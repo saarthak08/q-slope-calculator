@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         applicationId = "in.sg.q_slope_calculator"
-        minSdk = flutter.minSdkVersion
+        minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
