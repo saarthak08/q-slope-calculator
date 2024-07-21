@@ -15,6 +15,7 @@ dependencies:
   flutter_svg: ^2.0.10
   flutter_dotenv: ^5.1.0
   intl: ^0.19.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -27,23 +28,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/illustrations/
-    - assets/icons/
+    - assets/images/
     - .env
-
-  fonts:
-    - family: Montserrat
-      fonts:
-        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
-        - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
-        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
-
-    - family: Rubik
-      fonts:
-        - asset: assets/fonts/Rubik/Rubik-Regular.ttf
-        - asset: assets/fonts/Rubik/Rubik-Bold.ttf
-        - asset: assets/fonts/Rubik/Rubik-Medium.ttf
-        - asset: assets/fonts/Rubik/Rubik-Light.ttf
-        - asset: assets/fonts/Rubik/Rubik-SemiBold.ttf
 
 lint_staged:
   "lib/**.dart": dart format --fix && dart fix --apply
