@@ -9,6 +9,7 @@ import 'package:q_slope_calculator/src/utils/app_config.dart';
 const String? _flavor = kIsWeb ? null : String.fromEnvironment('FLAVOR');
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   final configuredApp = AppConfig(
       environment: _flavor == AppEnvironment.production.value

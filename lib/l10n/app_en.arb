@@ -1,0 +1,16 @@
+{
+    "@@locale": "en",
+    "appName": "Q-slope Calculator",
+    "homeScreenAppBarSubtitle": "by {author}",
+    "@homeScreenAppBarSubtitle": {
+        "context": "Home Screen",
+        "placeholders": {
+            "author": {
+                "description": "The author of the application.",
+                "example": "Khyati Gupta"
+            }
+        }
+    },
+    "calculate": "Calculate",
+    "noPreviousCalculationsFound": "No previous calculations found"
+}

@@ -6,6 +6,7 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_scr
 import 'package:q_slope_calculator/src/ui/widgets/illustration_widget.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,11 +27,12 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  appName,
+                  AppLocalizations.of(context).appName,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "by Khyati Gupta",
+                  AppLocalizations.of(context)
+                      .homeScreenAppBarSubtitle(khyatiGupta),
                   textAlign: TextAlign.end,
                   style: GoogleFonts.montserrat(
                       fontSize: getViewPortWidth(context) * 0.04),
@@ -41,17 +43,17 @@ class HomeScreen extends StatelessWidget {
           splashColor: Colors.teal.withOpacity(0.2),
           label: SizedBox(
               width: getViewPortWidth(context) * 0.225,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.add,
                     color: Colors.teal,
                   ),
                   Text(
-                    "Calculate",
-                    style: TextStyle(color: Colors.teal),
+                    AppLocalizations.of(context).calculate,
+                    style: const TextStyle(color: Colors.teal),
                   ),
                 ],
               )),
@@ -60,10 +62,10 @@ class HomeScreen extends StatelessWidget {
             Navigator.pushNamed(context, CalculateScreen.route);
           },
         ),
-        body: const Center(
+        body: Center(
             child: IllustrationWidget(
           assetPath: Assets.noData,
-          text: "No previous calculations found",
+          text: AppLocalizations.of(context).noPreviousCalculationsFound,
           onRefresh: null,
         )));
   }
