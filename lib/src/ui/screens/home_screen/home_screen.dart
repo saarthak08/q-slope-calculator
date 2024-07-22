@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.teal,
                   ),
                   Text(
-                    AppLocalizations.of(context).calculate,
+                    AppLocalizations.of(context).homeScreenCalculateButtonText,
                     style: const TextStyle(color: Colors.teal),
                   ),
                 ],
@@ -65,7 +65,8 @@ class HomeScreen extends StatelessWidget {
         body: Center(
             child: IllustrationWidget(
           assetPath: Assets.noData,
-          text: AppLocalizations.of(context).noPreviousCalculationsFound,
+          text: AppLocalizations.of(context)
+              .homeScreenNoPreviousCalculationsFound,
           onRefresh: null,
         )));
   }

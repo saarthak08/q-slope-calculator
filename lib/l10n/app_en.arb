@@ -7,10 +7,10 @@
         "placeholders": {
             "author": {
                 "description": "The author of the application.",
-                "example": "Khyati Gupta"
+                "example": "Ram Chandra"
             }
         }
     },
-    "calculate": "Calculate",
-    "noPreviousCalculationsFound": "No previous calculations found"
+    "homeScreenCalculateButtonText": "Calculate",
+    "homeScreenNoPreviousCalculationsFound": "No previous calculations found"
 }
