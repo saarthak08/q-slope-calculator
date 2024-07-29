@@ -41,22 +41,23 @@ class HomeScreen extends StatelessWidget {
             )),
         floatingActionButton: FloatingActionButton.extended(
           splashColor: Colors.teal.withOpacity(0.2),
-          label: SizedBox(
-              width: getViewPortWidth(context) * 0.225,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.add,
-                    color: Colors.teal,
-                  ),
-                  Text(
-                    AppLocalizations.of(context).homeScreenCalculateButtonText,
-                    style: const TextStyle(color: Colors.teal),
-                  ),
-                ],
-              )),
+          label: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.add,
+                color: Colors.teal,
+              ),
+              SizedBox(
+                width: getViewPortWidth(context) * 0.02,
+              ),
+              Text(
+                AppLocalizations.of(context).homeScreenCalculateButtonText,
+                style: const TextStyle(color: Colors.teal),
+              ),
+            ],
+          ),
           backgroundColor: white,
           onPressed: () {
             Navigator.pushNamed(context, CalculateScreen.route);
