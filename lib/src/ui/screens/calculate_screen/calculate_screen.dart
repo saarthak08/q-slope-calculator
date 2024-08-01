@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
 
 class CalculateScreen extends StatefulWidget {
   static const String route = '/calculate';
@@ -17,6 +18,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
   final ValueNotifier<int> page = ValueNotifier(1);
   final PageController _pageController = PageController();
   late ValueNotifier<QSlope?> _qSlope;
+  final int maxPageValue = 2;
 
   String getAppBarTitle(int pageValue) {
     switch (pageValue) {
@@ -57,15 +59,20 @@ class _CalculateScreenState extends State<CalculateScreen> {
           PageView(
             controller: _pageController,
             onPageChanged: (value) {
-              page.value = value;
+              page.value = value + 1;
             },
             children: [
               BlockSizePage(
                 pageController: _pageController,
                 qSlope: _qSlope,
                 currentPage: page,
-                maxPageValue: 2,
-              )
+                maxPageValue: maxPageValue,
+              ),
+              JointRoughnessPage(
+                  qSlope: _qSlope,
+                  pageController: _pageController,
+                  currentPage: page,
+                  maxPageValue: maxPageValue)
             ],
           ),
         ]));

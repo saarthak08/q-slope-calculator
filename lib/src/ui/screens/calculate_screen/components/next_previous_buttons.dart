@@ -35,8 +35,7 @@ class NextPreviousButtons extends StatelessWidget {
                       ? null
                       : () {
                           int pageValue = page - 1;
-                          currentPage.value = pageValue;
-                          pageController.animateToPage(pageValue,
+                          pageController.animateToPage(pageValue - 1,
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeIn);
                         },
@@ -62,8 +61,7 @@ class NextPreviousButtons extends StatelessWidget {
                           }
                           if (shouldNext) {
                             int pageValue = page + 1;
-                            currentPage.value = pageValue;
-                            pageController.animateToPage(pageValue,
+                            pageController.animateToPage(pageValue + 1,
                                 duration: const Duration(milliseconds: 150),
                                 curve: Curves.easeIn);
                           }

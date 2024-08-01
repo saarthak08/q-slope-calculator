@@ -50,6 +50,44 @@ class _BlockSizePageState extends State<BlockSizePage> {
   RqdCalculationType? rqdCalculationType;
 
   @override
+  void initState() {
+    QSlope? qSlope = widget.qSlope.value;
+    if (qSlope != null) {
+      _locationIdController.text = qSlope.locationId;
+      _lithologyController.text = qSlope.lithology;
+      _sumOfCorePiecesController.text =
+          qSlope.blockSize?.sumOfCorePieces.toString() ?? '';
+      _totalDrillRunController.text =
+          qSlope.blockSize?.totalDrillRun.toString() ?? '';
+      if (qSlope.blockSize != null &&
+          qSlope.blockSize!.jointSpacingInMeters != null &&
+          qSlope.blockSize!.jointSpacingInMeters!.isNotEmpty) {
+        List<TextEditingController> controllers = List.empty(growable: true);
+        for (var spacing in qSlope.blockSize!.jointSpacingInMeters!) {
+          TextEditingController t = TextEditingController();
+          t.text = spacing.toString();
+          controllers.add(t);
+        }
+        _jointSpacingControllers.value = controllers;
+      }
+      jointSpacings.value = qSlope.blockSize?.jointSpacingInMeters ?? [];
+      _numberOfJointsController.text =
+          qSlope.blockSize?.numberOfJoints?.toString() ?? '';
+      _numberOfRandomSetsController.text =
+          qSlope.blockSize?.numberOfRandomSets?.toString() ?? '';
+      _areaController.text =
+          qSlope.blockSize?.areaInSquareMeters?.toString() ?? '';
+      rqd.value = qSlope.blockSize?.rqd;
+      jointVolume.value = qSlope.blockSize?.jointVolume;
+      rqdByJvCalculationType.value = qSlope.blockSize?.rqdByJvCalculationType;
+      setState(() {
+        rqdCalculationType = qSlope.blockSize?.rqdCalculationType;
+      });
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
