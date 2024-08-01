@@ -26,7 +26,7 @@ const BlockSizeSchema = Schema(
     r'jointSpacingInMeters': PropertySchema(
       id: 2,
       name: r'jointSpacingInMeters',
-      type: IsarType.longList,
+      type: IsarType.doubleList,
     ),
     r'jointVolume': PropertySchema(
       id: 3,
@@ -48,19 +48,25 @@ const BlockSizeSchema = Schema(
       name: r'rqd',
       type: IsarType.double,
     ),
-    r'rqdCalculationType': PropertySchema(
+    r'rqdByJvCalculationType': PropertySchema(
       id: 7,
+      name: r'rqdByJvCalculationType',
+      type: IsarType.string,
+      enumMap: _BlockSizerqdByJvCalculationTypeEnumValueMap,
+    ),
+    r'rqdCalculationType': PropertySchema(
+      id: 8,
       name: r'rqdCalculationType',
       type: IsarType.string,
       enumMap: _BlockSizerqdCalculationTypeEnumValueMap,
     ),
     r'sumOfCorePieces': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'sumOfCorePieces',
       type: IsarType.double,
     ),
     r'totalDrillRun': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'totalDrillRun',
       type: IsarType.double,
     )
@@ -84,6 +90,12 @@ int _blockSizeEstimateSize(
     }
   }
   {
+    final value = object.rqdByJvCalculationType;
+    if (value != null) {
+      bytesCount += 3 + value.name.length * 3;
+    }
+  }
+  {
     final value = object.rqdCalculationType;
     if (value != null) {
       bytesCount += 3 + value.name.length * 3;
@@ -100,14 +112,15 @@ void _blockSizeSerialize(
 ) {
   writer.writeDouble(offsets[0], object.areaInSquareMeters);
   writer.writeLong(offsets[1], object.hashCode);
-  writer.writeLongList(offsets[2], object.jointSpacingInMeters);
+  writer.writeDoubleList(offsets[2], object.jointSpacingInMeters);
   writer.writeDouble(offsets[3], object.jointVolume);
   writer.writeLong(offsets[4], object.numberOfJoints);
   writer.writeLong(offsets[5], object.numberOfRandomSets);
   writer.writeDouble(offsets[6], object.rqd);
-  writer.writeString(offsets[7], object.rqdCalculationType?.name);
-  writer.writeDouble(offsets[8], object.sumOfCorePieces);
-  writer.writeDouble(offsets[9], object.totalDrillRun);
+  writer.writeString(offsets[7], object.rqdByJvCalculationType?.name);
+  writer.writeString(offsets[8], object.rqdCalculationType?.name);
+  writer.writeDouble(offsets[9], object.sumOfCorePieces);
+  writer.writeDouble(offsets[10], object.totalDrillRun);
 }
 
 BlockSize _blockSizeDeserialize(
@@ -118,15 +131,17 @@ BlockSize _blockSizeDeserialize(
 ) {
   final object = BlockSize(
     areaInSquareMeters: reader.readDoubleOrNull(offsets[0]),
-    jointSpacingInMeters: reader.readLongList(offsets[2]),
+    jointSpacingInMeters: reader.readDoubleList(offsets[2]),
     jointVolume: reader.readDoubleOrNull(offsets[3]),
     numberOfJoints: reader.readLongOrNull(offsets[4]),
     numberOfRandomSets: reader.readLongOrNull(offsets[5]),
     rqd: reader.readDoubleOrNull(offsets[6]) ?? 0,
-    rqdCalculationType: _BlockSizerqdCalculationTypeValueEnumMap[
+    rqdByJvCalculationType: _BlockSizerqdByJvCalculationTypeValueEnumMap[
         reader.readStringOrNull(offsets[7])],
-    sumOfCorePieces: reader.readDoubleOrNull(offsets[8]),
-    totalDrillRun: reader.readDoubleOrNull(offsets[9]),
+    rqdCalculationType: _BlockSizerqdCalculationTypeValueEnumMap[
+        reader.readStringOrNull(offsets[8])],
+    sumOfCorePieces: reader.readDoubleOrNull(offsets[9]),
+    totalDrillRun: reader.readDoubleOrNull(offsets[10]),
   );
   return object;
 }
@@ -143,7 +158,7 @@ P _blockSizeDeserializeProp<P>(
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readLongList(offset)) as P;
+      return (reader.readDoubleList(offset)) as P;
     case 3:
       return (reader.readDoubleOrNull(offset)) as P;
     case 4:
@@ -153,17 +168,28 @@ P _blockSizeDeserializeProp<P>(
     case 6:
       return (reader.readDoubleOrNull(offset) ?? 0) as P;
     case 7:
-      return (_BlockSizerqdCalculationTypeValueEnumMap[
+      return (_BlockSizerqdByJvCalculationTypeValueEnumMap[
           reader.readStringOrNull(offset)]) as P;
     case 8:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (_BlockSizerqdCalculationTypeValueEnumMap[
+          reader.readStringOrNull(offset)]) as P;
     case 9:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 10:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
+const _BlockSizerqdByJvCalculationTypeEnumValueMap = {
+  r'formulaWith2Point5Jv': r'formulaWith2Point5Jv',
+  r'formulaWith3Point3Jv': r'formulaWith3Point3Jv',
+};
+const _BlockSizerqdByJvCalculationTypeValueEnumMap = {
+  r'formulaWith2Point5Jv': RqdByJvCalculationType.formulaWith2Point5Jv,
+  r'formulaWith3Point3Jv': RqdByJvCalculationType.formulaWith3Point3Jv,
+};
 const _BlockSizerqdCalculationTypeEnumValueMap = {
   r'jv': r'jv',
   r'directMethod': r'directMethod',
@@ -331,49 +357,58 @@ extension BlockSizeQueryFilter
   }
 
   QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
-      jointSpacingInMetersElementEqualTo(int value) {
+      jointSpacingInMetersElementEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'jointSpacingInMeters',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
       jointSpacingInMetersElementGreaterThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'jointSpacingInMeters',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
       jointSpacingInMetersElementLessThan(
-    int value, {
+    double value, {
     bool include = false,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'jointSpacingInMeters',
         value: value,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
       jointSpacingInMetersElementBetween(
-    int lower,
-    int upper, {
+    double lower,
+    double upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -382,6 +417,7 @@ extension BlockSizeQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }
@@ -762,6 +798,162 @@ extension BlockSizeQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'rqdByJvCalculationType',
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'rqdByJvCalculationType',
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeEqualTo(
+    RqdByJvCalculationType? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeGreaterThan(
+    RqdByJvCalculationType? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeLessThan(
+    RqdByJvCalculationType? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeBetween(
+    RqdByJvCalculationType? lower,
+    RqdByJvCalculationType? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'rqdByJvCalculationType',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'rqdByJvCalculationType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'rqdByJvCalculationType',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rqdByJvCalculationType',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BlockSize, BlockSize, QAfterFilterCondition>
+      rqdByJvCalculationTypeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'rqdByJvCalculationType',
+        value: '',
       ));
     });
   }

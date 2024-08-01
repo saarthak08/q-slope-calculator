@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
               ],
             )),
         floatingActionButton: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           splashColor: Colors.teal.withOpacity(0.2),
           label: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

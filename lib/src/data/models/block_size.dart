@@ -9,7 +9,7 @@ class BlockSize {
   /// [USING_Jv]
   int? numberOfJoints;
   int? numberOfRandomSets;
-  List<int>? jointSpacingInMeters;
+  List<double>? jointSpacingInMeters;
   double? areaInSquareMeters;
   double? jointVolume;
 
@@ -19,6 +19,10 @@ class BlockSize {
 
   @Enumerated(EnumType.name)
   RqdCalculationType? rqdCalculationType;
+
+  @Enumerated(EnumType.name)
+  RqdByJvCalculationType? rqdByJvCalculationType;
+
   double rqd;
 
   BlockSize({
@@ -30,18 +34,20 @@ class BlockSize {
     this.sumOfCorePieces,
     this.totalDrillRun,
     this.rqdCalculationType,
+    this.rqdByJvCalculationType,
     this.rqd = 0,
   });
 
   BlockSize copyWith({
     int? numberOfJoints,
     int? numberOfRandomSets,
-    List<int>? jointSpacingInMeters,
+    List<double>? jointSpacingInMeters,
     double? areaInSquareMeters,
     double? jointVolume,
     double? sumOfCorePieces,
     double? totalDrillRun,
     RqdCalculationType? rqdCalculationType,
+    RqdByJvCalculationType? rqdByJvCalculationType,
     double? rqd,
   }) {
     return BlockSize(
@@ -53,6 +59,8 @@ class BlockSize {
       sumOfCorePieces: sumOfCorePieces ?? this.sumOfCorePieces,
       totalDrillRun: totalDrillRun ?? this.totalDrillRun,
       rqdCalculationType: rqdCalculationType ?? this.rqdCalculationType,
+      rqdByJvCalculationType:
+          rqdByJvCalculationType ?? this.rqdByJvCalculationType,
       rqd: rqd ?? this.rqd,
     );
   }
@@ -67,37 +75,44 @@ class BlockSize {
       'sumOfCorePieces': sumOfCorePieces,
       'totalDrillRun': totalDrillRun,
       'rqdCalculationType': rqdCalculationType?.name,
+      'rqdByJvCalculationType': rqdByJvCalculationType?.name,
       'rqd': rqd,
     };
   }
 
   factory BlockSize.fromMap(Map<String, dynamic> map) {
     return BlockSize(
-      numberOfJoints:
-          map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
-      numberOfRandomSets: map['numberOfRandomSets'] != null
-          ? map['numberOfRandomSets'] as int
-          : null,
-      jointSpacingInMeters: map['jointSpacingInMeters'] != null
-          ? List<int>.from((map['jointSpacingInMeters'] as List<int>))
-          : null,
-      areaInSquareMeters: map['areaInSquareMeters'] != null
-          ? map['areaInSquareMeters'] as double
-          : null,
-      jointVolume:
-          map['jointVolume'] != null ? map['jointVolume'] as double : null,
-      sumOfCorePieces: map['sumOfCorePieces'] != null
-          ? map['sumOfCorePieces'] as double
-          : null,
-      totalDrillRun:
-          map['totalDrillRun'] != null ? map['totalDrillRun'] as double : null,
-      rqdCalculationType: map['rqdCalculationType'] != null
-          ? map['rqdCalculationType'] == RqdCalculationType.directMethod.name
-              ? RqdCalculationType.directMethod
-              : RqdCalculationType.jv
-          : null,
-      rqd: map['rqd'] as double,
-    );
+        numberOfJoints:
+            map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
+        numberOfRandomSets: map['numberOfRandomSets'] != null
+            ? map['numberOfRandomSets'] as int
+            : null,
+        jointSpacingInMeters: map['jointSpacingInMeters'] != null
+            ? List<double>.from((map['jointSpacingInMeters'] as List<double>))
+            : null,
+        areaInSquareMeters: map['areaInSquareMeters'] != null
+            ? map['areaInSquareMeters'] as double
+            : null,
+        jointVolume:
+            map['jointVolume'] != null ? map['jointVolume'] as double : null,
+        sumOfCorePieces: map['sumOfCorePieces'] != null
+            ? map['sumOfCorePieces'] as double
+            : null,
+        totalDrillRun: map['totalDrillRun'] != null
+            ? map['totalDrillRun'] as double
+            : null,
+        rqdCalculationType: map['rqdCalculationType'] != null
+            ? map['rqdCalculationType'] == RqdCalculationType.directMethod.name
+                ? RqdCalculationType.directMethod
+                : RqdCalculationType.jv
+            : null,
+        rqd: map['rqd'] as double,
+        rqdByJvCalculationType: map['rqdByJvCalculationType'] != null
+            ? map['rqdByJvCalculationType'] ==
+                    RqdByJvCalculationType.formulaWith2Point5Jv.name
+                ? RqdByJvCalculationType.formulaWith2Point5Jv
+                : RqdByJvCalculationType.formulaWith3Point3Jv
+            : null);
   }
 
   String toJson() => json.encode(toMap());
@@ -107,7 +122,7 @@ class BlockSize {
 
   @override
   String toString() {
-    return 'BlockSize(numberOfJoints: $numberOfJoints, numberOfRandomSets: $numberOfRandomSets, jointSpacingInMeters: $jointSpacingInMeters, areaInSquareMeters: $areaInSquareMeters, jointVolume: $jointVolume, sumOfCorePieces: $sumOfCorePieces, totalDrillRun: $totalDrillRun, rqdCalculationType: $rqdCalculationType, rqd: $rqd)';
+    return 'BlockSize(numberOfJoints: $numberOfJoints, numberOfRandomSets: $numberOfRandomSets, jointSpacingInMeters: $jointSpacingInMeters, areaInSquareMeters: $areaInSquareMeters, jointVolume: $jointVolume, sumOfCorePieces: $sumOfCorePieces, totalDrillRun: $totalDrillRun, rqdCalculationType: $rqdCalculationType, rqdByJvCalculationType: $rqdByJvCalculationType, rqd: $rqd)';
   }
 
   @override
@@ -123,6 +138,7 @@ class BlockSize {
         other.sumOfCorePieces == sumOfCorePieces &&
         other.totalDrillRun == totalDrillRun &&
         other.rqdCalculationType == rqdCalculationType &&
+        other.rqdByJvCalculationType == rqdByJvCalculationType &&
         other.rqd == rqd;
   }
 
@@ -136,6 +152,7 @@ class BlockSize {
         sumOfCorePieces.hashCode ^
         totalDrillRun.hashCode ^
         rqdCalculationType.hashCode ^
+        rqdByJvCalculationType.hashCode ^
         rqd.hashCode;
   }
 }
@@ -144,3 +161,5 @@ enum RqdCalculationType {
   jv,
   directMethod;
 }
+
+enum RqdByJvCalculationType { formulaWith2Point5Jv, formulaWith3Point3Jv }

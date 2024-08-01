@@ -99,23 +99,47 @@ int _qSlopeEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 +
-      ActiveStressSchema.estimateSize(
-          object.activeStress, allOffsets[ActiveStress]!, allOffsets);
-  bytesCount += 3 +
-      BlockSizeSchema.estimateSize(
-          object.blockSize, allOffsets[BlockSize]!, allOffsets);
-  bytesCount += 3 +
-      ExternalFactorsSchema.estimateSize(
-          object.externalFactors, allOffsets[ExternalFactors]!, allOffsets);
-  bytesCount += 3 +
-      JointCharacterSchema.estimateSize(
-          object.jointCharacter, allOffsets[JointCharacter]!, allOffsets);
+  {
+    final value = object.activeStress;
+    if (value != null) {
+      bytesCount += 3 +
+          ActiveStressSchema.estimateSize(
+              value, allOffsets[ActiveStress]!, allOffsets);
+    }
+  }
+  {
+    final value = object.blockSize;
+    if (value != null) {
+      bytesCount += 3 +
+          BlockSizeSchema.estimateSize(
+              value, allOffsets[BlockSize]!, allOffsets);
+    }
+  }
+  {
+    final value = object.externalFactors;
+    if (value != null) {
+      bytesCount += 3 +
+          ExternalFactorsSchema.estimateSize(
+              value, allOffsets[ExternalFactors]!, allOffsets);
+    }
+  }
+  {
+    final value = object.jointCharacter;
+    if (value != null) {
+      bytesCount += 3 +
+          JointCharacterSchema.estimateSize(
+              value, allOffsets[JointCharacter]!, allOffsets);
+    }
+  }
   bytesCount += 3 + object.lithology.length * 3;
   bytesCount += 3 + object.locationId.length * 3;
-  bytesCount += 3 +
-      OFactorSchema.estimateSize(
-          object.oFactor, allOffsets[OFactor]!, allOffsets);
+  {
+    final value = object.oFactor;
+    if (value != null) {
+      bytesCount += 3 +
+          OFactorSchema.estimateSize(value, allOffsets[OFactor]!, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -170,40 +194,35 @@ QSlope _qSlopeDeserialize(
 ) {
   final object = QSlope(
     activeStress: reader.readObjectOrNull<ActiveStress>(
-          offsets[0],
-          ActiveStressSchema.deserialize,
-          allOffsets,
-        ) ??
-        ActiveStress(),
+      offsets[0],
+      ActiveStressSchema.deserialize,
+      allOffsets,
+    ),
     blockSize: reader.readObjectOrNull<BlockSize>(
-          offsets[1],
-          BlockSizeSchema.deserialize,
-          allOffsets,
-        ) ??
-        BlockSize(),
-    createdAt: reader.readDateTime(offsets[2]),
+      offsets[1],
+      BlockSizeSchema.deserialize,
+      allOffsets,
+    ),
+    createdAt: reader.readDateTimeOrNull(offsets[2]),
     externalFactors: reader.readObjectOrNull<ExternalFactors>(
-          offsets[3],
-          ExternalFactorsSchema.deserialize,
-          allOffsets,
-        ) ??
-        ExternalFactors(),
+      offsets[3],
+      ExternalFactorsSchema.deserialize,
+      allOffsets,
+    ),
     id: id,
     jointCharacter: reader.readObjectOrNull<JointCharacter>(
-          offsets[5],
-          JointCharacterSchema.deserialize,
-          allOffsets,
-        ) ??
-        JointCharacter(),
+      offsets[5],
+      JointCharacterSchema.deserialize,
+      allOffsets,
+    ),
     lithology: reader.readString(offsets[6]),
     locationId: reader.readString(offsets[7]),
     oFactor: reader.readObjectOrNull<OFactor>(
-          offsets[8],
-          OFactorSchema.deserialize,
-          allOffsets,
-        ) ??
-        OFactor(),
-    qSlope: reader.readDouble(offsets[9]),
+      offsets[8],
+      OFactorSchema.deserialize,
+      allOffsets,
+    ),
+    qSlope: reader.readDoubleOrNull(offsets[9]),
   );
   return object;
 }
@@ -217,49 +236,44 @@ P _qSlopeDeserializeProp<P>(
   switch (propertyId) {
     case 0:
       return (reader.readObjectOrNull<ActiveStress>(
-            offset,
-            ActiveStressSchema.deserialize,
-            allOffsets,
-          ) ??
-          ActiveStress()) as P;
+        offset,
+        ActiveStressSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 1:
       return (reader.readObjectOrNull<BlockSize>(
-            offset,
-            BlockSizeSchema.deserialize,
-            allOffsets,
-          ) ??
-          BlockSize()) as P;
+        offset,
+        BlockSizeSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 2:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
       return (reader.readObjectOrNull<ExternalFactors>(
-            offset,
-            ExternalFactorsSchema.deserialize,
-            allOffsets,
-          ) ??
-          ExternalFactors()) as P;
+        offset,
+        ExternalFactorsSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 4:
       return (reader.readLong(offset)) as P;
     case 5:
       return (reader.readObjectOrNull<JointCharacter>(
-            offset,
-            JointCharacterSchema.deserialize,
-            allOffsets,
-          ) ??
-          JointCharacter()) as P;
+        offset,
+        JointCharacterSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
       return (reader.readString(offset)) as P;
     case 8:
       return (reader.readObjectOrNull<OFactor>(
-            offset,
-            OFactorSchema.deserialize,
-            allOffsets,
-          ) ??
-          OFactor()) as P;
+        offset,
+        OFactorSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 9:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -353,8 +367,56 @@ extension QSlopeQueryWhere on QueryBuilder<QSlope, QSlope, QWhereClause> {
 }
 
 extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> activeStressIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'activeStress',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> activeStressIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'activeStress',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> blockSizeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'blockSize',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> blockSizeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'blockSize',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtEqualTo(
-      DateTime value) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -364,7 +426,7 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -377,7 +439,7 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -390,8 +452,8 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> createdAtBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -402,6 +464,23 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> externalFactorsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'externalFactors',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition>
+      externalFactorsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'externalFactors',
       ));
     });
   }
@@ -507,6 +586,23 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> jointCharacterIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'jointCharacter',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition>
+      jointCharacterIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'jointCharacter',
       ));
     });
   }
@@ -771,8 +867,40 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
     });
   }
 
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> oFactorIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'oFactor',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> oFactorIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'oFactor',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'qSlope',
+      ));
+    });
+  }
+
+  QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'qSlope',
+      ));
+    });
+  }
+
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -785,7 +913,7 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -800,7 +928,7 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -815,8 +943,8 @@ extension QSlopeQueryFilter on QueryBuilder<QSlope, QSlope, QFilterCondition> {
   }
 
   QueryBuilder<QSlope, QSlope, QAfterFilterCondition> qSlopeBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -1050,25 +1178,25 @@ extension QSlopeQueryProperty on QueryBuilder<QSlope, QSlope, QQueryProperty> {
     });
   }
 
-  QueryBuilder<QSlope, ActiveStress, QQueryOperations> activeStressProperty() {
+  QueryBuilder<QSlope, ActiveStress?, QQueryOperations> activeStressProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'activeStress');
     });
   }
 
-  QueryBuilder<QSlope, BlockSize, QQueryOperations> blockSizeProperty() {
+  QueryBuilder<QSlope, BlockSize?, QQueryOperations> blockSizeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'blockSize');
     });
   }
 
-  QueryBuilder<QSlope, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<QSlope, DateTime?, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<QSlope, ExternalFactors, QQueryOperations>
+  QueryBuilder<QSlope, ExternalFactors?, QQueryOperations>
       externalFactorsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'externalFactors');
@@ -1081,7 +1209,7 @@ extension QSlopeQueryProperty on QueryBuilder<QSlope, QSlope, QQueryProperty> {
     });
   }
 
-  QueryBuilder<QSlope, JointCharacter, QQueryOperations>
+  QueryBuilder<QSlope, JointCharacter?, QQueryOperations>
       jointCharacterProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'jointCharacter');
@@ -1100,13 +1228,13 @@ extension QSlopeQueryProperty on QueryBuilder<QSlope, QSlope, QQueryProperty> {
     });
   }
 
-  QueryBuilder<QSlope, OFactor, QQueryOperations> oFactorProperty() {
+  QueryBuilder<QSlope, OFactor?, QQueryOperations> oFactorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'oFactor');
     });
   }
 
-  QueryBuilder<QSlope, double, QQueryOperations> qSlopeProperty() {
+  QueryBuilder<QSlope, double?, QQueryOperations> qSlopeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'qSlope');
     });

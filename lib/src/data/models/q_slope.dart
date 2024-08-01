@@ -16,31 +16,31 @@ class QSlope {
 
   String lithology;
 
-  late BlockSize blockSize;
+  BlockSize? blockSize;
 
-  late JointCharacter jointCharacter;
+  JointCharacter? jointCharacter;
 
-  late OFactor oFactor;
+  OFactor? oFactor;
 
-  late ExternalFactors externalFactors;
+  ExternalFactors? externalFactors;
 
-  late ActiveStress activeStress;
+  ActiveStress? activeStress;
 
-  late double qSlope;
+  double? qSlope;
 
-  DateTime createdAt;
+  DateTime? createdAt;
 
   QSlope({
-    required this.id,
+    this.id = Isar.autoIncrement,
     required this.locationId,
     required this.lithology,
-    required this.blockSize,
-    required this.jointCharacter,
-    required this.oFactor,
-    required this.externalFactors,
-    required this.activeStress,
-    required this.qSlope,
-    required this.createdAt,
+    this.blockSize,
+    this.jointCharacter,
+    this.oFactor,
+    this.externalFactors,
+    this.activeStress,
+    this.qSlope,
+    this.createdAt,
   });
 
   QSlope copyWith({
@@ -74,13 +74,13 @@ class QSlope {
       'id': id.toInt(),
       'locationId': locationId,
       'lithology': lithology,
-      'blockSize': blockSize.toMap(),
-      'jointCharacter': jointCharacter.toMap(),
-      'oFactor': oFactor.toMap(),
-      'externalFactors': externalFactors.toMap(),
-      'activeStress': activeStress.toMap(),
-      'qSlope': qSlope.toDouble(),
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'blockSize': blockSize?.toMap(),
+      'jointCharacter': jointCharacter?.toMap(),
+      'oFactor': oFactor?.toMap(),
+      'externalFactors': externalFactors?.toMap(),
+      'activeStress': activeStress?.toMap(),
+      'qSlope': qSlope?.toDouble(),
+      'createdAt': createdAt?.millisecondsSinceEpoch,
     };
   }
 

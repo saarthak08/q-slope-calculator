@@ -13,7 +13,7 @@ ThemeData getThemeData(BuildContext context) {
       textTheme: TextTheme(
         bodyMedium: GoogleFonts.raleway(),
         titleMedium: GoogleFonts.montserrat(),
-        headlineMedium: GoogleFonts.rubik(),
+        headlineMedium: GoogleFonts.poppins(),
       ),
       scaffoldBackgroundColor: white,
       colorSchemeSeed: Colors.teal,
