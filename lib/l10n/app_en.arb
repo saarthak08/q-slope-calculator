@@ -53,5 +53,17 @@
     "numberOfJointsNotMoreThanHundred": "Number of Joints cannot be more than 100",
     "areaCannotBeZero": "Area should be more than zero",
     "nextPreviousButtonsNext": "Next",
-    "nextPreviousButtonsPrevious": "Previous"
+    "nextPreviousButtonsPrevious": "Previous",
+    "jointRoughness": "Joint Roughness (Jr)",
+    "jointRoughnessSymbol": "Jr",
+    "jointAlteration": "Joint Alteration (Ja)",
+    "jointAlterationSymbol": "Ja",
+    "accordingToBarAndBarton": "According to Bar & Barton (2017)",
+    "jointRoughnessRequired": "Joint Roughness is required",
+    "jointRoughnessConstraintsValidation": "Joint Roughness should be a value between 0.5 and 4",
+    "jointAlterationRequired": "Joint Alteration is required",
+    "jointAlterationConstraintsValidation": "Joint Alteration should be a value between 0.75 and 20",
+    "jointRoughnessTable": "Joint Roughness Table",
+    "jointAlterationTable": "Joint Alteration Table"
+
 }
