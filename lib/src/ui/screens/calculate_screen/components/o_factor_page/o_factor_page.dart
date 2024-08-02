@@ -167,7 +167,7 @@ class _OFactorPageState extends State<OFactorPage> {
                               )
                             : _oFactorCalculationType ==
                                     OFactorCalculationType.romanaAdjacentFactor
-                                ? OFactorRomanaAdjustmentFactor(
+                                ? OFactorRomanaAdjustmentFactorWidget(
                                     oFactorTypeOfFailure: _oFactorTypeOfFailure,
                                     alphaI: _alphaI,
                                     alphaJ: _alphaJ,

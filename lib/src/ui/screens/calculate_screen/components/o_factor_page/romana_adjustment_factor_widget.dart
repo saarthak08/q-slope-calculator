@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/logger.dart';
 
-class OFactorRomanaAdjustmentFactor extends StatefulWidget {
+class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;
   final TextEditingController alphaI;
   final TextEditingController alphaJ;
@@ -20,7 +20,7 @@ class OFactorRomanaAdjustmentFactor extends StatefulWidget {
   final TextEditingController f3;
   final TextEditingController oFactor;
 
-  const OFactorRomanaAdjustmentFactor(
+  const OFactorRomanaAdjustmentFactorWidget(
       {super.key,
       required this.oFactorTypeOfFailure,
       required this.alphaI,
@@ -35,12 +35,12 @@ class OFactorRomanaAdjustmentFactor extends StatefulWidget {
       required this.oFactor});
 
   @override
-  State<OFactorRomanaAdjustmentFactor> createState() =>
-      _OFactorRomanaAdjustmentFactorState();
+  State<OFactorRomanaAdjustmentFactorWidget> createState() =>
+      _OFactorRomanaAdjustmentFactorWidgetState();
 }
 
-class _OFactorRomanaAdjustmentFactorState
-    extends State<OFactorRomanaAdjustmentFactor> {
+class _OFactorRomanaAdjustmentFactorWidgetState
+    extends State<OFactorRomanaAdjustmentFactorWidget> {
   bool isF2Beta1 = true;
 
   void _calculateOFactor() {
