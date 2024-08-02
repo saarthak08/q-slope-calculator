@@ -4,8 +4,10 @@ import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_slider_input_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/next_previous_buttons.dart';
+import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/utils/formulas.dart';
 
 class JointRoughnessPage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -29,6 +31,18 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
   final TextEditingController _jointRoughness = TextEditingController();
   final TextEditingController _jointRoughnessQuotient = TextEditingController();
   final TextEditingController _jointAlteration = TextEditingController();
+
+  @override
+  void initState() {
+    QSlope? qSlope = widget.qSlope.value;
+    if (qSlope != null) {
+      _jointRoughness.text =
+          qSlope.jointCharacter?.jointRoughness.toString() ?? "";
+      _jointAlteration.text =
+          qSlope.jointCharacter?.jointAlteration.toString() ?? "";
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +69,8 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
                     imageTitle:
                         AppLocalizations.of(context).jointRoughnessTable,
                     inputTitle: AppLocalizations.of(context).jointRoughness,
-                    maxSliderValue: 4,
-                    minSliderValue: 0.5,
+                    maxSliderValue: maxJointRoughnessValue,
+                    minSliderValue: minJointRoughnessValue,
                     sliderDivisions: 7,
                     imageHeight: getViewPortHeight(context) * 0.3,
                     validateInput: (value) {
@@ -65,16 +79,22 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
                             .jointRoughnessRequired;
                       }
                       if (value.isNotEmpty &&
-                          ((double.tryParse(value) ?? 0) < 0.5 ||
-                              (double.tryParse(value) ?? 0) > 4)) {
+                          ((double.tryParse(value) ?? 0) <
+                                  minJointRoughnessValue ||
+                              (double.tryParse(value) ?? 0) >
+                                  maxJointRoughnessValue)) {
                         return AppLocalizations.of(context)
                             .jointRoughnessConstraintsValidation;
                       }
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: getViewPortHeight(context) * 0.05,
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: getViewPortHeight(context) * 0.04,
+                      bottom: getViewPortHeight(context) * 0.04,
+                    ),
+                    child: const DividerWidget(),
                   ),
                   JointRoughnessSliderInputWidget(
                     textEditingController: _jointAlteration,
@@ -82,8 +102,8 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
                     imageTitle:
                         AppLocalizations.of(context).jointAlterationTable,
                     inputTitle: AppLocalizations.of(context).jointAlteration,
-                    maxSliderValue: 20,
-                    minSliderValue: 0.75,
+                    maxSliderValue: maxJointAlterationValue,
+                    minSliderValue: minJointAlterationValue,
                     sliderDivisions: 77,
                     imageHeight: getViewPortHeight(context) * 0.25,
                     validateInput: (value) {
@@ -92,13 +112,18 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
                             .jointAlterationRequired;
                       }
                       if (value.isNotEmpty &&
-                          ((double.tryParse(value) ?? 0) < 0.75 ||
-                              (double.tryParse(value) ?? 0) > 20)) {
+                          ((double.tryParse(value) ?? 0) <
+                                  minJointAlterationValue ||
+                              (double.tryParse(value) ?? 0) >
+                                  maxJointAlterationValue)) {
                         return AppLocalizations.of(context)
                             .jointAlterationConstraintsValidation;
                       }
                       return null;
                     },
+                  ),
+                  SizedBox(
+                    height: getViewPortHeight(context) * 0.03,
                   ),
                   ValueListenableBuilder(
                       valueListenable: _jointRoughness,
@@ -108,8 +133,18 @@ class _JointRoughnessPageState extends State<JointRoughnessPage> {
                                 pageController: widget.pageController,
                                 currentPage: widget.currentPage,
                                 maxPageValue: widget.maxPageValue,
-                                isNextButtonEnabled:
-                                    jR.text.isNotEmpty && jA.text.isNotEmpty,
+                                isNextButtonEnabled: jR.text.isNotEmpty &&
+                                    double.tryParse(jR.text) != null &&
+                                    double.parse(jR.text) >=
+                                        minJointRoughnessValue &&
+                                    double.parse(jR.text) <=
+                                        maxJointRoughnessValue &&
+                                    jA.text.isNotEmpty &&
+                                    double.tryParse(jA.text) != null &&
+                                    double.parse(jA.text) >=
+                                        minJointAlterationValue &&
+                                    double.parse(jA.text) <=
+                                        maxJointAlterationValue,
                                 onNext: () {
                                   QSlope? qSlope = widget.qSlope.value;
                                   if (qSlope != null) {

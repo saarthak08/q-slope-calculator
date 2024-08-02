@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
-import 'package:q_slope_calculator/src/constants/strings.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/illustration_widget.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
@@ -27,15 +25,8 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalizations.of(context).appName,
+                  AppLocalizations.of(context).appName.toUpperCase(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  AppLocalizations.of(context)
-                      .homeScreenAppBarSubtitle(khyatiGupta),
-                  textAlign: TextAlign.end,
-                  style: GoogleFonts.montserrat(
-                      fontSize: getViewPortWidth(context) * 0.04),
                 ),
               ],
             )),

@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
 
 class CalculateScreen extends StatefulWidget {
   static const String route = '/calculate';
@@ -18,7 +19,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
   final ValueNotifier<int> page = ValueNotifier(1);
   final PageController _pageController = PageController();
   late ValueNotifier<QSlope?> _qSlope;
-  final int maxPageValue = 2;
+  final int maxPageValue = 5;
 
   String getAppBarTitle(int pageValue) {
     switch (pageValue) {
@@ -69,6 +70,11 @@ class _CalculateScreenState extends State<CalculateScreen> {
                 maxPageValue: maxPageValue,
               ),
               JointRoughnessPage(
+                  qSlope: _qSlope,
+                  pageController: _pageController,
+                  currentPage: page,
+                  maxPageValue: maxPageValue),
+              OFactorPage(
                   qSlope: _qSlope,
                   pageController: _pageController,
                   currentPage: page,
