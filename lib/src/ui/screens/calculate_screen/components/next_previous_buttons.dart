@@ -31,10 +31,11 @@ class NextPreviousButtons extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 ElevatedButton(
-                  onPressed: page == 1
+                  onPressed: page == 0
                       ? null
                       : () {
                           int pageValue = page - 1;
+                          currentPage.value = pageValue;
                           pageController.animateToPage(pageValue - 1,
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeIn);
@@ -61,7 +62,8 @@ class NextPreviousButtons extends StatelessWidget {
                           }
                           if (shouldNext) {
                             int pageValue = page + 1;
-                            pageController.animateToPage(pageValue + 1,
+                            currentPage.value = pageValue;
+                            pageController.animateToPage(pageValue,
                                 duration: const Duration(milliseconds: 150),
                                 curve: Curves.easeIn);
                           }

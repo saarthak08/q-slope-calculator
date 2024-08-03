@@ -5,7 +5,6 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
-import 'package:q_slope_calculator/src/utils/logger.dart';
 
 class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;
@@ -89,7 +88,6 @@ class _OFactorRomanaAdjustmentFactorWidgetState
           widget.f1.text =
               calculateF1ForTopplingFailure(alphaJ, alphaS).toStringAsFixed(4);
           widget.f2.text = "1";
-          getLogger().d(betaS);
           widget.f3.text =
               calculateF3ForTopplingFailure(betaJ, betaS).toStringAsFixed(4);
         }

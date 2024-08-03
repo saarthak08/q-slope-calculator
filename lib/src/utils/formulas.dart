@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+
 double minJointRoughnessValue = 0.5;
 double maxJointRoughnessValue = 4;
 double minJointAlterationValue = 0.75;
@@ -11,6 +13,13 @@ double f2ForToppling = 1;
 
 double minJWiceValue = 0.05;
 double maxJWiceValue = 1;
+
+double minSRFa = 2.5;
+double maxSRFa = 20;
+double minSRFb = 1;
+double maxSRFb = 200;
+double minSRFc = 1;
+double maxSRFc = 24;
 
 double calculateRqdByDirectMethod(
     double sumOfCorePieces, double totalDrillRun) {
@@ -61,4 +70,15 @@ double calculateF3ForTopplingFailure(double betaJ, double betaS) {
 double calculateOFactorByRomananAdjustmentFactor(
     double f1, double f2, double f3) {
   return 1.9759 * (exp(0.0339 * (f1 * f2 * f3)));
+}
+
+double calculateQSlope(QSlope qSlope) {
+  return ((qSlope.blockSize?.rqd ?? 0) /
+          (qSlope.blockSize?.numberOfJoints ?? 1)) *
+      ((qSlope.jointCharacter?.jointRoughness ?? 0) /
+          (qSlope.jointCharacter?.jointAlteration ?? 1)) *
+      (qSlope.oFactor?.oFactor ?? 0) *
+      ((qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber ??
+              0) /
+          (qSlope.activeStress?.srf ?? 1));
 }

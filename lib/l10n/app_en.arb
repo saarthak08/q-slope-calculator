@@ -19,7 +19,7 @@
     "joinCharacterPageAppBarTitle": "Joint Character",
     "oFactorPageAppBarTitle": "O-Factor",
     "externalFactorsPageAppBarTitle": "External Factors",
-    "activeStressPageAppBarTitle": "Active Stress",
+    "activeStressPageAppBarTitle": "Active Stress & Q-slope",
     "locationIdTextInputTitle": "Location Id",
     "locationIdTextInputRequired": "Location Id is required",
     "lithologyTextInputTitle": "Lithology",
@@ -31,6 +31,7 @@
     "totalDrillRunTextInputRequired": "Total Drill Run is required",
     "totalDrillRunTextNotZero": "Total Drill Run cannot be zero",
     "numberOfJointsTextInputTitle": "Number of Joints (Jn)",
+    "numberOfJointsSymbol": "Jn",
     "numberOfJointsTextInputRequired": "Number of Joints is required",
     "numberOfRandomSetsTextInputTitle": "Number of Random Sets (Nr)",
     "numberOfRandomSetsTextInputRequired": "Number of Random Sets is required",
@@ -91,7 +92,7 @@
     "valueOfF2": "Value of F2",
     "enviornmentalAndGeologicalConditionalNumber": "Environmental and Geological Conditional Number (Jwice)",
     "enviornmentalAndGeologicalConditionalNumberSymbol": "Jwice",
-    "jWiceInputConstraints":"Jwice value should be between 0.05 and 1",
+    "jWiceInputConstraints": "Jwice value should be between 0.05 and 1",
     "externalFactorStructure": "Structure",
     "structureStable": "Stable",
     "structureUnstable": "Unstable",
@@ -110,5 +111,10 @@
     "srfB": "SRFb",
     "srfC": "SRFc",
     "maxOf": "Maximum of",
-    "qSlopeSymbol": "Q-slope"
+    "qSlopeSymbol": "Q-slope",
+    "qSlopeCalculation":"Q-slope Calculation",
+    "srfAInputConstraints": "SRFa value should be between 2.5 and 20",
+    "srfBInputConstraints": "SRFb value should be between 1 and 200",
+    "srfCInputConstraints": "SRFc value should be between 1 and 24",
+    "activeStress": "Active Stress"
 }
