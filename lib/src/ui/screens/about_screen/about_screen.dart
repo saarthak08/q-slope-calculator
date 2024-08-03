@@ -27,7 +27,8 @@ class AboutScreen extends StatelessWidget {
           elevation: 1,
           shadowColor: Colors.white,
         ),
-        body: Container(
+        body: SingleChildScrollView(
+            child: Container(
           padding: EdgeInsets.symmetric(
               horizontal: getViewPortWidth(context) * 0.05),
           child:
@@ -177,6 +178,6 @@ class AboutScreen extends StatelessWidget {
               ],
             )
           ]),
-        ));
+        )));
   }
 }
