@@ -101,43 +101,6 @@ class _CalculateScreenState extends State<CalculateScreen> {
                       color: Colors.teal,
                     ))
                 : Container(),
-            ValueListenableBuilder<int>(
-                valueListenable: page,
-                builder: (context, value, child) => value == maxPageValue
-                    ? IconButton(
-                        onPressed: () async {
-                          final QSlope? qSlope = _qSlope.value;
-                          if (qSlope != null) {
-                            var result = await context
-                                .read<QSlopeListCubit>()
-                                .saveQSlopeToList(qSlope);
-                            if (result.isSuccess && buildContext.mounted) {
-                              toastification.show(
-                                  autoCloseDuration: const Duration(seconds: 2),
-                                  alignment: Alignment.bottomCenter,
-                                  type: ToastificationType.success,
-                                  title: Text(AppLocalizations.of(buildContext)
-                                      .saveCalculationSuccessful));
-                            } else {
-                              if (result.error is QSlopeError &&
-                                  buildContext.mounted) {
-                                toastification.show(
-                                    autoCloseDuration:
-                                        const Duration(seconds: 2),
-                                    alignment: Alignment.bottomCenter,
-                                    type: ToastificationType.error,
-                                    title: Text(
-                                        AppLocalizations.of(buildContext)
-                                            .errorInSavingCalculation));
-                              }
-                            }
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.save,
-                          color: Colors.teal,
-                        ))
-                    : Container())
           ],
         ),
         body: Stack(children: [

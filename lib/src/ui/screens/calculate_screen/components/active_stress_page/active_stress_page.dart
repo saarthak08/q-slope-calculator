@@ -1,14 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/next_previous_buttons.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:toastification/toastification.dart';
 
 class ActiveStressPage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -43,6 +47,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
       srfB.text = qSlope.activeStress?.srfB.toString() ?? "";
       srfC.text = qSlope.activeStress?.srfC.toString() ?? "";
       srf.text = qSlope.activeStress?.srf.toString() ?? "";
+      _qSlope.value = qSlope.qSlope;
     }
     super.initState();
   }
@@ -272,14 +277,41 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
           left: 0,
           right: 0,
           child: ValueListenableBuilder(
-              valueListenable: srf,
-              builder: (context, srf, child) => NextPreviousButtons(
-                    pageController: widget.pageController,
-                    currentPage: widget.currentPage,
-                    maxPageValue: widget.maxPageValue,
-                    isNextButtonEnabled: false,
-                    onNext: null,
-                  )))
+              valueListenable: widget.qSlope,
+              builder: (context, qslope, child) => NextPreviousButtons(
+                  pageController: widget.pageController,
+                  currentPage: widget.currentPage,
+                  maxPageValue: widget.maxPageValue,
+                  nextButtonText: AppLocalizations.of(context).save,
+                  isNextButtonEnabled: qslope != null,
+                  onNext: () {
+                    final QSlope? qSlope = qslope;
+                    if (qSlope != null) {
+                      context
+                          .read<QSlopeListCubit>()
+                          .saveQSlopeToList(qSlope)
+                          .then((result) {
+                        if (result.isSuccess && context.mounted) {
+                          toastification.show(
+                              autoCloseDuration: const Duration(seconds: 2),
+                              alignment: Alignment.bottomCenter,
+                              type: ToastificationType.success,
+                              title: Text(AppLocalizations.of(context)
+                                  .saveCalculationSuccessful));
+                        } else {
+                          if (result.error is QSlopeError && context.mounted) {
+                            toastification.show(
+                                autoCloseDuration: const Duration(seconds: 2),
+                                alignment: Alignment.bottomCenter,
+                                type: ToastificationType.error,
+                                title: Text(AppLocalizations.of(context)
+                                    .errorInSavingCalculation));
+                          }
+                        }
+                      });
+                    }
+                    return false;
+                  })))
     ]);
   }
 

@@ -129,5 +129,6 @@
     "references": "References",
     "contactUs": "Contact Us",
     "version": "Version",
-    "aboutQSlopeInfo": "Q-slope is an empirical rock slope engineering method for assessing the stability of excavated rock slopes in the field. Intended for use in reinforcement-free road or railway cuttings or in opencast mines, Q-slope allows geotechnical engineers to make potential adjustments to slope angles as rock mass conditions become apparent during construction."
+    "aboutQSlopeInfo": "Q-slope is an empirical rock slope engineering method for assessing the stability of excavated rock slopes in the field. Intended for use in reinforcement-free road or railway cuttings or in opencast mines, Q-slope allows geotechnical engineers to make potential adjustments to slope angles as rock mass conditions become apparent during construction.",
+    "save": "Save"
 }

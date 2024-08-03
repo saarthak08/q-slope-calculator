@@ -108,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               arguments:
                                                   CalculateScreenArguments(
                                                       qSlope: state
-                                                          .qSlopeList[index]));
+                                                          .qSlopeList[index]
+                                                          .copyWith()));
                                         },
                                         title: Column(
                                             crossAxisAlignment:

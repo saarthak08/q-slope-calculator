@@ -8,13 +8,16 @@ class NextPreviousButtons extends StatelessWidget {
   final int maxPageValue;
   final bool isNextButtonEnabled;
   final bool Function()? onNext;
+  final String? nextButtonText;
+
   const NextPreviousButtons(
       {super.key,
       required this.pageController,
       required this.currentPage,
       required this.maxPageValue,
       required this.isNextButtonEnabled,
-      this.onNext});
+      this.onNext,
+      this.nextButtonText});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class NextPreviousButtons extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: page == maxPageValue || !isNextButtonEnabled
+                  onPressed: !isNextButtonEnabled
                       ? null
                       : () {
                           var next = onNext;
@@ -83,7 +86,8 @@ class NextPreviousButtons extends StatelessWidget {
                           getViewPortWidth(context) * 0.4,
                           getViewPortHeight(context) * 0.05))),
                   child: Text(
-                    AppLocalizations.of(context).nextPreviousButtonsNext,
+                    nextButtonText ??
+                        AppLocalizations.of(context).nextPreviousButtonsNext,
                   ),
                 ),
               ],
