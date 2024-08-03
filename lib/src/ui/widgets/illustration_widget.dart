@@ -44,7 +44,10 @@ class IllustrationWidget extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       text,
-                      style: TextStyle(fontSize: (height ?? vpH) * 0.022),
+                      style: TextStyle(
+                          fontSize: (height ??
+                                  getFontSizeAccordingToOrientation(context)) *
+                              0.022),
                       textAlign: TextAlign.center,
                     ))),
             Flexible(
