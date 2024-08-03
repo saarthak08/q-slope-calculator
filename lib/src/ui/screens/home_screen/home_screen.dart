@@ -30,13 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
             actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AboutScreen.route);
-                  },
-                  icon: Image.asset(
-                    Assets.pngIcon,
-                  ))
+              Padding(
+                  padding: EdgeInsets.all(getViewPortHeight(context) * 0.01),
+                  child: Ink(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.teal, width: 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                            Navigator.pushNamed(context, AboutScreen.route);
+                          },
+                          child: Image.asset(
+                            Assets.pngIcon,
+                          ))))
             ],
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
