@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
+import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/illustration_widget.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
@@ -10,8 +11,19 @@ import 'package:q_slope_calculator/src/utils/date_time_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<QSlopeListCubit>().loadQSlopeList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +31,9 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AboutScreen.route);
+                  },
                   icon: Image.asset(
                     Assets.pngIcon,
                   ))
