@@ -1,5 +1,17 @@
 import 'dart:math';
 
+double minJointRoughnessValue = 0.5;
+double maxJointRoughnessValue = 4;
+double minJointAlterationValue = 0.75;
+double maxJointAlterationValue = 20;
+double minOFactorValue = 0.25;
+double maxOFactorValue = 2;
+
+double f2ForToppling = 1;
+
+double minJWiceValue = 0.05;
+double maxJWiceValue = 1;
+
 double calculateRqdByDirectMethod(
     double sumOfCorePieces, double totalDrillRun) {
   return (sumOfCorePieces * 100) / totalDrillRun;
@@ -22,13 +34,6 @@ double calculateRqdByThreePointThreeJv(double jv) {
   return 115 - (3.3 * jv);
 }
 
-double minJointRoughnessValue = 0.5;
-double maxJointRoughnessValue = 4;
-double minJointAlterationValue = 0.75;
-double maxJointAlterationValue = 20;
-double minOFactorValue = 0.25;
-double maxOFactorValue = 2;
-
 double calculateF1ForPlanarFailure(double alphaJ, double alphaS) {
   return alphaJ - alphaS;
 }
@@ -40,8 +45,6 @@ double calculateF1ForWedgeFailure(double alphaI, double alphaS) {
 double calculateF1ForTopplingFailure(double alphaJ, double alphaS) {
   return alphaJ - alphaS - 180;
 }
-
-double f2ForToppling = 1;
 
 double calculateF3ForPlanarFailure(double betaJ, double betaS) {
   return betaJ - betaS;

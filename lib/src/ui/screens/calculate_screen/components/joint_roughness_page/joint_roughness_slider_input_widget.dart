@@ -69,9 +69,9 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
             child: Text(
               inputTitle,
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black87,
-                  fontSize: getViewPortHeight(context) * 0.018),
+                  fontSize: getViewPortHeight(context) * 0.02),
             )),
         ValueListenableBuilder(
             valueListenable: textEditingController,

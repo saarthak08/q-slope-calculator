@@ -121,7 +121,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.black87,
-                        fontSize: getViewPortHeight(context) * 0.018),
+                        fontSize: getViewPortHeight(context) * 0.02),
                   )),
               SizedBox(
                 height: getViewPortHeight(context) * 0.01,

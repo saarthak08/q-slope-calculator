@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
 
@@ -78,7 +79,12 @@ class _CalculateScreenState extends State<CalculateScreen> {
                   qSlope: _qSlope,
                   pageController: _pageController,
                   currentPage: page,
-                  maxPageValue: maxPageValue)
+                  maxPageValue: maxPageValue),
+              ExternalFactorsPage(
+                  qSlope: _qSlope,
+                  pageController: _pageController,
+                  currentPage: page,
+                  maxPageValue: maxPageValue),
             ],
           ),
         ]));

@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalizations.of(context).appName.toUpperCase(),
+                  AppLocalizations.of(context).appName,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

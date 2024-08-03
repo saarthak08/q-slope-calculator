@@ -90,7 +90,7 @@ class _OFactorPageState extends State<OFactorPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.black87,
-                            fontSize: getViewPortHeight(context) * 0.018),
+                            fontSize: getViewPortHeight(context) * 0.02),
                       )),
                   Row(children: [
                     Radio<OFactorCalculationType>(
