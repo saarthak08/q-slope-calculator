@@ -111,7 +111,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
                                         fontSize:
-                                            getViewPortHeight(context) * 0.02),
+                                            getFontSizeAccordingToOrientation(
+                                                    context) *
+                                                0.02),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsStructureType>(
@@ -127,7 +129,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context).structureStable,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                               Row(children: [
@@ -146,7 +150,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       .structureUnstable,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ])
                             ]),
@@ -166,7 +172,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
                                         fontSize:
-                                            getViewPortHeight(context) * 0.02),
+                                            getFontSizeAccordingToOrientation(
+                                                    context) *
+                                                0.02),
                                   )),
                               SizedBox(
                                 height: getViewPortHeight(context) * 0.01,
@@ -197,7 +205,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       .strengthOfRockCompetent,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                               Row(children: [
@@ -216,7 +226,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       .strengthOfRockInCompetent,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ])
                             ]),
@@ -237,7 +249,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
                                         fontSize:
-                                            getViewPortHeight(context) * 0.02),
+                                            getFontSizeAccordingToOrientation(
+                                                    context) *
+                                                0.02),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsEnvironmentConditions>(
@@ -257,7 +271,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       .desertEnvironment,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                               Row(children: [
@@ -277,7 +293,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context).wetEnvironment,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                               Row(children: [
@@ -297,7 +315,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context).tropicalStorms,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                               Row(children: [
@@ -317,7 +337,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context).iceWedging,
                                   style: TextStyle(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.018),
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.018),
                                 )),
                               ]),
                             ]),

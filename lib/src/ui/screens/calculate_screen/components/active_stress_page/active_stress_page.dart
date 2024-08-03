@@ -104,7 +104,9 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                   AppLocalizations.of(context).activeStress,
                                   style: GoogleFonts.poppins(
                                       fontSize:
-                                          getViewPortHeight(context) * 0.02,
+                                          getFontSizeAccordingToOrientation(
+                                                  context) *
+                                              0.02,
                                       color: Colors.teal),
                                 ))),
                         CustomTextFormField(
@@ -190,7 +192,8 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.019),
                                         ),
                                         SizedBox(
@@ -203,7 +206,8 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.019),
                                         ),
                                         SizedBox(
@@ -237,7 +241,8 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.019),
                                         ),
                                         SizedBox(
@@ -250,7 +255,8 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.019),
                                         )
                                       ])

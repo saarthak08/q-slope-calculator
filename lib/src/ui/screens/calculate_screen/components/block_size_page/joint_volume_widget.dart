@@ -309,7 +309,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                             fontWeight: FontWeight.w500,
                                             color: Colors.black87,
                                             fontSize:
-                                                getViewPortHeight(context) *
+                                                getFontSizeAccordingToOrientation(
+                                                        context) *
                                                     0.018),
                                       ),
                                       Row(children: [
@@ -327,7 +328,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                           "${AppLocalizations.of(context).rockQualityDesignationSymbol} = 115 - (3.3 x ${AppLocalizations.of(context).jointVolumeSymbol})",
                                           style: TextStyle(
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.018),
                                         )),
                                       ]),
@@ -346,7 +348,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                           "${AppLocalizations.of(context).rockQualityDesignationSymbol} = 110 - (2.5 x ${AppLocalizations.of(context).jointVolumeSymbol})",
                                           style: TextStyle(
                                               fontSize:
-                                                  getViewPortHeight(context) *
+                                                  getFontSizeAccordingToOrientation(
+                                                          context) *
                                                       0.018),
                                         )),
                                       ]),
