@@ -85,8 +85,9 @@ class CustomTextFormField extends StatelessWidget {
                 helperMaxLines: 3,
                 helperText: hintText,
                 helperStyle: GoogleFonts.openSans(
-                  color: Colors.grey.shade700,
-                ),
+                    color: Colors.grey.shade700,
+                    fontSize:
+                        getFontSizeAccordingToOrientation(context) * 0.016),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 labelStyle: GoogleFonts.openSans(color: Colors.grey.shade500),
                 labelText: placeholderText))

@@ -186,8 +186,11 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     AppLocalizations.of(context)
                                         .strengthOfRockCompetentNote,
                                     style: GoogleFonts.openSans(
-                                      color: Colors.grey.shade700,
-                                    ),
+                                        color: Colors.grey.shade700,
+                                        fontSize:
+                                            getFontSizeAccordingToOrientation(
+                                                    context) *
+                                                0.016),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsStrengthOfRock>(

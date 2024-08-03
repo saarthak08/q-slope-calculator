@@ -370,7 +370,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getViewPortHeight(
+                                                                  getFontSizeAccordingToOrientation(
                                                                           context) *
                                                                       0.019),
                                                         ),
@@ -395,7 +395,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getViewPortHeight(
+                                                                  getFontSizeAccordingToOrientation(
                                                                           context) *
                                                                       0.019),
                                                         ),
@@ -420,7 +420,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getViewPortHeight(
+                                                                  getFontSizeAccordingToOrientation(
                                                                           context) *
                                                                       0.019),
                                                         ),
