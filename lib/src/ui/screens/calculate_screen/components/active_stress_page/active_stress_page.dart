@@ -48,7 +48,15 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
   }
 
   void _calculateQSlope() {
-    if (srfA.text.isNotEmpty || srfB.text.isNotEmpty || srfC.text.isNotEmpty) {
+    if ((srfA.text.isNotEmpty &&
+            (double.tryParse(srfA.text) ?? 0) <= maxSRFa &&
+            (double.tryParse(srfA.text) ?? 0) >= minSRFa) ||
+        (srfB.text.isNotEmpty &&
+            (double.tryParse(srfB.text) ?? 0) <= maxSRFb &&
+            (double.tryParse(srfB.text) ?? 0) >= minSRFb) ||
+        (srfC.text.isNotEmpty &&
+            (double.tryParse(srfC.text) ?? 0) <= maxSRFc &&
+            (double.tryParse(srfC.text) ?? 0) >= minSRFc)) {
       QSlope? qSlope = widget.qSlope.value;
       if (qSlope != null) {
         qSlope.activeStress = ActiveStress();
@@ -58,7 +66,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
         double preMax = max<double>(
             qSlope.activeStress?.srfA ?? 0, qSlope.activeStress?.srfB ?? 0);
         srf.text = max<double>(preMax, qSlope.activeStress?.srfC ?? 0)
-            .toStringAsFixed(2);
+            .toStringAsFixed(4);
         qSlope.activeStress?.srf = double.tryParse(srf.text) ?? 1;
         qSlope.qSlope = calculateQSlope(qSlope);
         _qSlope.value = qSlope.qSlope;
@@ -237,7 +245,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               getViewPortHeight(context) * 0.02,
                                         ),
                                         Text(
-                                          "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(2)}",
+                                          "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(4)}",
                                           style: GoogleFonts.montserrat(
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,

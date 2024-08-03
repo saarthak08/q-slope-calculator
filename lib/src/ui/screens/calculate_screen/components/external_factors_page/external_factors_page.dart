@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/next_previous_buttons.dart';
@@ -166,6 +167,19 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         color: Colors.black87,
                                         fontSize:
                                             getViewPortHeight(context) * 0.02),
+                                  )),
+                              SizedBox(
+                                height: getViewPortHeight(context) * 0.01,
+                              ),
+                              Container(
+                                  padding: EdgeInsets.only(
+                                      left: getViewPortWidth(context) * 0.02),
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                        .strengthOfRockCompetentNote,
+                                    style: GoogleFonts.openSans(
+                                      color: Colors.grey.shade700,
+                                    ),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsStrengthOfRock>(

@@ -76,15 +76,17 @@ class CustomTextFormField extends StatelessWidget {
                 errorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Colors.red, width: 1.5),
                     borderRadius: BorderRadius.circular(6)),
-                errorStyle: GoogleFonts.raleway(
+                errorStyle: GoogleFonts.openSans(
                     fontSize: getViewPortHeight(context) * 0.016),
                 errorMaxLines: 3,
+                hintMaxLines: 3,
+                helperMaxLines: 3,
                 helperText: hintText,
-                helperStyle: GoogleFonts.raleway(
+                helperStyle: GoogleFonts.openSans(
                   color: Colors.grey.shade700,
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                labelStyle: GoogleFonts.raleway(color: Colors.grey.shade500),
+                labelStyle: GoogleFonts.openSans(color: Colors.grey.shade500),
                 labelText: placeholderText))
       ],
     );

@@ -11,7 +11,7 @@ ThemeData getThemeData(BuildContext context) {
           backgroundColor: white),
       useMaterial3: true,
       textTheme: TextTheme(
-        bodyMedium: GoogleFonts.raleway(),
+        bodyMedium: GoogleFonts.openSans(),
         titleMedium: GoogleFonts.montserrat(),
         headlineMedium: GoogleFonts.poppins(),
       ),

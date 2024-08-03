@@ -112,9 +112,16 @@
     "srfC": "SRFc",
     "maxOf": "Maximum of",
     "qSlopeSymbol": "Q-slope",
-    "qSlopeCalculation":"Q-slope Calculation",
+    "qSlopeCalculation": "Q-slope Calculation",
     "srfAInputConstraints": "SRFa value should be between 2.5 and 20",
     "srfBInputConstraints": "SRFb value should be between 1 and 200",
     "srfCInputConstraints": "SRFc value should be between 1 and 24",
-    "activeStress": "Active Stress"
+    "activeStress": "Active Stress",
+    "errorInSavingCalculation": "Error in saving calculation",
+    "errorInDeletingCalculation": "Error in deleting calculation",
+    "saveCalculationSuccessful": "Calculation saved",
+    "deleteCalculationSuccessful": "Calculation deleted",
+    "listLocationId": "Location Id",
+    "listLithology": "Lithology",
+    "createdAt": "Created At"
 }

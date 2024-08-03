@@ -9,7 +9,9 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case CalculateScreen.route:
-        return MaterialPageRoute(builder: (context) => const CalculateScreen());
+        final args = settings.arguments as CalculateScreenArguments;
+        return MaterialPageRoute(
+            builder: (context) => CalculateScreen(qSlope: args.qSlope));
       case PhotoViewScreen.route:
         final args = settings.arguments as ImageProvider;
         return MaterialPageRoute(

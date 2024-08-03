@@ -36,7 +36,7 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
 
 class _BlockSizePageJoinVolumeWidgetState
     extends State<BlockSizePageJoinVolumeWidget> {
-  void _calculateJointVolume() {
+  void _calculateRqd() {
     if (widget.numberOfJointsController.text.isNotEmpty &&
         widget.numberOfRandomSetsController.text.isNotEmpty &&
         widget.areaController.text.isNotEmpty &&
@@ -71,7 +71,17 @@ class _BlockSizePageJoinVolumeWidgetState
                 int.tryParse(widget.numberOfRandomSetsController.text) ?? 0,
                 spacings,
                 double.tryParse(widget.areaController.text) ?? 1.0)
-            .toStringAsFixed(2));
+            .toStringAsFixed(4));
+        if (widget.rqdByJvCalculationType.value ==
+            RqdByJvCalculationType.formulaWith2Point5Jv) {
+          widget.rqd.value =
+              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0);
+        }
+        if (widget.rqdByJvCalculationType.value ==
+            RqdByJvCalculationType.formulaWith3Point3Jv) {
+          widget.rqd.value =
+              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0);
+        }
       }
     }
   }
@@ -118,7 +128,7 @@ class _BlockSizePageJoinVolumeWidgetState
                 widget.jointSpacingControllers.value = controller;
               }
             }
-            _calculateJointVolume();
+            _calculateRqd();
           },
         ),
         SizedBox(
@@ -180,7 +190,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                                             0.02),
                                                 child: CustomTextFormField(
                                                   onChanged: (value) {
-                                                    _calculateJointVolume();
+                                                    _calculateRqd();
                                                   },
                                                   titleText:
                                                       "${AppLocalizations.of(context).jointSpacingSymbol}${index + 1}",
@@ -206,7 +216,7 @@ class _BlockSizePageJoinVolumeWidgetState
                               ])))),
         CustomTextFormField(
           onChanged: (value) {
-            _calculateJointVolume();
+            _calculateRqd();
           },
           type: const TextInputType.numberWithOptions(
               signed: false, decimal: false),
@@ -228,7 +238,7 @@ class _BlockSizePageJoinVolumeWidgetState
         ),
         CustomTextFormField(
           onChanged: (value) {
-            _calculateJointVolume();
+            _calculateRqd();
           },
           type: const TextInputType.numberWithOptions(signed: false),
           textInputAction: TextInputAction.next,
@@ -307,12 +317,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                             onChanged: (value) {
                                               widget.rqdByJvCalculationType
                                                   .value = value;
-                                              var jv = widget.jointVolume.value;
-                                              if (jv != null) {
-                                                widget.rqd.value =
-                                                    calculateRqdByThreePointThreeJv(
-                                                        jv);
-                                              }
+                                              _calculateRqd();
                                             }),
                                         Expanded(
                                             child: Text(
@@ -331,12 +336,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                             onChanged: (value) {
                                               widget.rqdByJvCalculationType
                                                   .value = value;
-                                              var jv = widget.jointVolume.value;
-                                              if (jv != null) {
-                                                widget.rqd.value =
-                                                    calculateRqdByTwoPointFiveJv(
-                                                        jv);
-                                              }
+                                              _calculateRqd();
                                             }),
                                         Expanded(
                                             child: Text(

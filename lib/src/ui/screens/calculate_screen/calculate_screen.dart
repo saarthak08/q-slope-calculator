@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/active_stress_page/active_stress_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
+import 'package:toastification/toastification.dart';
 
 class CalculateScreen extends StatefulWidget {
   static const String route = '/calculate';
@@ -47,10 +51,16 @@ class _CalculateScreenState extends State<CalculateScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.teal,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: ValueListenableBuilder<int>(
               valueListenable: page,
               builder: (context, value, child) => Text(getAppBarTitle(value))),
@@ -59,7 +69,33 @@ class _CalculateScreenState extends State<CalculateScreen> {
           actions: [
             widget.qSlope != null
                 ? IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final QSlope? qSlope = _qSlope.value;
+                      if (qSlope != null) {
+                        var result = await context
+                            .read<QSlopeListCubit>()
+                            .deleteQSlopeFromList(qSlope.id);
+                        if (result.isSuccess && buildContext.mounted) {
+                          toastification.show(
+                              autoCloseDuration: const Duration(seconds: 2),
+                              alignment: Alignment.bottomCenter,
+                              type: ToastificationType.success,
+                              title: Text(AppLocalizations.of(buildContext)
+                                  .deleteCalculationSuccessful));
+                          Navigator.pop(buildContext);
+                        }
+                        if (result.isFailure &&
+                            result.error is QSlopeError &&
+                            buildContext.mounted) {
+                          toastification.show(
+                              autoCloseDuration: const Duration(seconds: 2),
+                              alignment: Alignment.bottomCenter,
+                              type: ToastificationType.error,
+                              title: Text(AppLocalizations.of(buildContext)
+                                  .errorInDeletingCalculation));
+                        }
+                      }
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.teal,
@@ -69,7 +105,34 @@ class _CalculateScreenState extends State<CalculateScreen> {
                 valueListenable: page,
                 builder: (context, value, child) => value == maxPageValue
                     ? IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final QSlope? qSlope = _qSlope.value;
+                          if (qSlope != null) {
+                            var result = await context
+                                .read<QSlopeListCubit>()
+                                .saveQSlopeToList(qSlope);
+                            if (result.isSuccess && buildContext.mounted) {
+                              toastification.show(
+                                  autoCloseDuration: const Duration(seconds: 2),
+                                  alignment: Alignment.bottomCenter,
+                                  type: ToastificationType.success,
+                                  title: Text(AppLocalizations.of(buildContext)
+                                      .saveCalculationSuccessful));
+                            } else {
+                              if (result.error is QSlopeError &&
+                                  buildContext.mounted) {
+                                toastification.show(
+                                    autoCloseDuration:
+                                        const Duration(seconds: 2),
+                                    alignment: Alignment.bottomCenter,
+                                    type: ToastificationType.error,
+                                    title: Text(
+                                        AppLocalizations.of(buildContext)
+                                            .errorInSavingCalculation));
+                              }
+                            }
+                          }
+                        },
                         icon: const Icon(
                           Icons.save,
                           color: Colors.teal,
@@ -120,4 +183,10 @@ class _CalculateScreenState extends State<CalculateScreen> {
     _qSlope.dispose();
     super.dispose();
   }
+}
+
+class CalculateScreenArguments {
+  final QSlope? qSlope;
+
+  CalculateScreenArguments({required this.qSlope});
 }

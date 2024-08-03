@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
+import 'package:q_slope_calculator/src/data/common/result.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/service/q_slope_list_service.dart';
 
@@ -12,42 +14,51 @@ class QSlopeListCubit extends Cubit<QSlopeListState> {
 
   Future<void> loadQSlopeList() async {
     emit(QSlopeListLoading());
-    try {
-      List<QSlope>? qSlopeList = await _qSlopeListService.getQSlopesList();
-      if (qSlopeList.isNotEmpty) {
-        emit(QSlopeListLoaded(qSlopeList));
-      } else {
+    Result<List<QSlope>> qSlopeListResult =
+        await _qSlopeListService.getQSlopesList();
+    qSlopeListResult.when(onSuccess: (data) {
+      if (data.isEmpty) {
         emit(QSlopeListEmpty());
+      } else {
+        emit(QSlopeListLoaded(data));
       }
-    } on Exception catch (ex) {
-      emit(QSlopeListLoadingErrorState(ex));
-    }
+    }, onError: (error) {
+      if (error is QSlopeError) {
+        emit(QSlopeListLoadingErrorState(error));
+      }
+    });
   }
 
-  Future<void> saveQSlopeToList(QSlope qSlope) async {
-    try {
-      await _qSlopeListService.saveQSlopeToList(qSlope);
-    } on Exception catch (ex) {
-      emit(QSlopeSaveToListErrorState(ex));
-    }
+  Future<Result> saveQSlopeToList(QSlope qSlope) async {
+    var result = await _qSlopeListService.saveQSlopeToList(qSlope);
+    result.when(onError: (error) {
+      if (error is QSlopeError) {
+        emit(QSlopeListOperationErrorState(error));
+      }
+    });
     await loadQSlopeList();
+    return result;
   }
 
-  Future<void> clearQSlopeList() async {
-    try {
-      await _qSlopeListService.clearQSlopeList();
-    } on Exception catch (ex) {
-      emit(QSlopeClearListErrorState(ex));
-    }
+  Future<Result> clearQSlopeList() async {
+    var result = await _qSlopeListService.clearQSlopeList();
+    result.when(onError: (error) {
+      if (error is QSlopeError) {
+        emit(QSlopeListOperationErrorState(error));
+      }
+    });
     await loadQSlopeList();
+    return result;
   }
 
-  Future<void> deleteQSlopeFromList(int id) async {
-    try {
-      await _qSlopeListService.deleteQSlope(id);
-    } on Exception catch (ex) {
-      emit(QSlopeDeleteFromListErrorState(ex));
-    }
+  Future<Result> deleteQSlopeFromList(int id) async {
+    var result = await _qSlopeListService.deleteQSlope(id);
+    result.when(onError: (error) {
+      if (error is QSlopeError) {
+        emit(QSlopeListOperationErrorState(error));
+      }
+    });
     await loadQSlopeList();
+    return result;
   }
 }

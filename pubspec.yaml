@@ -25,6 +25,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   logger: ^2.4.0
   photo_view: ^0.15.0
+  toastification: ^2.1.0
 
 dev_dependencies:
   flutter_test:

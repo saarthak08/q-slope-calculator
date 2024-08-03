@@ -29,22 +29,11 @@ class QSlopeListLoaded extends QSlopeListState {
 }
 
 class QSlopeListLoadingErrorState extends QSlopeListState {
-  final Exception exception;
-
-  QSlopeListLoadingErrorState(this.exception);
+  final QSlopeError qSlopeError;
+  QSlopeListLoadingErrorState(this.qSlopeError);
 }
 
-class QSlopeSaveToListErrorState extends QSlopeListState {
-  final Exception exception;
-  QSlopeSaveToListErrorState(this.exception);
-}
-
-class QSlopeClearListErrorState extends QSlopeListState {
-  final Exception exception;
-  QSlopeClearListErrorState(this.exception);
-}
-
-class QSlopeDeleteFromListErrorState extends QSlopeListState {
-  final Exception exception;
-  QSlopeDeleteFromListErrorState(this.exception);
+class QSlopeListOperationErrorState extends QSlopeListState {
+  final QSlopeError qSlopeError;
+  QSlopeListOperationErrorState(this.qSlopeError);
 }

@@ -25,7 +25,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
       rqd.value = double.tryParse(calculateRqdByDirectMethod(
               double.tryParse(sumOfCorePiecesController.text) ?? 0,
               double.tryParse(totalDrillRunController.text) ?? 1)
-          .toStringAsFixed(2));
+          .toStringAsFixed(4));
     }
   }
 
@@ -92,7 +92,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
                     margin:
                         EdgeInsets.only(top: getViewPortHeight(context) * 0.03),
                     child: Text(
-                      "${AppLocalizations.of(context).rockQualityDesignation} = ${rqdValue.toStringAsFixed(2)} %",
+                      "${AppLocalizations.of(context).rockQualityDesignation} = ${rqdValue.toStringAsFixed(4)} %",
                       style: GoogleFonts.montserrat(
                           fontFeatures: [],
                           fontWeight: FontWeight.w600,

@@ -86,7 +86,7 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
                 min: minSliderValue,
                 divisions: sliderDivisions,
                 onChanged: (value) {
-                  textEditingController.text = value.toStringAsFixed(2);
+                  textEditingController.text = value.toStringAsFixed(4);
                 })),
         CustomTextFormField(
           type: const TextInputType.numberWithOptions(signed: false),

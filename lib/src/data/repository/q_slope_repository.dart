@@ -25,14 +25,20 @@ class QSlopeRepository {
   }
 
   Future<int> saveQSlope(QSlope qSlope) {
-    return _isarService.isar.qSlopes.put(qSlope);
+    return _isarService.isar.writeTxn(() {
+      return _isarService.isar.qSlopes.put(qSlope);
+    });
   }
 
   Future<void> deleteAllQSlopes() {
-    return _isarService.isar.qSlopes.clear();
+    return _isarService.isar.writeTxn(() {
+      return _isarService.isar.qSlopes.clear();
+    });
   }
 
   Future<void> deleteQSlope(int id) {
-    return _isarService.isar.qSlopes.delete(id);
+    return _isarService.isar.writeTxn(() {
+      return _isarService.isar.qSlopes.delete(id);
+    });
   }
 }
