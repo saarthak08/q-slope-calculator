@@ -9,7 +9,6 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
-import 'package:q_slope_calculator/src/utils/logger.dart';
 
 class ActiveStressPage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -63,6 +62,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
         qSlope.activeStress?.srf = double.tryParse(srf.text) ?? 1;
         qSlope.qSlope = calculateQSlope(qSlope);
         _qSlope.value = qSlope.qSlope;
+        qSlope.createdAt = DateTime.now();
         widget.qSlope.value = qSlope.copyWith();
       }
     }
