@@ -37,6 +37,7 @@ dev_dependencies:
   lint_staged: ^0.5.1
   isar_generator: ^3.1.0+1
   build_runner: ^2.4.11
+  msix: ^3.16.7
 
 flutter:
   uses-material-design: true
