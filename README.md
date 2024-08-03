@@ -21,9 +21,10 @@ An application that calculates the Q-slope of a rock to express the quality of t
     - Create a `.env` file in the root directory of the project.
     - Copy the contents of `.env.sample` into the `.env` file and modify them according to your requirements.
 
-2. **Install Dependencies:**
+2. **Setup Project & Install Dependencies:**
 
-    - Run the command `flutter install` to install the necessary dependencies.
+    - Run the command `flutter pub get` to install the necessary dependencies.
+    - Run the command `dart run husky install` to setup husky (git hooks).
 
 3. **Run the Application:**
 

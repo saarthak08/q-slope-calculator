@@ -25,7 +25,7 @@ jobs:
             - run: cp .env.sample .env
             - run: flutter pub get
             - name: Analyze code
-              run: flutter analyze
+              run: flutter analyze -v
             - name: Ensure the Dart code is formatted correctly
               run: dart format --set-exit-if-changed .
             - name: Creating release key and release key properties from secrets

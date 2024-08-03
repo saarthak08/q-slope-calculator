@@ -1,1 +1,9 @@
 String appName = "Q-slope Calculator";
+String khyatiGupta = "Khyati Gupta";
+const mail = "mailto:saarthakgupta08@gmail.com";
+const reference1 = "Bar & Barton 2015";
+const reference2 = "Bar & Barton 2017";
+const reference1Link =
+    "https://drive.google.com/file/d/1EsSIlYLWDFlOaLePkfi8Cm63bpRwjDxZ/view?usp=sharing";
+const reference2Link =
+    "https://drive.google.com/file/d/1sSVjmFOb7Rwbny5oPhkI80tRWcqEVzd4/view?usp=sharing";
