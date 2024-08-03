@@ -74,13 +74,15 @@ class _BlockSizePageJoinVolumeWidgetState
             .toStringAsFixed(4));
         if (widget.rqdByJvCalculationType.value ==
             RqdByJvCalculationType.formulaWith2Point5Jv) {
-          widget.rqd.value =
-              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0);
+          widget.rqd.value = double.tryParse(
+              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
+                  .toStringAsFixed(4));
         }
         if (widget.rqdByJvCalculationType.value ==
             RqdByJvCalculationType.formulaWith3Point3Jv) {
-          widget.rqd.value =
-              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0);
+          widget.rqd.value = double.tryParse(
+              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
+                  .toStringAsFixed(4));
         }
       }
     }
