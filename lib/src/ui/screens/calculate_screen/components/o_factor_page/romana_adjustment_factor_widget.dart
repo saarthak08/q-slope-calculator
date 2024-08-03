@@ -106,6 +106,18 @@ class _OFactorRomanaAdjustmentFactorWidgetState
   }
 
   @override
+  void initState() {
+    if (widget.f2.text.isNotEmpty) {
+      if (widget.f2.text == widget.betaJ.text) {
+        setState(() {
+          isF2Beta1 = false;
+        });
+      }
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: widget.oFactorTypeOfFailure,
