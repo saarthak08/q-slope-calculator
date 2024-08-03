@@ -43,3 +43,8 @@ class QSlopeClearListErrorState extends QSlopeListState {
   final Exception exception;
   QSlopeClearListErrorState(this.exception);
 }
+
+class QSlopeDeleteFromListErrorState extends QSlopeListState {
+  final Exception exception;
+  QSlopeDeleteFromListErrorState(this.exception);
+}

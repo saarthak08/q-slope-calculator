@@ -42,4 +42,13 @@ class QSlopeListService {
       rethrow;
     }
   }
+
+  Future<void> deleteQSlope(int id) async {
+    try {
+      return await _qSlopeCalculationsRepository.deleteQSlope(id);
+    } catch (err, s) {
+      getLogger().e('Error in deleting Q-slope', error: err, stackTrace: s);
+      rethrow;
+    }
+  }
 }

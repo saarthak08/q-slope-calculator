@@ -30,6 +30,7 @@ class QSlopeListCubit extends Cubit<QSlopeListState> {
     } on Exception catch (ex) {
       emit(QSlopeSaveToListErrorState(ex));
     }
+    await loadQSlopeList();
   }
 
   Future<void> clearQSlopeList() async {
@@ -38,5 +39,15 @@ class QSlopeListCubit extends Cubit<QSlopeListState> {
     } on Exception catch (ex) {
       emit(QSlopeClearListErrorState(ex));
     }
+    await loadQSlopeList();
+  }
+
+  Future<void> deleteQSlopeFromList(int id) async {
+    try {
+      await _qSlopeListService.deleteQSlope(id);
+    } on Exception catch (ex) {
+      emit(QSlopeDeleteFromListErrorState(ex));
+    }
+    await loadQSlopeList();
   }
 }

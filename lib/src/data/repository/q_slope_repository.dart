@@ -31,4 +31,8 @@ class QSlopeRepository {
   Future<void> deleteAllQSlopes() {
     return _isarService.isar.qSlopes.clear();
   }
+
+  Future<void> deleteQSlope(int id) {
+    return _isarService.isar.qSlopes.delete(id);
+  }
 }
