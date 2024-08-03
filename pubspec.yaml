@@ -47,5 +47,12 @@ flutter:
     - assets/images/
     - .env
 
+msix_config:
+  display_name: Q-slope Calculator
+  publisher_display_name: Saarthak Gupta
+  identity_name: in.sg.qslopecalculator
+  msix_version: 1.0.0.0
+  logo_path: assets/images/icon.png
+
 lint_staged:
   "lib/**.dart": dart format --fix && dart fix --apply
