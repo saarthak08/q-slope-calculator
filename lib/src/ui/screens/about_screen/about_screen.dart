@@ -45,7 +45,8 @@ class AboutScreen extends StatelessWidget {
                   AppLocalizations.of(context).appName.toUpperCase(),
                   style: GoogleFonts.montserrat(
                       color: Colors.teal,
-                      fontSize: getViewPortHeight(context) * 0.025,
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.025,
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
@@ -54,7 +55,8 @@ class AboutScreen extends StatelessWidget {
                   textAlign: TextAlign.end,
                   style: GoogleFonts.montserrat(
                       color: Colors.teal,
-                      fontSize: getViewPortHeight(context) * 0.02,
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.02,
                       fontWeight: FontWeight.w500),
                 ),
                 Container(
@@ -66,7 +68,8 @@ class AboutScreen extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context).aboutQSlope,
                       style: GoogleFonts.poppins(
-                          fontSize: getViewPortHeight(context) * 0.02,
+                          fontSize:
+                              getFontSizeAccordingToOrientation(context) * 0.02,
                           color: Colors.teal),
                     )),
                 SizedBox(
@@ -87,7 +90,8 @@ class AboutScreen extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context).references,
                       style: GoogleFonts.poppins(
-                          fontSize: getViewPortHeight(context) * 0.02,
+                          fontSize:
+                              getFontSizeAccordingToOrientation(context) * 0.02,
                           color: Colors.teal),
                     )),
                 SizedBox(
@@ -136,7 +140,8 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).contactUs,
                     style: GoogleFonts.poppins(
-                        fontSize: getViewPortHeight(context) * 0.02,
+                        fontSize:
+                            getFontSizeAccordingToOrientation(context) * 0.02,
                         color: Colors.teal),
                   ),
                   IconButton(
@@ -171,7 +176,8 @@ class AboutScreen extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.teal,
-                        fontSize: getViewPortHeight(context) * 0.018,
+                        fontSize:
+                            getFontSizeAccordingToOrientation(context) * 0.018,
                         letterSpacing: 1.0,
                       ),
                     ))

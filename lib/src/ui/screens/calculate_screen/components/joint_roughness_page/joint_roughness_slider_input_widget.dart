@@ -39,7 +39,7 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,
-                  fontSize: getViewPortHeight(context) * 0.018),
+                  fontSize: getFontSizeAccordingToOrientation(context) * 0.018),
             )),
         Container(
             margin: EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
@@ -71,7 +71,7 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,
-                  fontSize: getViewPortHeight(context) * 0.02),
+                  fontSize: getFontSizeAccordingToOrientation(context) * 0.02),
             )),
         ValueListenableBuilder(
             valueListenable: textEditingController,

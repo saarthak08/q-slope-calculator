@@ -91,7 +91,9 @@ class _OFactorPageState extends State<OFactorPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black87,
-                              fontSize: getViewPortHeight(context) * 0.02),
+                              fontSize:
+                                  getFontSizeAccordingToOrientation(context) *
+                                      0.02),
                         )),
                     Row(children: [
                       Radio<OFactorCalculationType>(
@@ -107,7 +109,9 @@ class _OFactorPageState extends State<OFactorPage> {
                           child: Text(
                         AppLocalizations.of(context).oFactorByValue,
                         style: TextStyle(
-                            fontSize: getViewPortHeight(context) * 0.018),
+                            fontSize:
+                                getFontSizeAccordingToOrientation(context) *
+                                    0.018),
                       )),
                     ]),
                     Row(children: [
@@ -125,7 +129,9 @@ class _OFactorPageState extends State<OFactorPage> {
                         AppLocalizations.of(context)
                             .oFactorByRomanaAdjustmentFactor,
                         style: TextStyle(
-                            fontSize: getViewPortHeight(context) * 0.018),
+                            fontSize:
+                                getFontSizeAccordingToOrientation(context) *
+                                    0.018),
                       )),
                     ]),
                     Container(

@@ -125,14 +125,17 @@ class _BlockSizePageState extends State<BlockSizePage> {
                               AppLocalizations.of(context)
                                   .blockSizePageBlockSizeSubTitle,
                               style: GoogleFonts.poppins(
-                                  fontSize: getViewPortHeight(context) * 0.02,
+                                  fontSize: getFontSizeAccordingToOrientation(
+                                          context) *
+                                      0.02,
                                   color: Colors.teal),
                             ))),
                     Text(
                       AppLocalizations.of(context)
                           .rockQualityDesignationCalculation,
                       style: TextStyle(
-                          fontSize: getViewPortHeight(context) * 0.02),
+                          fontSize: getFontSizeAccordingToOrientation(context) *
+                              0.02),
                     ),
                     Row(children: [
                       Radio<RqdCalculationType>(
@@ -148,7 +151,9 @@ class _BlockSizePageState extends State<BlockSizePage> {
                           child: Text(
                         AppLocalizations.of(context).byUsingJointVolumeMethod,
                         style: TextStyle(
-                            fontSize: getViewPortHeight(context) * 0.018),
+                            fontSize:
+                                getFontSizeAccordingToOrientation(context) *
+                                    0.018),
                       )),
                     ]),
                     Row(children: [
@@ -165,7 +170,9 @@ class _BlockSizePageState extends State<BlockSizePage> {
                           child: Text(
                         AppLocalizations.of(context).byUsingDirectMethod,
                         style: TextStyle(
-                            fontSize: getViewPortHeight(context) * 0.018),
+                            fontSize:
+                                getFontSizeAccordingToOrientation(context) *
+                                    0.018),
                       )),
                     ]),
                     Container(

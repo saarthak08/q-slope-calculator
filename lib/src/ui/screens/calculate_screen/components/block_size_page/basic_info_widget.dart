@@ -24,7 +24,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                 AppLocalizations.of(context)
                     .blockSizePageBasicInformationSubTitle,
                 style: GoogleFonts.poppins(
-                    fontSize: getViewPortHeight(context) * 0.02,
+                    fontSize: getFontSizeAccordingToOrientation(context) * 0.02,
                     color: Colors.teal),
               ))),
       CustomTextFormField(

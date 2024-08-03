@@ -41,7 +41,8 @@ class CustomTextFormField extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
-                      fontSize: getViewPortHeight(context) * 0.018),
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.018),
                 ))
             : Container(),
         titleText != null
@@ -77,7 +78,8 @@ class CustomTextFormField extends StatelessWidget {
                     borderSide: const BorderSide(color: Colors.red, width: 1.5),
                     borderRadius: BorderRadius.circular(6)),
                 errorStyle: GoogleFonts.openSans(
-                    fontSize: getViewPortHeight(context) * 0.016),
+                    fontSize:
+                        getFontSizeAccordingToOrientation(context) * 0.016),
                 errorMaxLines: 3,
                 hintMaxLines: 3,
                 helperMaxLines: 3,

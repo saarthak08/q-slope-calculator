@@ -119,7 +119,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.black87,
-                        fontSize: getViewPortHeight(context) * 0.02),
+                        fontSize:
+                            getFontSizeAccordingToOrientation(context) * 0.02),
                   )),
               SizedBox(
                 height: getViewPortHeight(context) * 0.01,
@@ -135,8 +136,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).planarFailure,
-                  style:
-                      TextStyle(fontSize: getViewPortHeight(context) * 0.018),
+                  style: TextStyle(
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.018),
                 )),
               ]),
               Row(children: [
@@ -150,8 +152,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).wedgeFailure,
-                  style:
-                      TextStyle(fontSize: getViewPortHeight(context) * 0.018),
+                  style: TextStyle(
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.018),
                 )),
               ]),
               Row(children: [
@@ -165,8 +168,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).toppling,
-                  style:
-                      TextStyle(fontSize: getViewPortHeight(context) * 0.018),
+                  style: TextStyle(
+                      fontSize:
+                          getFontSizeAccordingToOrientation(context) * 0.018),
                 )),
               ]),
               AnimatedSwitcher(
@@ -330,9 +334,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -438,9 +443,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -452,9 +458,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -466,9 +473,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -480,9 +488,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -494,9 +503,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                             SizedBox(
                                               height:
@@ -508,9 +518,10 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize: getViewPortHeight(
-                                                          context) *
-                                                      0.019),
+                                                  fontSize:
+                                                      getFontSizeAccordingToOrientation(
+                                                              context) *
+                                                          0.019),
                                             ),
                                           ])
                                     : Container()),

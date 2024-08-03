@@ -21,3 +21,10 @@ double getViewPortHeight(BuildContext context) {
   final EdgeInsets padding = MediaQuery.of(context).padding;
   return getDeviceHeight(context) - padding.top - padding.bottom;
 }
+
+/// Get font size
+double getFontSizeAccordingToOrientation(BuildContext context) {
+  double height = getViewPortHeight(context);
+  double width = getViewPortWidth(context);
+  return height > width ? height : width;
+}

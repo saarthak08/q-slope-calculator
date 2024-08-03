@@ -7,7 +7,8 @@ ThemeData getThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: AppBarTheme(
           titleTextStyle: GoogleFonts.montserrat(
-              color: Colors.teal, fontSize: getViewPortHeight(context) * 0.028),
+              color: Colors.teal,
+              fontSize: getFontSizeAccordingToOrientation(context) * 0.028),
           backgroundColor: white),
       useMaterial3: true,
       textTheme: TextTheme(

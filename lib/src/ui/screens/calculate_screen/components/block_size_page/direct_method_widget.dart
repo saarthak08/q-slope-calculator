@@ -83,7 +83,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
           style: GoogleFonts.montserrat(
               fontFeatures: [],
               fontWeight: FontWeight.w600,
-              fontSize: getViewPortHeight(context) * 0.019),
+              fontSize: getFontSizeAccordingToOrientation(context) * 0.019),
         ),
         ValueListenableBuilder(
             valueListenable: rqd,
@@ -96,7 +96,8 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                           fontFeatures: [],
                           fontWeight: FontWeight.w600,
-                          fontSize: getViewPortHeight(context) * 0.019),
+                          fontSize: getFontSizeAccordingToOrientation(context) *
+                              0.019),
                     ))
                 : Container())
       ],

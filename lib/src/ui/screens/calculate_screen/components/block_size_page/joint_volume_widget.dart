@@ -161,8 +161,10 @@ class _BlockSizePageJoinVolumeWidgetState
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black87,
-                                          fontSize: getViewPortHeight(context) *
-                                              0.018),
+                                          fontSize:
+                                              getFontSizeAccordingToOrientation(
+                                                      context) *
+                                                  0.018),
                                     )),
                                 SizedBox(
                                   height: getViewPortHeight(context) * 0.01,
@@ -263,7 +265,7 @@ class _BlockSizePageJoinVolumeWidgetState
           style: GoogleFonts.montserrat(
               fontFeatures: [],
               fontWeight: FontWeight.w600,
-              fontSize: getViewPortHeight(context) * 0.019),
+              fontSize: getFontSizeAccordingToOrientation(context) * 0.019),
         ),
         ValueListenableBuilder(
             valueListenable: widget.jointVolume,
@@ -276,7 +278,8 @@ class _BlockSizePageJoinVolumeWidgetState
                       style: GoogleFonts.montserrat(
                           fontFeatures: [],
                           fontWeight: FontWeight.w600,
-                          fontSize: getViewPortHeight(context) * 0.019),
+                          fontSize: getFontSizeAccordingToOrientation(context) *
+                              0.019),
                     ))
                 : Container()),
         ValueListenableBuilder(
@@ -358,9 +361,10 @@ class _BlockSizePageJoinVolumeWidgetState
                                                 style: GoogleFonts.montserrat(
                                                     fontFeatures: [],
                                                     fontWeight: FontWeight.w600,
-                                                    fontSize: getViewPortHeight(
-                                                            context) *
-                                                        0.019),
+                                                    fontSize:
+                                                        getFontSizeAccordingToOrientation(
+                                                                context) *
+                                                            0.019),
                                               ))
                                           : Container()
                                     ])
