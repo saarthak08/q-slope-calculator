@@ -20,12 +20,20 @@ class NextPreviousButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: currentPage,
-        builder: (context, page, child) => Padding(
+        builder: (context, page, child) => Container(
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: const Offset(0, 3),
+              ),
+            ]),
             padding: EdgeInsets.only(
-                top: getViewPortHeight(context) * 0.04,
-                bottom: getViewPortHeight(context) * 0.02,
-                left: getViewPortWidth(context) * 0.04,
-                right: getViewPortWidth(context) * 0.04),
+                top: getViewPortHeight(context) * 0.01,
+                bottom: getViewPortHeight(context) * 0.01,
+                left: getViewPortWidth(context) * 0.08,
+                right: getViewPortWidth(context) * 0.08),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,

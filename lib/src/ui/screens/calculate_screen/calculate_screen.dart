@@ -56,6 +56,26 @@ class _CalculateScreenState extends State<CalculateScreen> {
               builder: (context, value, child) => Text(getAppBarTitle(value))),
           elevation: 1,
           shadowColor: Colors.white,
+          actions: [
+            widget.qSlope != null
+                ? IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.teal,
+                    ))
+                : Container(),
+            ValueListenableBuilder<int>(
+                valueListenable: page,
+                builder: (context, value, child) => value == maxPageValue
+                    ? IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.save,
+                          color: Colors.teal,
+                        ))
+                    : Container())
+          ],
         ),
         body: Stack(children: [
           PageView(

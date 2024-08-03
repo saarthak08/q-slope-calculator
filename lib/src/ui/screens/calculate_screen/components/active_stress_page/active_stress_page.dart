@@ -70,194 +70,203 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getViewPortWidth(context) * 0.04,
-                    vertical: getViewPortHeight(context) * 0.02),
-                child: Form(
-                  key: formKey,
-                  onChanged: () {
-                    formKey.currentState?.validate();
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: getViewPortHeight(context) * 0.03),
-                              child: Text(
-                                AppLocalizations.of(context).activeStress,
-                                style: GoogleFonts.poppins(
-                                    fontSize: getViewPortHeight(context) * 0.02,
-                                    color: Colors.teal),
-                              ))),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfA,
-                        titleText: AppLocalizations.of(context).srfA,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFa ||
-                                  (double.tryParse(value) ?? 0) > maxSRFa)) {
-                            return AppLocalizations.of(context)
-                                .srfAInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.02,
-                      ),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfB,
-                        titleText: AppLocalizations.of(context).srfB,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFb ||
-                                  (double.tryParse(value) ?? 0) > maxSRFb)) {
-                            return AppLocalizations.of(context)
-                                .srfBInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.02,
-                      ),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfC,
-                        titleText: AppLocalizations.of(context).srfC,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFc ||
-                                  (double.tryParse(value) ?? 0) > maxSRFc)) {
-                            return AppLocalizations.of(context)
-                                .srfCInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      ValueListenableBuilder(
-                          valueListenable: _qSlope,
-                          builder: (context, qSlope, child) => qSlope != null
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.04,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).stressReductionFactorSymbol} = ${AppLocalizations.of(context).maxOf} (${AppLocalizations.of(context).srfA}, ${AppLocalizations.of(context).srfB}, ${AppLocalizations.of(context).srfC})",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getViewPortHeight(context) *
-                                                    0.019),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.02,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).stressReductionFactor} = ${srf.text}",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getViewPortHeight(context) *
-                                                    0.019),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.03,
-                                      ),
-                                      const Divider(),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.03,
-                                      ),
-                                      Center(
-                                          child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  bottom: getViewPortHeight(
-                                                          context) *
-                                                      0.03),
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                    .qSlopeCalculation,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: getViewPortHeight(
+    return Stack(children: [
+      GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getViewPortWidth(context) * 0.04,
+                      vertical: getViewPortHeight(context) * 0.02),
+                  child: Form(
+                    key: formKey,
+                    onChanged: () {
+                      formKey.currentState?.validate();
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: getViewPortHeight(context) * 0.03),
+                                child: Text(
+                                  AppLocalizations.of(context).activeStress,
+                                  style: GoogleFonts.poppins(
+                                      fontSize:
+                                          getViewPortHeight(context) * 0.02,
+                                      color: Colors.teal),
+                                ))),
+                        CustomTextFormField(
+                          type: const TextInputType.numberWithOptions(
+                              signed: false),
+                          textInputAction: TextInputAction.done,
+                          textEditingController: srfA,
+                          titleText: AppLocalizations.of(context).srfA,
+                          validate: (value) {
+                            if (value != null &&
+                                value.isNotEmpty &&
+                                ((double.tryParse(value) ?? 0) < minSRFa ||
+                                    (double.tryParse(value) ?? 0) > maxSRFa)) {
+                              return AppLocalizations.of(context)
+                                  .srfAInputConstraints;
+                            }
+                            return null;
+                          },
+                          onChanged: (_) {
+                            _calculateQSlope();
+                          },
+                        ),
+                        SizedBox(
+                          height: getViewPortHeight(context) * 0.02,
+                        ),
+                        CustomTextFormField(
+                          type: const TextInputType.numberWithOptions(
+                              signed: false),
+                          textInputAction: TextInputAction.done,
+                          textEditingController: srfB,
+                          titleText: AppLocalizations.of(context).srfB,
+                          validate: (value) {
+                            if (value != null &&
+                                value.isNotEmpty &&
+                                ((double.tryParse(value) ?? 0) < minSRFb ||
+                                    (double.tryParse(value) ?? 0) > maxSRFb)) {
+                              return AppLocalizations.of(context)
+                                  .srfBInputConstraints;
+                            }
+                            return null;
+                          },
+                          onChanged: (_) {
+                            _calculateQSlope();
+                          },
+                        ),
+                        SizedBox(
+                          height: getViewPortHeight(context) * 0.02,
+                        ),
+                        CustomTextFormField(
+                          type: const TextInputType.numberWithOptions(
+                              signed: false),
+                          textInputAction: TextInputAction.done,
+                          textEditingController: srfC,
+                          titleText: AppLocalizations.of(context).srfC,
+                          validate: (value) {
+                            if (value != null &&
+                                value.isNotEmpty &&
+                                ((double.tryParse(value) ?? 0) < minSRFc ||
+                                    (double.tryParse(value) ?? 0) > maxSRFc)) {
+                              return AppLocalizations.of(context)
+                                  .srfCInputConstraints;
+                            }
+                            return null;
+                          },
+                          onChanged: (_) {
+                            _calculateQSlope();
+                          },
+                        ),
+                        ValueListenableBuilder(
+                            valueListenable: _qSlope,
+                            builder: (context, qSlope, child) => qSlope != null
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                        SizedBox(
+                                          height:
+                                              getViewPortHeight(context) * 0.04,
+                                        ),
+                                        Text(
+                                          "${AppLocalizations.of(context).stressReductionFactorSymbol} = ${AppLocalizations.of(context).maxOf} (${AppLocalizations.of(context).srfA}, ${AppLocalizations.of(context).srfB}, ${AppLocalizations.of(context).srfC})",
+                                          style: GoogleFonts.montserrat(
+                                              fontFeatures: [],
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                                  getViewPortHeight(context) *
+                                                      0.019),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              getViewPortHeight(context) * 0.02,
+                                        ),
+                                        Text(
+                                          "${AppLocalizations.of(context).stressReductionFactor} = ${srf.text}",
+                                          style: GoogleFonts.montserrat(
+                                              fontFeatures: [],
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                                  getViewPortHeight(context) *
+                                                      0.019),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              getViewPortHeight(context) * 0.03,
+                                        ),
+                                        const Divider(),
+                                        SizedBox(
+                                          height:
+                                              getViewPortHeight(context) * 0.03,
+                                        ),
+                                        Center(
+                                            child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: getViewPortHeight(
                                                             context) *
-                                                        0.02,
-                                                    color: Colors.teal),
-                                              ))),
-                                      Text(
-                                        "${AppLocalizations.of(context).qSlopeSymbol} = (${AppLocalizations.of(context).rockQualityDesignationSymbol} / ${AppLocalizations.of(context).numberOfJointsSymbol}) x (${AppLocalizations.of(context).jointRoughnessSymbol} / ${AppLocalizations.of(context).jointAlterationSymbol}) x (${AppLocalizations.of(context).oFactor}) x (${AppLocalizations.of(context).enviornmentalAndGeologicalConditionalNumberSymbol} / ${AppLocalizations.of(context).stressReductionFactorSymbol})",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getViewPortHeight(context) *
-                                                    0.019),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.02,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(2)}",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getViewPortHeight(context) *
-                                                    0.019),
-                                      )
-                                    ])
-                              : Container()),
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.02,
-                      ),
-                      ValueListenableBuilder(
-                          valueListenable: srf,
-                          builder: (context, srf, child) => NextPreviousButtons(
-                                pageController: widget.pageController,
-                                currentPage: widget.currentPage,
-                                maxPageValue: widget.maxPageValue,
-                                isNextButtonEnabled: false,
-                                onNext: null,
-                              ))
-                    ],
-                  ),
-                ))));
+                                                        0.03),
+                                                child: Text(
+                                                  AppLocalizations.of(context)
+                                                      .qSlopeCalculation,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize:
+                                                          getViewPortHeight(
+                                                                  context) *
+                                                              0.02,
+                                                      color: Colors.teal),
+                                                ))),
+                                        Text(
+                                          "${AppLocalizations.of(context).qSlopeSymbol} = (${AppLocalizations.of(context).rockQualityDesignationSymbol} / ${AppLocalizations.of(context).numberOfJointsSymbol}) x (${AppLocalizations.of(context).jointRoughnessSymbol} / ${AppLocalizations.of(context).jointAlterationSymbol}) x (${AppLocalizations.of(context).oFactor}) x (${AppLocalizations.of(context).enviornmentalAndGeologicalConditionalNumberSymbol} / ${AppLocalizations.of(context).stressReductionFactorSymbol})",
+                                          style: GoogleFonts.montserrat(
+                                              fontFeatures: [],
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                                  getViewPortHeight(context) *
+                                                      0.019),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              getViewPortHeight(context) * 0.02,
+                                        ),
+                                        Text(
+                                          "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(2)}",
+                                          style: GoogleFonts.montserrat(
+                                              fontFeatures: [],
+                                              fontWeight: FontWeight.w600,
+                                              fontSize:
+                                                  getViewPortHeight(context) *
+                                                      0.019),
+                                        )
+                                      ])
+                                : Container()),
+                        SizedBox(
+                          height: getViewPortHeight(context) * 0.1,
+                        ),
+                      ],
+                    ),
+                  )))),
+      Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: ValueListenableBuilder(
+              valueListenable: srf,
+              builder: (context, srf, child) => NextPreviousButtons(
+                    pageController: widget.pageController,
+                    currentPage: widget.currentPage,
+                    maxPageValue: widget.maxPageValue,
+                    isNextButtonEnabled: false,
+                    onNext: null,
+                  )))
+    ]);
   }
 
   @override

@@ -89,190 +89,182 @@ class _BlockSizePageState extends State<BlockSizePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-            child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: getViewPortWidth(context) * 0.04,
-              vertical: getViewPortHeight(context) * 0.02),
-          child: Form(
-              key: formKey,
-              onChanged: () {
-                formKey.currentState?.validate();
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlockSizePageBasicInfoWidget(
-                      locationIdController: _locationIdController,
-                      lithologyController: _lithologyController),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: getViewPortHeight(context) * 0.04,
-                      bottom: getViewPortHeight(context) * 0.02,
-                    ),
-                    child: const DividerWidget(),
-                  ),
-                  Center(
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              bottom: getViewPortHeight(context) * 0.03),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .blockSizePageBlockSizeSubTitle,
-                            style: GoogleFonts.poppins(
-                                fontSize: getViewPortHeight(context) * 0.02,
-                                color: Colors.teal),
-                          ))),
-                  Text(
-                    AppLocalizations.of(context)
-                        .rockQualityDesignationCalculation,
-                    style:
-                        TextStyle(fontSize: getViewPortHeight(context) * 0.02),
-                  ),
-                  Row(children: [
-                    Radio<RqdCalculationType>(
-                        value: RqdCalculationType.jv,
-                        groupValue: rqdCalculationType,
-                        onChanged: (value) {
-                          setState(() {
-                            rqdCalculationType = value;
-                          });
-                          rqd.value = null;
-                        }),
-                    Expanded(
-                        child: Text(
-                      AppLocalizations.of(context).byUsingJointVolumeMethod,
-                      style: TextStyle(
-                          fontSize: getViewPortHeight(context) * 0.018),
-                    )),
-                  ]),
-                  Row(children: [
-                    Radio<RqdCalculationType>(
-                        value: RqdCalculationType.directMethod,
-                        groupValue: rqdCalculationType,
-                        onChanged: (value) {
-                          setState(() {
-                            rqdCalculationType = value;
-                          });
-                          rqd.value = null;
-                        }),
-                    Expanded(
-                        child: Text(
-                      AppLocalizations.of(context).byUsingDirectMethod,
-                      style: TextStyle(
-                          fontSize: getViewPortHeight(context) * 0.018),
-                    )),
-                  ]),
-                  Container(
+    return Stack(children: [
+      GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+              child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getViewPortWidth(context) * 0.04,
+                vertical: getViewPortHeight(context) * 0.02),
+            child: Form(
+                key: formKey,
+                onChanged: () {
+                  formKey.currentState?.validate();
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BlockSizePageBasicInfoWidget(
+                        locationIdController: _locationIdController,
+                        lithologyController: _lithologyController),
+                    Container(
                       margin: EdgeInsets.only(
-                          top: getViewPortHeight(context) * 0.02),
-                      key: const ValueKey<int>(1),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 500),
-                        transitionBuilder:
-                            (Widget child, Animation<double> animation) {
-                          return FadeTransition(
-                              opacity: animation, child: child);
-                        },
-                        child: rqdCalculationType ==
-                                RqdCalculationType.directMethod
-                            ? BlockSizePageDirectMethodWidget(
-                                rqd: rqd,
-                                sumOfCorePiecesController:
-                                    _sumOfCorePiecesController,
-                                totalDrillRunController:
-                                    _totalDrillRunController,
-                                rqdCalculationType: rqdCalculationType)
-                            : rqdCalculationType == RqdCalculationType.jv
-                                ? BlockSizePageJoinVolumeWidget(
-                                    jointSpacings: jointSpacings,
-                                    numberOfJointsController:
-                                        _numberOfJointsController,
-                                    jointSpacingControllers:
-                                        _jointSpacingControllers,
-                                    numberOfRandomSetsController:
-                                        _numberOfRandomSetsController,
-                                    areaController: _areaController,
-                                    rqd: rqd,
-                                    rqdByJvCalculationType:
-                                        rqdByJvCalculationType,
-                                    jointVolume: jointVolume,
-                                  )
-                                : Container(),
+                        top: getViewPortHeight(context) * 0.04,
+                        bottom: getViewPortHeight(context) * 0.02,
+                      ),
+                      child: const DividerWidget(),
+                    ),
+                    Center(
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                bottom: getViewPortHeight(context) * 0.03),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .blockSizePageBlockSizeSubTitle,
+                              style: GoogleFonts.poppins(
+                                  fontSize: getViewPortHeight(context) * 0.02,
+                                  color: Colors.teal),
+                            ))),
+                    Text(
+                      AppLocalizations.of(context)
+                          .rockQualityDesignationCalculation,
+                      style: TextStyle(
+                          fontSize: getViewPortHeight(context) * 0.02),
+                    ),
+                    Row(children: [
+                      Radio<RqdCalculationType>(
+                          value: RqdCalculationType.jv,
+                          groupValue: rqdCalculationType,
+                          onChanged: (value) {
+                            setState(() {
+                              rqdCalculationType = value;
+                            });
+                            rqd.value = null;
+                          }),
+                      Expanded(
+                          child: Text(
+                        AppLocalizations.of(context).byUsingJointVolumeMethod,
+                        style: TextStyle(
+                            fontSize: getViewPortHeight(context) * 0.018),
                       )),
-                  ValueListenableBuilder(
-                      valueListenable: _lithologyController,
-                      builder: (context, lithology, child) =>
-                          ValueListenableBuilder(
-                              valueListenable: _locationIdController,
-                              builder: (context, locationId, child) =>
-                                  ValueListenableBuilder(
-                                      valueListenable: rqd,
-                                      builder: (context, rqdValue, child) =>
-                                          NextPreviousButtons(
-                                            pageController:
-                                                widget.pageController,
-                                            currentPage: widget.currentPage,
-                                            maxPageValue: widget.maxPageValue,
-                                            isNextButtonEnabled:
-                                                locationId.text.isNotEmpty &&
-                                                    lithology.text.isNotEmpty &&
-                                                    rqdValue != null,
-                                            onNext: () {
-                                              QSlope qSlope =
-                                                  widget.qSlope.value ??
-                                                      QSlope(
-                                                          locationId:
-                                                              locationId.text,
-                                                          lithology:
-                                                              lithology.text);
-                                              qSlope.blockSize = BlockSize();
-                                              qSlope.blockSize
-                                                      ?.areaInSquareMeters =
-                                                  double.tryParse(
-                                                      _areaController.text);
-                                              qSlope.blockSize
-                                                      ?.jointSpacingInMeters =
-                                                  jointSpacings.value;
-                                              qSlope.blockSize?.jointVolume =
-                                                  jointVolume.value;
-                                              qSlope.blockSize?.numberOfJoints =
-                                                  int.tryParse(
-                                                      _numberOfJointsController
-                                                          .text);
-                                              qSlope.blockSize
-                                                      ?.numberOfRandomSets =
-                                                  int.tryParse(
-                                                      _numberOfRandomSetsController
-                                                          .text);
-                                              qSlope.blockSize?.rqd =
-                                                  rqdValue ?? 0;
-                                              qSlope.blockSize
-                                                      ?.rqdByJvCalculationType =
-                                                  rqdByJvCalculationType.value;
-                                              qSlope.blockSize
-                                                      ?.rqdCalculationType =
-                                                  rqdCalculationType;
-                                              qSlope.blockSize
-                                                      ?.sumOfCorePieces =
-                                                  double.tryParse(
-                                                      _sumOfCorePiecesController
-                                                          .text);
-                                              qSlope.blockSize?.totalDrillRun =
-                                                  double.tryParse(
-                                                      _totalDrillRunController
-                                                          .text);
-                                              widget.qSlope.value ??= qSlope;
-                                              return true;
-                                            },
-                                          ))))
-                ],
-              )),
-        )));
+                    ]),
+                    Row(children: [
+                      Radio<RqdCalculationType>(
+                          value: RqdCalculationType.directMethod,
+                          groupValue: rqdCalculationType,
+                          onChanged: (value) {
+                            setState(() {
+                              rqdCalculationType = value;
+                            });
+                            rqd.value = null;
+                          }),
+                      Expanded(
+                          child: Text(
+                        AppLocalizations.of(context).byUsingDirectMethod,
+                        style: TextStyle(
+                            fontSize: getViewPortHeight(context) * 0.018),
+                      )),
+                    ]),
+                    Container(
+                        margin: EdgeInsets.only(
+                            top: getViewPortHeight(context) * 0.02),
+                        key: const ValueKey<int>(1),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            return FadeTransition(
+                                opacity: animation, child: child);
+                          },
+                          child: rqdCalculationType ==
+                                  RqdCalculationType.directMethod
+                              ? BlockSizePageDirectMethodWidget(
+                                  rqd: rqd,
+                                  sumOfCorePiecesController:
+                                      _sumOfCorePiecesController,
+                                  totalDrillRunController:
+                                      _totalDrillRunController,
+                                  rqdCalculationType: rqdCalculationType)
+                              : rqdCalculationType == RqdCalculationType.jv
+                                  ? BlockSizePageJoinVolumeWidget(
+                                      jointSpacings: jointSpacings,
+                                      numberOfJointsController:
+                                          _numberOfJointsController,
+                                      jointSpacingControllers:
+                                          _jointSpacingControllers,
+                                      numberOfRandomSetsController:
+                                          _numberOfRandomSetsController,
+                                      areaController: _areaController,
+                                      rqd: rqd,
+                                      rqdByJvCalculationType:
+                                          rqdByJvCalculationType,
+                                      jointVolume: jointVolume,
+                                    )
+                                  : Container(),
+                        )),
+                    SizedBox(
+                      height: getViewPortHeight(context) * 0.1,
+                    ),
+                  ],
+                )),
+          ))),
+      Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: ValueListenableBuilder(
+              valueListenable: _lithologyController,
+              builder: (context, lithology, child) => ValueListenableBuilder(
+                  valueListenable: _locationIdController,
+                  builder: (context, locationId, child) =>
+                      ValueListenableBuilder(
+                          valueListenable: rqd,
+                          builder: (context, rqdValue, child) =>
+                              NextPreviousButtons(
+                                pageController: widget.pageController,
+                                currentPage: widget.currentPage,
+                                maxPageValue: widget.maxPageValue,
+                                isNextButtonEnabled:
+                                    locationId.text.isNotEmpty &&
+                                        lithology.text.isNotEmpty &&
+                                        rqdValue != null,
+                                onNext: () {
+                                  QSlope qSlope = widget.qSlope.value ??
+                                      QSlope(
+                                          locationId: locationId.text,
+                                          lithology: lithology.text);
+                                  qSlope.blockSize = BlockSize();
+                                  qSlope.blockSize?.areaInSquareMeters =
+                                      double.tryParse(_areaController.text);
+                                  qSlope.blockSize?.jointSpacingInMeters =
+                                      jointSpacings.value;
+                                  qSlope.blockSize?.jointVolume =
+                                      jointVolume.value;
+                                  qSlope.blockSize?.numberOfJoints =
+                                      int.tryParse(
+                                          _numberOfJointsController.text);
+                                  qSlope.blockSize?.numberOfRandomSets =
+                                      int.tryParse(
+                                          _numberOfRandomSetsController.text);
+                                  qSlope.blockSize?.rqd = rqdValue ?? 0;
+                                  qSlope.blockSize?.rqdByJvCalculationType =
+                                      rqdByJvCalculationType.value;
+                                  qSlope.blockSize?.rqdCalculationType =
+                                      rqdCalculationType;
+                                  qSlope.blockSize?.sumOfCorePieces =
+                                      double.tryParse(
+                                          _sumOfCorePiecesController.text);
+                                  qSlope.blockSize?.totalDrillRun =
+                                      double.tryParse(
+                                          _totalDrillRunController.text);
+                                  widget.qSlope.value ??= qSlope;
+                                  return true;
+                                },
+                              )))))
+    ]);
   }
 
   @override
