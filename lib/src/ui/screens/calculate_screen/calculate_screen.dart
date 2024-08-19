@@ -9,6 +9,7 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/bl
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:toastification/toastification.dart';
 
 class CalculateScreen extends StatefulWidget {
@@ -63,7 +64,12 @@ class _CalculateScreenState extends State<CalculateScreen> {
           ),
           title: ValueListenableBuilder<int>(
               valueListenable: page,
-              builder: (context, value, child) => Text(getAppBarTitle(value))),
+              builder: (context, value, child) => Text(
+                    getAppBarTitle(value),
+                    style: TextStyle(fontSize: getTitleFontSize(context)),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  )),
           elevation: 1,
           shadowColor: Colors.white,
           actions: [

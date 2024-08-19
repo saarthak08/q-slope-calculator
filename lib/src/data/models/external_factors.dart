@@ -1,20 +1,13 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 
-part 'external_factors.g.dart';
-
-@Embedded()
 class ExternalFactors {
   /// [J_WICE]
   double environmentalAndGeologicalConditionalNumber;
 
-  @Enumerated(EnumType.name)
   ExternalFactorsStructureType? externalFactorsStructureType;
 
-  @Enumerated(EnumType.name)
   ExternalFactorsStrengthOfRock? externalFactorsStrengthOfRock;
 
-  @Enumerated(EnumType.name)
   ExternalFactorsEnvironmentConditions? externalFactorsEnvironmentConditions;
 
   ExternalFactors(

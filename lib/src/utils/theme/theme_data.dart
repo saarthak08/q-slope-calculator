@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
-import 'package:q_slope_calculator/src/utils/dimensions.dart';
 
 ThemeData getThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: AppBarTheme(
-          titleTextStyle: GoogleFonts.montserrat(
-              color: Colors.teal,
-              fontSize: getFontSizeAccordingToOrientation(context) * 0.028),
+          titleTextStyle: GoogleFonts.montserrat(color: Colors.teal),
           backgroundColor: white),
       useMaterial3: true,
       textTheme: TextTheme(

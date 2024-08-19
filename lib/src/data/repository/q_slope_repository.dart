@@ -1,6 +1,7 @@
-import 'package:isar/isar.dart';
+import 'package:collection/collection.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
-import 'package:q_slope_calculator/src/logic/service/isar_service.dart';
+import 'package:q_slope_calculator/src/utils/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QSlopeRepository {
   static final QSlopeRepository _instance = QSlopeRepository._internal();
@@ -11,34 +12,51 @@ class QSlopeRepository {
     return _instance;
   }
 
-  final IsarService _isarService = IsarService();
+  static const _qSlopeSharedPreferenceKey = "Q_SLOPES";
+
+  final Future<SharedPreferences> _sharedPreferences =
+      SharedPreferences.getInstance();
 
   Future<List<QSlope>> getAllQSlopes() {
-    return _isarService.isar.qSlopes
-        .where(sort: Sort.desc)
-        .sortByCreatedAt()
-        .findAll();
+    return _sharedPreferences
+        .then((pref) => pref.getStringList(_qSlopeSharedPreferenceKey))
+        .then((list) =>
+            (list ?? []).map((value) => QSlope.fromJson(value)).toList());
   }
 
-  Future<QSlope?> getQSlope(int id) {
-    return _isarService.isar.qSlopes.get(id);
-  }
-
-  Future<int> saveQSlope(QSlope qSlope) {
-    return _isarService.isar.writeTxn(() {
-      return _isarService.isar.qSlopes.put(qSlope);
+  Future<bool> saveQSlope(QSlope qSlope) async {
+    var qSlopesList = await getAllQSlopes();
+    int? qSlopeIndex;
+    qSlopesList.firstWhereIndexedOrNull((index, element) {
+      if (element.id == qSlope.id) {
+        qSlopeIndex = index;
+      }
+      return element.id == qSlope.id;
+    });
+    if (qSlopeIndex != null) {
+      qSlopesList[qSlopeIndex!] = qSlope;
+    } else {
+      qSlopesList.add(qSlope);
+    }
+    var qSlopeJsonList = qSlopesList.map((val) => val.toJson()).toList();
+    return _sharedPreferences.then((pref) {
+      return pref.setStringList(_qSlopeSharedPreferenceKey, qSlopeJsonList);
     });
   }
 
-  Future<void> deleteAllQSlopes() {
-    return _isarService.isar.writeTxn(() {
-      return _isarService.isar.qSlopes.clear();
-    });
+  Future<bool> deleteAllQSlopes() {
+    return _sharedPreferences
+        .then((pref) => pref.remove(_qSlopeSharedPreferenceKey));
   }
 
-  Future<void> deleteQSlope(int id) {
-    return _isarService.isar.writeTxn(() {
-      return _isarService.isar.qSlopes.delete(id);
+  Future<bool> deleteQSlope(String id) async {
+    var qSlopesList = await getAllQSlopes();
+    getLogger().d(qSlopesList);
+    qSlopesList.removeWhere((qSlope) {
+      return qSlope.id == id;
     });
+    var jsonList = qSlopesList.map((qSlope) => qSlope.toJson()).toList();
+    return _sharedPreferences.then(
+        (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList));
   }
 }

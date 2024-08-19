@@ -1,16 +1,12 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
 import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 
-part 'q_slope.g.dart';
-
-@Collection()
 class QSlope {
-  Id id = Isar.autoIncrement;
+  String id;
 
   String locationId;
 
@@ -31,7 +27,7 @@ class QSlope {
   DateTime? createdAt;
 
   QSlope({
-    this.id = Isar.autoIncrement,
+    required this.id,
     required this.locationId,
     required this.lithology,
     this.blockSize,
@@ -44,7 +40,7 @@ class QSlope {
   });
 
   QSlope copyWith({
-    Id? id,
+    String? id,
     String? locationId,
     String? lithology,
     BlockSize? blockSize,
@@ -71,7 +67,7 @@ class QSlope {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id.toInt(),
+      'id': id.toString(),
       'locationId': locationId,
       'lithology': lithology,
       'blockSize': blockSize?.toMap(),
@@ -86,7 +82,7 @@ class QSlope {
 
   factory QSlope.fromMap(Map<String, dynamic> map) {
     return QSlope(
-      id: Id.parse(map['id']),
+      id: map['id'],
       locationId: map['locationId'] as String,
       lithology: map['lithology'] as String,
       blockSize: BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>),
@@ -97,7 +93,7 @@ class QSlope {
           map['externalFactors'] as Map<String, dynamic>),
       activeStress:
           ActiveStress.fromMap(map['activeStress'] as Map<String, dynamic>),
-      qSlope: double.parse(map['qSlope']),
+      qSlope: (map['qSlope']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
     );
   }

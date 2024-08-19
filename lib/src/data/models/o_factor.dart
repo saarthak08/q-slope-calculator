@@ -1,13 +1,8 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 
-part 'o_factor.g.dart';
-
-@Embedded()
 class OFactor {
   double oFactor;
 
-  @Enumerated(EnumType.name)
   OFactorCalculationType? oFactorCalculationType;
 
   /// [ROMANA_ADJUSTMENT_FACTOR]
@@ -34,7 +29,6 @@ class OFactor {
   double? betaS;
 
   // TYPE OF FAILURE
-  @Enumerated(EnumType.name)
   OFactorTypeOfFailure? oFactorTypeOfFailure;
 
   OFactor(

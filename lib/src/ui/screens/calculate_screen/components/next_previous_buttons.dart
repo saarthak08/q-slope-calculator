@@ -47,8 +47,8 @@ class NextPreviousButtons extends StatelessWidget {
                       : () {
                           int pageValue = page - 1;
                           currentPage.value = pageValue;
-                          pageController.animateToPage(pageValue - 1,
-                              duration: const Duration(milliseconds: 150),
+                          pageController.previousPage(
+                              duration: const Duration(milliseconds: 100),
                               curve: Curves.easeIn);
                         },
                   style: ButtonStyle(
@@ -56,7 +56,7 @@ class NextPreviousButtons extends StatelessWidget {
                       shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5))),
                       fixedSize: WidgetStatePropertyAll(Size(
-                          getViewPortWidth(context) * 0.4,
+                          getViewPortWidth(context) * 0.35,
                           getViewPortHeight(context) * 0.05))),
                   child: Text(
                     AppLocalizations.of(context).nextPreviousButtonsPrevious,
@@ -74,8 +74,8 @@ class NextPreviousButtons extends StatelessWidget {
                           if (shouldNext) {
                             int pageValue = page + 1;
                             currentPage.value = pageValue;
-                            pageController.animateToPage(pageValue,
-                                duration: const Duration(milliseconds: 150),
+                            pageController.nextPage(
+                                duration: const Duration(milliseconds: 100),
                                 curve: Curves.easeIn);
                           }
                         },
@@ -83,7 +83,7 @@ class NextPreviousButtons extends StatelessWidget {
                       shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5))),
                       fixedSize: WidgetStatePropertyAll(Size(
-                          getViewPortWidth(context) * 0.4,
+                          getViewPortWidth(context) * 0.35,
                           getViewPortHeight(context) * 0.05))),
                   child: Text(
                     nextButtonText ??

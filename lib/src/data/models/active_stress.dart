@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 
-part 'active_stress.g.dart';
-
-@Embedded()
 class ActiveStress {
   double srfA;
   double srfB;

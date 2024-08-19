@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:isar/isar.dart';
 
-part 'block_size.g.dart';
-
-@Embedded()
 class BlockSize {
   /// [USING_Jv]
   int? numberOfJoints;
@@ -17,10 +13,8 @@ class BlockSize {
   double? sumOfCorePieces;
   double? totalDrillRun;
 
-  @Enumerated(EnumType.name)
   RqdCalculationType? rqdCalculationType;
 
-  @Enumerated(EnumType.name)
   RqdByJvCalculationType? rqdByJvCalculationType;
 
   double rqd;
@@ -88,7 +82,7 @@ class BlockSize {
             ? map['numberOfRandomSets'] as int
             : null,
         jointSpacingInMeters: map['jointSpacingInMeters'] != null
-            ? List<double>.from((map['jointSpacingInMeters'] as List<double>))
+            ? (map['jointSpacingInMeters'] as List).cast<double>()
             : null,
         areaInSquareMeters: map['areaInSquareMeters'] != null
             ? map['areaInSquareMeters'] as double
