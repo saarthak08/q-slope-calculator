@@ -1,4 +1,4 @@
-name: Build & Deploy Flutter Web to GitHub Pages
+name: Build & Deploy Web
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
       - run: flutter analyze -v
 
       - name: Build Flutter Web
-        run: flutter build web
+        run: flutter build web --release --base-href="/q-slope-calculator/"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
