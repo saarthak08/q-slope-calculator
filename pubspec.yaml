@@ -3,7 +3,7 @@ description: "An application which calculates Q-slope of a rock expressing the q
 
 publish_to: "none"
 
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=3.4.3 <4.0.0"
