@@ -34,7 +34,7 @@ const RESOURCES = {"splash/img/light-1x.png": "0156ab4f5154bf9890e9ea872653d1aa"
 "main.dart.js": "6ccd843b5f1d23ebd820c05dbffa5b0c",
 "favicon.png": "c3abae03222fca42d71bac93193c69d6",
 "version.json": "5814e90c54b049845456c567b793ac18",
-"flutter_bootstrap.js": "93cdd61649632e5a2b10ab8af3678dbd",
+"flutter_bootstrap.js": "fd70130fc3c68e78b3af5a59a0f6816f",
 "canvaskit/skwasm.js.symbols": "262f4827a1317abb59d71d6c587a93e2",
 "canvaskit/skwasm.wasm": "9f0c0c02b82a910d12ce0543ec130e60",
 "canvaskit/chromium/canvaskit.wasm": "b1ac05b29c127d86df4bcfbf50dd902a",
