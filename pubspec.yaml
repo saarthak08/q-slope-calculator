@@ -28,6 +28,7 @@ dependencies:
   toastification: ^2.1.0
   package_info_plus: ^8.0.1
   url_launcher: ^6.3.0
+  responsive_framework: ^1.4.0
 
 dev_dependencies:
   flutter_test:

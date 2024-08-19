@@ -5,6 +5,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePageJoinVolumeWidget extends StatefulWidget {
   final TextEditingController numberOfJointsController;
@@ -163,10 +164,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black87,
-                                          fontSize:
-                                              getFontSizeAccordingToOrientation(
-                                                      context) *
-                                                  0.018),
+                                          fontSize: getBodyFontSize(context)),
                                     )),
                                 SizedBox(
                                   height: getViewPortHeight(context) * 0.01,
@@ -267,7 +265,7 @@ class _BlockSizePageJoinVolumeWidgetState
           style: GoogleFonts.montserrat(
               fontFeatures: [],
               fontWeight: FontWeight.w600,
-              fontSize: getFontSizeAccordingToOrientation(context) * 0.019),
+              fontSize: getSubTitleFontSize(context)),
         ),
         ValueListenableBuilder(
             valueListenable: widget.jointVolume,
@@ -280,8 +278,7 @@ class _BlockSizePageJoinVolumeWidgetState
                       style: GoogleFonts.montserrat(
                           fontFeatures: [],
                           fontWeight: FontWeight.w600,
-                          fontSize: getFontSizeAccordingToOrientation(context) *
-                              0.019),
+                          fontSize: getSubTitleFontSize(context)),
                     ))
                 : Container()),
         ValueListenableBuilder(
@@ -310,10 +307,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             color: Colors.black87,
-                                            fontSize:
-                                                getFontSizeAccordingToOrientation(
-                                                        context) *
-                                                    0.018),
+                                            fontSize: getBodyFontSize(context)),
                                       ),
                                       Row(children: [
                                         Radio<RqdByJvCalculationType>(
@@ -327,13 +321,11 @@ class _BlockSizePageJoinVolumeWidgetState
                                             }),
                                         Expanded(
                                             child: Text(
-                                          "${AppLocalizations.of(context).rockQualityDesignationSymbol} = 115 - (3.3 x ${AppLocalizations.of(context).jointVolumeSymbol})",
-                                          style: TextStyle(
-                                              fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.018),
-                                        )),
+                                                "${AppLocalizations.of(context).rockQualityDesignationSymbol} = 115 - (3.3 x ${AppLocalizations.of(context).jointVolumeSymbol})",
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      getBodyFontSize(context),
+                                                ))),
                                       ]),
                                       Row(children: [
                                         Radio<RqdByJvCalculationType>(
@@ -350,9 +342,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                           "${AppLocalizations.of(context).rockQualityDesignationSymbol} = 110 - (2.5 x ${AppLocalizations.of(context).jointVolumeSymbol})",
                                           style: TextStyle(
                                               fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.018),
+                                                  getBodyFontSize(context)),
                                         )),
                                       ]),
                                       rqdByJvCalculationValue != null
@@ -367,9 +357,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                                     fontFeatures: [],
                                                     fontWeight: FontWeight.w600,
                                                     fontSize:
-                                                        getFontSizeAccordingToOrientation(
-                                                                context) *
-                                                            0.019),
+                                                        getSubTitleFontSize(
+                                                            context)),
                                               ))
                                           : Container()
                                     ])

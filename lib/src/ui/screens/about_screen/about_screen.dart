@@ -7,6 +7,7 @@ import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/common_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -45,8 +46,7 @@ class AboutScreen extends StatelessWidget {
                   AppLocalizations.of(context).appName.toUpperCase(),
                   style: GoogleFonts.montserrat(
                       color: Colors.teal,
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.025,
+                      fontSize: getTitleFontSize(context),
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
@@ -55,8 +55,7 @@ class AboutScreen extends StatelessWidget {
                   textAlign: TextAlign.end,
                   style: GoogleFonts.montserrat(
                       color: Colors.teal,
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.02,
+                      fontSize: getSubTitleFontSize(context),
                       fontWeight: FontWeight.w500),
                 ),
                 Container(
@@ -68,8 +67,7 @@ class AboutScreen extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context).aboutQSlope,
                       style: GoogleFonts.poppins(
-                          fontSize:
-                              getFontSizeAccordingToOrientation(context) * 0.02,
+                          fontSize: getSubTitleFontSize(context),
                           color: Colors.teal),
                     )),
                 SizedBox(
@@ -90,8 +88,7 @@ class AboutScreen extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context).references,
                       style: GoogleFonts.poppins(
-                          fontSize:
-                              getFontSizeAccordingToOrientation(context) * 0.02,
+                          fontSize: getSubTitleFontSize(context),
                           color: Colors.teal),
                     )),
                 SizedBox(
@@ -140,8 +137,7 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).contactUs,
                     style: GoogleFonts.poppins(
-                        fontSize:
-                            getFontSizeAccordingToOrientation(context) * 0.02,
+                        fontSize: getSubTitleFontSize(context),
                         color: Colors.teal),
                   ),
                   IconButton(
@@ -166,6 +162,9 @@ class AboutScreen extends StatelessWidget {
                         builder: (context, snapshot) => Text(
                               "${AppLocalizations.of(context).version}: ${snapshot.data?.version}",
                               textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: getCaptionFontSize(context),
+                                  color: Colors.black54),
                             ))),
                 Container(
                     alignment: Alignment.center,
@@ -176,11 +175,13 @@ class AboutScreen extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.teal,
-                        fontSize:
-                            getFontSizeAccordingToOrientation(context) * 0.018,
+                        fontSize: getCaptionFontSize(context),
                         letterSpacing: 1.0,
                       ),
-                    ))
+                    )),
+                SizedBox(
+                  height: getViewPortHeight(context) * 0.02,
+                )
               ],
             )
           ]),

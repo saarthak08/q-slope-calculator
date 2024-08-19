@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class JointRoughnessSliderInputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -39,7 +40,7 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,
-                  fontSize: getFontSizeAccordingToOrientation(context) * 0.018),
+                  fontSize: getBodyFontSize(context)),
             )),
         Container(
             margin: EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
@@ -71,7 +72,7 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,
-                  fontSize: getFontSizeAccordingToOrientation(context) * 0.02),
+                  fontSize: getBodyFontSize(context)),
             )),
         ValueListenableBuilder(
             valueListenable: textEditingController,

@@ -12,6 +12,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:toastification/toastification.dart';
 
 class ActiveStressPage extends StatefulWidget {
@@ -109,9 +110,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                   AppLocalizations.of(context).activeStress,
                                   style: GoogleFonts.poppins(
                                       fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.02,
+                                          getSubtitleLargeFontSize(context),
                                       color: Colors.teal),
                                 ))),
                         CustomTextFormField(
@@ -197,9 +196,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.019),
+                                                  getSubTitleFontSize(context)),
                                         ),
                                         SizedBox(
                                           height:
@@ -211,9 +208,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.019),
+                                                  getSubTitleFontSize(context)),
                                         ),
                                         SizedBox(
                                           height:
@@ -235,9 +230,8 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                                       .qSlopeCalculation,
                                                   style: GoogleFonts.poppins(
                                                       fontSize:
-                                                          getViewPortHeight(
-                                                                  context) *
-                                                              0.02,
+                                                          getSubtitleLargeFontSize(
+                                                              context),
                                                       color: Colors.teal),
                                                 ))),
                                         Text(
@@ -246,9 +240,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.019),
+                                                  getSubTitleFontSize(context)),
                                         ),
                                         SizedBox(
                                           height:
@@ -260,9 +252,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               fontFeatures: [],
                                               fontWeight: FontWeight.w600,
                                               fontSize:
-                                                  getFontSizeAccordingToOrientation(
-                                                          context) *
-                                                      0.019),
+                                                  getSubTitleFontSize(context)),
                                         )
                                       ])
                                 : Container()),

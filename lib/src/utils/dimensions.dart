@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 /// Get device width
 double getDeviceWidth(BuildContext context) {
-  return MediaQuery.of(context).size.width;
+  return MediaQuery.sizeOf(context).width;
 }
 
 /// Get device height
 double getDeviceHeight(BuildContext context) {
-  return MediaQuery.of(context).size.height;
+  return MediaQuery.sizeOf(context).height;
 }
 
 /// Get device safe width
@@ -20,11 +20,4 @@ double getViewPortWidth(BuildContext context) {
 double getViewPortHeight(BuildContext context) {
   final EdgeInsets padding = MediaQuery.of(context).padding;
   return getDeviceHeight(context) - padding.top - padding.bottom;
-}
-
-/// Get font size
-double getFontSizeAccordingToOrientation(BuildContext context) {
-  double height = getViewPortHeight(context);
-  double width = getViewPortWidth(context);
-  return height > width ? height : width;
 }

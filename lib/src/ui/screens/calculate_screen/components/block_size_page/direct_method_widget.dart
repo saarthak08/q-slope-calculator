@@ -5,6 +5,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePageDirectMethodWidget extends StatelessWidget {
   final TextEditingController sumOfCorePiecesController;
@@ -83,7 +84,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
           style: GoogleFonts.montserrat(
               fontFeatures: [],
               fontWeight: FontWeight.w600,
-              fontSize: getFontSizeAccordingToOrientation(context) * 0.019),
+              fontSize: getSubTitleFontSize(context)),
         ),
         ValueListenableBuilder(
             valueListenable: rqd,
@@ -96,8 +97,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                           fontFeatures: [],
                           fontWeight: FontWeight.w600,
-                          fontSize: getFontSizeAccordingToOrientation(context) *
-                              0.019),
+                          fontSize: getSubTitleFontSize(context)),
                     ))
                 : Container())
       ],

@@ -7,6 +7,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class OFactorPage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -91,10 +92,11 @@ class _OFactorPageState extends State<OFactorPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black87,
-                              fontSize:
-                                  getFontSizeAccordingToOrientation(context) *
-                                      0.02),
+                              fontSize: getSubTitleFontSize(context)),
                         )),
+                    SizedBox(
+                      height: getViewPortHeight(context) * 0.01,
+                    ),
                     Row(children: [
                       Radio<OFactorCalculationType>(
                           value: OFactorCalculationType.value,
@@ -108,10 +110,7 @@ class _OFactorPageState extends State<OFactorPage> {
                       Expanded(
                           child: Text(
                         AppLocalizations.of(context).oFactorByValue,
-                        style: TextStyle(
-                            fontSize:
-                                getFontSizeAccordingToOrientation(context) *
-                                    0.018),
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
                       )),
                     ]),
                     Row(children: [
@@ -128,10 +127,7 @@ class _OFactorPageState extends State<OFactorPage> {
                           child: Text(
                         AppLocalizations.of(context)
                             .oFactorByRomanaAdjustmentFactor,
-                        style: TextStyle(
-                            fontSize:
-                                getFontSizeAccordingToOrientation(context) *
-                                    0.018),
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
                       )),
                     ]),
                     Container(

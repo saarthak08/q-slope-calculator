@@ -9,6 +9,7 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/ne
 import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -125,17 +126,13 @@ class _BlockSizePageState extends State<BlockSizePage> {
                               AppLocalizations.of(context)
                                   .blockSizePageBlockSizeSubTitle,
                               style: GoogleFonts.poppins(
-                                  fontSize: getFontSizeAccordingToOrientation(
-                                          context) *
-                                      0.02,
+                                  fontSize: getSubtitleLargeFontSize(context),
                                   color: Colors.teal),
                             ))),
                     Text(
                       AppLocalizations.of(context)
                           .rockQualityDesignationCalculation,
-                      style: TextStyle(
-                          fontSize: getFontSizeAccordingToOrientation(context) *
-                              0.02),
+                      style: TextStyle(fontSize: getSubTitleFontSize(context)),
                     ),
                     Row(children: [
                       Radio<RqdCalculationType>(
@@ -150,10 +147,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
                       Expanded(
                           child: Text(
                         AppLocalizations.of(context).byUsingJointVolumeMethod,
-                        style: TextStyle(
-                            fontSize:
-                                getFontSizeAccordingToOrientation(context) *
-                                    0.018),
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
                       )),
                     ]),
                     Row(children: [
@@ -169,10 +163,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
                       Expanded(
                           child: Text(
                         AppLocalizations.of(context).byUsingDirectMethod,
-                        style: TextStyle(
-                            fontSize:
-                                getFontSizeAccordingToOrientation(context) *
-                                    0.018),
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
                       )),
                     ]),
                     Container(

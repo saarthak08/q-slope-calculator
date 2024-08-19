@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class IllustrationWidget extends StatelessWidget {
   final String assetPath;
@@ -40,14 +41,13 @@ class IllustrationWidget extends StatelessWidget {
             )),
             Flexible(
                 child: Container(
-                    width: (width ?? vpW) * 0.8,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: (width ?? vpW) * 0.1),
                     alignment: Alignment.center,
                     child: Text(
                       text,
-                      style: TextStyle(
-                          fontSize: (height ??
-                                  getFontSizeAccordingToOrientation(context)) *
-                              0.022),
+                      style:
+                          TextStyle(fontSize: (getSubTitleFontSize(context))),
                       textAlign: TextAlign.center,
                     ))),
             Flexible(

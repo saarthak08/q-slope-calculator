@@ -5,6 +5,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;
@@ -131,8 +132,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.black87,
-                        fontSize:
-                            getFontSizeAccordingToOrientation(context) * 0.02),
+                        fontSize: getSubTitleFontSize(context)),
                   )),
               SizedBox(
                 height: getViewPortHeight(context) * 0.01,
@@ -148,9 +148,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).planarFailure,
-                  style: TextStyle(
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.018),
+                  style: TextStyle(fontSize: getBodyFontSize(context)),
                 )),
               ]),
               Row(children: [
@@ -164,9 +162,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).wedgeFailure,
-                  style: TextStyle(
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.018),
+                  style: TextStyle(fontSize: getBodyFontSize(context)),
                 )),
               ]),
               Row(children: [
@@ -180,9 +176,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).toppling,
-                  style: TextStyle(
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.018),
+                  style: TextStyle(fontSize: getBodyFontSize(context)),
                 )),
               ]),
               AnimatedSwitcher(
@@ -346,10 +340,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -366,9 +358,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize:
-                                                            getViewPortHeight(
-                                                                    context) *
-                                                                0.019),
+                                                            getSubTitleFontSize(
+                                                                context)),
                                                   )
                                                 : Row(
                                                     mainAxisAlignment:
@@ -382,9 +373,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getFontSizeAccordingToOrientation(
-                                                                          context) *
-                                                                      0.019),
+                                                                  getSubTitleFontSize(
+                                                                      context)),
                                                         ),
                                                         Radio<bool>(
                                                             value: true,
@@ -407,9 +397,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getFontSizeAccordingToOrientation(
-                                                                          context) *
-                                                                      0.019),
+                                                                  getSubTitleFontSize(
+                                                                      context)),
                                                         ),
                                                         Radio<bool>(
                                                             value: false,
@@ -432,9 +421,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                   FontWeight
                                                                       .w600,
                                                               fontSize:
-                                                                  getFontSizeAccordingToOrientation(
-                                                                          context) *
-                                                                      0.019),
+                                                                  getSubTitleFontSize(
+                                                                      context)),
                                                         ),
                                                       ]),
                                             SizedBox(
@@ -455,10 +443,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -470,10 +456,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -485,10 +469,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -500,10 +482,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -515,10 +495,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                             SizedBox(
                                               height:
@@ -530,10 +508,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                               style: GoogleFonts.montserrat(
                                                   fontFeatures: [],
                                                   fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      getFontSizeAccordingToOrientation(
-                                                              context) *
-                                                          0.019),
+                                                  fontSize: getSubTitleFontSize(
+                                                      context)),
                                             ),
                                           ])
                                     : Container()),

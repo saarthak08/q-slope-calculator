@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
@@ -41,8 +42,7 @@ class CustomTextFormField extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
-                      fontSize:
-                          getFontSizeAccordingToOrientation(context) * 0.018),
+                      fontSize: getBodyFontSize(context)),
                 ))
             : Container(),
         titleText != null
@@ -64,7 +64,7 @@ class CustomTextFormField extends StatelessWidget {
             onChanged: onChanged,
             validator: validate,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            style: GoogleFonts.poppins(),
+            style: GoogleFonts.poppins(fontSize: getBodyFontSize(context)),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                     borderSide:
@@ -77,19 +77,19 @@ class CustomTextFormField extends StatelessWidget {
                 errorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Colors.red, width: 1.5),
                     borderRadius: BorderRadius.circular(6)),
-                errorStyle: GoogleFonts.openSans(
-                    fontSize:
-                        getFontSizeAccordingToOrientation(context) * 0.016),
+                errorStyle:
+                    GoogleFonts.openSans(fontSize: getCaptionFontSize(context)),
                 errorMaxLines: 3,
                 hintMaxLines: 3,
                 helperMaxLines: 3,
                 helperText: hintText,
                 helperStyle: GoogleFonts.openSans(
                     color: Colors.grey.shade700,
-                    fontSize:
-                        getFontSizeAccordingToOrientation(context) * 0.016),
+                    fontSize: getCaptionFontSize(context)),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                labelStyle: GoogleFonts.openSans(color: Colors.grey.shade500),
+                labelStyle: GoogleFonts.openSans(
+                    color: Colors.grey.shade500,
+                    fontSize: getBodyFontSize(context)),
                 labelText: placeholderText))
       ],
     );

@@ -7,6 +7,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class ExternalFactorsPage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -110,10 +111,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
-                                        fontSize:
-                                            getFontSizeAccordingToOrientation(
-                                                    context) *
-                                                0.02),
+                                        fontSize: getSubTitleFontSize(context)),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsStructureType>(
@@ -128,10 +126,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     child: Text(
                                   AppLocalizations.of(context).structureStable,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                               Row(children: [
@@ -149,10 +144,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context)
                                       .structureUnstable,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ])
                             ]),
@@ -171,10 +163,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
-                                        fontSize:
-                                            getFontSizeAccordingToOrientation(
-                                                    context) *
-                                                0.02),
+                                        fontSize: getSubTitleFontSize(context)),
                                   )),
                               SizedBox(
                                 height: getViewPortHeight(context) * 0.01,
@@ -187,10 +176,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         .strengthOfRockCompetentNote,
                                     style: GoogleFonts.openSans(
                                         color: Colors.grey.shade700,
-                                        fontSize:
-                                            getFontSizeAccordingToOrientation(
-                                                    context) *
-                                                0.016),
+                                        fontSize: getCaptionFontSize(context)),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsStrengthOfRock>(
@@ -207,10 +193,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context)
                                       .strengthOfRockCompetent,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                               Row(children: [
@@ -228,10 +211,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context)
                                       .strengthOfRockInCompetent,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ])
                             ]),
@@ -251,10 +231,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
-                                        fontSize:
-                                            getFontSizeAccordingToOrientation(
-                                                    context) *
-                                                0.02),
+                                        fontSize: getSubTitleFontSize(context)),
                                   )),
                               Row(children: [
                                 Radio<ExternalFactorsEnvironmentConditions>(
@@ -273,10 +250,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   AppLocalizations.of(context)
                                       .desertEnvironment,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                               Row(children: [
@@ -295,10 +269,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     child: Text(
                                   AppLocalizations.of(context).wetEnvironment,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                               Row(children: [
@@ -317,10 +288,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     child: Text(
                                   AppLocalizations.of(context).tropicalStorms,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                               Row(children: [
@@ -339,10 +307,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                     child: Text(
                                   AppLocalizations.of(context).iceWedging,
                                   style: TextStyle(
-                                      fontSize:
-                                          getFontSizeAccordingToOrientation(
-                                                  context) *
-                                              0.018),
+                                      fontSize: getBodyFontSize(context)),
                                 )),
                               ]),
                             ]),
