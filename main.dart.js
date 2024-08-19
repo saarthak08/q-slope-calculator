@@ -29321,7 +29321,7 @@ j.aT()
 j.a59(null,null,o)
 p.cy$!==$&&A.ai()
 p.cy$=j
-k=j}p.a_x(new A.FC(m,new A.yS("[DEV] Q-slope Calculator",new A.KO(new A.KQ(),new A.mh(q,B.KR,new A.CZ()),null),null),l,k,null))
+k=j}p.a_x(new A.FC(m,new A.yS("Q-slope Calculator",new A.KO(new A.KQ(),new A.mh(q,B.KR,new A.CZ()),null),null),l,k,null))
 p.KY()
 return A.L(null,r)}})
 return A.M($async$aFW,r)},
