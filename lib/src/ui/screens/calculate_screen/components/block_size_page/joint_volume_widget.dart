@@ -170,7 +170,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                   height: getViewPortHeight(context) * 0.01,
                                 ),
                                 SizedBox(
-                                    height: getViewPortHeight(context) * 0.14,
+                                    height: getViewPortHeight(context) * 0.15,
                                     child: ListView.builder(
                                         primary: true,
                                         scrollDirection: Axis.horizontal,
