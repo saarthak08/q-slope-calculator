@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 
-part 'joint_character.g.dart';
-
-@Embedded()
 class JointCharacter {
   /// [JR_USING_JRC]
   double? jointRoughnessQuotient;
@@ -12,7 +8,6 @@ class JointCharacter {
   double? jw;
   double? js;
 
-  @Enumerated(EnumType.name)
   JrCalculationType? jrCalculationType;
   double jointRoughness;
 

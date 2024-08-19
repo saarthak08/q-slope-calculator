@@ -25,7 +25,7 @@ class QSlopeListService {
     }
   }
 
-  Future<Result<int?>> saveQSlopeToList(QSlope qslope) async {
+  Future<Result<bool?>> saveQSlopeToList(QSlope qslope) async {
     try {
       return Success(await _qSlopeCalculationsRepository.saveQSlope(qslope));
     } catch (err, s) {
@@ -35,7 +35,7 @@ class QSlopeListService {
     }
   }
 
-  Future<Result<void>> clearQSlopeList() async {
+  Future<Result<bool>> clearQSlopeList() async {
     try {
       return Success(await _qSlopeCalculationsRepository.deleteAllQSlopes());
     } catch (err, s) {
@@ -45,7 +45,7 @@ class QSlopeListService {
     }
   }
 
-  Future<Result<void>> deleteQSlope(int id) async {
+  Future<Result<bool>> deleteQSlope(String id) async {
     try {
       return Success(await _qSlopeCalculationsRepository.deleteQSlope(id));
     } catch (err, s) {

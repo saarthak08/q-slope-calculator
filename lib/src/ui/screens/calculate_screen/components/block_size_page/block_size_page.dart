@@ -10,6 +10,7 @@ import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:uuid/uuid.dart';
 
 class BlockSizePage extends StatefulWidget {
   final ValueNotifier<QSlope?> qSlope;
@@ -49,6 +50,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
   final ValueNotifier<RqdByJvCalculationType?> rqdByJvCalculationType =
       ValueNotifier(null);
   RqdCalculationType? rqdCalculationType;
+  final uuid = const Uuid();
 
   @override
   void initState() {
@@ -232,6 +234,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
                                 onNext: () {
                                   QSlope qSlope = widget.qSlope.value ??
                                       QSlope(
+                                          id: uuid.v4(),
                                           locationId: locationId.text,
                                           lithology: lithology.text);
                                   qSlope.blockSize = BlockSize();
