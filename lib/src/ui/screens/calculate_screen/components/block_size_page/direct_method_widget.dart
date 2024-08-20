@@ -12,12 +12,14 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
   final TextEditingController totalDrillRunController;
   final RqdCalculationType? rqdCalculationType;
   final ValueNotifier<double?> rqd;
+  final void Function() setQSlope;
   const BlockSizePageDirectMethodWidget(
       {super.key,
       required this.sumOfCorePiecesController,
       required this.totalDrillRunController,
       required this.rqdCalculationType,
-      required this.rqd});
+      required this.rqd,
+      required this.setQSlope});
 
   void _calculateRqd() {
     if (sumOfCorePiecesController.text.isNotEmpty &&
@@ -27,6 +29,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
               double.tryParse(sumOfCorePiecesController.text) ?? 0,
               double.tryParse(totalDrillRunController.text) ?? 1)
           .toStringAsFixed(4));
+      setQSlope();
     }
   }
 

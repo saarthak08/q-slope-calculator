@@ -19,6 +19,7 @@ class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
   final TextEditingController f2;
   final TextEditingController f3;
   final TextEditingController oFactor;
+  final void Function() setQSlope;
 
   const OFactorRomanaAdjustmentFactorWidget(
       {super.key,
@@ -32,7 +33,8 @@ class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
       required this.f1,
       required this.f2,
       required this.f3,
-      required this.oFactor});
+      required this.oFactor,
+      required this.setQSlope});
 
   @override
   State<OFactorRomanaAdjustmentFactorWidget> createState() =>
@@ -102,6 +104,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 double.tryParse(widget.f2.text) ?? 0,
                 double.tryParse(widget.f3.text) ?? 0)
             .toStringAsFixed(4);
+        widget.setQSlope();
       }
     }
   }

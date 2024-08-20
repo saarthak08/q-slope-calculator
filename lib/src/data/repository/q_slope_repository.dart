@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
-import 'package:q_slope_calculator/src/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QSlopeRepository {
@@ -51,7 +50,6 @@ class QSlopeRepository {
 
   Future<bool> deleteQSlope(String id) async {
     var qSlopesList = await getAllQSlopes();
-    getLogger().d(qSlopesList);
     qSlopesList.removeWhere((qSlope) {
       return qSlope.id == id;
     });

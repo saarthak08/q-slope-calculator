@@ -17,6 +17,7 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
   final ValueNotifier<List<double>> jointSpacings;
   final ValueNotifier<double?> jointVolume;
   final ValueNotifier<RqdByJvCalculationType?> rqdByJvCalculationType;
+  final void Function() setQSlope;
 
   const BlockSizePageJoinVolumeWidget(
       {super.key,
@@ -28,7 +29,8 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
       required this.rqd,
       required this.jointSpacings,
       required this.jointVolume,
-      required this.rqdByJvCalculationType});
+      required this.rqdByJvCalculationType,
+      required this.setQSlope});
 
   @override
   State<BlockSizePageJoinVolumeWidget> createState() =>
@@ -78,12 +80,14 @@ class _BlockSizePageJoinVolumeWidgetState
           widget.rqd.value = double.tryParse(
               calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
                   .toStringAsFixed(4));
+          widget.setQSlope();
         }
         if (widget.rqdByJvCalculationType.value ==
             RqdByJvCalculationType.formulaWith3Point3Jv) {
           widget.rqd.value = double.tryParse(
               calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
                   .toStringAsFixed(4));
+          widget.setQSlope();
         }
       }
     }

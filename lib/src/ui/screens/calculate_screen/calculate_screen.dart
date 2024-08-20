@@ -9,8 +9,11 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/bl
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/tab_widget.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
+import 'package:uuid/uuid.dart';
 
 class CalculateScreen extends StatefulWidget {
   static const String route = '/calculate';
@@ -22,133 +25,141 @@ class CalculateScreen extends StatefulWidget {
   State<CalculateScreen> createState() => _CalculateScreenState();
 }
 
-class _CalculateScreenState extends State<CalculateScreen> {
-  final ValueNotifier<int> page = ValueNotifier(0);
-  final PageController _pageController = PageController();
-  late ValueNotifier<QSlope?> _qSlope;
-  final int maxPageValue = 4;
-
-  String getAppBarTitle(int pageValue) {
-    switch (pageValue) {
-      case 0:
-        return AppLocalizations.of(context).blockSizePageAppBarTitle;
-      case 1:
-        return AppLocalizations.of(context).joinCharacterPageAppBarTitle;
-      case 2:
-        return AppLocalizations.of(context).oFactorPageAppBarTitle;
-      case 3:
-        return AppLocalizations.of(context).externalFactorsPageAppBarTitle;
-      case 4:
-        return AppLocalizations.of(context).activeStressPageAppBarTitle;
-      default:
-        return "";
-    }
-  }
+class _CalculateScreenState extends State<CalculateScreen>
+    with SingleTickerProviderStateMixin {
+  late ValueNotifier<QSlope> _qSlope;
+  late ValueNotifier<List<bool>> _errorTabs;
+  TabController? _tabController;
+  final uuid = const Uuid();
 
   @override
   void initState() {
-    _qSlope = ValueNotifier(widget.qSlope);
+    _tabController = TabController(length: 5, vsync: this);
+    _qSlope = ValueNotifier(widget.qSlope ?? QSlope(id: uuid.v4()));
+    _errorTabs = ValueNotifier(List.filled(5, widget.qSlope == null));
     super.initState();
   }
 
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.teal,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: ValueListenableBuilder<int>(
-              valueListenable: page,
-              builder: (context, value, child) => Text(
-                    getAppBarTitle(value),
-                    style: TextStyle(fontSize: getTitleFontSize(context)),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  )),
-          elevation: 1,
-          shadowColor: Colors.white,
-          actions: [
-            widget.qSlope != null
-                ? IconButton(
-                    onPressed: () async {
-                      final QSlope? qSlope = _qSlope.value;
-                      if (qSlope != null) {
-                        var result = await context
-                            .read<QSlopeListCubit>()
-                            .deleteQSlopeFromList(qSlope.id);
-                        if (result.isSuccess && buildContext.mounted) {
-                          toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.success,
-                              title: Text(AppLocalizations.of(buildContext)
-                                  .deleteCalculationSuccessful));
-                          Navigator.pop(buildContext);
-                        }
-                        if (result.isFailure &&
-                            result.error is QSlopeError &&
-                            buildContext.mounted) {
-                          toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.error,
-                              title: Text(AppLocalizations.of(buildContext)
-                                  .errorInDeletingCalculation));
-                        }
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.teal,
-                    ))
-                : Container(),
-          ],
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.teal,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Stack(children: [
-          PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              BlockSizePage(
-                pageController: _pageController,
-                qSlope: _qSlope,
-                currentPage: page,
-                maxPageValue: maxPageValue,
-              ),
-              JointRoughnessPage(
-                  qSlope: _qSlope,
-                  pageController: _pageController,
-                  currentPage: page,
-                  maxPageValue: maxPageValue),
-              OFactorPage(
-                  qSlope: _qSlope,
-                  pageController: _pageController,
-                  currentPage: page,
-                  maxPageValue: maxPageValue),
-              ExternalFactorsPage(
-                  qSlope: _qSlope,
-                  pageController: _pageController,
-                  currentPage: page,
-                  maxPageValue: maxPageValue),
-              ActiveStressPage(
-                  qSlope: _qSlope,
-                  pageController: _pageController,
-                  currentPage: page,
-                  maxPageValue: maxPageValue),
-            ],
+        title: Text(
+          AppLocalizations.of(context).qSlopeCalculation,
+          style: TextStyle(fontSize: getTitleFontSize(context)),
+          softWrap: true,
+          overflow: TextOverflow.visible,
+        ),
+        bottom: TabBar(
+            dividerColor: Colors.teal.shade100,
+            controller: _tabController,
+            tabAlignment: ResponsiveBreakpoints.of(context).screenWidth < 700
+                ? TabAlignment.start
+                : null,
+            isScrollable: ResponsiveBreakpoints.of(context).screenWidth < 700,
+            tabs: [
+              TabWidget(
+                  errorTabs: _errorTabs,
+                  tabText:
+                      AppLocalizations.of(context).blockSizePageAppBarTitle,
+                  tabBarIndex: 0),
+              TabWidget(
+                  errorTabs: _errorTabs,
+                  tabText:
+                      AppLocalizations.of(context).joinCharacterPageAppBarTitle,
+                  tabBarIndex: 1),
+              TabWidget(
+                  errorTabs: _errorTabs,
+                  tabText: AppLocalizations.of(context).oFactorPageAppBarTitle,
+                  tabBarIndex: 2),
+              TabWidget(
+                  errorTabs: _errorTabs,
+                  tabText: AppLocalizations.of(context)
+                      .externalFactorsPageAppBarTitle,
+                  tabBarIndex: 3),
+              TabWidget(
+                  errorTabs: _errorTabs,
+                  tabText:
+                      AppLocalizations.of(context).activeStressPageAppBarTitle,
+                  tabBarIndex: 4),
+            ]),
+        elevation: 1,
+        shadowColor: Colors.white,
+        actions: [
+          widget.qSlope != null
+              ? IconButton(
+                  onPressed: () async {
+                    final QSlope qSlope = _qSlope.value;
+                    var result = await context
+                        .read<QSlopeListCubit>()
+                        .deleteQSlopeFromList(qSlope.id);
+                    if (result.isSuccess && buildContext.mounted) {
+                      toastification.show(
+                          autoCloseDuration: const Duration(seconds: 2),
+                          alignment: Alignment.bottomCenter,
+                          type: ToastificationType.success,
+                          title: Text(AppLocalizations.of(buildContext)
+                              .deleteCalculationSuccessful));
+                      Navigator.pop(buildContext);
+                      if (result.isFailure &&
+                          result.error is QSlopeError &&
+                          buildContext.mounted) {
+                        toastification.show(
+                            autoCloseDuration: const Duration(seconds: 2),
+                            alignment: Alignment.bottomCenter,
+                            type: ToastificationType.error,
+                            title: Text(AppLocalizations.of(buildContext)
+                                .errorInDeletingCalculation));
+                      }
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.teal,
+                  ))
+              : Container(),
+        ],
+      ),
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _tabController,
+        children: [
+          BlockSizePage(
+            errorTabs: _errorTabs,
+            qSlope: _qSlope,
           ),
-        ]));
+          JointRoughnessPage(
+            qSlope: _qSlope,
+            errorTabs: _errorTabs,
+          ),
+          OFactorPage(
+            qSlope: _qSlope,
+            errorTabs: _errorTabs,
+          ),
+          ExternalFactorsPage(
+            qSlope: _qSlope,
+            errorTabs: _errorTabs,
+          ),
+          ActiveStressPage(
+            qSlope: _qSlope,
+            errorTabs: _errorTabs,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
-    page.dispose();
+    _tabController?.dispose();
     _qSlope.dispose();
     super.dispose();
   }

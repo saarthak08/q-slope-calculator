@@ -16,7 +16,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Center(
           child: Padding(
               padding:
