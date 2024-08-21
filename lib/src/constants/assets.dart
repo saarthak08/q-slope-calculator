@@ -10,6 +10,8 @@ class Assets {
       "$imagesBaseFolder/joint_roughness_table.png";
   static const String jointAlterationTable =
       "$imagesBaseFolder/joint_alteration_table.png";
+  static const String jointSetNumberTable =
+      "$imagesBaseFolder/joint_set_number_table.png";
 
   /// [Illustrations]
   static const String noData = '$illustrationsBaseFolder/no_data.svg';

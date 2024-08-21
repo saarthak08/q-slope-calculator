@@ -42,6 +42,8 @@ class _BlockSizePageState extends State<BlockSizePage>
   final ValueNotifier<double?> jointVolume = ValueNotifier(null);
   final ValueNotifier<RqdByJvCalculationType?> rqdByJvCalculationType =
       ValueNotifier(null);
+  final TextEditingController _jointSetNumberController =
+      TextEditingController();
   RqdCalculationType? rqdCalculationType;
   final tabIndex = 0;
 
@@ -74,6 +76,8 @@ class _BlockSizePageState extends State<BlockSizePage>
         qSlope.blockSize?.areaInSquareMeters?.toString() ?? '';
     rqd.value = qSlope.blockSize?.rqd;
     jointVolume.value = qSlope.blockSize?.jointVolume;
+    _jointSetNumberController.text =
+        qSlope.blockSize?.jointSetNumber?.toString() ?? "";
     rqdByJvCalculationType.value = qSlope.blockSize?.rqdByJvCalculationType;
     setState(() {
       rqdCalculationType = qSlope.blockSize?.rqdCalculationType;
@@ -104,6 +108,8 @@ class _BlockSizePageState extends State<BlockSizePage>
           double.tryParse(_sumOfCorePiecesController.text);
       qSlope.blockSize?.totalDrillRun =
           double.tryParse(_totalDrillRunController.text);
+      qSlope.blockSize?.jointSetNumber =
+          double.tryParse(_jointSetNumberController.text);
       widget.qSlope.value = qSlope;
       widget.errorTabs.value[tabIndex] = false;
     } else {
@@ -212,6 +218,8 @@ class _BlockSizePageState extends State<BlockSizePage>
                           : rqdCalculationType == RqdCalculationType.jv
                               ? BlockSizePageJoinVolumeWidget(
                                   setQSlope: _setQSlope,
+                                  jointSetNumberController:
+                                      _jointSetNumberController,
                                   jointSpacings: jointSpacings,
                                   numberOfJointsController:
                                       _numberOfJointsController,
@@ -249,6 +257,7 @@ class _BlockSizePageState extends State<BlockSizePage>
     jointSpacings.dispose();
     jointVolume.dispose();
     rqdByJvCalculationType.dispose();
+    _jointSetNumberController.dispose();
     for (var controller in _jointSpacingControllers.value) {
       controller.dispose();
     }

@@ -82,3 +82,26 @@ double calculateQSlope(QSlope qSlope) {
               0) /
           (qSlope.activeStress?.srf ?? 1));
 }
+
+double calculateJointSetNumber(
+    double numberOfJointSets, double numberOfRandomSets) {
+  if (numberOfJointSets == 0) {
+    return 0.5;
+  } else if (numberOfJointSets == 1 && numberOfRandomSets == 0) {
+    return 2;
+  } else if (numberOfJointSets == 1 && numberOfRandomSets > 0) {
+    return 3;
+  } else if (numberOfJointSets == 2 && numberOfRandomSets == 0) {
+    return 4;
+  } else if (numberOfJointSets == 2 && numberOfRandomSets > 0) {
+    return 6;
+  } else if (numberOfJointSets == 3 && numberOfRandomSets == 0) {
+    return 9;
+  } else if (numberOfJointSets == 3 && numberOfRandomSets > 0) {
+    return 12;
+  } else if (numberOfJointSets == 4) {
+    return 15;
+  } else {
+    return 20;
+  }
+}

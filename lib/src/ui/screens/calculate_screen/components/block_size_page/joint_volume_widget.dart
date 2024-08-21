@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
+import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,6 +14,7 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
   final ValueNotifier<List<TextEditingController>> jointSpacingControllers;
   final TextEditingController numberOfRandomSetsController;
   final TextEditingController areaController;
+  final TextEditingController jointSetNumberController;
   final RqdCalculationType? rqdCalculationType;
   final ValueNotifier<double?> rqd;
   final ValueNotifier<List<double>> jointSpacings;
@@ -30,7 +33,8 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
       required this.jointSpacings,
       required this.jointVolume,
       required this.rqdByJvCalculationType,
-      required this.setQSlope});
+      required this.setQSlope,
+      required this.jointSetNumberController});
 
   @override
   State<BlockSizePageJoinVolumeWidget> createState() =>
@@ -42,9 +46,21 @@ class _BlockSizePageJoinVolumeWidgetState
   void _calculateRqd() {
     if (widget.numberOfJointsController.text.isNotEmpty &&
         widget.numberOfRandomSetsController.text.isNotEmpty &&
+        widget.jointSetNumberController.text.isEmpty) {
+      double numberOfJoints =
+          double.tryParse(widget.numberOfJointsController.text) ?? 0;
+      double numberOfRandomSets =
+          double.tryParse(widget.numberOfRandomSetsController.text) ?? 0;
+      double jointSetNumber =
+          calculateJointSetNumber(numberOfJoints, numberOfRandomSets);
+      widget.jointSetNumberController.text = jointSetNumber.toString();
+    }
+    if (widget.numberOfJointsController.text.isNotEmpty &&
+        widget.numberOfRandomSetsController.text.isNotEmpty &&
         widget.areaController.text.isNotEmpty &&
         double.tryParse(widget.areaController.text) != 0 &&
-        widget.jointSpacingControllers.value.isNotEmpty) {
+        widget.jointSpacingControllers.value.isNotEmpty &&
+        widget.jointSetNumberController.text.isNotEmpty) {
       int index = 0;
       bool emptySpacing = false;
       int numberOfJoints =
@@ -238,6 +254,24 @@ class _BlockSizePageJoinVolumeWidgetState
             }
             return null;
           },
+        ),
+        SizedBox(
+          height: getViewPortHeight(context) * 0.03,
+        ),
+        CustomTextFormField(
+          onChanged: (value) {
+            _calculateRqd();
+          },
+          icon: Icons.help_outline,
+          onClickIcon: () {
+            Navigator.pushNamed(context, PhotoViewScreen.route,
+                arguments: const AssetImage(Assets.jointSetNumberTable));
+          },
+          type: const TextInputType.numberWithOptions(
+              signed: false, decimal: true),
+          textInputAction: TextInputAction.next,
+          textEditingController: widget.jointSetNumberController,
+          titleText: AppLocalizations.of(context).jointSetNumber,
         ),
         SizedBox(
           height: getViewPortHeight(context) * 0.03,
