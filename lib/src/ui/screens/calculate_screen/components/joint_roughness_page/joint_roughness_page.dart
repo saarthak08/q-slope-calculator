@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
@@ -7,6 +8,7 @@ import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class JointRoughnessPage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
@@ -82,6 +84,18 @@ class _JointRoughnessPageState extends State<JointRoughnessPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Center(
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              top: getViewPortHeight(context) * 0.02,
+                              bottom: getViewPortHeight(context) * 0.03),
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .joinCharacterPageAppBarTitle,
+                            style: GoogleFonts.poppins(
+                                fontSize: getSubtitleLargeFontSize(context),
+                                color: Colors.teal),
+                          ))),
                   JointRoughnessSliderInputWidget(
                     textEditingController: _jointRoughness,
                     imagePath: Assets.jointRoughnessTable,
@@ -110,8 +124,8 @@ class _JointRoughnessPageState extends State<JointRoughnessPage>
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      top: getViewPortHeight(context) * 0.04,
-                      bottom: getViewPortHeight(context) * 0.04,
+                      top: getViewPortHeight(context) * 0.06,
+                      bottom: getViewPortHeight(context) * 0.06,
                     ),
                     child: const DividerWidget(),
                   ),

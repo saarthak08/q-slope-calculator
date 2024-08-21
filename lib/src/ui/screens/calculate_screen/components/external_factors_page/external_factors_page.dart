@@ -88,6 +88,18 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Center(
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                top: getViewPortHeight(context) * 0.02,
+                                bottom: getViewPortHeight(context) * 0.03),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .externalFactorsPageAppBarTitle,
+                              style: GoogleFonts.poppins(
+                                  fontSize: getSubtitleLargeFontSize(context),
+                                  color: Colors.teal),
+                            ))),
                     CustomTextFormField(
                       type:
                           const TextInputType.numberWithOptions(signed: false),
@@ -110,7 +122,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
                       },
                     ),
                     SizedBox(
-                      height: getViewPortHeight(context) * 0.02,
+                      height: getViewPortHeight(context) * 0.03,
                     ),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +172,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
                           ])
                         ]),
                     SizedBox(
-                      height: getViewPortHeight(context) * 0.02,
+                      height: getViewPortHeight(context) * 0.03,
                     ),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +237,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
                           ])
                         ]),
                     SizedBox(
-                      height: getViewPortHeight(context) * 0.02,
+                      height: getViewPortHeight(context) * 0.03,
                     ),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

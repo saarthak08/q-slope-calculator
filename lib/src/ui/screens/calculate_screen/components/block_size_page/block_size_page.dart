@@ -123,7 +123,7 @@ class _BlockSizePageState extends State<BlockSizePage>
           child: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: getViewPortWidth(context) * 0.04,
-            vertical: getViewPortHeight(context) * 0.02),
+            vertical: getViewPortHeight(context) * 0.04),
         child: Form(
             key: formKey,
             onChanged: () {
@@ -137,8 +137,8 @@ class _BlockSizePageState extends State<BlockSizePage>
                     lithologyController: _lithologyController),
                 Container(
                   margin: EdgeInsets.only(
-                    top: getViewPortHeight(context) * 0.04,
-                    bottom: getViewPortHeight(context) * 0.02,
+                    top: getViewPortHeight(context) * 0.06,
+                    bottom: getViewPortHeight(context) * 0.04,
                   ),
                   child: const DividerWidget(),
                 ),

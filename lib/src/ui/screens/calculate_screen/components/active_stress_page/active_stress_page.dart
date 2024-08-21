@@ -78,7 +78,13 @@ class _ActiveStressPageState extends State<ActiveStressPage>
         qSlope.qSlope = calculateQSlope(qSlope);
         _qSlope.value = qSlope.qSlope;
         widget.qSlope.value = qSlope.copyWith();
+      } else {
+        widget.errorTabs.value[tabIndex] = true;
+        widget.errorTabs.value = List.from(widget.errorTabs.value);
       }
+    } else {
+      widget.errorTabs.value[tabIndex] = true;
+      widget.errorTabs.value = List.from(widget.errorTabs.value);
     }
   }
 
@@ -109,6 +115,7 @@ class _ActiveStressPageState extends State<ActiveStressPage>
                       Center(
                           child: Padding(
                               padding: EdgeInsets.only(
+                                  top: getViewPortHeight(context) * 0.02,
                                   bottom: getViewPortHeight(context) * 0.03),
                               child: Text(
                                 AppLocalizations.of(context).activeStress,

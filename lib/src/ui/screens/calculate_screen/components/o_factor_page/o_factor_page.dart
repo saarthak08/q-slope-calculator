@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/romana_adjustment_factor_widget.dart';
@@ -107,16 +108,17 @@ class _OFactorPageState extends State<OFactorPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getViewPortWidth(context) * 0.01),
-                      child: Text(
-                        AppLocalizations.of(context).oFactor,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                            fontSize: getSubTitleFontSize(context)),
-                      )),
+                  Center(
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              top: getViewPortHeight(context) * 0.02,
+                              bottom: getViewPortHeight(context) * 0.02),
+                          child: Text(
+                            AppLocalizations.of(context).oFactor,
+                            style: GoogleFonts.poppins(
+                                fontSize: getSubtitleLargeFontSize(context),
+                                color: Colors.teal),
+                          ))),
                   SizedBox(
                     height: getViewPortHeight(context) * 0.01,
                   ),
