@@ -39,14 +39,13 @@ class _CalculateScreenState extends State<CalculateScreen>
     _tabController?.addListener(() {
       if (_tabController!.indexIsChanging &&
           (_tabController!.index == 1 || _tabController!.index == 2)) {
-        QSlope? qSlope = widget.qSlope;
-        if (qSlope == null ||
-            ((qSlope.blockSize == null ||
-                qSlope.blockSize!.jointSetNumber == null ||
-                qSlope.blockSize!.numberOfJoints == null ||
-                qSlope.blockSize!.jointVolume == null ||
-                qSlope.blockSize!.numberOfRandomSets == null ||
-                qSlope.blockSize!.areaInSquareMeters == null))) {
+        QSlope qSlope = _qSlope.value;
+        if (qSlope.blockSize == null ||
+            qSlope.blockSize!.jointSetNumber == null ||
+            qSlope.blockSize!.numberOfJoints == null ||
+            qSlope.blockSize!.jointVolume == null ||
+            qSlope.blockSize!.numberOfRandomSets == null ||
+            qSlope.blockSize!.areaInSquareMeters == null) {
           showGenericDialog(
               titleText: AppLocalizations.of(context).completeDialogTitle,
               context: context,

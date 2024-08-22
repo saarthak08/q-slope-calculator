@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
-import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePageJoinVolumeWidget extends StatefulWidget {
@@ -20,7 +17,7 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
   final ValueNotifier<List<double>> jointSpacings;
   final ValueNotifier<double?> jointVolume;
   final ValueNotifier<RqdByJvCalculationType?> rqdByJvCalculationType;
-  final void Function() setQSlope;
+  final void Function() calculateRqdByJointVolumeMethod;
 
   const BlockSizePageJoinVolumeWidget(
       {super.key,
@@ -33,7 +30,7 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
       required this.jointSpacings,
       required this.jointVolume,
       required this.rqdByJvCalculationType,
-      required this.setQSlope,
+      required this.calculateRqdByJointVolumeMethod,
       required this.jointSetNumberController});
 
   @override
@@ -43,120 +40,12 @@ class BlockSizePageJoinVolumeWidget extends StatefulWidget {
 
 class _BlockSizePageJoinVolumeWidgetState
     extends State<BlockSizePageJoinVolumeWidget> {
-  void _calculateRqd() {
-    if (widget.numberOfJointsController.text.isNotEmpty &&
-        widget.numberOfRandomSetsController.text.isNotEmpty &&
-        widget.jointSetNumberController.text.isEmpty) {
-      double numberOfJoints =
-          double.tryParse(widget.numberOfJointsController.text) ?? 0;
-      double numberOfRandomSets =
-          double.tryParse(widget.numberOfRandomSetsController.text) ?? 0;
-      double jointSetNumber =
-          calculateJointSetNumber(numberOfJoints, numberOfRandomSets);
-      widget.jointSetNumberController.text = jointSetNumber.toString();
-    }
-    if (widget.numberOfJointsController.text.isNotEmpty &&
-        widget.numberOfRandomSetsController.text.isNotEmpty &&
-        widget.areaController.text.isNotEmpty &&
-        double.tryParse(widget.areaController.text) != 0 &&
-        widget.jointSpacingControllers.value.isNotEmpty &&
-        widget.jointSetNumberController.text.isNotEmpty) {
-      int index = 0;
-      bool emptySpacing = false;
-      int numberOfJoints =
-          int.tryParse(widget.numberOfJointsController.text) ?? 0;
-      for (var controller in widget.jointSpacingControllers.value) {
-        if (index == numberOfJoints) {
-          break;
-        }
-        if ((double.tryParse(controller.text) ?? 0) == 0.0) {
-          emptySpacing = true;
-          break;
-        }
-        index++;
-      }
-      if (!emptySpacing) {
-        List<double> spacings = List.empty(growable: true);
-        int index = 0;
-        for (var controller in widget.jointSpacingControllers.value) {
-          if (index == numberOfJoints) {
-            break;
-          }
-          spacings.add(double.tryParse(controller.text) ?? 1);
-          index++;
-        }
-        widget.jointSpacings.value = spacings;
-        widget.jointVolume.value = double.tryParse(calculateJointVolume(
-                int.tryParse(widget.numberOfRandomSetsController.text) ?? 0,
-                spacings,
-                double.tryParse(widget.areaController.text) ?? 1.0)
-            .toStringAsFixed(4));
-        if (widget.rqdByJvCalculationType.value ==
-            RqdByJvCalculationType.formulaWith2Point5Jv) {
-          widget.rqd.value = double.tryParse(
-              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
-                  .toStringAsFixed(4));
-          widget.setQSlope();
-        }
-        if (widget.rqdByJvCalculationType.value ==
-            RqdByJvCalculationType.formulaWith3Point3Jv) {
-          widget.rqd.value = double.tryParse(
-              calculateRqdByTwoPointFiveJv(widget.jointVolume.value ?? 0)
-                  .toStringAsFixed(4));
-          widget.setQSlope();
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        CustomTextFormField(
-          type: const TextInputType.numberWithOptions(
-              signed: false, decimal: false),
-          textInputAction: TextInputAction.next,
-          textEditingController: widget.numberOfJointsController,
-          titleText: AppLocalizations.of(context).numberOfJointsTextInputTitle,
-          validate: (value) {
-            if (widget.rqdCalculationType == RqdCalculationType.jv &&
-                (value == null || value.isEmpty)) {
-              return AppLocalizations.of(context)
-                  .numberOfJointsTextInputRequired;
-            }
-            if (value != null &&
-                value.isNotEmpty &&
-                (int.tryParse(value) ?? 0) > 100) {
-              return AppLocalizations.of(context)
-                  .numberOfJointsNotMoreThanHundred;
-            }
-            return null;
-          },
-          onChanged: (value) {
-            if (value.isNotEmpty) {
-              int intValue = int.tryParse(value) ?? 0;
-              if (widget.jointSpacingControllers.value.length < intValue &&
-                  intValue <= 100) {
-                List<TextEditingController> controller = List.from(
-                    widget.jointSpacingControllers.value,
-                    growable: true);
-                for (int i = 0;
-                    i < intValue - widget.jointSpacingControllers.value.length;
-                    i++) {
-                  controller.add(TextEditingController());
-                }
-                widget.jointSpacingControllers.value = controller;
-              }
-            }
-            _calculateRqd();
-          },
-        ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.03,
-        ),
         ValueListenableBuilder(
             valueListenable: widget.numberOfJointsController,
             builder: (context, numOfJoints, child) => ValueListenableBuilder(
@@ -190,7 +79,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                   height: getViewPortHeight(context) * 0.01,
                                 ),
                                 SizedBox(
-                                    height: getViewPortHeight(context) * 0.15,
+                                    height: 108,
                                     child: ListView.builder(
                                         primary: true,
                                         scrollDirection: Axis.horizontal,
@@ -212,7 +101,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                                             0.02),
                                                 child: CustomTextFormField(
                                                   onChanged: (value) {
-                                                    _calculateRqd();
+                                                    widget
+                                                        .calculateRqdByJointVolumeMethod();
                                                   },
                                                   titleText:
                                                       "${AppLocalizations.of(context).jointSpacingSymbol}${index + 1}",
@@ -236,49 +126,12 @@ class _BlockSizePageJoinVolumeWidgetState
                                                       TextInputAction.next,
                                                 ))))
                               ])))),
-        CustomTextFormField(
-          onChanged: (value) {
-            _calculateRqd();
-          },
-          type: const TextInputType.numberWithOptions(
-              signed: false, decimal: false),
-          textInputAction: TextInputAction.next,
-          textEditingController: widget.numberOfRandomSetsController,
-          titleText:
-              AppLocalizations.of(context).numberOfRandomSetsTextInputTitle,
-          validate: (value) {
-            if (widget.rqdCalculationType == RqdCalculationType.jv &&
-                (value == null || value.isEmpty)) {
-              return AppLocalizations.of(context)
-                  .numberOfRandomSetsTextInputRequired;
-            }
-            return null;
-          },
-        ),
         SizedBox(
-          height: getViewPortHeight(context) * 0.03,
+          height: getViewPortHeight(context) * 0.01,
         ),
         CustomTextFormField(
           onChanged: (value) {
-            _calculateRqd();
-          },
-          icon: Icons.help_outline,
-          onClickIcon: () {
-            Navigator.pushNamed(context, PhotoViewScreen.route,
-                arguments: const AssetImage(Assets.jointSetNumberTable));
-          },
-          type: const TextInputType.numberWithOptions(
-              signed: false, decimal: true),
-          textInputAction: TextInputAction.next,
-          textEditingController: widget.jointSetNumberController,
-          titleText: AppLocalizations.of(context).jointSetNumber,
-        ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.03,
-        ),
-        CustomTextFormField(
-          onChanged: (value) {
-            _calculateRqd();
+            widget.calculateRqdByJointVolumeMethod();
           },
           type: const TextInputType.numberWithOptions(signed: false),
           textInputAction: TextInputAction.next,
@@ -355,7 +208,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                             onChanged: (value) {
                                               widget.rqdByJvCalculationType
                                                   .value = value;
-                                              _calculateRqd();
+                                              widget
+                                                  .calculateRqdByJointVolumeMethod();
                                             }),
                                         Expanded(
                                             child: Text(
@@ -373,7 +227,8 @@ class _BlockSizePageJoinVolumeWidgetState
                                             onChanged: (value) {
                                               widget.rqdByJvCalculationType
                                                   .value = value;
-                                              _calculateRqd();
+                                              widget
+                                                  .calculateRqdByJointVolumeMethod();
                                             }),
                                         Expanded(
                                             child: Text(

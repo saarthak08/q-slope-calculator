@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/basic_info_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/direct_method_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/joint_volume_widget.dart';
+import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
+import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePage extends StatefulWidget {
@@ -85,10 +89,77 @@ class _BlockSizePageState extends State<BlockSizePage>
     super.initState();
   }
 
+  void _calculateRqdByJointVolumeMethod() {
+    if (_numberOfJointsController.text.isNotEmpty &&
+        _numberOfRandomSetsController.text.isNotEmpty) {
+      double numberOfJoints =
+          double.tryParse(_numberOfJointsController.text) ?? 0;
+      double numberOfRandomSets =
+          double.tryParse(_numberOfRandomSetsController.text) ?? 0;
+      double jointSetNumber =
+          calculateJointSetNumber(numberOfJoints, numberOfRandomSets);
+      _jointSetNumberController.text = jointSetNumber.toString();
+    }
+    if (_numberOfJointsController.text.isNotEmpty &&
+        _numberOfRandomSetsController.text.isNotEmpty &&
+        _areaController.text.isNotEmpty &&
+        double.tryParse(_areaController.text) != 0 &&
+        _jointSpacingControllers.value.isNotEmpty &&
+        _jointSetNumberController.text.isNotEmpty) {
+      int index = 0;
+      bool emptySpacing = false;
+      int numberOfJoints = int.tryParse(_numberOfJointsController.text) ?? 0;
+      for (var controller in _jointSpacingControllers.value) {
+        if (index == numberOfJoints) {
+          break;
+        }
+        if ((double.tryParse(controller.text) ?? 0) == 0.0) {
+          emptySpacing = true;
+          break;
+        }
+        index++;
+      }
+      if (!emptySpacing) {
+        List<double> spacings = List.empty(growable: true);
+        int index = 0;
+        for (var controller in _jointSpacingControllers.value) {
+          if (index == numberOfJoints) {
+            break;
+          }
+          spacings.add(double.tryParse(controller.text) ?? 1);
+          index++;
+        }
+        jointSpacings.value = spacings;
+        jointVolume.value = double.tryParse(calculateJointVolume(
+                int.tryParse(_numberOfRandomSetsController.text) ?? 0,
+                spacings,
+                double.tryParse(_areaController.text) ?? 1.0)
+            .toStringAsFixed(4));
+        if (rqdByJvCalculationType.value ==
+            RqdByJvCalculationType.formulaWith2Point5Jv) {
+          rqd.value = double.tryParse(
+              calculateRqdByTwoPointFiveJv(jointVolume.value ?? 0)
+                  .toStringAsFixed(4));
+          _setQSlope();
+        }
+        if (rqdByJvCalculationType.value ==
+            RqdByJvCalculationType.formulaWith3Point3Jv) {
+          rqd.value = double.tryParse(
+              calculateRqdByTwoPointFiveJv(jointVolume.value ?? 0)
+                  .toStringAsFixed(4));
+          _setQSlope();
+        }
+      }
+    }
+  }
+
   void _setQSlope() {
     if (_locationIdController.text.isNotEmpty &&
         _lithologyController.text.isNotEmpty &&
-        rqd.value != null) {
+        rqd.value != null &&
+        _numberOfJointsController.text.isNotEmpty &&
+        _numberOfRandomSetsController.text.isNotEmpty &&
+        _jointSetNumberController.text.isNotEmpty) {
       QSlope qSlope = widget.qSlope.value;
       qSlope.lithology = _lithologyController.text;
       qSlope.locationId = _locationIdController.text;
@@ -144,7 +215,7 @@ class _BlockSizePageState extends State<BlockSizePage>
                 Container(
                   margin: EdgeInsets.only(
                     top: getViewPortHeight(context) * 0.06,
-                    bottom: getViewPortHeight(context) * 0.04,
+                    bottom: getViewPortHeight(context) * 0.03,
                   ),
                   child: const DividerWidget(),
                 ),
@@ -159,6 +230,92 @@ class _BlockSizePageState extends State<BlockSizePage>
                               fontSize: getSubtitleLargeFontSize(context),
                               color: Colors.teal),
                         ))),
+                CustomTextFormField(
+                  type: const TextInputType.numberWithOptions(
+                      signed: false, decimal: false),
+                  textInputAction: TextInputAction.next,
+                  textEditingController: _numberOfJointsController,
+                  titleText:
+                      AppLocalizations.of(context).numberOfJointsTextInputTitle,
+                  validate: (value) {
+                    if (rqdCalculationType == RqdCalculationType.jv &&
+                        (value == null || value.isEmpty)) {
+                      return AppLocalizations.of(context)
+                          .numberOfJointsTextInputRequired;
+                    }
+                    if (value != null &&
+                        value.isNotEmpty &&
+                        (int.tryParse(value) ?? 0) > 100) {
+                      return AppLocalizations.of(context)
+                          .numberOfJointsNotMoreThanHundred;
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      int intValue = int.tryParse(value) ?? 0;
+                      if (_jointSpacingControllers.value.length < intValue &&
+                          intValue <= 100) {
+                        List<TextEditingController> controller = List.from(
+                            _jointSpacingControllers.value,
+                            growable: true);
+                        for (int i = 0;
+                            i <
+                                intValue -
+                                    _jointSpacingControllers.value.length;
+                            i++) {
+                          controller.add(TextEditingController());
+                        }
+                        _jointSpacingControllers.value = controller;
+                      }
+                    }
+                    _calculateRqdByJointVolumeMethod();
+                  },
+                ),
+                SizedBox(
+                  height: getViewPortHeight(context) * 0.03,
+                ),
+                CustomTextFormField(
+                  onChanged: (value) {
+                    _calculateRqdByJointVolumeMethod();
+                  },
+                  type: const TextInputType.numberWithOptions(
+                      signed: false, decimal: false),
+                  textInputAction: TextInputAction.next,
+                  textEditingController: _numberOfRandomSetsController,
+                  titleText: AppLocalizations.of(context)
+                      .numberOfRandomSetsTextInputTitle,
+                  validate: (value) {
+                    if (rqdCalculationType == RqdCalculationType.jv &&
+                        (value == null || value.isEmpty)) {
+                      return AppLocalizations.of(context)
+                          .numberOfRandomSetsTextInputRequired;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: getViewPortHeight(context) * 0.03,
+                ),
+                CustomTextFormField(
+                  onChanged: (value) {
+                    _calculateRqdByJointVolumeMethod();
+                  },
+                  icon: Icons.help_outline,
+                  onClickIcon: () {
+                    Navigator.pushNamed(context, PhotoViewScreen.route,
+                        arguments:
+                            const AssetImage(Assets.jointSetNumberTable));
+                  },
+                  type: const TextInputType.numberWithOptions(
+                      signed: false, decimal: true),
+                  textInputAction: TextInputAction.next,
+                  textEditingController: _jointSetNumberController,
+                  titleText: AppLocalizations.of(context).jointSetNumber,
+                ),
+                SizedBox(
+                  height: getViewPortHeight(context) * 0.04,
+                ),
                 Text(
                   AppLocalizations.of(context)
                       .rockQualityDesignationCalculation,
@@ -217,7 +374,8 @@ class _BlockSizePageState extends State<BlockSizePage>
                               rqdCalculationType: rqdCalculationType)
                           : rqdCalculationType == RqdCalculationType.jv
                               ? BlockSizePageJoinVolumeWidget(
-                                  setQSlope: _setQSlope,
+                                  calculateRqdByJointVolumeMethod:
+                                      _calculateRqdByJointVolumeMethod,
                                   jointSetNumberController:
                                       _jointSetNumberController,
                                   jointSpacings: jointSpacings,

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class JointRoughnessSliderInputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
-  final String imagePath;
-  final String imageTitle;
   final String inputTitle;
   final double maxSliderValue;
   final double minSliderValue;
@@ -18,8 +15,6 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
   const JointRoughnessSliderInputWidget(
       {super.key,
       required this.textEditingController,
-      required this.imagePath,
-      required this.imageTitle,
       required this.inputTitle,
       required this.maxSliderValue,
       required this.minSliderValue,
@@ -32,35 +27,6 @@ class JointRoughnessSliderInputWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getViewPortWidth(context) * 0.01),
-            child: Text(
-              imageTitle,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                  fontSize: getBodyFontSize(context)),
-            )),
-        Container(
-            margin: EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      Navigator.pushNamed(context, PhotoViewScreen.route,
-                          arguments: AssetImage(imagePath));
-                    },
-                    child: Image.asset(
-                      imagePath,
-                      fit: BoxFit.fill,
-                      height: imageHeight,
-                      width: getViewPortWidth(context),
-                    )))),
         SizedBox(
           height: getViewPortHeight(context) * 0.03,
         ),

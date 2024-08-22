@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_slider_input_widget.dart';
@@ -99,9 +98,6 @@ class _JointRoughnessPageState extends State<JointRoughnessPage>
                           ))),
                   JointRoughnessSliderInputWidget(
                     textEditingController: _jointRoughness,
-                    imagePath: Assets.jointRoughnessTable,
-                    imageTitle:
-                        AppLocalizations.of(context).jointRoughnessTable,
                     inputTitle: AppLocalizations.of(context).jointRoughness,
                     maxSliderValue: maxJointRoughnessValue,
                     minSliderValue: minJointRoughnessValue,
@@ -132,9 +128,6 @@ class _JointRoughnessPageState extends State<JointRoughnessPage>
                   ),
                   JointRoughnessSliderInputWidget(
                     textEditingController: _jointAlteration,
-                    imagePath: Assets.jointAlterationTable,
-                    imageTitle:
-                        AppLocalizations.of(context).jointAlterationTable,
                     inputTitle: AppLocalizations.of(context).jointAlteration,
                     maxSliderValue: maxJointAlterationValue,
                     minSliderValue: minJointAlterationValue,
