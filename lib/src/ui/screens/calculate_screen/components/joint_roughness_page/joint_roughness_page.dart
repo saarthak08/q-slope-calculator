@@ -31,11 +31,12 @@ class _JointRoughnessPageState extends State<JointRoughnessPage>
 
   @override
   void initState() {
-    QSlope? qSlope = widget.qSlope.value;
+    QSlope qSlope = widget.qSlope.value;
     _jointRoughness.text =
         qSlope.jointCharacter?.jointRoughness.toString() ?? "";
     _jointAlteration.text =
         qSlope.jointCharacter?.jointAlteration.toString() ?? "";
+
     super.initState();
   }
 

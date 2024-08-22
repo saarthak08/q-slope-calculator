@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
+import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/active_stress_page/active_stress_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
@@ -35,6 +36,31 @@ class _CalculateScreenState extends State<CalculateScreen>
   @override
   void initState() {
     _tabController = TabController(length: 5, vsync: this);
+    _tabController?.addListener(() {
+      if (_tabController!.indexIsChanging &&
+          (_tabController!.index == 1 || _tabController!.index == 2)) {
+        QSlope? qSlope = widget.qSlope;
+        if (qSlope == null ||
+            ((qSlope.blockSize == null ||
+                qSlope.blockSize!.jointSetNumber == null ||
+                qSlope.blockSize!.numberOfJoints == null ||
+                qSlope.blockSize!.jointVolume == null ||
+                qSlope.blockSize!.numberOfRandomSets == null ||
+                qSlope.blockSize!.areaInSquareMeters == null))) {
+          showGenericDialog(
+              titleText: AppLocalizations.of(context).completeDialogTitle,
+              context: context,
+              label:
+                  AppLocalizations.of(context).pleaseCompleteBlockSizeSection,
+              barrierDismissable: false,
+              hideCancel: true,
+              onOk: () async {
+                _tabController?.animateTo(0, curve: Curves.easeIn);
+                Navigator.pop(context);
+              });
+        }
+      }
+    });
     _qSlope = ValueNotifier(widget.qSlope ?? QSlope(id: uuid.v4()));
     _errorTabs = ValueNotifier(List.filled(5, widget.qSlope == null));
     super.initState();
