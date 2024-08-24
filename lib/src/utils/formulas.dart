@@ -73,14 +73,15 @@ double calculateOFactorByRomananAdjustmentFactor(
 }
 
 double calculateQSlope(QSlope qSlope) {
-  return ((qSlope.blockSize?.rqd ?? 0) /
-          (qSlope.blockSize?.numberOfJoints ?? 1)) *
-      ((qSlope.jointCharacter?.jointRoughness ?? 0) /
-          (qSlope.jointCharacter?.jointAlteration ?? 1)) *
-      (qSlope.oFactor?.oFactor ?? 0) *
-      ((qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber ??
-              0) /
-          (qSlope.activeStress?.srf ?? 1));
+  // return ((qSlope.blockSize?.rqd ?? 0) /
+  //         (qSlope.blockSize?.numberOfJoints ?? 1)) *
+  //     ((qSlope.jointCharacter?.jointRoughness ?? 0) /
+  //         (qSlope.jointCharacter?.jointAlteration ?? 1)) *
+  //     (qSlope.oFactor?.oFactor ?? 0) *
+  //     ((qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber ??
+  //             0) /
+  //         (qSlope.activeStress?.srf ?? 1));
+  return 0;
 }
 
 double calculateJointSetNumber(

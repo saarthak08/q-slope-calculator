@@ -26,8 +26,7 @@ class ActiveStressPage extends StatefulWidget {
   State<ActiveStressPage> createState() => _ActiveStressPageState();
 }
 
-class _ActiveStressPageState extends State<ActiveStressPage>
-    with AutomaticKeepAliveClientMixin {
+class _ActiveStressPageState extends State<ActiveStressPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController srfA = TextEditingController();
   final TextEditingController srfB = TextEditingController();
@@ -90,7 +89,6 @@ class _ActiveStressPageState extends State<ActiveStressPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -350,7 +348,4 @@ class _ActiveStressPageState extends State<ActiveStressPage>
     _qSlope.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

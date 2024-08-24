@@ -19,8 +19,7 @@ class ExternalFactorsPage extends StatefulWidget {
   State<ExternalFactorsPage> createState() => _ExternalFactorsPageState();
 }
 
-class _ExternalFactorsPageState extends State<ExternalFactorsPage>
-    with AutomaticKeepAliveClientMixin {
+class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _jWice = TextEditingController();
   final tabIndex = 3;
@@ -48,7 +47,6 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -344,7 +342,4 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage>
     _jWice.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

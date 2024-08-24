@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class ActiveStress {
-  double srfA;
-  double srfB;
-  double srfC;
+  double? srfA;
+  double? srfB;
+  double? srfC;
 
   /// [MAX_AMONG_SRFA_SRFB_SRFC]
-  double srf;
+  double? srf;
 
   ActiveStress({
     this.srfA = 0,

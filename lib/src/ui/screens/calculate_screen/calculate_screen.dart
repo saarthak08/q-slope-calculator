@@ -8,7 +8,7 @@ import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/active_stress_page/active_stress_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/block_size_page/block_size_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/external_factors_page/external_factors_page.dart';
-import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_roughness_page/joint_roughness_page.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/joint_character_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/tab_widget.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
@@ -43,9 +43,8 @@ class _CalculateScreenState extends State<CalculateScreen>
         if (qSlope.blockSize == null ||
             qSlope.blockSize!.jointSetNumber == null ||
             qSlope.blockSize!.numberOfJoints == null ||
-            qSlope.blockSize!.jointVolume == null ||
             qSlope.blockSize!.numberOfRandomSets == null ||
-            qSlope.blockSize!.areaInSquareMeters == null) {
+            qSlope.blockSize!.rqd == null) {
           showGenericDialog(
               titleText: AppLocalizations.of(context).completeDialogTitle,
               context: context,
@@ -161,7 +160,7 @@ class _CalculateScreenState extends State<CalculateScreen>
             errorTabs: _errorTabs,
             qSlope: _qSlope,
           ),
-          JointRoughnessPage(
+          JointCharacterPage(
             qSlope: _qSlope,
             errorTabs: _errorTabs,
           ),

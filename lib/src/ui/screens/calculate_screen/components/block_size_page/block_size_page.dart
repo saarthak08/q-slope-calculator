@@ -25,8 +25,7 @@ class BlockSizePage extends StatefulWidget {
   State<BlockSizePage> createState() => _BlockSizePageState();
 }
 
-class _BlockSizePageState extends State<BlockSizePage>
-    with AutomaticKeepAliveClientMixin {
+class _BlockSizePageState extends State<BlockSizePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _locationIdController = TextEditingController();
   final TextEditingController _lithologyController = TextEditingController();
@@ -90,44 +89,32 @@ class _BlockSizePageState extends State<BlockSizePage>
   }
 
   void _calculateRqdByJointVolumeMethod() {
-    if (_numberOfJointsController.text.isNotEmpty &&
-        _numberOfRandomSetsController.text.isNotEmpty) {
-      double numberOfJoints =
-          double.tryParse(_numberOfJointsController.text) ?? 0;
-      double numberOfRandomSets =
-          double.tryParse(_numberOfRandomSetsController.text) ?? 0;
+    double? numberOfJoints = double.tryParse(_numberOfJointsController.text);
+    double? numberOfRandomSets =
+        double.tryParse(_numberOfRandomSetsController.text);
+    if (numberOfRandomSets != null && numberOfJoints != null) {
       double jointSetNumber =
           calculateJointSetNumber(numberOfJoints, numberOfRandomSets);
       _jointSetNumberController.text = jointSetNumber.toString();
+      _setQSlope();
     }
-    if (_numberOfJointsController.text.isNotEmpty &&
-        _numberOfRandomSetsController.text.isNotEmpty &&
+    if (numberOfJoints != null &&
+        numberOfRandomSets != null &&
         _areaController.text.isNotEmpty &&
         double.tryParse(_areaController.text) != 0 &&
         _jointSpacingControllers.value.isNotEmpty &&
         _jointSetNumberController.text.isNotEmpty) {
-      int index = 0;
       bool emptySpacing = false;
-      int numberOfJoints = int.tryParse(_numberOfJointsController.text) ?? 0;
       for (var controller in _jointSpacingControllers.value) {
-        if (index == numberOfJoints) {
-          break;
-        }
         if ((double.tryParse(controller.text) ?? 0) == 0.0) {
           emptySpacing = true;
           break;
         }
-        index++;
       }
       if (!emptySpacing) {
         List<double> spacings = List.empty(growable: true);
-        int index = 0;
         for (var controller in _jointSpacingControllers.value) {
-          if (index == numberOfJoints) {
-            break;
-          }
           spacings.add(double.tryParse(controller.text) ?? 1);
-          index++;
         }
         jointSpacings.value = spacings;
         jointVolume.value = double.tryParse(calculateJointVolume(
@@ -172,7 +159,7 @@ class _BlockSizePageState extends State<BlockSizePage>
           int.tryParse(_numberOfJointsController.text);
       qSlope.blockSize?.numberOfRandomSets =
           int.tryParse(_numberOfRandomSetsController.text);
-      qSlope.blockSize?.rqd = rqd.value ?? 0;
+      qSlope.blockSize?.rqd = rqd.value;
       qSlope.blockSize?.rqdByJvCalculationType = rqdByJvCalculationType.value;
       qSlope.blockSize?.rqdCalculationType = rqdCalculationType;
       qSlope.blockSize?.sumOfCorePieces =
@@ -191,7 +178,6 @@ class _BlockSizePageState extends State<BlockSizePage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -205,6 +191,7 @@ class _BlockSizePageState extends State<BlockSizePage>
             key: formKey,
             onChanged: () {
               formKey.currentState?.validate();
+              _setQSlope();
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,7 +409,4 @@ class _BlockSizePageState extends State<BlockSizePage>
     _jointSpacingControllers.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class ExternalFactors {
   /// [J_WICE]
-  double environmentalAndGeologicalConditionalNumber;
+  double? environmentalAndGeologicalConditionalNumber;
 
   ExternalFactorsStructureType? externalFactorsStructureType;
 

@@ -19,8 +19,7 @@ class OFactorPage extends StatefulWidget {
   State<OFactorPage> createState() => _OFactorPageState();
 }
 
-class _OFactorPageState extends State<OFactorPage>
-    with AutomaticKeepAliveClientMixin {
+class _OFactorPageState extends State<OFactorPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _oFactor = TextEditingController();
   final TextEditingController _alphaI = TextEditingController();
@@ -89,7 +88,6 @@ class _OFactorPageState extends State<OFactorPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -233,7 +231,4 @@ class _OFactorPageState extends State<OFactorPage>
     _oFactorTypeOfFailure.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -44,25 +44,28 @@ class CustomTextFormField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               titleText != null
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getViewPortWidth(context) * 0.01),
-                      child: Text(
-                        titleText ?? "",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                            fontSize: getBodyFontSize(context)),
-                      ))
+                  ? Flexible(
+                      flex: 10,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: getViewPortWidth(context) * 0.01),
+                          child: Text(
+                            titleText ?? "",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87,
+                                fontSize: getBodyFontSize(context)),
+                          )))
                   : Container(),
               onClickIcon != null && icon != null
-                  ? InkWell(
+                  ? Flexible(
+                      child: InkWell(
                       onTap: onClickIcon,
                       child: Icon(
                         icon,
                         size: 20,
                       ),
-                    )
+                    ))
                   : Container()
             ]),
         titleText != null

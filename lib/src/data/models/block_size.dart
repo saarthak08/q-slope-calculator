@@ -18,7 +18,7 @@ class BlockSize {
 
   RqdByJvCalculationType? rqdByJvCalculationType;
 
-  double rqd;
+  double? rqd;
 
   BlockSize({
     this.numberOfJoints,

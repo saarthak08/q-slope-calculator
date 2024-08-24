@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class OFactor {
-  double oFactor;
+  double? oFactor;
 
   OFactorCalculationType? oFactorCalculationType;
 
