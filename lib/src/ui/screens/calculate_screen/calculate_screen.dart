@@ -12,6 +12,7 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/jo
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_page.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/tab_widget.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 import 'package:uuid/uuid.dart';
@@ -71,7 +72,7 @@ class _CalculateScreenState extends State<CalculateScreen>
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.teal,
+          color: primaryColor,
           onPressed: () {
             Navigator.pop(context);
           },
@@ -83,7 +84,7 @@ class _CalculateScreenState extends State<CalculateScreen>
           overflow: TextOverflow.visible,
         ),
         bottom: TabBar(
-            dividerColor: Colors.teal.shade100,
+            dividerColor: primaryColorShade100,
             controller: _tabController,
             tabAlignment: ResponsiveBreakpoints.of(context).screenWidth < 700
                 ? TabAlignment.start
@@ -145,9 +146,9 @@ class _CalculateScreenState extends State<CalculateScreen>
                       }
                     }
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.delete,
-                    color: Colors.teal,
+                    color: primaryColor,
                   ))
               : Container(),
         ],

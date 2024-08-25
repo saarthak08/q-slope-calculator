@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class IllustrationWidget extends StatelessWidget {
   final String assetPath;
@@ -61,14 +62,14 @@ class IllustrationWidget extends StatelessWidget {
                           backgroundColor:
                               WidgetStateProperty.resolveWith((states) {
                             if (states.contains(WidgetState.pressed)) {
-                              return Colors.teal.withOpacity(0.3);
+                              return primaryColor.withOpacity(0.3);
                             }
                             return Colors.transparent;
                           }),
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
-                              side: const BorderSide(
-                                  color: Colors.teal,
+                              side: BorderSide(
+                                  color: primaryColor,
                                   style: BorderStyle.solid))),
                           elevation: WidgetStateProperty.all(0),
                           fixedSize: WidgetStateProperty.all<Size>(

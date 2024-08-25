@@ -8,6 +8,7 @@ import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class JointCharacterPage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
@@ -186,7 +187,7 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                                 .joinCharacterPageAppBarTitle,
                             style: GoogleFonts.poppins(
                                 fontSize: getSubtitleLargeFontSize(context),
-                                color: Colors.teal),
+                                color: primaryColor),
                           ))),
                   Text(
                     AppLocalizations.of(context).jointRoughness,

@@ -13,6 +13,7 @@ import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
 
 class ActiveStressPage extends StatefulWidget {
@@ -119,7 +120,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                 AppLocalizations.of(context).activeStress,
                                 style: GoogleFonts.poppins(
                                     fontSize: getSubtitleLargeFontSize(context),
-                                    color: Colors.teal),
+                                    color: primaryColor),
                               ))),
                       CustomTextFormField(
                         type: const TextInputType.numberWithOptions(
@@ -239,7 +240,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                                     fontSize:
                                                         getSubtitleLargeFontSize(
                                                             context),
-                                                    color: Colors.teal),
+                                                    color: primaryColor),
                                               ))),
                                       Text(
                                         "${AppLocalizations.of(context).qSlopeSymbol} = (${AppLocalizations.of(context).rockQualityDesignationSymbol} / ${AppLocalizations.of(context).jointSetNumberSymbol}) x (${AppLocalizations.of(context).jointRoughnessSymbol} / ${AppLocalizations.of(context).jointAlterationSymbol}) x (${AppLocalizations.of(context).oFactor}) x (${AppLocalizations.of(context).enviornmentalAndGeologicalConditionalNumberSymbol} / ${AppLocalizations.of(context).stressReductionFactorSymbol})",

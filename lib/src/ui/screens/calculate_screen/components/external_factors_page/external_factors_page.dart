@@ -9,6 +9,7 @@ import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class ExternalFactorsPage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
@@ -117,7 +118,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   style: GoogleFonts.poppins(
                                       fontSize:
                                           getSubtitleLargeFontSize(context),
-                                      color: Colors.teal),
+                                      color: primaryColor),
                                 ))),
                         Padding(
                             padding: EdgeInsets.symmetric(

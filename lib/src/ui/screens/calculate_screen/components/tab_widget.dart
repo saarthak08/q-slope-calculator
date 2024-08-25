@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class TabWidget extends StatelessWidget {
@@ -38,7 +39,7 @@ class TabWidget extends StatelessWidget {
                         width: getViewPortHeight(context) * 0.01,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Colors.teal,
+                          color: primaryColor,
                         ),
                       ))
                     : Container())

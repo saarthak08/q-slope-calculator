@@ -4,6 +4,7 @@ import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class BlockSizePageBasicInfoWidget extends StatelessWidget {
   final TextEditingController locationIdController;
@@ -26,7 +27,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                     .blockSizePageBasicInformationSubTitle,
                 style: GoogleFonts.poppins(
                     fontSize: getSubtitleLargeFontSize(context),
-                    color: Colors.teal),
+                    color: primaryColor),
               ))),
       CustomTextFormField(
         textInputAction: TextInputAction.next,

@@ -163,5 +163,9 @@
     "ok": "OK",
     "cancel": "Cancel",
     "completeDialogTitle": "Caution!",
-    "pleaseCompleteBlockSizeSection": "Please complete the Basic Info and Block Size section before proceeding to this step."
+    "pleaseCompleteBlockSizeSection": "Please complete the Basic Info and Block Size section before proceeding to this step.",
+    "exportFileTitle": "Export Excel File",
+    "exportFileContent": "Do you want to export calculations as an excel file?",
+    "exportSuccessful": "File exported successfully as {fileName}",
+    "exportFailed": "File export failed"
 }
