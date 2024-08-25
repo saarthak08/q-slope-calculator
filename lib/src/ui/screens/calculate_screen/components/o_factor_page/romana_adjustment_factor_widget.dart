@@ -58,7 +58,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
       double betaI = double.tryParse(widget.betaI.text) ?? 0;
       double betaJ = double.tryParse(widget.betaJ.text) ?? 0;
       double betaS = double.tryParse(widget.betaS.text) ?? 0;
-      if (widget.oFactorTypeOfFailure != OFactorTypeOfFailure.planar) {
+      if (widget.oFactorTypeOfFailure == OFactorTypeOfFailure.planar) {
         if (widget.alphaJ.text.isNotEmpty &&
             widget.alphaS.text.isNotEmpty &&
             widget.betaJ.text.isNotEmpty &&
