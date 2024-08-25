@@ -80,7 +80,7 @@ double calculateQSlope(QSlope qSlope) {
   if (oFactor != null) {
     if (oFactor.oFactorCalculationType == OFactorCalculationType.value) {
       qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
-              (qSlope.blockSize?.numberOfJoints ?? 1)) *
+              (qSlope.blockSize?.jointSetNumber ?? 1)) *
           ((qSlope.jointCharacter!
                   .jointRoughness![oFactor.indexOfFirstJoint!]) /
               (qSlope.jointCharacter!
@@ -103,7 +103,7 @@ double calculateQSlope(QSlope qSlope) {
       return qSlopeValue;
     } else {
       return qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
-              (qSlope.blockSize?.numberOfJoints ?? 1)) *
+              (qSlope.blockSize?.jointSetNumber ?? 1)) *
           ((qSlope.jointCharacter!
                   .jointRoughness![oFactor.indexOfFirstJoint!]) /
               (qSlope.jointCharacter!
