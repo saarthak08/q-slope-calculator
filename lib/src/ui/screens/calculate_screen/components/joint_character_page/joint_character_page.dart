@@ -303,11 +303,12 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                                     ),
                                     JointCharacterValueWidget(
                                       readOnly: true,
+                                      shouldIncludeIndexInPlaceholderText:
+                                          false,
                                       inputTitle: AppLocalizations.of(context)
                                           .jointRoughnessWithLimits,
                                       inputPlaceholderText:
-                                          AppLocalizations.of(context)
-                                              .jointRoughnessSymbol,
+                                          "${AppLocalizations.of(context).jointRoughnessSymbol} = ${AppLocalizations.of(context).jointWavynessSymbol} x ${AppLocalizations.of(context).jointSmoothnessSymbol}",
                                       validateInput: (value) {
                                         if (value == null || value.isEmpty) {
                                           return "";
@@ -327,6 +328,9 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                                   ],
                                 )
                               : Container()),
+                  SizedBox(
+                    height: getViewPortHeight(context) * 0.02,
+                  ),
                   Text(
                     AppLocalizations.of(context).jointAlteration,
                     style: TextStyle(

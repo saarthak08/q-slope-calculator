@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 
 double minJointRoughnessValue = 0.5;
@@ -73,15 +74,62 @@ double calculateOFactorByRomananAdjustmentFactor(
 }
 
 double calculateQSlope(QSlope qSlope) {
-  // return ((qSlope.blockSize?.rqd ?? 0) /
-  //         (qSlope.blockSize?.numberOfJoints ?? 1)) *
-  //     ((qSlope.jointCharacter?.jointRoughness ?? 0) /
-  //         (qSlope.jointCharacter?.jointAlteration ?? 1)) *
-  //     (qSlope.oFactor?.oFactor ?? 0) *
-  //     ((qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber ??
-  //             0) /
-  //         (qSlope.activeStress?.srf ?? 1));
+  OFactor? oFactor = qSlope.oFactor;
+  double qSlopeValue;
+  if (oFactor != null) {
+    if (oFactor.oFactorCalculationType == OFactorCalculationType.value) {
+      qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+              (qSlope.blockSize?.numberOfJoints ?? 1)) *
+          ((qSlope.jointCharacter!
+                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!
+                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          (oFactor.oFactorForFirstJoint ?? 0) *
+          ((qSlope.externalFactors
+                      ?.environmentalAndGeologicalConditionalNumber ??
+                  0) /
+              (qSlope.activeStress?.srf ?? 1));
+      if (oFactor.indexOfSecondJoint != null &&
+          oFactor.oFactorForSecondJoint != null &&
+          oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
+        return qSlopeValue *
+            (((qSlope.jointCharacter!
+                        .jointRoughness![oFactor.indexOfSecondJoint!]) /
+                    (qSlope.jointCharacter!
+                        .jointAlteration![oFactor.indexOfSecondJoint!])) *
+                (oFactor.oFactorForSecondJoint ?? 0));
+      }
+    } else {
+      return qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+              (qSlope.blockSize?.numberOfJoints ?? 1)) *
+          ((qSlope.jointCharacter!
+                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!
+                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          (oFactor.oFactorForFirstJoint ?? 0) *
+          ((qSlope.externalFactors
+                      ?.environmentalAndGeologicalConditionalNumber ??
+                  0) /
+              (qSlope.activeStress?.srf ?? 1));
+    }
+  }
   return 0;
+}
+
+double calculateRatingForF1(double f1) {
+  return 16 / 25 - ((3 / 500) * (atan((1 / 10) * (f1.abs() - 17))));
+}
+
+double calculateRatingForF2(double f2) {
+  return 9 / 16 + ((1 / 195) * (atan(((17 / 100) * f2) - 5)));
+}
+
+double calculateRatingForF3NonTopplingFailure(double f3) {
+  return -30 + ((1 / 3) * atan(f3));
+}
+
+double calculateRatingForF3TopplingFailure(double f3) {
+  return -13 - ((1 / 7) * atan(f3 - 120));
 }
 
 double calculateJointSetNumber(

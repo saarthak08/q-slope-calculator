@@ -9,6 +9,7 @@ class JointCharacterValueWidget extends StatelessWidget {
   final String inputTitle;
   final String? imagePath;
   final String? inputPlaceholderText;
+  final bool shouldIncludeIndexInPlaceholderText;
   final bool? readOnly;
   final String? Function(String?)? validateInput;
   final List<TextEditingController>? jointRoughnessControllers;
@@ -25,7 +26,8 @@ class JointCharacterValueWidget extends StatelessWidget {
       this.readOnly,
       this.jointRoughnessControllers,
       this.jointWavynessControllers,
-      this.jointSmoothnessControllers});
+      this.jointSmoothnessControllers,
+      this.shouldIncludeIndexInPlaceholderText = true});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,9 @@ class JointCharacterValueWidget extends StatelessWidget {
                             }
                           },
                           textEditingController: textEditingControllers[index],
-                          placeholderText: "$inputPlaceholderText ${index + 1}",
+                          placeholderText: shouldIncludeIndexInPlaceholderText
+                              ? "$inputPlaceholderText ${index + 1}"
+                              : inputPlaceholderText,
                           validate: validateInput,
                           type: const TextInputType.numberWithOptions(
                               signed: false),
