@@ -29975,66 +29975,67 @@ return A.bE(a,B.cK,s).w.a.b-r.b-r.d},
 b7x(a,b,c){var s,r,q
 for(s=b.length,r=0,q=0;q<s;++q)r+=1/b[q]
 return r+a/(5*Math.sqrt(c))},
-b7z(a){var s,r,q,p,o,n,m,l,k,j,i=null,h=a.f
-if(h!=null){s=h.a
+b7z(a){var s,r,q,p,o,n,m,l,k=null,j=a.f
+if(j!=null){s=j.a
 r=a.d
 if(s===B.eE){s=r==null
-q=s?i:r.z
+q=s?k:r.z
 if(q==null)q=0
-s=s?i:r.a
+s=s?k:r.a
 if(s==null)s=1
 r=a.e.d
 r.toString
-p=h.Q
+p=j.Q
 p.toString
 p=J.dq(r,p)
 r=a.e.e
 r.toString
-o=h.Q
+o=j.Q
 o.toString
 o=J.dq(r,o)
-r=h.at
+r=j.at
 if(r==null)r=0
 n=a.r
-n=n==null?i:n.a
+n=n==null?k:n.a
 if(n==null)n=0
 m=a.w
-m=m==null?i:m.d
+m=m==null?k:m.d
 if(m==null)m=1
-l=h.as
-if(l!=null&&h.ax!=null&&h.z===B.b_){k=a.e.d
-k.toString
-l.toString
-l=J.dq(k,l)
-k=a.e.e
-k.toString
-j=h.as
-j.toString
-j=J.dq(k,j)
-k=h.ax
-if(k==null)k=0
-return q/s*(p/o)*r*(n/m)*(l/j*k)}}else{s=r==null
-q=s?i:r.z
+l=q/s*(p/o)*r*(n/m)
+s=j.as
+if(s!=null&&j.ax!=null&&j.z===B.b_){r=a.e.d
+r.toString
+s.toString
+s=J.dq(r,s)
+r=a.e.e
+r.toString
+q=j.as
+q.toString
+q=J.dq(r,q)
+r=j.ax
+if(r==null)r=0
+return l*(s/q*r)}return l}else{s=r==null
+q=s?k:r.z
 if(q==null)q=0
-s=s?i:r.a
+s=s?k:r.a
 if(s==null)s=1
 r=a.e.d
 r.toString
-p=h.Q
+p=j.Q
 p.toString
 p=J.dq(r,p)
 r=a.e.e
 r.toString
-o=h.Q
+o=j.Q
 o.toString
 o=J.dq(r,o)
-r=h.at
+r=j.at
 if(r==null)r=0
 n=a.r
-n=n==null?i:n.a
+n=n==null?k:n.a
 if(n==null)n=0
 m=a.w
-m=m==null?i:m.d
+m=m==null?k:m.d
 if(m==null)m=1
 return q/s*(p/o)*r*(n/m)}}return 0},
 aKy(a){return 0.64-0.006*Math.atan(0.1*(Math.abs(a)-17))},
@@ -93235,15 +93236,15 @@ I(a){var s,r,q,p,o=this,n=null,m=A.cV(a)*0.04,l=A.at(a)*0.02,k=A.at(a),j=A.at(a)
 A.C(a,B.e,i).toString
 j=A.dH(new A.bk(new A.a9(0,k*0.02,0,j*0.03),A.as("Active Stress",n,n,n,n,A.kb().$2$color$fontSize(B.aq,A.yQ(a)),n,n),n),n,n)
 A.C(a,B.e,i).toString
-k=A.e4(n,n,new A.aue(o),n,n,n,o.e,B.bw,"SRFa",B.aR,new A.auf(a))
+k=A.e4(n,n,new A.aue(o),n,n,n,o.e,B.bw,"SRFa (2.5 - 20)",B.aR,new A.auf(a))
 s=A.aF(n,A.at(a)*0.02,n)
 A.C(a,B.e,i).toString
-r=A.e4(n,n,new A.aug(o),n,n,n,o.f,B.bw,"SRFb",B.aR,new A.auh(a))
+r=A.e4(n,n,new A.aug(o),n,n,n,o.f,B.bw,"SRFb (1 - 200)",B.aR,new A.auh(a))
 q=A.aF(n,A.at(a)*0.02,n)
 A.C(a,B.e,i).toString
 i=o.x
 p=t.PM
-return A.fO(n,A.wB(new A.bk(new A.a9(m,l,m,l),A.PQ(A.ct(A.a([j,k,s,r,q,A.e4(n,n,new A.aui(o),n,n,n,o.r,B.bw,"SRFc",B.aR,new A.auj(a)),A.j4(new A.auk(o),i,p),A.aF(n,A.at(a)*0.1,n),A.j4(new A.aul(o),i,p)],t.p),B.U,B.t,B.x),o.d,new A.aum(o)),n),n,B.R,n,n,B.ao),B.R,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.aun(a),n,n,n,n,n,n)},
+return A.fO(n,A.wB(new A.bk(new A.a9(m,l,m,l),A.PQ(A.ct(A.a([j,k,s,r,q,A.e4(n,n,new A.aui(o),n,n,n,o.r,B.bw,"SRFc (1 - 24)",B.aR,new A.auj(a)),A.j4(new A.auk(o),i,p),A.aF(n,A.at(a)*0.1,n),A.j4(new A.aul(o),i,p)],t.p),B.U,B.t,B.x),o.d,new A.aum(o)),n),n,B.R,n,n,B.ao),B.R,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.aun(a),n,n,n,n,n,n)},
 l(){var s=this,r=s.w,q=r.G$=$.am()
 r.F$=0
 r=s.e
@@ -93810,6 +93811,7 @@ n=o==null
 if(!n)o.d=q.x
 if(!n)o.c=q.w
 if(!n)o.b=q.r
+if(!n)o.e=q.y
 q.a.c.sm(r)
 J.e1(q.a.d.a,3,!1)}else J.e1(s.d.a,3,!0)
 o=q.a.d
@@ -93839,7 +93841,7 @@ q=A.cp(A.a([q,A.dt(A.as("By External Factors",a1,a1,a1,a1,A.bx(a1,a1,a1,a1,a1,a1
 n=A.aF(a1,A.at(a8)*0.03,a1)
 m=a0.y
 if(m===B.ly){A.C(a8,B.e,a7).toString
-a7=A.e4(a1,a1,a1,a1,a1,a1,a0.e,B.bw,"Environmental and Geological Conditional Number (Jwice)",B.aR,new A.axO(a8))}else if(m===B.lz){m=A.cV(a8)*0.01
+a7=A.e4(a1,a1,a1,a1,a1,a1,a0.e,B.bw,"Environmental and Geological Conditional Number (Jwice) (0.05 - 1)",B.aR,new A.axO(a8))}else if(m===B.lz){m=A.cV(a8)*0.01
 A.C(a8,B.e,a7).toString
 m=A.cp(A.a([new A.dJ(10,B.aN,new A.bk(new A.a9(m,0,m,0),A.as(a2,a1,a1,a1,a1,A.bx(a1,a1,B.J,a1,a1,a1,a1,a1,a1,a1,a1,A.c9(a8),a1,a1,B.I,a1,a1,!0,a1,a1,a1,a1,a1,a1,a1,a1),a1,a1),a1),a1),new A.dJ(1,B.aN,A.ky(!1,a1,!0,B.qu,a1,!0,a1,a1,a1,a1,a1,a1,a1,a1,a1,new A.axT(a8),a1,a1,a1,a1),a1)],o),B.H,B.t,B.x)
 l=A.aF(a1,A.at(a8)*0.01,a1)
