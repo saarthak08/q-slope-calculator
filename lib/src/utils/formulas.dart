@@ -100,6 +100,7 @@ double calculateQSlope(QSlope qSlope) {
                         .jointAlteration![oFactor.indexOfSecondJoint!])) *
                 (oFactor.oFactorForSecondJoint ?? 0));
       }
+      return qSlopeValue;
     } else {
       return qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
               (qSlope.blockSize?.numberOfJoints ?? 1)) *

@@ -126,7 +126,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             signed: false),
                         textInputAction: TextInputAction.done,
                         textEditingController: srfA,
-                        titleText: AppLocalizations.of(context).srfA,
+                        titleText: AppLocalizations.of(context).srfAInputTitle,
                         validate: (value) {
                           if (value != null &&
                               value.isNotEmpty &&
@@ -149,7 +149,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             signed: false),
                         textInputAction: TextInputAction.done,
                         textEditingController: srfB,
-                        titleText: AppLocalizations.of(context).srfB,
+                        titleText: AppLocalizations.of(context).srfBInputTitle,
                         validate: (value) {
                           if (value != null &&
                               value.isNotEmpty &&
@@ -172,7 +172,7 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             signed: false),
                         textInputAction: TextInputAction.done,
                         textEditingController: srfC,
-                        titleText: AppLocalizations.of(context).srfC,
+                        titleText: AppLocalizations.of(context).srfCInputTitle,
                         validate: (value) {
                           if (value != null &&
                               value.isNotEmpty &&

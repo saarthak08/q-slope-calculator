@@ -65,6 +65,8 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
           _externalFactorsStrengthOfRock;
       qSlope.externalFactors?.externalFactorsStructureType =
           _externalFactorsStructureType;
+      qSlope.externalFactors?.externalFactorsCalculationType =
+          _externalFactorsCalculationType;
       widget.qSlope.value = qSlope;
       widget.errorTabs.value[tabIndex] = false;
     } else {
