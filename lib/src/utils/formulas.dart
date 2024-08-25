@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:q_slope_calculator/src/data/models/external_factors.dart';
+import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 
 double minJointRoughnessValue = 0.5;
@@ -73,12 +75,150 @@ double calculateOFactorByRomananAdjustmentFactor(
 }
 
 double calculateQSlope(QSlope qSlope) {
-  return ((qSlope.blockSize?.rqd ?? 0) /
-          (qSlope.blockSize?.numberOfJoints ?? 1)) *
-      ((qSlope.jointCharacter?.jointRoughness ?? 0) /
-          (qSlope.jointCharacter?.jointAlteration ?? 1)) *
-      (qSlope.oFactor?.oFactor ?? 0) *
-      ((qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber ??
-              0) /
-          (qSlope.activeStress?.srf ?? 1));
+  OFactor? oFactor = qSlope.oFactor;
+  double qSlopeValue;
+  if (oFactor != null) {
+    if (oFactor.oFactorCalculationType == OFactorCalculationType.value) {
+      qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+              (qSlope.blockSize?.jointSetNumber ?? 1)) *
+          ((qSlope.jointCharacter!
+                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!
+                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          (oFactor.oFactorForFirstJoint ?? 0) *
+          ((qSlope.externalFactors
+                      ?.environmentalAndGeologicalConditionalNumber ??
+                  0) /
+              (qSlope.activeStress?.srf ?? 1));
+      if (oFactor.indexOfSecondJoint != null &&
+          oFactor.oFactorForSecondJoint != null &&
+          oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
+        return qSlopeValue *
+            (((qSlope.jointCharacter!
+                        .jointRoughness![oFactor.indexOfSecondJoint!]) /
+                    (qSlope.jointCharacter!
+                        .jointAlteration![oFactor.indexOfSecondJoint!])) *
+                (oFactor.oFactorForSecondJoint ?? 0));
+      }
+      return qSlopeValue;
+    } else {
+      return qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+              (qSlope.blockSize?.jointSetNumber ?? 1)) *
+          ((qSlope.jointCharacter!
+                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!
+                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          (oFactor.oFactorForFirstJoint ?? 0) *
+          ((qSlope.externalFactors
+                      ?.environmentalAndGeologicalConditionalNumber ??
+                  0) /
+              (qSlope.activeStress?.srf ?? 1));
+    }
+  }
+  return 0;
+}
+
+double calculateRatingForF1(double f1) {
+  return 16 / 25 - ((3 / 500) * (atan((1 / 10) * (f1.abs() - 17))));
+}
+
+double calculateRatingForF2(double f2) {
+  return 9 / 16 + ((1 / 195) * (atan(((17 / 100) * f2) - 5)));
+}
+
+double calculateRatingForF3NonTopplingFailure(double f3) {
+  return -30 + ((1 / 3) * atan(f3));
+}
+
+double calculateRatingForF3TopplingFailure(double f3) {
+  return -13 - ((1 / 7) * atan(f3 - 120));
+}
+
+double calculateJointSetNumber(
+    double numberOfJointSets, double numberOfRandomSets) {
+  if (numberOfJointSets == 0) {
+    return 0.5;
+  } else if (numberOfJointSets == 1 && numberOfRandomSets == 0) {
+    return 2;
+  } else if (numberOfJointSets == 1 && numberOfRandomSets > 0) {
+    return 3;
+  } else if (numberOfJointSets == 2 && numberOfRandomSets == 0) {
+    return 4;
+  } else if (numberOfJointSets == 2 && numberOfRandomSets > 0) {
+    return 6;
+  } else if (numberOfJointSets == 3 && numberOfRandomSets == 0) {
+    return 9;
+  } else if (numberOfJointSets == 3 && numberOfRandomSets > 0) {
+    return 12;
+  } else if (numberOfJointSets == 4) {
+    return 15;
+  } else {
+    return 20;
+  }
+}
+
+double calculateJwice(
+    ExternalFactorsEnvironmentConditions environmentalConditions,
+    ExternalFactorsStrengthOfRock strengthOfRock,
+    ExternalFactorsStructureType structureType) {
+  if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.desertEnvironment) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 1.0;
+      } else {
+        return 0.7;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.8;
+      } else {
+        return 0.5;
+      }
+    }
+  } else if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.iceWedging) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.7;
+      } else {
+        return 0.6;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.5;
+      } else {
+        return 0.3;
+      }
+    }
+  } else if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.tropicalStorms) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.5;
+      } else {
+        return 0.3;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.1;
+      } else {
+        return 0.05;
+      }
+    }
+  } else {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.9;
+      } else {
+        return 0.5;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.3;
+      } else {
+        return 0.2;
+      }
+    }
+  }
 }

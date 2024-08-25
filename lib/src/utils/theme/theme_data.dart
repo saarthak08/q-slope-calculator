@@ -5,7 +5,7 @@ import 'package:q_slope_calculator/src/utils/color_pallet.dart';
 ThemeData getThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: AppBarTheme(
-          titleTextStyle: GoogleFonts.montserrat(color: Colors.teal),
+          titleTextStyle: GoogleFonts.montserrat(color: primaryColor),
           backgroundColor: white),
       useMaterial3: true,
       textTheme: TextTheme(
@@ -14,10 +14,13 @@ ThemeData getThemeData(BuildContext context) {
         headlineMedium: GoogleFonts.poppins(),
       ),
       scaffoldBackgroundColor: white,
-      colorSchemeSeed: Colors.teal,
-      splashColor: Colors.teal.withOpacity(0.2),
+      colorSchemeSeed: primaryColor,
+      splashColor: primaryColor.withOpacity(0.2),
       disabledColor: Colors.grey,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scrollbarTheme: const ScrollbarThemeData(
           thumbColor: WidgetStatePropertyAll(Colors.grey)));
 }
+
+Color primaryColor = Colors.teal;
+Color primaryColorShade100 = Colors.teal.shade100;

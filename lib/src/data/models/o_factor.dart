@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 class OFactor {
-  double oFactor;
-
   OFactorCalculationType? oFactorCalculationType;
 
   /// [ROMANA_ADJUSTMENT_FACTOR]
@@ -31,9 +29,22 @@ class OFactor {
   // TYPE OF FAILURE
   OFactorTypeOfFailure? oFactorTypeOfFailure;
 
+  int? indexOfFirstJoint;
+
+  int? indexOfSecondJoint;
+
+  double? oFactorForFirstJoint;
+
+  double? oFactorForSecondJoint;
+
+  double? ratingForF1;
+
+  double? ratingForF2;
+
+  double? ratingForF3;
+
   OFactor(
-      {this.oFactor = 0,
-      this.oFactorCalculationType,
+      {this.oFactorCalculationType,
       this.f1,
       this.f2,
       this.f3,
@@ -43,7 +54,14 @@ class OFactor {
       this.betaI,
       this.betaJ,
       this.betaS,
-      this.oFactorTypeOfFailure});
+      this.indexOfFirstJoint,
+      this.indexOfSecondJoint,
+      this.oFactorForFirstJoint,
+      this.oFactorForSecondJoint,
+      this.oFactorTypeOfFailure,
+      this.ratingForF1,
+      this.ratingForF2,
+      this.ratingForF3});
 
   OFactor copyWith(
       {double? oFactor,
@@ -57,9 +75,15 @@ class OFactor {
       double? betaI,
       double? betaJ,
       double? betaS,
+      int? indexOfFirstJoint,
+      int? indexOfSecondJoint,
+      double? oFactorForFirstJoint,
+      double? oFactorForSecondJoint,
+      double? ratingForF1,
+      double? ratingForF2,
+      double? ratingForF3,
       OFactorTypeOfFailure? oFactorTypeOfFailure}) {
     return OFactor(
-        oFactor: oFactor ?? this.oFactor,
         oFactorCalculationType:
             oFactorCalculationType ?? this.oFactorCalculationType,
         f1: f1 ?? this.f1,
@@ -71,30 +95,43 @@ class OFactor {
         betaI: betaI ?? this.betaI,
         betaJ: betaJ ?? this.betaJ,
         betaS: betaS ?? this.betaS,
+        ratingForF1: ratingForF1 ?? this.ratingForF1,
+        ratingForF2: ratingForF2 ?? this.ratingForF2,
+        ratingForF3: ratingForF3 ?? this.ratingForF3,
+        indexOfFirstJoint: indexOfFirstJoint ?? this.indexOfFirstJoint,
+        indexOfSecondJoint: indexOfSecondJoint ?? this.indexOfSecondJoint,
+        oFactorForFirstJoint: oFactorForFirstJoint ?? this.oFactorForFirstJoint,
+        oFactorForSecondJoint:
+            oFactorForSecondJoint ?? this.oFactorForSecondJoint,
         oFactorTypeOfFailure:
             oFactorTypeOfFailure ?? this.oFactorTypeOfFailure);
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'oFactor': oFactor,
       'oFactorCalculationType': oFactorCalculationType?.name,
       'f1': f1,
       'f2': f2,
       'f3': f3,
+      'ratingForF1': ratingForF1,
+      'ratingForF2': ratingForF2,
+      'ratingForF3': ratingForF3,
       'alphaI': alphaI,
       'alphaJ': alphaJ,
       'alphaS': alphaS,
       'betaI': betaI,
       'betaJ': betaJ,
       'betaS': betaS,
+      'indexOfFirstJoint': indexOfFirstJoint,
+      'indexOfSecondJoint': indexOfSecondJoint,
+      'oFactorForFirstJoint': oFactorForFirstJoint,
+      'oFactorForSecondJoint': oFactorForSecondJoint,
       'oFactorTypeOfFailure': oFactorTypeOfFailure?.name
     };
   }
 
   factory OFactor.fromMap(Map<String, dynamic> map) {
     return OFactor(
-        oFactor: map['oFactor'] as double,
         oFactorCalculationType: map['oFactorCalculationType'] != null
             ? map['oFactorCalculationType'] ==
                     OFactorCalculationType.romanaAdjacentFactor.name
@@ -110,6 +147,24 @@ class OFactor {
         betaI: map['betaI'] != null ? map['betaI'] as double : null,
         betaJ: map['betaJ'] != null ? map['betaJ'] as double : null,
         betaS: map['betaS'] != null ? map['betaS'] as double : null,
+        ratingForF1:
+            map['ratingForF1'] != null ? map['ratingForF1'] as double : null,
+        ratingForF2:
+            map['ratingForF2'] != null ? map['ratingForF2'] as double : null,
+        ratingForF3:
+            map['ratingForF3'] != null ? map['ratingForF3'] as double : null,
+        indexOfFirstJoint: map['indexOfFirstJoint'] != null
+            ? map['indexOfFirstJoint'] as int
+            : null,
+        indexOfSecondJoint: map['indexOfSecondJoint'] != null
+            ? map['indexOfSecondJoint'] as int
+            : null,
+        oFactorForFirstJoint: map['oFactorForFirstJoint'] != null
+            ? map['oFactorForFirstJoint'] as double
+            : null,
+        oFactorForSecondJoint: map['oFactorForSecondJoint'] != null
+            ? map['oFactorForSecondJoint'] as double
+            : null,
         oFactorTypeOfFailure: map['oFactorTypeOfFailure'] != null
             ? map['oFactorTypeOfFailure'] == OFactorTypeOfFailure.planar.name
                 ? OFactorTypeOfFailure.planar
@@ -127,40 +182,52 @@ class OFactor {
 
   @override
   String toString() {
-    return 'OFactor(oFactor: $oFactor, oFactorCalculationType: ${oFactorCalculationType?.name},  f1: $f1, f2: $f2, f3: $f3, alphaI: $alphaI, alphaJ: $alphaJ, alphaS: $alphaS, betaI: $betaI, betaJ: $betaJ, betaS: $betaS), oFactorTypeOfFailure: ${oFactorTypeOfFailure?.name}';
+    return 'OFactor(ratingForF1: $ratingForF1, ratingForF2: $ratingForF2, ratingForF3: $ratingForF3, indexOfFirstJoint: $indexOfFirstJoint, indexOfSecondJoint: $indexOfSecondJoint, oFactorForFirstJoint: $oFactorForFirstJoint, oFactorForSecondJoint: $oFactorForSecondJoint, oFactorCalculationType: ${oFactorCalculationType?.name},  f1: $f1, f2: $f2, f3: $f3, alphaI: $alphaI, alphaJ: $alphaJ, alphaS: $alphaS, betaI: $betaI, betaJ: $betaJ, betaS: $betaS), oFactorTypeOfFailure: ${oFactorTypeOfFailure?.name}';
   }
 
   @override
   bool operator ==(covariant OFactor other) {
     if (identical(this, other)) return true;
 
-    return other.oFactor == oFactor &&
-        other.oFactorCalculationType == oFactorCalculationType &&
+    return other.oFactorCalculationType == oFactorCalculationType &&
         other.f1 == f1 &&
         other.f2 == f2 &&
         other.f3 == f3 &&
+        other.ratingForF1 == ratingForF1 &&
+        other.ratingForF2 == ratingForF2 &&
+        other.ratingForF3 == ratingForF3 &&
         other.alphaI == alphaI &&
         other.alphaJ == alphaJ &&
         other.alphaS == alphaS &&
         other.betaI == betaI &&
         other.betaJ == betaJ &&
         other.betaS == betaS &&
+        other.indexOfFirstJoint == indexOfFirstJoint &&
+        other.indexOfSecondJoint == indexOfSecondJoint &&
+        other.oFactorForFirstJoint == oFactorForFirstJoint &&
+        other.oFactorForSecondJoint == oFactorForSecondJoint &&
         other.oFactorTypeOfFailure == oFactorTypeOfFailure;
   }
 
   @override
   int get hashCode {
-    return oFactor.hashCode ^
-        oFactorCalculationType.hashCode ^
+    return oFactorCalculationType.hashCode ^
         f1.hashCode ^
         f2.hashCode ^
         f3.hashCode ^
+        ratingForF1.hashCode ^
+        ratingForF2.hashCode ^
+        ratingForF3.hashCode ^
         alphaI.hashCode ^
         alphaJ.hashCode ^
         alphaS.hashCode ^
         betaI.hashCode ^
         betaJ.hashCode ^
         betaS.hashCode ^
+        indexOfFirstJoint.hashCode ^
+        indexOfSecondJoint.hashCode ^
+        oFactorForFirstJoint.hashCode ^
+        oFactorForSecondJoint.hashCode ^
         oFactorTypeOfFailure.hashCode;
   }
 }

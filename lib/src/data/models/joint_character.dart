@@ -1,41 +1,35 @@
 import 'dart:convert';
 
 class JointCharacter {
-  /// [JR_USING_JRC]
-  double? jointRoughnessQuotient;
-
-  /// [JR_USING_JW_JS]
-  double? jw;
-  double? js;
+  /// [JR_USING_PALMSTROM]
+  List<double>? jointWaviness;
+  List<double>? jointSmoothness;
 
   JrCalculationType? jrCalculationType;
-  double jointRoughness;
 
-  double jointAlteration;
+  List<double>? jointRoughness;
+  List<double>? jointAlteration;
 
   JointCharacter({
-    this.jointRoughness = 0,
-    this.jointRoughnessQuotient,
-    this.jw,
-    this.js,
+    this.jointRoughness,
+    this.jointWaviness,
+    this.jointSmoothness,
     this.jrCalculationType,
-    this.jointAlteration = 0,
+    this.jointAlteration,
   });
 
   JointCharacter copyWith({
-    double? jointRoughness,
-    double? jointRoughnessQuotient,
-    double? jw,
-    double? js,
+    List<double>? jointRoughness,
+    List<double>? jointRoughnessQuotient,
+    List<double>? jw,
+    List<double>? js,
     JrCalculationType? jrCalculationType,
-    double? jointAlteration,
+    List<double>? jointAlteration,
   }) {
     return JointCharacter(
       jointRoughness: jointRoughness ?? this.jointRoughness,
-      jointRoughnessQuotient:
-          jointRoughnessQuotient ?? this.jointRoughnessQuotient,
-      jw: jw ?? this.jw,
-      js: js ?? this.js,
+      jointWaviness: jw ?? jointWaviness,
+      jointSmoothness: js ?? jointSmoothness,
       jrCalculationType: jrCalculationType ?? this.jrCalculationType,
       jointAlteration: jointAlteration ?? this.jointAlteration,
     );
@@ -44,9 +38,8 @@ class JointCharacter {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'jointRoughness': jointRoughness,
-      'jointRoughnessQuotient': jointRoughnessQuotient,
-      'jw': jw,
-      'js': js,
+      'jw': jointWaviness,
+      'js': jointSmoothness,
       'jrCalculationType': jrCalculationType?.name,
       'jointAlteration': jointAlteration,
     };
@@ -54,20 +47,21 @@ class JointCharacter {
 
   factory JointCharacter.fromMap(Map<String, dynamic> map) {
     return JointCharacter(
-      jointRoughness: map['jointRoughness'] as double,
-      jointRoughnessQuotient: map['jointRoughnessQuotient'] != null
-          ? map['jointRoughnessQuotient'] as double
+      jointRoughness: map['jointRoughness'] != null
+          ? (map['jointRoughness'] as List).cast<double>()
           : null,
-      jw: map['jw'] != null ? map['jw'] as double : null,
-      js: map['js'] != null ? map['js'] as double : null,
+      jointWaviness:
+          map['jw'] != null ? (map['jw'] as List).cast<double>() : null,
+      jointSmoothness:
+          map['js'] != null ? (map['js'] as List).cast<double>() : null,
       jrCalculationType: map['jrCalculationType'] != null
           ? map['jrCalculationType'] == JrCalculationType.jr.name
               ? JrCalculationType.jr
-              : map['jrCalculationType'] == JrCalculationType.jrc.name
-                  ? JrCalculationType.jrc
-                  : JrCalculationType.palmstorm
+              : JrCalculationType.palmstorm
           : null,
-      jointAlteration: map['jointAlteration'] as double,
+      jointAlteration: map['jointAlteration'] != null
+          ? (map['jointAlteration'] as List).cast<double>()
+          : null,
     );
   }
 
@@ -78,7 +72,7 @@ class JointCharacter {
 
   @override
   String toString() {
-    return 'JointCharacter(jointRoughness: $jointRoughness, jointRoughnessQuotient: $jointRoughnessQuotient, jw: $jw, js: $js, jrCalculationType: $jrCalculationType, jointAlteration: $jointAlteration)';
+    return 'JointCharacter(jointRoughness: $jointRoughness, jw: $jointWaviness, js: $jointSmoothness, jrCalculationType: $jrCalculationType, jointAlteration: $jointAlteration)';
   }
 
   @override
@@ -86,9 +80,8 @@ class JointCharacter {
     if (identical(this, other)) return true;
 
     return other.jointRoughness == jointRoughness &&
-        other.jointRoughnessQuotient == jointRoughnessQuotient &&
-        other.jw == jw &&
-        other.js == js &&
+        other.jointWaviness == jointWaviness &&
+        other.jointSmoothness == jointSmoothness &&
         other.jrCalculationType == jrCalculationType &&
         other.jointAlteration == jointAlteration;
   }
@@ -96,16 +89,14 @@ class JointCharacter {
   @override
   int get hashCode {
     return jointRoughness.hashCode ^
-        jointRoughnessQuotient.hashCode ^
-        jw.hashCode ^
-        js.hashCode ^
+        jointWaviness.hashCode ^
+        jointSmoothness.hashCode ^
         jrCalculationType.hashCode ^
         jointAlteration.hashCode;
   }
 }
 
 enum JrCalculationType {
-  jrc,
   palmstorm,
   jr;
 }

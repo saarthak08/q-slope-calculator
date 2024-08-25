@@ -8,9 +8,9 @@ import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 class QSlope {
   String id;
 
-  String locationId;
+  String? locationId;
 
-  String lithology;
+  String? lithology;
 
   BlockSize? blockSize;
 
@@ -28,8 +28,8 @@ class QSlope {
 
   QSlope({
     required this.id,
-    required this.locationId,
-    required this.lithology,
+    this.locationId,
+    this.lithology,
     this.blockSize,
     this.jointCharacter,
     this.oFactor,

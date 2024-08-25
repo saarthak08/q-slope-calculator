@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
   final Color? color;
@@ -19,7 +20,7 @@ class CustomProgressIndicator extends StatelessWidget {
             ? CupertinoActivityIndicator(color: color)
             : CircularProgressIndicator(
                 strokeWidth: 1,
-                color: color ?? Colors.teal,
+                color: color ?? primaryColor,
               ));
   }
 }

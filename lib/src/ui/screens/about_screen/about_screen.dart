@@ -8,6 +8,7 @@ import 'package:q_slope_calculator/src/utils/common_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class AboutScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.teal,
+            color: primaryColor,
             onPressed: () {
               Navigator.pop(context);
             },
@@ -45,7 +46,7 @@ class AboutScreen extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context).appName.toUpperCase(),
                   style: GoogleFonts.montserrat(
-                      color: Colors.teal,
+                      color: primaryColor,
                       fontSize: getTitleFontSize(context),
                       fontWeight: FontWeight.w500),
                 ),
@@ -54,7 +55,7 @@ class AboutScreen extends StatelessWidget {
                       .homeScreenAppBarSubtitle(khyatiGupta),
                   textAlign: TextAlign.end,
                   style: GoogleFonts.montserrat(
-                      color: Colors.teal,
+                      color: primaryColor,
                       fontSize: getSubTitleFontSize(context),
                       fontWeight: FontWeight.w500),
                 ),
@@ -68,7 +69,7 @@ class AboutScreen extends StatelessWidget {
                       AppLocalizations.of(context).aboutQSlope,
                       style: GoogleFonts.poppins(
                           fontSize: getSubTitleFontSize(context),
-                          color: Colors.teal),
+                          color: primaryColor),
                     )),
                 SizedBox(
                   height: getViewPortHeight(context) * 0.01,
@@ -89,7 +90,7 @@ class AboutScreen extends StatelessWidget {
                       AppLocalizations.of(context).references,
                       style: GoogleFonts.poppins(
                           fontSize: getSubTitleFontSize(context),
-                          color: Colors.teal),
+                          color: primaryColor),
                     )),
                 SizedBox(
                   height: getViewPortHeight(context) * 0.01,
@@ -138,7 +139,7 @@ class AboutScreen extends StatelessWidget {
                     AppLocalizations.of(context).contactUs,
                     style: GoogleFonts.poppins(
                         fontSize: getSubTitleFontSize(context),
-                        color: Colors.teal),
+                        color: primaryColor),
                   ),
                   IconButton(
                     onPressed: () async {
@@ -148,7 +149,7 @@ class AboutScreen extends StatelessWidget {
                       }
                     },
                     icon: const Icon(Icons.mail),
-                    color: Colors.teal,
+                    color: primaryColor,
                   ),
                 ]),
                 Container(
@@ -174,7 +175,7 @@ class AboutScreen extends StatelessWidget {
                       "${AppLocalizations.of(context).proudlyBuiltInIndia} ${getCountryFlag()}",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Colors.teal,
+                        color: primaryColor,
                         fontSize: getCaptionFontSize(context),
                         letterSpacing: 1.0,
                       ),

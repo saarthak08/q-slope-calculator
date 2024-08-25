@@ -14,6 +14,9 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String? titleText;
   final String? placeholderText;
+  final bool? readOnly;
+  final void Function()? onClickIcon;
+  final IconData? icon;
 
   const CustomTextFormField({
     super.key,
@@ -26,6 +29,9 @@ class CustomTextFormField extends StatelessWidget {
     this.titleText,
     required this.textEditingController,
     this.placeholderText,
+    this.readOnly,
+    this.onClickIcon,
+    this.icon,
   });
 
   @override
@@ -33,24 +39,42 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        titleText != null
-            ? Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getViewPortWidth(context) * 0.01),
-                child: Text(
-                  titleText ?? "",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                      fontSize: getBodyFontSize(context)),
-                ))
-            : Container(),
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              titleText != null
+                  ? Flexible(
+                      flex: 10,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: getViewPortWidth(context) * 0.01),
+                          child: Text(
+                            titleText ?? "",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87,
+                                fontSize: getBodyFontSize(context)),
+                          )))
+                  : Container(),
+              onClickIcon != null && icon != null
+                  ? Flexible(
+                      child: InkWell(
+                      onTap: onClickIcon,
+                      child: Icon(
+                        icon,
+                        size: 20,
+                      ),
+                    ))
+                  : Container()
+            ]),
         titleText != null
             ? SizedBox(
                 height: getViewPortHeight(context) * 0.01,
               )
             : Container(),
         TextFormField(
+            readOnly: readOnly ?? false,
             keyboardType: type,
             controller: textEditingController,
             textInputAction: textInputAction,

@@ -6,6 +6,7 @@ class BlockSize {
   int? numberOfJoints;
   int? numberOfRandomSets;
   List<double>? jointSpacingInMeters;
+  double? jointSetNumber;
   double? areaInSquareMeters;
   double? jointVolume;
 
@@ -17,13 +18,14 @@ class BlockSize {
 
   RqdByJvCalculationType? rqdByJvCalculationType;
 
-  double rqd;
+  double? rqd;
 
   BlockSize({
     this.numberOfJoints,
     this.numberOfRandomSets,
     this.jointSpacingInMeters,
     this.areaInSquareMeters,
+    this.jointSetNumber,
     this.jointVolume,
     this.sumOfCorePieces,
     this.totalDrillRun,
@@ -40,23 +42,24 @@ class BlockSize {
     double? jointVolume,
     double? sumOfCorePieces,
     double? totalDrillRun,
+    double? jointSetNumber,
     RqdCalculationType? rqdCalculationType,
     RqdByJvCalculationType? rqdByJvCalculationType,
     double? rqd,
   }) {
     return BlockSize(
-      numberOfJoints: numberOfJoints ?? this.numberOfJoints,
-      numberOfRandomSets: numberOfRandomSets ?? this.numberOfRandomSets,
-      jointSpacingInMeters: jointSpacingInMeters ?? this.jointSpacingInMeters,
-      areaInSquareMeters: areaInSquareMeters ?? this.areaInSquareMeters,
-      jointVolume: jointVolume ?? this.jointVolume,
-      sumOfCorePieces: sumOfCorePieces ?? this.sumOfCorePieces,
-      totalDrillRun: totalDrillRun ?? this.totalDrillRun,
-      rqdCalculationType: rqdCalculationType ?? this.rqdCalculationType,
-      rqdByJvCalculationType:
-          rqdByJvCalculationType ?? this.rqdByJvCalculationType,
-      rqd: rqd ?? this.rqd,
-    );
+        numberOfJoints: numberOfJoints ?? this.numberOfJoints,
+        numberOfRandomSets: numberOfRandomSets ?? this.numberOfRandomSets,
+        jointSpacingInMeters: jointSpacingInMeters ?? this.jointSpacingInMeters,
+        areaInSquareMeters: areaInSquareMeters ?? this.areaInSquareMeters,
+        jointVolume: jointVolume ?? this.jointVolume,
+        sumOfCorePieces: sumOfCorePieces ?? this.sumOfCorePieces,
+        totalDrillRun: totalDrillRun ?? this.totalDrillRun,
+        rqdCalculationType: rqdCalculationType ?? this.rqdCalculationType,
+        rqdByJvCalculationType:
+            rqdByJvCalculationType ?? this.rqdByJvCalculationType,
+        rqd: rqd ?? this.rqd,
+        jointSetNumber: jointSetNumber ?? this.jointSetNumber);
   }
 
   Map<String, dynamic> toMap() {
@@ -71,6 +74,7 @@ class BlockSize {
       'rqdCalculationType': rqdCalculationType?.name,
       'rqdByJvCalculationType': rqdByJvCalculationType?.name,
       'rqd': rqd,
+      'jointSetNumber': jointSetNumber
     };
   }
 
@@ -79,21 +83,21 @@ class BlockSize {
         numberOfJoints:
             map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
         numberOfRandomSets: map['numberOfRandomSets'] != null
-            ? map['numberOfRandomSets'] as int
+            ? map['numberOfRandomSets'] as int?
             : null,
         jointSpacingInMeters: map['jointSpacingInMeters'] != null
             ? (map['jointSpacingInMeters'] as List).cast<double>()
             : null,
         areaInSquareMeters: map['areaInSquareMeters'] != null
-            ? map['areaInSquareMeters'] as double
+            ? map['areaInSquareMeters'] as double?
             : null,
         jointVolume:
             map['jointVolume'] != null ? map['jointVolume'] as double : null,
         sumOfCorePieces: map['sumOfCorePieces'] != null
-            ? map['sumOfCorePieces'] as double
+            ? map['sumOfCorePieces'] as double?
             : null,
         totalDrillRun: map['totalDrillRun'] != null
-            ? map['totalDrillRun'] as double
+            ? map['totalDrillRun'] as double?
             : null,
         rqdCalculationType: map['rqdCalculationType'] != null
             ? map['rqdCalculationType'] == RqdCalculationType.directMethod.name
@@ -101,6 +105,7 @@ class BlockSize {
                 : RqdCalculationType.jv
             : null,
         rqd: map['rqd'] as double,
+        jointSetNumber: map['jointSetNumber'] as double?,
         rqdByJvCalculationType: map['rqdByJvCalculationType'] != null
             ? map['rqdByJvCalculationType'] ==
                     RqdByJvCalculationType.formulaWith2Point5Jv.name
@@ -116,7 +121,7 @@ class BlockSize {
 
   @override
   String toString() {
-    return 'BlockSize(numberOfJoints: $numberOfJoints, numberOfRandomSets: $numberOfRandomSets, jointSpacingInMeters: $jointSpacingInMeters, areaInSquareMeters: $areaInSquareMeters, jointVolume: $jointVolume, sumOfCorePieces: $sumOfCorePieces, totalDrillRun: $totalDrillRun, rqdCalculationType: $rqdCalculationType, rqdByJvCalculationType: $rqdByJvCalculationType, rqd: $rqd)';
+    return 'BlockSize(numberOfJoints: $numberOfJoints, numberOfRandomSets: $numberOfRandomSets, jointSpacingInMeters: $jointSpacingInMeters, areaInSquareMeters: $areaInSquareMeters, jointVolume: $jointVolume, sumOfCorePieces: $sumOfCorePieces, totalDrillRun: $totalDrillRun, jointSetNumber: $jointSetNumber, rqdCalculationType: $rqdCalculationType, rqdByJvCalculationType: $rqdByJvCalculationType, rqd: $rqd)';
   }
 
   @override
@@ -133,6 +138,7 @@ class BlockSize {
         other.totalDrillRun == totalDrillRun &&
         other.rqdCalculationType == rqdCalculationType &&
         other.rqdByJvCalculationType == rqdByJvCalculationType &&
+        other.jointSetNumber == jointSetNumber &&
         other.rqd == rqd;
   }
 
@@ -147,6 +153,7 @@ class BlockSize {
         totalDrillRun.hashCode ^
         rqdCalculationType.hashCode ^
         rqdByJvCalculationType.hashCode ^
+        jointSetNumber.hashCode ^
         rqd.hashCode;
   }
 }
