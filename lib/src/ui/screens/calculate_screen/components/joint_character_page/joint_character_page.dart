@@ -108,12 +108,10 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
           qSlope.jointCharacter?.jointAlteration
               ?.add(double.tryParse(controller.text) ?? 1);
         }
-        if (qSlope.jointCharacter?.jrCalculationType == JrCalculationType.jr) {
-          qSlope.jointCharacter?.jointRoughness ??= List.empty(growable: true);
-          for (var controller in _jointRoughnessControllers) {
-            qSlope.jointCharacter?.jointRoughness
-                ?.add(double.tryParse(controller.text) ?? 0);
-          }
+        qSlope.jointCharacter?.jointRoughness ??= List.empty(growable: true);
+        for (var controller in _jointRoughnessControllers) {
+          qSlope.jointCharacter?.jointRoughness
+              ?.add(double.tryParse(controller.text) ?? 0);
         }
         if (qSlope.jointCharacter?.jrCalculationType ==
             JrCalculationType.palmstorm) {
