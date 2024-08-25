@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 
@@ -152,5 +153,71 @@ double calculateJointSetNumber(
     return 15;
   } else {
     return 20;
+  }
+}
+
+double calculateJwice(
+    ExternalFactorsEnvironmentConditions environmentalConditions,
+    ExternalFactorsStrengthOfRock strengthOfRock,
+    ExternalFactorsStructureType structureType) {
+  if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.desertEnvironment) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 1.0;
+      } else {
+        return 0.7;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.8;
+      } else {
+        return 0.5;
+      }
+    }
+  } else if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.iceWedging) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.7;
+      } else {
+        return 0.6;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.5;
+      } else {
+        return 0.3;
+      }
+    }
+  } else if (environmentalConditions ==
+      ExternalFactorsEnvironmentConditions.tropicalStorms) {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.5;
+      } else {
+        return 0.3;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.1;
+      } else {
+        return 0.05;
+      }
+    }
+  } else {
+    if (structureType == ExternalFactorsStructureType.stable) {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.9;
+      } else {
+        return 0.5;
+      }
+    } else {
+      if (strengthOfRock == ExternalFactorsStrengthOfRock.competent) {
+        return 0.3;
+      } else {
+        return 0.2;
+      }
+    }
   }
 }

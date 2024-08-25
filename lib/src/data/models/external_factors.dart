@@ -10,18 +10,22 @@ class ExternalFactors {
 
   ExternalFactorsEnvironmentConditions? externalFactorsEnvironmentConditions;
 
+  ExternalFactorsCalculationType? externalFactorsCalculationType;
+
   ExternalFactors(
       {this.environmentalAndGeologicalConditionalNumber = 0,
       this.externalFactorsStructureType,
       this.externalFactorsStrengthOfRock,
-      this.externalFactorsEnvironmentConditions});
+      this.externalFactorsEnvironmentConditions,
+      this.externalFactorsCalculationType});
 
   ExternalFactors copyWith(
       {double? environmentalAndGeologicalConditionalNumber,
       ExternalFactorsStructureType? externalFactorsStructureType,
       ExternalFactorsStrengthOfRock? externalFactorsStrengthOfRock,
       ExternalFactorsEnvironmentConditions?
-          externalFactorsEnvironmentConditions}) {
+          externalFactorsEnvironmentConditions,
+      ExternalFactorsCalculationType? externalFactorsCalculationType}) {
     return ExternalFactors(
         environmentalAndGeologicalConditionalNumber:
             environmentalAndGeologicalConditionalNumber ??
@@ -32,7 +36,9 @@ class ExternalFactors {
             externalFactorsStrengthOfRock ?? this.externalFactorsStrengthOfRock,
         externalFactorsEnvironmentConditions:
             externalFactorsEnvironmentConditions ??
-                this.externalFactorsEnvironmentConditions);
+                this.externalFactorsEnvironmentConditions,
+        externalFactorsCalculationType: externalFactorsCalculationType ??
+            this.externalFactorsCalculationType);
   }
 
   Map<String, dynamic> toMap() {
@@ -42,7 +48,8 @@ class ExternalFactors {
       'externalFactorsStructureType': externalFactorsStructureType?.name,
       'externalFactorsStrengthOfRock': externalFactorsStrengthOfRock?.name,
       'externalFactorsEnvironmentConditions':
-          externalFactorsEnvironmentConditions?.name
+          externalFactorsEnvironmentConditions?.name,
+      'externalFactorsCalculationType': externalFactorsCalculationType?.name
     };
   }
 
@@ -63,6 +70,13 @@ class ExternalFactors {
                         ExternalFactorsStructureType.stable.name
                     ? ExternalFactorsStructureType.stable
                     : ExternalFactorsStructureType.unstable
+                : null,
+        externalFactorsCalculationType:
+            map['externalFactorsCalculationType'] != null
+                ? map['externalFactorsCalculationType'] ==
+                        ExternalFactorsCalculationType.value.name
+                    ? ExternalFactorsCalculationType.value
+                    : ExternalFactorsCalculationType.factors
                 : null,
         externalFactorsEnvironmentConditions: map[
                     'externalFactorsEnvironmentConditions'] !=
@@ -88,7 +102,7 @@ class ExternalFactors {
 
   @override
   String toString() =>
-      'ExternalFactors(environmentalAndGeologicalConditionalNumber: $environmentalAndGeologicalConditionalNumber, externalFactorsStrengthOfRock: ${externalFactorsStrengthOfRock?.name}, externalFactorsStructureType: ${externalFactorsStructureType?.name}, externalFactorsEnvironmentConditions: ${externalFactorsEnvironmentConditions?.name})';
+      'ExternalFactors(externalFactorsCalculationType: $externalFactorsCalculationType, environmentalAndGeologicalConditionalNumber: $environmentalAndGeologicalConditionalNumber, externalFactorsStrengthOfRock: ${externalFactorsStrengthOfRock?.name}, externalFactorsStructureType: ${externalFactorsStructureType?.name}, externalFactorsEnvironmentConditions: ${externalFactorsEnvironmentConditions?.name})';
 
   @override
   bool operator ==(covariant ExternalFactors other) {
@@ -99,7 +113,8 @@ class ExternalFactors {
         other.externalFactorsStructureType == externalFactorsStructureType &&
         other.externalFactorsStrengthOfRock == externalFactorsStrengthOfRock &&
         other.environmentalAndGeologicalConditionalNumber ==
-            environmentalAndGeologicalConditionalNumber;
+            environmentalAndGeologicalConditionalNumber &&
+        other.externalFactorsCalculationType == externalFactorsCalculationType;
   }
 
   @override
@@ -107,7 +122,8 @@ class ExternalFactors {
       environmentalAndGeologicalConditionalNumber.hashCode ^
       externalFactorsStructureType.hashCode ^
       externalFactorsStrengthOfRock.hashCode ^
-      externalFactorsEnvironmentConditions.hashCode;
+      externalFactorsEnvironmentConditions.hashCode ^
+      externalFactorsCalculationType.hashCode;
 }
 
 enum ExternalFactorsStructureType { stable, unstable }
@@ -120,3 +136,5 @@ enum ExternalFactorsEnvironmentConditions {
   tropicalStorms,
   iceWedging
 }
+
+enum ExternalFactorsCalculationType { value, factors }
