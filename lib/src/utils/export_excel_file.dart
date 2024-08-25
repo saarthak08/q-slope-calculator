@@ -12,16 +12,104 @@ Future<String> exportExcelFile(List<QSlope> qSlopes) async {
 
   _setHeader(worksheet, headerStyle);
 
+  int index = 2;
+  for (var qSlope in qSlopes) {
+    worksheet.getRangeByName("A$index").setText(qSlope.locationId);
+    worksheet.getRangeByName("B$index").setText(qSlope.lithology);
+    worksheet.getRangeByName("C$index").setNumber(qSlope.blockSize?.rqd);
+    worksheet
+        .getRangeByName("D$index")
+        .setNumber(qSlope.blockSize?.jointSetNumber);
+    worksheet.getRangeByName("E$index").setNumber(qSlope.jointCharacter
+        ?.jointRoughness?[qSlope.oFactor?.indexOfFirstJoint ?? 0]);
+    worksheet.getRangeByName("F$index").setNumber(qSlope.jointCharacter
+        ?.jointAlteration?[qSlope.oFactor?.indexOfFirstJoint ?? 0]);
+    worksheet.getRangeByName("G$index").setText(
+        qSlope.oFactor?.indexOfSecondJoint != null
+            ? (qSlope.jointCharacter
+                ?.jointRoughness?[qSlope.oFactor!.indexOfSecondJoint!]
+                .toString())
+            : "-");
+    worksheet.getRangeByName("H$index").setText(
+        qSlope.oFactor?.indexOfSecondJoint != null
+            ? (qSlope.jointCharacter
+                ?.jointAlteration?[qSlope.oFactor!.indexOfSecondJoint!]
+                .toString())
+            : "-");
+    worksheet
+        .getRangeByName("I$index")
+        .setNumber(qSlope.oFactor?.oFactorForFirstJoint);
+    worksheet.getRangeByName("J$index").setText(
+        qSlope.oFactor?.oFactorForSecondJoint != null &&
+                qSlope.oFactor?.oFactorForSecondJoint != 0
+            ? (qSlope.oFactor?.oFactorForSecondJoint)?.toString()
+            : "-");
+    worksheet.getRangeByName("K$index").setNumber(
+        qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber);
+    worksheet.getRangeByName("L$index").setNumber(qSlope.activeStress?.srf);
+    worksheet.getRangeByName("M$index").setNumber(qSlope.qSlope);
+
+    index++;
+  }
+
   final List<int> bytes = workbook.saveAsStream();
   final fileName =
-      "q-slope-calculations_${DateTime.now().toIso8601String().replaceAll(":", "-").split(".")}.xlsx";
+      "q-slope-calculations_${DateTime.now().toIso8601String().replaceAll(":", "-")}.xlsx";
   await File(fileName).writeAsBytes(bytes);
   workbook.dispose();
   return fileName;
 }
 
 void _setHeader(Worksheet worksheet, Style headerStyle) {
-  Range lithology = worksheet.getRangeByName("A1");
+  Range locationId = worksheet.getRangeByName("A1");
+  locationId.setText("Location Id");
+  locationId.cellStyle = headerStyle;
+
+  Range lithology = worksheet.getRangeByName("B1");
   lithology.setText("Lithology");
   lithology.cellStyle = headerStyle;
+
+  Range rqd = worksheet.getRangeByName("C1");
+  rqd.setText("RQD");
+  rqd.cellStyle = headerStyle;
+
+  Range jointSetNumber = worksheet.getRangeByName("D1");
+  jointSetNumber.setText("Jn");
+  jointSetNumber.cellStyle = headerStyle;
+
+  Range jr1 = worksheet.getRangeByName("E1");
+  jr1.setText("Jr 1");
+  jr1.cellStyle = headerStyle;
+
+  Range ja1 = worksheet.getRangeByName("F1");
+  ja1.setText("Ja 1");
+  ja1.cellStyle = headerStyle;
+
+  Range jr2 = worksheet.getRangeByName("G1");
+  jr2.setText("Jr 2");
+  jr2.cellStyle = headerStyle;
+
+  Range ja2 = worksheet.getRangeByName("H1");
+  ja2.setText("Ja 2");
+  ja2.cellStyle = headerStyle;
+
+  Range of1 = worksheet.getRangeByName("I1");
+  of1.setText("O-Factor 1");
+  of1.cellStyle = headerStyle;
+
+  Range of2 = worksheet.getRangeByName("J1");
+  of2.setText("O-Factor 2");
+  of2.cellStyle = headerStyle;
+
+  Range jwice = worksheet.getRangeByName("K1");
+  jwice.setText("Jwice");
+  jwice.cellStyle = headerStyle;
+
+  Range srf = worksheet.getRangeByName("L1");
+  srf.setText("SRF");
+  srf.cellStyle = headerStyle;
+
+  Range qSlope = worksheet.getRangeByName("M1");
+  qSlope.setText("Q Slope");
+  qSlope.cellStyle = headerStyle;
 }
