@@ -91,14 +91,16 @@ double calculateQSlope(QSlope qSlope) {
                   0) /
               (qSlope.activeStress?.srf ?? 1));
       if (oFactor.indexOfSecondJoint != null &&
-          oFactor.oFactorForSecondJoint != null &&
           oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
-        return qSlopeValue *
-            (((qSlope.jointCharacter!
-                        .jointRoughness![oFactor.indexOfSecondJoint!]) /
-                    (qSlope.jointCharacter!
-                        .jointAlteration![oFactor.indexOfSecondJoint!])) *
-                (oFactor.oFactorForSecondJoint ?? 0));
+        qSlopeValue = qSlopeValue *
+            ((qSlope.jointCharacter!
+                    .jointRoughness![oFactor.indexOfSecondJoint!]) /
+                (qSlope.jointCharacter!
+                    .jointAlteration![oFactor.indexOfSecondJoint!]));
+      }
+      if (oFactor.oFactorCalculationType == OFactorCalculationType.value &&
+          oFactor.oFactorForSecondJoint != null) {
+        qSlopeValue = qSlopeValue * (oFactor.oFactorForSecondJoint ?? 0);
       }
       return qSlopeValue;
     } else {
