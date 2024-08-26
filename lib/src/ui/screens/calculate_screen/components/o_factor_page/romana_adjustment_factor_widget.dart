@@ -55,6 +55,18 @@ class _OFactorRomanaAdjustmentFactorWidgetState
       double alphaI = double.tryParse(widget.alphaI.text) ?? 0;
       double alphaJ = double.tryParse(widget.alphaJ.text) ?? 0;
       double alphaS = double.tryParse(widget.alphaS.text) ?? 0;
+      if (alphaI >= 360) {
+        alphaI = 360 - alphaI;
+        widget.alphaI.text = alphaI.toString();
+      }
+      if (alphaJ >= 360) {
+        alphaJ = 360 - alphaJ;
+        widget.alphaJ.text = alphaJ.toString();
+      }
+      if (alphaS >= 360) {
+        alphaS = 360 - alphaS;
+        widget.alphaS.text = alphaS.toString();
+      }
       double betaI = double.tryParse(widget.betaI.text) ?? 0;
       double betaJ = double.tryParse(widget.betaJ.text) ?? 0;
       double betaS = double.tryParse(widget.betaS.text) ?? 0;
@@ -64,6 +76,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
             widget.betaJ.text.isNotEmpty &&
             widget.betaS.text.isNotEmpty) {
           double f1 = calculateF1ForPlanarFailure(alphaJ, alphaS);
+          if (f1 >= 360) {
+            f1 = 360 - f1;
+          }
           double f2 = betaJ;
           double f3 = calculateF3ForPlanarFailure(betaJ, betaS);
           widget.f1.text = f1.toStringAsFixed(4);
