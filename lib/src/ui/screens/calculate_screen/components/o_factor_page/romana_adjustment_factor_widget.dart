@@ -97,14 +97,14 @@ class _OFactorRomanaAdjustmentFactorWidgetState
             widget.alphaS.text.isNotEmpty &&
             widget.betaJ.text.isNotEmpty &&
             widget.betaS.text.isNotEmpty) {
-          double f1 = calculateF1ForTopplingFailure(alphaI, alphaS);
-          double f2 = betaJ;
+          double f1 = calculateF1ForTopplingFailure(alphaJ, alphaS);
+          double f2 = 1;
           double f3 = calculateF3ForTopplingFailure(betaJ, betaS);
           widget.f1.text = f1.toStringAsFixed(4);
           widget.f2.text = f2.toStringAsFixed(4);
           widget.f3.text = f3.toStringAsFixed(4);
           widget.ratingForF1.text = calculateRatingForF1(f1).toStringAsFixed(4);
-          widget.ratingForF2.text = calculateRatingForF2(f2).toStringAsFixed(4);
+          widget.ratingForF2.text = "1";
           widget.ratingForF3.text =
               calculateRatingForF3TopplingFailure(f3).toStringAsFixed(4);
         }

@@ -54,7 +54,7 @@ double calculateF1ForWedgeFailure(double alphaI, double alphaS) {
 }
 
 double calculateF1ForTopplingFailure(double alphaJ, double alphaS) {
-  return alphaJ - alphaS - 180;
+  return (alphaJ - alphaS) - 180;
 }
 
 double calculateF3ForPlanarFailure(double betaJ, double betaS) {
@@ -121,19 +121,21 @@ double calculateQSlope(QSlope qSlope) {
 }
 
 double calculateRatingForF1(double f1) {
-  return 16 / 25 - ((3 / 500) * (atan((1 / 10) * (f1.abs() - 17))));
+  return (16.0 / 25.0) -
+      ((3.0 / 500.0) * (180 / pi) * (atan((1.0 / 10.0) * (f1.abs() - 17))));
 }
 
 double calculateRatingForF2(double f2) {
-  return 9 / 16 + ((1 / 195) * (atan(((17 / 100) * f2) - 5)));
+  return (9.0 / 16.0) +
+      ((1.0 / 195.0) * (180 / pi) * (atan(((17.0 / 100.0) * f2) - 5)));
 }
 
 double calculateRatingForF3NonTopplingFailure(double f3) {
-  return -30 + ((1 / 3) * atan(f3));
+  return -30.0 + ((1.0 / 3.0) * (180 / pi) * atan(f3));
 }
 
 double calculateRatingForF3TopplingFailure(double f3) {
-  return -13 - ((1 / 7) * atan(f3 - 120));
+  return -13.0 - ((1.0 / 7.0) * (180 / pi) * atan(f3 - 120));
 }
 
 double calculateJointSetNumber(
