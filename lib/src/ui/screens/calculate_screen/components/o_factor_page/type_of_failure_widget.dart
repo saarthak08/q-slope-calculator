@@ -7,10 +7,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OFactorTypeOfFailureWidget extends StatelessWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;
   final OFactorTypeOfFailure? currentValue;
+  final ValueNotifier<int?> joint1IndexValueNotifier;
+  final ValueNotifier<int?> joint2IndexValueNotifier;
   const OFactorTypeOfFailureWidget(
       {super.key,
       required this.oFactorTypeOfFailure,
-      required this.currentValue});
+      required this.currentValue,
+      required this.joint1IndexValueNotifier,
+      required this.joint2IndexValueNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,8 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
+                joint1IndexValueNotifier.value = null;
+                joint2IndexValueNotifier.value = null;
               }),
           Expanded(
               child: Text(
@@ -50,6 +56,8 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
+                joint1IndexValueNotifier.value = null;
+                joint2IndexValueNotifier.value = null;
               }),
           Expanded(
               child: Text(

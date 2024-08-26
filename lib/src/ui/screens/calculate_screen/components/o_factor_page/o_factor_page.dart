@@ -158,6 +158,8 @@ class _OFactorPageState extends State<OFactorPage> {
                                                 color: primaryColor),
                                           ))),
                                   OFactorTypeOfFailureWidget(
+                                      joint1IndexValueNotifier: _joint1Index,
+                                      joint2IndexValueNotifier: _joint2Index,
                                       oFactorTypeOfFailure:
                                           _oFactorTypeOfFailure,
                                       currentValue: oFactorTypeOfFailure),
