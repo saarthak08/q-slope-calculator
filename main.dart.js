@@ -27975,9 +27975,12 @@ this.b=b},
 aIQ:function aIQ(a){this.a=a},
 aIG:function aIG(a){this.a=a},
 aIH:function aIH(a){this.a=a},
-VX:function VX(a,b,c){this.c=a
-this.d=b
-this.a=c},
+VX:function VX(a,b,c,d,e){var _=this
+_.c=a
+_.d=b
+_.e=c
+_.f=d
+_.a=e},
 aqg:function aqg(a){this.a=a},
 aqh:function aqh(a){this.a=a},
 aqi:function aqi(a){this.a=a},
@@ -99285,10 +99288,11 @@ if(r!=null)r.qz()
 s.T2()},
 $S:0}
 A.aIz.prototype={
-$3(a,b,c){var s,r=null,q=A.aA(a),p=A.aA(a)
+$3(a,b,c){var s,r,q=null,p=A.aA(a),o=A.aA(a)
 A.D(a,B.f,t.J).toString
 s=this.a
-return A.cH(A.a([A.dT(new A.bv(new A.ae(0,q*0.02,0,p*0.02),A.av("O-Factor",r,r,r,r,A.kW().$2$color$fontSize(B.ax,A.A4(a)),r,r),r),r,r),new A.VX(s.db,b,r),A.aN(r,A.aA(a)*0.01,r),A.jI(new A.aIy(s,b),s.ay,t.bo)],t.p),B.a6,B.w,B.A)},
+r=s.ay
+return A.cH(A.a([A.dT(new A.bv(new A.ae(0,p*0.02,0,o*0.02),A.av("O-Factor",q,q,q,q,A.kW().$2$color$fontSize(B.ax,A.A4(a)),q,q),q),q,q),new A.VX(s.db,b,r,s.ch,q),A.aN(q,A.aA(a)*0.01,q),A.jI(new A.aIy(s,b),r,t.bo)],t.p),B.a6,B.w,B.A)},
 $S:567}
 A.aIy.prototype={
 $3(a,b,c){var s=this.a
@@ -99649,10 +99653,16 @@ p=A.eF(q,new A.aqi(l),B.pa,p)
 A.D(a,B.f,i).toString
 return A.cH(A.a([new A.bv(new A.ae(j,0,j,0),s,k),r,o,m,A.cw(A.a([p,A.dB(A.av("Toppling",k,k,k,k,A.bF(k,k,k,k,k,k,k,k,k,k,k,A.d5(a),k,k,k,k,k,!0,k,k,k,k,k,k,k,k),k,k))],n),B.O,B.w,B.A)],n),B.a6,B.w,B.A)}}
 A.aqg.prototype={
-$1(a){this.a.c.sl(0,a)},
+$1(a){var s=this.a
+s.c.sl(0,a)
+s.e.sl(0,null)
+s.f.sl(0,null)},
 $S:111}
 A.aqh.prototype={
-$1(a){this.a.c.sl(0,a)},
+$1(a){var s=this.a
+s.c.sl(0,a)
+s.e.sl(0,null)
+s.f.sl(0,null)},
 $S:111}
 A.aqi.prototype={
 $1(a){this.a.c.sl(0,a)},
