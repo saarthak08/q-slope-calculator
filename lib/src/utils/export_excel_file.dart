@@ -1,5 +1,8 @@
-import 'dart:io';
-
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:q_slope_calculator/src/data/common/app_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
@@ -55,7 +58,10 @@ Future<String> exportExcelFile(List<QSlope> qSlopes) async {
   final List<int> bytes = workbook.saveAsStream();
   final fileName =
       "q-slope-calculations_${DateTime.now().toIso8601String().replaceAll(":", "-")}.xlsx";
-  await File(fileName).writeAsBytes(bytes);
+  String? result = await _saveFile(bytes, fileName);
+  if (result == null) {
+    throw AppError(type: ErrorType.unexpected, message: "File saving failed");
+  }
   workbook.dispose();
   return fileName;
 }
@@ -112,4 +118,22 @@ void _setHeader(Worksheet worksheet, Style headerStyle) {
   Range qSlope = worksheet.getRangeByName("M1");
   qSlope.setText("Q Slope");
   qSlope.cellStyle = headerStyle;
+}
+
+Future<String?> _saveFile(List<int> bytes, String fileName) async {
+  if (kIsWeb) {
+    _saveFileInWeb(bytes, fileName);
+    return "";
+  } else {
+    return FilePicker.platform
+        .saveFile(fileName: fileName, bytes: Uint8List.fromList(bytes));
+  }
+}
+
+Future<void> _saveFileInWeb(List<int> bytes, String fileName) async {
+  html.AnchorElement(
+      href:
+          'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+    ..setAttribute('download', fileName)
+    ..click();
 }
