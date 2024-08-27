@@ -2,22 +2,18 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
-import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
-import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
-import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
 import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/home_screen/components/app_bar_list_selection_menu_widget.dart';
 import 'package:q_slope_calculator/src/ui/widgets/illustration_widget.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
 import 'package:q_slope_calculator/src/utils/custom_progress_indicator.dart';
 import 'package:q_slope_calculator/src/utils/date_time_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
-import 'package:toastification/toastification.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,6 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     context.read<QSlopeListCubit>().loadQSlopeList();
     super.initState();
+  }
+
+  void _setSelectedTiles(List<bool> setTiles) {
+    setState(() {
+      _selectedTiles = setTiles;
+    });
   }
 
   @override
@@ -54,84 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
             actions: [
               _selectedTiles?.firstWhereOrNull((val) => val) != null
-                  ? Container(
-                      margin: EdgeInsets.only(
-                          right: getViewPortWidth(context) * 0.005),
-                      child: InkWell(
-                        onTap: () {
-                          showGenericDialog(
-                              context: context,
-                              titleText:
-                                  AppLocalizations.of(context).exportFileTitle,
-                              label: AppLocalizations.of(context)
-                                  .exportFileContent,
-                              onOk: () async {
-                                var selectedTiles = _selectedTiles;
-                                var qSlopeState = qSlopeListState;
-                                if (qSlopeState is QSlopeListLoaded &&
-                                    selectedTiles != null) {
-                                  int index = 0;
-                                  var qSlopes =
-                                      List<QSlope>.empty(growable: true);
-                                  for (var selectedQSlopes in selectedTiles) {
-                                    if (selectedQSlopes) {
-                                      qSlopes
-                                          .add(qSlopeState.qSlopeList[index]);
-                                    }
-                                    index++;
-                                  }
-                                  showFullScreenLoader(context);
-                                  try {
-                                    String fileName =
-                                        await exportExcelFile(qSlopes, context);
-                                    if (context.mounted) {
-                                      toastification.show(
-                                          autoCloseDuration:
-                                              const Duration(seconds: 2),
-                                          alignment: Alignment.bottomCenter,
-                                          type: ToastificationType.success,
-                                          title: Text(
-                                              AppLocalizations.of(context)
-                                                  .exportSuccessful(fileName)));
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                    }
-                                  } catch (err) {
-                                    if (context.mounted) {
-                                      toastification.show(
-                                          autoCloseDuration:
-                                              const Duration(seconds: 2),
-                                          alignment: Alignment.bottomCenter,
-                                          type: ToastificationType.error,
-                                          title: Text(
-                                              AppLocalizations.of(context)
-                                                  .exportFailed));
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                      rethrow;
-                                    }
-                                  }
-                                  setState(() {
-                                    _selectedTiles = List.filled(
-                                        qSlopeState.qSlopeList.length, false);
-                                  });
-                                }
-                              });
-                        },
-                        child: Icon(
-                          Icons.file_upload_outlined,
-                          color: primaryColor,
-                          size: getBodyFontSize(context) * 2,
-                        ),
-                      ))
+                  ? AppBarListSelectionMenuWidget(
+                      selectedTiles: _selectedTiles,
+                      setSelectedTiles: _setSelectedTiles)
                   : Container(),
               Padding(
                   padding: EdgeInsets.all(getViewPortHeight(context) * 0.01),
@@ -303,6 +230,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 )))
                                       ]));
                             }))
-                    : const Center(child: CustomProgressIndicator())));
+                    : state is QSlopeListLoading
+                        ? const Center(child: CustomProgressIndicator())
+                        : Center(
+                            child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(AppLocalizations.of(context)
+                                    .errorInLoadingQSlopeList)))));
   }
 }

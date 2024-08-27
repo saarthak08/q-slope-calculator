@@ -53,4 +53,15 @@ class QSlopeListService {
       return Failure(QSlopeError(type: QSlopeErrorType.deleteError));
     }
   }
+
+  Future<Result<bool>> deleteMultipleQSlopes(List<String> ids) async {
+    try {
+      return Success(
+          await _qSlopeCalculationsRepository.deleteMultipleQSlopes(ids));
+    } catch (err, s) {
+      getLogger()
+          .e('Error in deleting multiple Q-slopes', error: err, stackTrace: s);
+      return Failure(QSlopeError(type: QSlopeErrorType.deleteError));
+    }
+  }
 }
