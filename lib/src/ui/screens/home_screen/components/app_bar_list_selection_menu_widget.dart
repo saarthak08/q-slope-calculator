@@ -29,7 +29,7 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
     final qSlopeListState = context.watch<QSlopeListCubit>().state;
 
     return PopupMenuButton(
-        color: primaryColor,
+        iconColor: primaryColor,
         itemBuilder: (context) => [
               PopupMenuItem(
                   onTap: () {
