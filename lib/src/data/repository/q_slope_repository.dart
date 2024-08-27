@@ -57,4 +57,14 @@ class QSlopeRepository {
     return _sharedPreferences.then(
         (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList));
   }
+
+  Future<bool> deleteMultipleQSlopes(List<String> ids) async {
+    var qSlopesList = await getAllQSlopes();
+    qSlopesList.removeWhere((qSlope) {
+      return ids.contains(qSlope.id);
+    });
+    var jsonList = qSlopesList.map((qSlope) => qSlope.toJson()).toList();
+    return _sharedPreferences.then(
+        (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList));
+  }
 }

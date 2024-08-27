@@ -158,6 +158,26 @@ class AboutScreen extends StatelessWidget {
                     child: const DividerWidget()),
                 Align(
                     alignment: Alignment.center,
+                    child: InkWell(
+                        onTap: () async {
+                          final uri = Uri.tryParse(privacyPolicyLink);
+                          if (uri != null && await canLaunchUrl(uri)) {
+                            launchUrl(uri,
+                                mode: LaunchMode.externalApplication);
+                          }
+                        },
+                        child: Text(
+                          AppLocalizations.of(context).privacyPolicyTitle,
+                          style: TextStyle(
+                              fontSize: getCaptionFontSize(context),
+                              color: primaryColor,
+                              decoration: TextDecoration.underline),
+                        ))),
+                SizedBox(
+                  height: getViewPortHeight(context) * 0.01,
+                ),
+                Align(
+                    alignment: Alignment.center,
                     child: FutureBuilder(
                         future: PackageInfo.fromPlatform(),
                         builder: (context, snapshot) => Text(

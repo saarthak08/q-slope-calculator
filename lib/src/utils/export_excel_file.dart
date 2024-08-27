@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ Future<String> exportExcelFile(
   final List<int> bytes = workbook.saveAsStream();
   final fileName =
       "q-slope-calculations_${DateTime.now().toIso8601String().replaceAll(":", "-")}.xlsx";
-  String? result = await _saveFile(bytes, fileName);
+  String? result = await _saveFile(bytes, fileName, context);
 
   if (result == null) {
     throw AppError(type: ErrorType.unexpected, message: "File saving failed");
@@ -126,13 +127,18 @@ void _setHeader(Worksheet worksheet, Style headerStyle, BuildContext context) {
   qSlope.cellStyle = headerStyle;
 }
 
-Future<String?> _saveFile(List<int> bytes, String fileName) async {
+Future<String?> _saveFile(
+    List<int> bytes, String fileName, BuildContext context) async {
   if (kIsWeb) {
     _saveFileInWeb(bytes, fileName);
     return "";
+  } else if (Platform.isWindows) {
+    return _saveFileInWindows(bytes, fileName, context);
   } else {
-    return FilePicker.platform
-        .saveFile(fileName: fileName, bytes: Uint8List.fromList(bytes));
+    return FilePicker.platform.saveFile(
+        fileName: fileName,
+        bytes: Uint8List.fromList(bytes),
+        dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile);
   }
 }
 
@@ -142,4 +148,15 @@ Future<void> _saveFileInWeb(List<int> bytes, String fileName) async {
           'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
     ..setAttribute('download', fileName)
     ..click();
+}
+
+Future<String?> _saveFileInWindows(
+    List<int> bytes, String fileName, BuildContext context) async {
+  String? directory = await FilePicker.platform.getDirectoryPath(
+      lockParentWindow: true,
+      dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile);
+  if (directory != null) {
+    File("$directory/$fileName").writeAsBytesSync(bytes);
+  }
+  return directory;
 }

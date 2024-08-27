@@ -167,5 +167,14 @@
     "exportFileTitle": "Export Excel File",
     "exportFileContent": "Do you want to export calculations as an excel file?",
     "exportSuccessful": "File exported successfully as {fileName}",
-    "exportFailed": "File export failed"
+    "exportFailed": "File export failed",
+    "export": "Export",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "delete": "Delete",
+    "deleteCalculationsModalTitle": "Delete Calculations",
+    "deleteCalculationsModalContent": "Are you sure want to delete the selected calculations?",
+    "errorInLoadingQSlopeList": "Error in loading Q-slope list. Please try removing app data or re-installing the app",
+    "privacyPolicyTitle": "Privacy Policy",
+    "selectDirectoryToSaveFile": "Please select a directory to save the file"
 }

@@ -61,4 +61,15 @@ class QSlopeListCubit extends Cubit<QSlopeListState> {
     await loadQSlopeList();
     return result;
   }
+
+  Future<Result> deleteMultipleQSlopesFromList(List<String> ids) async {
+    var result = await _qSlopeListService.deleteMultipleQSlopes(ids);
+    result.when(onError: (error) {
+      if (error is QSlopeError) {
+        emit(QSlopeListOperationErrorState(error));
+      }
+    });
+    await loadQSlopeList();
+    return result;
+  }
 }

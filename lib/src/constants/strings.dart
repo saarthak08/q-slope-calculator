@@ -7,3 +7,5 @@ const reference1Link =
     "https://drive.google.com/file/d/1EsSIlYLWDFlOaLePkfi8Cm63bpRwjDxZ/view?usp=sharing";
 const reference2Link =
     "https://drive.google.com/file/d/1sSVjmFOb7Rwbny5oPhkI80tRWcqEVzd4/view?usp=sharing";
+const privacyPolicyLink =
+    "https://docs.google.com/document/d/1W7llZRHJl-HNIlpxQqHbANEbb3vgdK7KqSKIwQfyBAI/edit?usp=sharing";
