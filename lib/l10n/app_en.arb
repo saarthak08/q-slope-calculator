@@ -174,5 +174,7 @@
     "delete": "Delete",
     "deleteCalculationsModalTitle": "Delete Calculations",
     "deleteCalculationsModalContent": "Are you sure want to delete the selected calculations?",
-    "errorInLoadingQSlopeList": "Error in loading Q-slope list. Please try removing app data or re-installing the app"
+    "errorInLoadingQSlopeList": "Error in loading Q-slope list. Please try removing app data or re-installing the app",
+    "privacyPolicyTitle": "Privacy Policy",
+    "selectDirectoryToSaveFile": "Please select a directory to save the file"
 }
