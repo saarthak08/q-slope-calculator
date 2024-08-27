@@ -8,17 +8,21 @@ class AppRouter {
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(
+            settings: settings, builder: (context) => const HomeScreen());
       case CalculateScreen.route:
         final args = settings.arguments as CalculateScreenArguments;
         return MaterialPageRoute(
+            settings: settings,
             builder: (context) => CalculateScreen(qSlope: args.qSlope));
       case PhotoViewScreen.route:
         final args = settings.arguments as ImageProvider;
         return MaterialPageRoute(
+            settings: settings,
             builder: (context) => PhotoViewScreen(imageProvider: args));
       case AboutScreen.route:
-        return MaterialPageRoute(builder: (context) => const AboutScreen());
+        return MaterialPageRoute(
+            settings: settings, builder: (context) => const AboutScreen());
       default:
         return MaterialPageRoute(
           builder: (context) => const Text("No Route Found"),
