@@ -100312,10 +100312,10 @@ if(n!=null)n.ch=A.aN(q.cx.a.a)
 n=r.f
 if(n!=null)n.CW=A.aN(q.cy.a.a)
 n=r.f
-if(n!=null){s=A.aN(q.at.a.a)
-n.at=s==null?0:s}n=r.f
-if(n!=null){s=A.aN(q.ax.a.a)
-n.ax=s==null?0:s}n=r.f
+if(n!=null)n.at=A.aN(q.at.a.a)
+n=r.f
+if(n!=null)n.ax=A.aN(q.ax.a.a)
+n=r.f
 s=n==null
 if(!s)n.Q=q.ay.a
 if(!s)n.as=q.ch.a
@@ -100414,6 +100414,8 @@ $S:571}
 A.aJe.prototype={
 $1(a){var s=this.a
 s.aa(new A.aJd(s,a))
+s.ay.sl(0,null)
+s.ch.sl(0,null)
 s.at.saO(0,"")
 s.ax.saO(0,"")},
 $S:223}
@@ -100423,6 +100425,8 @@ $S:0}
 A.aJf.prototype={
 $1(a){var s=this.a
 s.aa(new A.aJc(s,a))
+s.ay.sl(0,null)
+s.ch.sl(0,null)
 s.at.saO(0,"")
 s.ax.saO(0,"")},
 $S:223}
@@ -100462,16 +100466,16 @@ I(a){var s,r,q,p=this,o=null,n="O-Factor Value for J",m=t.J
 A.y(a,B.f,m).toString
 A.y(a,B.f,m).toString
 s=p.r
-if(s==null)s=1
+if(s==null)s=0
 A.y(a,B.f,m).toString
-s=A.em(o,o,o,o,o,o,p.e,B.c_,n+s+" (0.25 - 2)",B.b4,new A.aqP(p))
+s=A.em(o,o,o,o,o,o,p.e,B.c_,n+(s+1)+" (0.25 - 2)",B.b4,new A.aqP(p))
 if(p.d===B.bg){r=A.cI(a)
 A.y(a,B.f,m).toString
 A.y(a,B.f,m).toString
 q=p.w
-if(q==null)q=2
+if(q==null)q=1
 A.y(a,B.f,m).toString
-r=new A.dY(1,B.b1,A.aV(o,A.em(o,o,o,o,o,o,p.f,B.c_,n+q+" (0.25 - 2)",B.b4,new A.aqQ(p)),B.n,o,o,o,o,new A.ac(r*0.02,0,0,0),o,o),o)
+r=new A.dY(1,B.b1,A.aV(o,A.em(o,o,o,o,o,o,p.f,B.c_,n+(q+1)+" (0.25 - 2)",B.b4,new A.aqQ(p)),B.n,o,o,o,o,new A.ac(r*0.02,0,0,0),o,o),o)
 m=r}else m=A.aV(o,o,B.n,o,o,o,o,o,o,o)
 return A.cl(A.a([new A.dY(1,B.b1,s,o),m],t.p),B.M,B.w,B.bU)}}
 A.aqP.prototype={
@@ -100785,7 +100789,9 @@ s=this.c
 r=s.length
 q=0
 for(;q<r;++q)if(!s[q]){p.a=!1
-break}return new A.xl(new A.adn(p,this,A.xs(a,!0,t.P1).c),B.an,null,t.q3)}}
+break}s=s.length
+if(s===0)p.a=!1
+return new A.xl(new A.adn(p,this,A.xs(a,!0,t.P1).c),B.an,null,t.q3)}}
 A.adn.prototype={
 $1(a){var s,r,q,p,o=null,n=this.a,m=this.b,l=this.c,k=t.J
 if(n.a){A.y(a,B.f,k).toString
