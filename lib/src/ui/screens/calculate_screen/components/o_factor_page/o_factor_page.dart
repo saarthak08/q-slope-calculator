@@ -100,9 +100,9 @@ class _OFactorPageState extends State<OFactorPage> {
         qSlope.oFactor?.ratingForF2 = double.tryParse(ratingForF2.text);
         qSlope.oFactor?.ratingForF3 = double.tryParse(ratingForF3.text);
         qSlope.oFactor?.oFactorForFirstJoint =
-            double.tryParse(_joint1OFactor.text) ?? 0;
+            double.tryParse(_joint1OFactor.text);
         qSlope.oFactor?.oFactorForSecondJoint =
-            double.tryParse(_joint2OFactor.text) ?? 0;
+            double.tryParse(_joint2OFactor.text);
         qSlope.oFactor?.indexOfFirstJoint = _joint1Index.value;
         qSlope.oFactor?.indexOfSecondJoint = _joint2Index.value;
         qSlope.oFactor?.oFactorTypeOfFailure = _oFactorTypeOfFailure.value;
@@ -233,6 +233,10 @@ class _OFactorPageState extends State<OFactorPage> {
                                                                 _oFactorCalculationType =
                                                                     value;
                                                               });
+                                                              _joint1Index
+                                                                  .value = null;
+                                                              _joint2Index
+                                                                  .value = null;
                                                               _joint1OFactor
                                                                   .text = "";
                                                               _joint2OFactor
@@ -261,6 +265,10 @@ class _OFactorPageState extends State<OFactorPage> {
                                                                 _oFactorCalculationType =
                                                                     value;
                                                               });
+                                                              _joint1Index
+                                                                  .value = null;
+                                                              _joint2Index
+                                                                  .value = null;
                                                               _joint1OFactor
                                                                   .text = "";
                                                               _joint2OFactor
