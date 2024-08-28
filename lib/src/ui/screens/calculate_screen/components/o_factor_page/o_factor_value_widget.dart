@@ -35,7 +35,7 @@ class OFactorValueWidget extends StatelessWidget {
               textInputAction: TextInputAction.done,
               textEditingController: joint1OFactor,
               titleText:
-                  "${AppLocalizations.of(context).oFactorValueFor} ${AppLocalizations.of(context).jointSymbol}${joint1Index ?? 0 + 1} ${AppLocalizations.of(context).oFactorConstraints}",
+                  "${AppLocalizations.of(context).oFactorValueFor} ${AppLocalizations.of(context).jointSymbol}${(joint1Index ?? 0) + 1} ${AppLocalizations.of(context).oFactorConstraints}",
               validate: (value) {
                 if (oFactorCalculationType == OFactorCalculationType.value &&
                     (value == null || value.isEmpty)) {
@@ -61,7 +61,7 @@ class OFactorValueWidget extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textEditingController: joint2OFactor,
                     titleText:
-                        "${AppLocalizations.of(context).oFactorValueFor} ${AppLocalizations.of(context).jointSymbol}${joint2Index ?? 1 + 1} ${AppLocalizations.of(context).oFactorConstraints}",
+                        "${AppLocalizations.of(context).oFactorValueFor} ${AppLocalizations.of(context).jointSymbol}${(joint2Index ?? 1) + 1} ${AppLocalizations.of(context).oFactorConstraints}",
                     validate: (value) {
                       if (oFactorCalculationType ==
                               OFactorCalculationType.value &&
