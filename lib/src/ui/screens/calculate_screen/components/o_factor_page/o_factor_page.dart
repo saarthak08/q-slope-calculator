@@ -233,10 +233,6 @@ class _OFactorPageState extends State<OFactorPage> {
                                                                 _oFactorCalculationType =
                                                                     value;
                                                               });
-                                                              _joint1Index
-                                                                  .value = null;
-                                                              _joint2Index
-                                                                  .value = null;
                                                               _joint1OFactor
                                                                   .text = "";
                                                               _joint2OFactor
@@ -265,10 +261,6 @@ class _OFactorPageState extends State<OFactorPage> {
                                                                 _oFactorCalculationType =
                                                                     value;
                                                               });
-                                                              _joint1Index
-                                                                  .value = null;
-                                                              _joint2Index
-                                                                  .value = null;
                                                               _joint1OFactor
                                                                   .text = "";
                                                               _joint2OFactor
