@@ -25,6 +25,9 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
         break;
       }
     }
+    if (selectedTiles == null || selectedTiles!.isEmpty) {
+      deselectAll = false;
+    }
 
     final qSlopeListState = context.watch<QSlopeListCubit>().state;
 
