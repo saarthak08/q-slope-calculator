@@ -303,8 +303,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                         ? "${AppLocalizations.of(context).romanaAdjustmentFactorSymbol}1 = ${AppLocalizations.of(context).alphaJSymbol} - ${AppLocalizations.of(context).alphaSSymbol}"
                                         : widget.oFactorTypeOfFailure ==
                                                 OFactorTypeOfFailure.wedge
-                                            ? "${AppLocalizations.of(context).romanaAdjustmentFactorSymbol}1 = ${AppLocalizations.of(context).alphaISymbol} - ${AppLocalizations.of(context).alphaSSymbol}"
-                                            : "${AppLocalizations.of(context).romanaAdjustmentFactorSymbol}1 = ${AppLocalizations.of(context).alphaJSymbol} - ${AppLocalizations.of(context).alphaSSymbol} -180",
+                                            ? "${AppLocalizations.of(context).romanaAdjustmentFactorSymbol}1 = ${AppLocalizations.of(context).alphaISymbol} - ${AppLocalizations.of(context).alphaSSymbol} ${(double.parse(widget.alphaI.text) < double.parse(widget.alphaS.text)) ? (double.parse(widget.alphaS.text) >= 90 && double.parse(widget.alphaS.text) <= 180) ? " + 180" : (double.parse(widget.alphaS.text) > 180 && double.parse(widget.alphaS.text) <= 360) ? " + 360" : "" : ""}"
+                                            : "${AppLocalizations.of(context).romanaAdjustmentFactorSymbol}1 = ${AppLocalizations.of(context).alphaJSymbol} - ${AppLocalizations.of(context).alphaSSymbol} - 180",
                                     style: GoogleFonts.montserrat(
                                         fontFeatures: [],
                                         fontWeight: FontWeight.w600,

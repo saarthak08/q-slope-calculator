@@ -50,6 +50,12 @@ double calculateF1ForPlanarFailure(double alphaJ, double alphaS) {
 }
 
 double calculateF1ForWedgeFailure(double alphaI, double alphaS) {
+  if (alphaS >= 90 && alphaS <= 180 && alphaI < alphaS) {
+    alphaI = alphaI + 180;
+  }
+  if (alphaS > 180 && alphaS <= 360 && alphaI < alphaS) {
+    alphaI = alphaI + 360;
+  }
   return alphaI - alphaS;
 }
 
@@ -90,21 +96,12 @@ double calculateQSlope(QSlope qSlope) {
                       ?.environmentalAndGeologicalConditionalNumber ??
                   0) /
               (qSlope.activeStress?.srf ?? 1));
-      if (oFactor.indexOfSecondJoint != null &&
-          oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
-        qSlopeValue = qSlopeValue *
-            ((qSlope.jointCharacter!
-                    .jointRoughness![oFactor.indexOfSecondJoint!]) /
-                (qSlope.jointCharacter!
-                    .jointAlteration![oFactor.indexOfSecondJoint!]));
-      }
       if (oFactor.oFactorCalculationType == OFactorCalculationType.value &&
           oFactor.oFactorForSecondJoint != null) {
         qSlopeValue = qSlopeValue * (oFactor.oFactorForSecondJoint ?? 0);
       }
-      return qSlopeValue;
     } else {
-      return qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+      qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
               (qSlope.blockSize?.jointSetNumber ?? 1)) *
           ((qSlope.jointCharacter!
                   .jointRoughness![oFactor.indexOfFirstJoint!]) /
@@ -116,6 +113,15 @@ double calculateQSlope(QSlope qSlope) {
                   0) /
               (qSlope.activeStress?.srf ?? 1));
     }
+    if (oFactor.indexOfSecondJoint != null &&
+        oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
+      qSlopeValue = qSlopeValue *
+          ((qSlope.jointCharacter!
+                  .jointRoughness![oFactor.indexOfSecondJoint!]) /
+              (qSlope.jointCharacter!
+                  .jointAlteration![oFactor.indexOfSecondJoint!]));
+    }
+    return qSlopeValue;
   }
   return 0;
 }
