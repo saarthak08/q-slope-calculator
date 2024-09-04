@@ -3,7 +3,7 @@ description: "An application which calculates Q-slope of a rock expressing the q
 
 publish_to: "none"
 
-version: 1.0.1+5
+version: 1.0.2+6
 
 environment:
   sdk: ">=3.4.3 <4.0.0"
@@ -53,7 +53,7 @@ msix_config:
   display_name: Q-slope Calculator
   publisher_display_name: Saarthak Gupta
   identity_name: in.sg.qslopecalculator
-  msix_version: 1.0.0.1
+  msix_version: 1.0.0.2
   logo_path: assets/images/icon.png
 
 lint_staged:
