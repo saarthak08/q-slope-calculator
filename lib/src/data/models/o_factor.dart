@@ -43,6 +43,8 @@ class OFactor {
 
   double? ratingForF3;
 
+  OFactorRomanaValueType? oFactorRomanaValueType;
+
   OFactor(
       {this.oFactorCalculationType,
       this.f1,
@@ -61,7 +63,8 @@ class OFactor {
       this.oFactorTypeOfFailure,
       this.ratingForF1,
       this.ratingForF2,
-      this.ratingForF3});
+      this.ratingForF3,
+      this.oFactorRomanaValueType});
 
   OFactor copyWith(
       {double? oFactor,
@@ -82,7 +85,8 @@ class OFactor {
       double? ratingForF1,
       double? ratingForF2,
       double? ratingForF3,
-      OFactorTypeOfFailure? oFactorTypeOfFailure}) {
+      OFactorTypeOfFailure? oFactorTypeOfFailure,
+      OFactorRomanaValueType? oFactorRomanaValueType}) {
     return OFactor(
         oFactorCalculationType:
             oFactorCalculationType ?? this.oFactorCalculationType,
@@ -103,8 +107,9 @@ class OFactor {
         oFactorForFirstJoint: oFactorForFirstJoint ?? this.oFactorForFirstJoint,
         oFactorForSecondJoint:
             oFactorForSecondJoint ?? this.oFactorForSecondJoint,
-        oFactorTypeOfFailure:
-            oFactorTypeOfFailure ?? this.oFactorTypeOfFailure);
+        oFactorTypeOfFailure: oFactorTypeOfFailure ?? this.oFactorTypeOfFailure,
+        oFactorRomanaValueType:
+            oFactorRomanaValueType ?? this.oFactorRomanaValueType);
   }
 
   Map<String, dynamic> toMap() {
@@ -126,7 +131,8 @@ class OFactor {
       'indexOfSecondJoint': indexOfSecondJoint,
       'oFactorForFirstJoint': oFactorForFirstJoint,
       'oFactorForSecondJoint': oFactorForSecondJoint,
-      'oFactorTypeOfFailure': oFactorTypeOfFailure?.name
+      'oFactorTypeOfFailure': oFactorTypeOfFailure?.name,
+      'oFactorRomanaValueType': oFactorRomanaValueType?.name
     };
   }
 
@@ -137,6 +143,11 @@ class OFactor {
                     OFactorCalculationType.romanaAdjacentFactor.name
                 ? OFactorCalculationType.romanaAdjacentFactor
                 : OFactorCalculationType.value
+            : null,
+        oFactorRomanaValueType: map['oFactorRomanaValueType'] != null
+            ? map['oFactorRomanaValueType'] == OFactorRomanaValueType.value
+                ? OFactorRomanaValueType.value
+                : OFactorRomanaValueType.calculation
             : null,
         f1: map['f1'] != null ? map['f1'] as double : null,
         f2: map['f2'] != null ? map['f2'] as double : null,
@@ -182,7 +193,7 @@ class OFactor {
 
   @override
   String toString() {
-    return 'OFactor(ratingForF1: $ratingForF1, ratingForF2: $ratingForF2, ratingForF3: $ratingForF3, indexOfFirstJoint: $indexOfFirstJoint, indexOfSecondJoint: $indexOfSecondJoint, oFactorForFirstJoint: $oFactorForFirstJoint, oFactorForSecondJoint: $oFactorForSecondJoint, oFactorCalculationType: ${oFactorCalculationType?.name},  f1: $f1, f2: $f2, f3: $f3, alphaI: $alphaI, alphaJ: $alphaJ, alphaS: $alphaS, betaI: $betaI, betaJ: $betaJ, betaS: $betaS), oFactorTypeOfFailure: ${oFactorTypeOfFailure?.name}';
+    return 'OFactor(ratingForF1: $ratingForF1, ratingForF2: $ratingForF2, ratingForF3: $ratingForF3, indexOfFirstJoint: $indexOfFirstJoint, indexOfSecondJoint: $indexOfSecondJoint, oFactorForFirstJoint: $oFactorForFirstJoint, oFactorForSecondJoint: $oFactorForSecondJoint, oFactorCalculationType: ${oFactorCalculationType?.name},  f1: $f1, f2: $f2, f3: $f3, alphaI: $alphaI, alphaJ: $alphaJ, alphaS: $alphaS, betaI: $betaI, betaJ: $betaJ, betaS: $betaS), oFactorTypeOfFailure: ${oFactorTypeOfFailure?.name}, oFactorRomanaValueType: ${oFactorRomanaValueType?.name}';
   }
 
   @override
@@ -206,7 +217,8 @@ class OFactor {
         other.indexOfSecondJoint == indexOfSecondJoint &&
         other.oFactorForFirstJoint == oFactorForFirstJoint &&
         other.oFactorForSecondJoint == oFactorForSecondJoint &&
-        other.oFactorTypeOfFailure == oFactorTypeOfFailure;
+        other.oFactorTypeOfFailure == oFactorTypeOfFailure &&
+        other.oFactorRomanaValueType == oFactorRomanaValueType;
   }
 
   @override
@@ -228,10 +240,13 @@ class OFactor {
         indexOfSecondJoint.hashCode ^
         oFactorForFirstJoint.hashCode ^
         oFactorForSecondJoint.hashCode ^
-        oFactorTypeOfFailure.hashCode;
+        oFactorTypeOfFailure.hashCode ^
+        oFactorRomanaValueType.hashCode;
   }
 }
 
 enum OFactorCalculationType { romanaAdjacentFactor, value }
 
 enum OFactorTypeOfFailure { planar, wedge, toppling }
+
+enum OFactorRomanaValueType { calculation, value }
