@@ -40,8 +40,9 @@ class _OFactorPageState extends State<OFactorPage> {
   final TextEditingController ratingForF1 = TextEditingController();
   final TextEditingController ratingForF2 = TextEditingController();
   final TextEditingController ratingForF3 = TextEditingController();
-
   final ValueNotifier<OFactorTypeOfFailure?> _oFactorTypeOfFailure =
+      ValueNotifier(null);
+  final ValueNotifier<OFactorRomanaValueType?> _oFactorRomanaValueType =
       ValueNotifier(null);
   OFactorCalculationType? _oFactorCalculationType;
   final tabIndex = 2;
@@ -67,6 +68,7 @@ class _OFactorPageState extends State<OFactorPage> {
     f2.text = qSlope.oFactor?.f2.toString() ?? "";
     f3.text = qSlope.oFactor?.f3.toString() ?? "";
     _oFactorTypeOfFailure.value = qSlope.oFactor?.oFactorTypeOfFailure;
+    _oFactorRomanaValueType.value = qSlope.oFactor?.oFactorRomanaValueType;
     setState(() {
       _oFactorCalculationType = qSlope.oFactor?.oFactorCalculationType;
     });
@@ -107,6 +109,7 @@ class _OFactorPageState extends State<OFactorPage> {
         qSlope.oFactor?.indexOfSecondJoint = _joint2Index.value;
         qSlope.oFactor?.oFactorTypeOfFailure = _oFactorTypeOfFailure.value;
         qSlope.oFactor?.oFactorCalculationType = _oFactorCalculationType;
+        qSlope.oFactor?.oFactorRomanaValueType = _oFactorRomanaValueType.value;
         widget.qSlope.value = qSlope;
         widget.errorTabs.value[tabIndex] = false;
       }
@@ -321,6 +324,8 @@ class _OFactorPageState extends State<OFactorPage> {
                                                                         OFactorCalculationType
                                                                             .romanaAdjacentFactor
                                                                     ? OFactorRomanaAdjustmentFactorWidget(
+                                                                        oFactorRomanaValueType:
+                                                                            _oFactorRomanaValueType,
                                                                         setQSlope:
                                                                             _setQSlope,
                                                                         oFactorTypeOfFailure:
