@@ -46,26 +46,23 @@ double calculateRqdByThreePointThreeJv(double jv) {
 }
 
 double calculateF1ForPlanarFailure(double alphaJ, double alphaS) {
-  double result = alphaJ - alphaS;
-  if (result < 0) {
-    result = result + 360;
+  double result = (alphaJ - alphaS).abs();
+  if (result > 180) {
+    result = 360 - result;
   }
   return result;
 }
 
 double calculateF1ForWedgeFailure(double alphaI, double alphaS) {
-  double result = alphaI - alphaS;
-  if (result < 0) {
-    result = result + 360;
+  double result = (alphaI - alphaS).abs();
+  if (result > 180) {
+    result = 360 - result;
   }
   return result;
 }
 
 double calculateF1ForTopplingFailure(double alphaJ, double alphaS) {
   double result = (alphaJ - alphaS) - 180;
-  if (result < 0) {
-    result = result + 360;
-  }
   return result;
 }
 
