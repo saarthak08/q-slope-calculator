@@ -26,6 +26,8 @@ jobs:
         run: flutter pub get
 
       - name: Create .env file
+        env:
+          RELEASE_ENV: ${{ secrets.RELEASE_ENV }}
         run: echo -n "${RELEASE_ENV}" > .env 
       
       - run: flutter analyze -v
