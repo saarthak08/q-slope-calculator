@@ -32884,7 +32884,7 @@ A.aO5.prototype={
 $1(a){var s=A.f5().b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/a6bd3f1de158bb61090e0c8053df93a10cb548e1/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/36335019a8eab588c3c2ea783c618d90505be233/":s)+a},
 $S:34}
 A.aeX.prototype={
 dz(a){B.d.aN(this.a.a.save())},
@@ -100565,8 +100565,8 @@ if(o==null)o=0
 n=A.aN(g.a.x.a.a)
 if(n==null)n=0
 f=g.a
-if(f.c===B.h5)if(f.e.a.a.length!==0&&f.f.a.a.length!==0&&f.w.a.a.length!==0&&f.x.a.a.length!==0){m=r-q
-if(m<0)m+=360
+if(f.c===B.h5)if(f.e.a.a.length!==0&&f.f.a.a.length!==0&&f.w.a.a.length!==0&&f.x.a.a.length!==0){m=Math.abs(r-q)
+if(m>180)m=360-m
 l=m>=360?360-m:m
 k=o-n
 f.y.saK(0,B.d.ag(l,4))
@@ -100575,8 +100575,8 @@ g.a.Q.saK(0,B.d.ag(k,4))
 g.a.at.saK(0,B.d.ag(A.aTv(l),4))
 g.a.ax.saK(0,B.d.ag(A.b0J(o),4))
 g.a.ay.saK(0,B.d.ag(-30+19.09859317102744*Math.atan(k),4))}f=g.a
-if(f.c===B.bg)if(f.d.a.a.length!==0&&f.f.a.a.length!==0&&f.r.a.a.length!==0&&f.x.a.a.length!==0){m=s-q
-if(m<0)m+=360
+if(f.c===B.bg)if(f.d.a.a.length!==0&&f.f.a.a.length!==0&&f.r.a.a.length!==0&&f.x.a.a.length!==0){m=Math.abs(s-q)
+if(m>180)m=360-m
 k=p-n
 f.y.saK(0,B.d.ag(m,4))
 g.a.z.saK(0,B.d.ag(p,4))
@@ -100585,7 +100585,6 @@ g.a.at.saK(0,B.d.ag(A.aTv(m),4))
 g.a.ax.saK(0,B.d.ag(A.b0J(p),4))
 g.a.ay.saK(0,B.d.ag(-30+19.09859317102744*Math.atan(k),4))}f=g.a
 if(f.c===B.pg)if(f.e.a.a.length!==0&&f.f.a.a.length!==0&&f.w.a.a.length!==0&&f.x.a.a.length!==0){m=r-q-180
-if(m<0)m+=360
 k=o+n
 f.y.saK(0,B.d.ag(m,4))
 g.a.z.saK(0,B.e.ag(1,4))
