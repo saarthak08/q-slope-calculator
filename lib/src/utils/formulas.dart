@@ -62,8 +62,12 @@ double calculateF1ForWedgeFailure(double alphaI, double alphaS) {
 }
 
 double calculateF1ForTopplingFailure(double alphaJ, double alphaS) {
-  double result = (alphaJ - alphaS) - 180;
-  return result;
+  double result = (alphaJ - alphaS).abs();
+  if (result <= 180) {
+    return 180 - result;
+  } else {
+    return result - 180;
+  }
 }
 
 double calculateF3ForPlanarFailure(double betaJ, double betaS) {
