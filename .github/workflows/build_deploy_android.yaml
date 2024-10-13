@@ -64,6 +64,7 @@ jobs:
             build/app/outputs/mapping/prodRelease/mapping.txt
             build/app/intermediates/merged_native_libs/prodRelease/out/lib/merged_native_libs.zip
           overwrite: true
+          include-hidden-files: true
 
   deploy-playstore:
     runs-on: ubuntu-latest

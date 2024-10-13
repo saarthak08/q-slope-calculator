@@ -3,7 +3,7 @@ name: Build Windows
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build-windows:
@@ -49,3 +49,4 @@ jobs:
           path: |
             build/windows/x64/runner/Release
           overwrite: true
+          include-hidden-files: true
