@@ -49,3 +49,4 @@ app.*.map.json
 # Developer introduced
 *.env
 /android/app/src/release/google-services.json
+/android/app/.cxx
