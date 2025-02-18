@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
         floatingActionButton: FloatingActionButton.extended(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          splashColor: primaryColor.withOpacity(0.2),
+          splashColor: primaryColor.withValues(alpha: 0.2),
           label: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

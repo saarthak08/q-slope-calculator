@@ -15,7 +15,7 @@ ThemeData getThemeData(BuildContext context) {
       ),
       scaffoldBackgroundColor: white,
       colorSchemeSeed: primaryColor,
-      splashColor: primaryColor.withOpacity(0.2),
+      splashColor: primaryColor.withValues(alpha: 0.2),
       disabledColor: Colors.grey,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scrollbarTheme: const ScrollbarThemeData(

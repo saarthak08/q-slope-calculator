@@ -62,7 +62,7 @@ class IllustrationWidget extends StatelessWidget {
                           backgroundColor:
                               WidgetStateProperty.resolveWith((states) {
                             if (states.contains(WidgetState.pressed)) {
-                              return primaryColor.withOpacity(0.3);
+                              return primaryColor.withValues(alpha: 0.3);
                             }
                             return Colors.transparent;
                           }),
