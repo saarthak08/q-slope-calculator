@@ -4,6 +4,7 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
+import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
@@ -54,17 +55,19 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 }
               },
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Icon(
+                    deselectAll ? Icons.deselect : Icons.select_all,
+                    color: primaryColor,
+                  ),
+                  SizedBox(width: getViewPortWidth(context) * 0.02),
                   Text(
                     deselectAll
                         ? AppLocalizations.of(context).deselectAll
                         : AppLocalizations.of(context).selectAll,
-                  ),
-                  SizedBox(width: getViewPortWidth(context) * 0.005),
-                  Icon(
-                    deselectAll ? Icons.deselect : Icons.select_all,
-                    color: primaryColor,
                   ),
                 ],
               ),
@@ -140,11 +143,47 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 );
               },
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(AppLocalizations.of(context).export),
-                  SizedBox(width: getViewPortWidth(context) * 0.005),
                   Icon(Icons.file_upload_outlined, color: primaryColor),
+                  SizedBox(width: getViewPortWidth(context) * 0.02),
+                  Text(AppLocalizations.of(context).export),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              onTap: () async {
+                var qSlopeState = qSlopeListState;
+                if (qSlopeState is QSlopeListLoaded) {
+                  int index = 0;
+                  var qSlopes = List<double>.empty(growable: true);
+                  var tiles = selectedTiles;
+                  if (tiles != null) {
+                    for (var selectedQSlopes in tiles) {
+                      var qSlope = qSlopeState.qSlopeList[index].qSlope;
+                      if (selectedQSlopes && qSlope != null) {
+                        qSlopes.add(qSlope);
+                      }
+                      index++;
+                    }
+                    Navigator.pushNamed(
+                      context,
+                      QSlopeStabilityChartScreen.route,
+                      arguments: qSlopes,
+                    );
+                  }
+                }
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.area_chart, color: primaryColor),
+                  SizedBox(width: getViewPortWidth(context) * 0.02),
+                  Text(AppLocalizations.of(context).qSlopeStabilityChart),
                 ],
               ),
             ),
@@ -221,11 +260,13 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 );
               },
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(AppLocalizations.of(context).delete),
-                  SizedBox(width: getViewPortWidth(context) * 0.005),
                   const Icon(Icons.delete, color: Colors.red),
+                  SizedBox(width: getViewPortWidth(context) * 0.02),
+                  Text(AppLocalizations.of(context).delete),
                 ],
               ),
             ),
