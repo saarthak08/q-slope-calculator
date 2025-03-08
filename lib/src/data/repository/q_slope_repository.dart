@@ -19,8 +19,10 @@ class QSlopeRepository {
   Future<List<QSlope>> getAllQSlopes() {
     return _sharedPreferences
         .then((pref) => pref.getStringList(_qSlopeSharedPreferenceKey))
-        .then((list) =>
-            (list ?? []).map((value) => QSlope.fromJson(value)).toList());
+        .then(
+          (list) =>
+              (list ?? []).map((value) => QSlope.fromJson(value)).toList(),
+        );
   }
 
   Future<bool> saveQSlope(QSlope qSlope) async {
@@ -44,8 +46,9 @@ class QSlopeRepository {
   }
 
   Future<bool> deleteAllQSlopes() {
-    return _sharedPreferences
-        .then((pref) => pref.remove(_qSlopeSharedPreferenceKey));
+    return _sharedPreferences.then(
+      (pref) => pref.remove(_qSlopeSharedPreferenceKey),
+    );
   }
 
   Future<bool> deleteQSlope(String id) async {
@@ -55,7 +58,8 @@ class QSlopeRepository {
     });
     var jsonList = qSlopesList.map((qSlope) => qSlope.toJson()).toList();
     return _sharedPreferences.then(
-        (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList));
+      (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList),
+    );
   }
 
   Future<bool> deleteMultipleQSlopes(List<String> ids) async {
@@ -65,6 +69,7 @@ class QSlopeRepository {
     });
     var jsonList = qSlopesList.map((qSlope) => qSlope.toJson()).toList();
     return _sharedPreferences.then(
-        (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList));
+      (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList),
+    );
   }
 }

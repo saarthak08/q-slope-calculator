@@ -19,8 +19,11 @@ class QSlopeListService {
     try {
       return Success(await _qSlopeCalculationsRepository.getAllQSlopes());
     } catch (err, s) {
-      getLogger()
-          .e('Error in getting Q-slopes list', error: err, stackTrace: s);
+      getLogger().e(
+        'Error in getting Q-slopes list',
+        error: err,
+        stackTrace: s,
+      );
       return Failure(QSlopeError(type: QSlopeErrorType.listLoadError));
     }
   }
@@ -29,8 +32,11 @@ class QSlopeListService {
     try {
       return Success(await _qSlopeCalculationsRepository.saveQSlope(qslope));
     } catch (err, s) {
-      getLogger()
-          .e('Error in saving Q-slope: $qslope', error: err, stackTrace: s);
+      getLogger().e(
+        'Error in saving Q-slope: $qslope',
+        error: err,
+        stackTrace: s,
+      );
       return Failure(QSlopeError(type: QSlopeErrorType.saveError));
     }
   }
@@ -39,8 +45,11 @@ class QSlopeListService {
     try {
       return Success(await _qSlopeCalculationsRepository.deleteAllQSlopes());
     } catch (err, s) {
-      getLogger()
-          .e('Error in clearing Q-slope list', error: err, stackTrace: s);
+      getLogger().e(
+        'Error in clearing Q-slope list',
+        error: err,
+        stackTrace: s,
+      );
       return Failure(QSlopeError(type: QSlopeErrorType.clearListError));
     }
   }
@@ -57,10 +66,14 @@ class QSlopeListService {
   Future<Result<bool>> deleteMultipleQSlopes(List<String> ids) async {
     try {
       return Success(
-          await _qSlopeCalculationsRepository.deleteMultipleQSlopes(ids));
+        await _qSlopeCalculationsRepository.deleteMultipleQSlopes(ids),
+      );
     } catch (err, s) {
-      getLogger()
-          .e('Error in deleting multiple Q-slopes', error: err, stackTrace: s);
+      getLogger().e(
+        'Error in deleting multiple Q-slopes',
+        error: err,
+        stackTrace: s,
+      );
       return Failure(QSlopeError(type: QSlopeErrorType.deleteError));
     }
   }

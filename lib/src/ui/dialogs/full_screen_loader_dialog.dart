@@ -5,11 +5,15 @@ void showFullScreenLoader(context) {
   showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (ctx) => PopScope(
-        canPop: false,
-        child: Container(
-            decoration:
-                const BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.4)),
-            child: const Center(child: CustomProgressIndicator()))),
+    builder:
+        (ctx) => PopScope(
+          canPop: false,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.4),
+            ),
+            child: const Center(child: CustomProgressIndicator()),
+          ),
+        ),
   );
 }

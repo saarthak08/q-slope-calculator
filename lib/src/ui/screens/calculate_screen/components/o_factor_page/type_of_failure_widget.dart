@@ -9,12 +9,13 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
   final OFactorTypeOfFailure? currentValue;
   final ValueNotifier<int?> joint1IndexValueNotifier;
   final ValueNotifier<int?> joint2IndexValueNotifier;
-  const OFactorTypeOfFailureWidget(
-      {super.key,
-      required this.oFactorTypeOfFailure,
-      required this.currentValue,
-      required this.joint1IndexValueNotifier,
-      required this.joint2IndexValueNotifier});
+  const OFactorTypeOfFailureWidget({
+    super.key,
+    required this.oFactorTypeOfFailure,
+    required this.currentValue,
+    required this.joint1IndexValueNotifier,
+    required this.joint2IndexValueNotifier,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,61 +24,74 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getViewPortWidth(context) * 0.01),
-            child: Text(
-              AppLocalizations.of(context).typeOfFailure,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                  fontSize: getSubTitleFontSize(context)),
-            )),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.01,
+          padding: EdgeInsets.symmetric(
+            horizontal: getViewPortWidth(context) * 0.01,
+          ),
+          child: Text(
+            AppLocalizations.of(context).typeOfFailure,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+              fontSize: getSubTitleFontSize(context),
+            ),
+          ),
         ),
-        Row(children: [
-          Radio<OFactorTypeOfFailure>(
+        SizedBox(height: getViewPortHeight(context) * 0.01),
+        Row(
+          children: [
+            Radio<OFactorTypeOfFailure>(
               value: OFactorTypeOfFailure.planar,
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
                 joint1IndexValueNotifier.value = null;
                 joint2IndexValueNotifier.value = null;
-              }),
-          Expanded(
+              },
+            ),
+            Expanded(
               child: Text(
-            AppLocalizations.of(context).planarFailure,
-            style: TextStyle(fontSize: getBodyFontSize(context)),
-          )),
-        ]),
-        Row(children: [
-          Radio<OFactorTypeOfFailure>(
+                AppLocalizations.of(context).planarFailure,
+                style: TextStyle(fontSize: getBodyFontSize(context)),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Radio<OFactorTypeOfFailure>(
               value: OFactorTypeOfFailure.wedge,
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
                 joint1IndexValueNotifier.value = null;
                 joint2IndexValueNotifier.value = null;
-              }),
-          Expanded(
+              },
+            ),
+            Expanded(
               child: Text(
-            AppLocalizations.of(context).wedgeFailure,
-            style: TextStyle(fontSize: getBodyFontSize(context)),
-          )),
-        ]),
-        Row(children: [
-          Radio<OFactorTypeOfFailure>(
+                AppLocalizations.of(context).wedgeFailure,
+                style: TextStyle(fontSize: getBodyFontSize(context)),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Radio<OFactorTypeOfFailure>(
               value: OFactorTypeOfFailure.toppling,
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
-              }),
-          Expanded(
+              },
+            ),
+            Expanded(
               child: Text(
-            AppLocalizations.of(context).toppling,
-            style: TextStyle(fontSize: getBodyFontSize(context)),
-          )),
-        ]),
+                AppLocalizations.of(context).toppling,
+                style: TextStyle(fontSize: getBodyFontSize(context)),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

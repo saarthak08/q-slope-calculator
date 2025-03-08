@@ -86,13 +86,16 @@ class QSlope {
       locationId: map['locationId'] as String,
       lithology: map['lithology'] as String,
       blockSize: BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>),
-      jointCharacter:
-          JointCharacter.fromMap(map['jointCharacter'] as Map<String, dynamic>),
+      jointCharacter: JointCharacter.fromMap(
+        map['jointCharacter'] as Map<String, dynamic>,
+      ),
       oFactor: OFactor.fromMap(map['oFactor'] as Map<String, dynamic>),
       externalFactors: ExternalFactors.fromMap(
-          map['externalFactors'] as Map<String, dynamic>),
-      activeStress:
-          ActiveStress.fromMap(map['activeStress'] as Map<String, dynamic>),
+        map['externalFactors'] as Map<String, dynamic>,
+      ),
+      activeStress: ActiveStress.fromMap(
+        map['activeStress'] as Map<String, dynamic>,
+      ),
       qSlope: (map['qSlope']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
     );

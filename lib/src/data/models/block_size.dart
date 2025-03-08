@@ -48,18 +48,19 @@ class BlockSize {
     double? rqd,
   }) {
     return BlockSize(
-        numberOfJoints: numberOfJoints ?? this.numberOfJoints,
-        numberOfRandomSets: numberOfRandomSets ?? this.numberOfRandomSets,
-        jointSpacingInMeters: jointSpacingInMeters ?? this.jointSpacingInMeters,
-        areaInSquareMeters: areaInSquareMeters ?? this.areaInSquareMeters,
-        jointVolume: jointVolume ?? this.jointVolume,
-        sumOfCorePieces: sumOfCorePieces ?? this.sumOfCorePieces,
-        totalDrillRun: totalDrillRun ?? this.totalDrillRun,
-        rqdCalculationType: rqdCalculationType ?? this.rqdCalculationType,
-        rqdByJvCalculationType:
-            rqdByJvCalculationType ?? this.rqdByJvCalculationType,
-        rqd: rqd ?? this.rqd,
-        jointSetNumber: jointSetNumber ?? this.jointSetNumber);
+      numberOfJoints: numberOfJoints ?? this.numberOfJoints,
+      numberOfRandomSets: numberOfRandomSets ?? this.numberOfRandomSets,
+      jointSpacingInMeters: jointSpacingInMeters ?? this.jointSpacingInMeters,
+      areaInSquareMeters: areaInSquareMeters ?? this.areaInSquareMeters,
+      jointVolume: jointVolume ?? this.jointVolume,
+      sumOfCorePieces: sumOfCorePieces ?? this.sumOfCorePieces,
+      totalDrillRun: totalDrillRun ?? this.totalDrillRun,
+      rqdCalculationType: rqdCalculationType ?? this.rqdCalculationType,
+      rqdByJvCalculationType:
+          rqdByJvCalculationType ?? this.rqdByJvCalculationType,
+      rqd: rqd ?? this.rqd,
+      jointSetNumber: jointSetNumber ?? this.jointSetNumber,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -74,44 +75,51 @@ class BlockSize {
       'rqdCalculationType': rqdCalculationType?.name,
       'rqdByJvCalculationType': rqdByJvCalculationType?.name,
       'rqd': rqd,
-      'jointSetNumber': jointSetNumber
+      'jointSetNumber': jointSetNumber,
     };
   }
 
   factory BlockSize.fromMap(Map<String, dynamic> map) {
     return BlockSize(
-        numberOfJoints:
-            map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
-        numberOfRandomSets: map['numberOfRandomSets'] != null
-            ? map['numberOfRandomSets'] as int?
-            : null,
-        jointSpacingInMeters: map['jointSpacingInMeters'] != null
-            ? (map['jointSpacingInMeters'] as List).cast<double>()
-            : null,
-        areaInSquareMeters: map['areaInSquareMeters'] != null
-            ? map['areaInSquareMeters'] as double?
-            : null,
-        jointVolume:
-            map['jointVolume'] != null ? map['jointVolume'] as double : null,
-        sumOfCorePieces: map['sumOfCorePieces'] != null
-            ? map['sumOfCorePieces'] as double?
-            : null,
-        totalDrillRun: map['totalDrillRun'] != null
-            ? map['totalDrillRun'] as double?
-            : null,
-        rqdCalculationType: map['rqdCalculationType'] != null
-            ? map['rqdCalculationType'] == RqdCalculationType.directMethod.name
-                ? RqdCalculationType.directMethod
-                : RqdCalculationType.jv
-            : null,
-        rqd: map['rqd'] as double,
-        jointSetNumber: map['jointSetNumber'] as double?,
-        rqdByJvCalculationType: map['rqdByJvCalculationType'] != null
-            ? map['rqdByJvCalculationType'] ==
-                    RqdByJvCalculationType.formulaWith2Point5Jv.name
-                ? RqdByJvCalculationType.formulaWith2Point5Jv
-                : RqdByJvCalculationType.formulaWith3Point3Jv
-            : null);
+      numberOfJoints:
+          map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
+      numberOfRandomSets:
+          map['numberOfRandomSets'] != null
+              ? map['numberOfRandomSets'] as int?
+              : null,
+      jointSpacingInMeters:
+          map['jointSpacingInMeters'] != null
+              ? (map['jointSpacingInMeters'] as List).cast<double>()
+              : null,
+      areaInSquareMeters:
+          map['areaInSquareMeters'] != null
+              ? map['areaInSquareMeters'] as double?
+              : null,
+      jointVolume:
+          map['jointVolume'] != null ? map['jointVolume'] as double : null,
+      sumOfCorePieces:
+          map['sumOfCorePieces'] != null
+              ? map['sumOfCorePieces'] as double?
+              : null,
+      totalDrillRun:
+          map['totalDrillRun'] != null ? map['totalDrillRun'] as double? : null,
+      rqdCalculationType:
+          map['rqdCalculationType'] != null
+              ? map['rqdCalculationType'] ==
+                      RqdCalculationType.directMethod.name
+                  ? RqdCalculationType.directMethod
+                  : RqdCalculationType.jv
+              : null,
+      rqd: map['rqd'] as double,
+      jointSetNumber: map['jointSetNumber'] as double?,
+      rqdByJvCalculationType:
+          map['rqdByJvCalculationType'] != null
+              ? map['rqdByJvCalculationType'] ==
+                      RqdByJvCalculationType.formulaWith2Point5Jv.name
+                  ? RqdByJvCalculationType.formulaWith2Point5Jv
+                  : RqdByJvCalculationType.formulaWith3Point3Jv
+              : null,
+    );
   }
 
   String toJson() => json.encode(toMap());
@@ -158,9 +166,6 @@ class BlockSize {
   }
 }
 
-enum RqdCalculationType {
-  jv,
-  directMethod;
-}
+enum RqdCalculationType { jv, directMethod }
 
 enum RqdByJvCalculationType { formulaWith2Point5Jv, formulaWith3Point3Jv }

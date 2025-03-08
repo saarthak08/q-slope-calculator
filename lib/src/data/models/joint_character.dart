@@ -47,21 +47,24 @@ class JointCharacter {
 
   factory JointCharacter.fromMap(Map<String, dynamic> map) {
     return JointCharacter(
-      jointRoughness: map['jointRoughness'] != null
-          ? (map['jointRoughness'] as List).cast<double>()
-          : null,
+      jointRoughness:
+          map['jointRoughness'] != null
+              ? (map['jointRoughness'] as List).cast<double>()
+              : null,
       jointWaviness:
           map['jw'] != null ? (map['jw'] as List).cast<double>() : null,
       jointSmoothness:
           map['js'] != null ? (map['js'] as List).cast<double>() : null,
-      jrCalculationType: map['jrCalculationType'] != null
-          ? map['jrCalculationType'] == JrCalculationType.jr.name
-              ? JrCalculationType.jr
-              : JrCalculationType.palmstorm
-          : null,
-      jointAlteration: map['jointAlteration'] != null
-          ? (map['jointAlteration'] as List).cast<double>()
-          : null,
+      jrCalculationType:
+          map['jrCalculationType'] != null
+              ? map['jrCalculationType'] == JrCalculationType.jr.name
+                  ? JrCalculationType.jr
+                  : JrCalculationType.palmstorm
+              : null,
+      jointAlteration:
+          map['jointAlteration'] != null
+              ? (map['jointAlteration'] as List).cast<double>()
+              : null,
     );
   }
 
@@ -96,7 +99,4 @@ class JointCharacter {
   }
 }
 
-enum JrCalculationType {
-  palmstorm,
-  jr;
-}
+enum JrCalculationType { palmstorm, jr }

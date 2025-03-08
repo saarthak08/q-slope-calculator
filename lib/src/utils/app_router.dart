@@ -9,20 +9,26 @@ class AppRouter {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-            settings: settings, builder: (context) => const HomeScreen());
+          settings: settings,
+          builder: (context) => const HomeScreen(),
+        );
       case CalculateScreen.route:
         final args = settings.arguments as CalculateScreenArguments;
         return MaterialPageRoute(
-            settings: settings,
-            builder: (context) => CalculateScreen(qSlope: args.qSlope));
+          settings: settings,
+          builder: (context) => CalculateScreen(qSlope: args.qSlope),
+        );
       case PhotoViewScreen.route:
         final args = settings.arguments as ImageProvider;
         return MaterialPageRoute(
-            settings: settings,
-            builder: (context) => PhotoViewScreen(imageProvider: args));
+          settings: settings,
+          builder: (context) => PhotoViewScreen(imageProvider: args),
+        );
       case AboutScreen.route:
         return MaterialPageRoute(
-            settings: settings, builder: (context) => const AboutScreen());
+          settings: settings,
+          builder: (context) => const AboutScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const Text("No Route Found"),

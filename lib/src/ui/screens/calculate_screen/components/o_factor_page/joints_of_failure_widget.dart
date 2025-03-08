@@ -14,93 +14,97 @@ class OFactorJointsOfFailureWidget extends StatelessWidget {
   final ValueNotifier<int?> joint2IndexValueNotifier;
   final void Function() setQSlope;
 
-  const OFactorJointsOfFailureWidget(
-      {super.key,
-      this.oFactorTypeOfFailure,
-      required this.qSlope,
-      this.joint1Index,
-      this.joint2Index,
-      required this.joint1IndexValueNotifier,
-      required this.joint2IndexValueNotifier,
-      required this.setQSlope});
+  const OFactorJointsOfFailureWidget({
+    super.key,
+    this.oFactorTypeOfFailure,
+    required this.qSlope,
+    this.joint1Index,
+    this.joint2Index,
+    required this.joint1IndexValueNotifier,
+    required this.joint2IndexValueNotifier,
+    required this.setQSlope,
+  });
 
   @override
   Widget build(BuildContext context) {
     return oFactorTypeOfFailure != null
         ? Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                SizedBox(
-                  height: getViewPortHeight(context) * 0.03,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: getViewPortHeight(context) * 0.03),
+            Text(
+              AppLocalizations.of(context).selectJointsHavingFailure,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+                fontSize: getSubTitleFontSize(context),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: getViewPortHeight(context) * 0.01),
+                Flexible(
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 30),
+                    width: 100,
+                    child: DropdownButton<int>(
+                      isExpanded: true,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      value: joint1Index,
+                      items:
+                          (List.generate(
+                            qSlope.value.blockSize?.numberOfJoints ?? 1,
+                            (index) => DropdownMenuItem(
+                              value: index,
+                              child: Text(
+                                "${AppLocalizations.of(context).jointSymbol}${index + 1}",
+                              ),
+                            ),
+                          ).where((value) => value.value != joint2Index).toList()),
+                      onChanged: (value) {
+                        joint1IndexValueNotifier.value = value;
+                        setQSlope();
+                      },
+                    ),
+                  ),
                 ),
-                Text(
-                  AppLocalizations.of(context).selectJointsHavingFailure,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                      fontSize: getSubTitleFontSize(context)),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.01,
+                oFactorTypeOfFailure == OFactorTypeOfFailure.wedge
+                    ? Flexible(
+                      child: SizedBox(
+                        width: 100,
+                        child: DropdownButton<int>(
+                          isExpanded: true,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          value: joint2Index,
+                          items:
+                              (List.generate(
+                                    qSlope.value.blockSize?.numberOfJoints ?? 1,
+                                    (index) => DropdownMenuItem(
+                                      value: index,
+                                      child: Text(
+                                        "${AppLocalizations.of(context).jointSymbol}${(index + 1)}",
+                                      ),
+                                    ),
+                                  )
+                                  .where((value) => value.value != joint1Index)
+                                  .toList()),
+                          onChanged: (value) {
+                            joint2IndexValueNotifier.value = value;
+                            setQSlope();
+                          },
+                        ),
                       ),
-                      Flexible(
-                          child: Container(
-                              margin: const EdgeInsets.only(right: 30),
-                              width: 100,
-                              child: DropdownButton<int>(
-                                  isExpanded: true,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  value: joint1Index,
-                                  items: (List.generate(
-                                          qSlope.value.blockSize
-                                                  ?.numberOfJoints ??
-                                              1,
-                                          (index) => DropdownMenuItem(
-                                              value: index,
-                                              child: Text(
-                                                  "${AppLocalizations.of(context).jointSymbol}${index + 1}")))
-                                      .where(
-                                          (value) => value.value != joint2Index)
-                                      .toList()),
-                                  onChanged: (value) {
-                                    joint1IndexValueNotifier.value = value;
-                                    setQSlope();
-                                  }))),
-                      oFactorTypeOfFailure == OFactorTypeOfFailure.wedge
-                          ? Flexible(
-                              child: SizedBox(
-                                  width: 100,
-                                  child: DropdownButton<int>(
-                                      isExpanded: true,
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      value: joint2Index,
-                                      items: (List.generate(
-                                              qSlope.value.blockSize
-                                                      ?.numberOfJoints ??
-                                                  1,
-                                              (index) => DropdownMenuItem(
-                                                  value: index,
-                                                  child: Text(
-                                                      "${AppLocalizations.of(context).jointSymbol}${(index + 1)}")))
-                                          .where((value) =>
-                                              value.value != joint1Index)
-                                          .toList()),
-                                      onChanged: (value) {
-                                        joint2IndexValueNotifier.value = value;
-                                        setQSlope();
-                                      })))
-                          : Container()
-                    ])
-              ])
+                    )
+                    : Container(),
+              ],
+            ),
+          ],
+        )
         : Container();
   }
 }

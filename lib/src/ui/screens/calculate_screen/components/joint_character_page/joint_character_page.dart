@@ -14,8 +14,11 @@ class JointCharacterPage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
   final ValueNotifier<List<bool>> errorTabs;
 
-  const JointCharacterPage(
-      {super.key, required this.qSlope, required this.errorTabs});
+  const JointCharacterPage({
+    super.key,
+    required this.qSlope,
+    required this.errorTabs,
+  });
 
   @override
   State<JointCharacterPage> createState() => _JointCharacterPageState();
@@ -35,30 +38,38 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
     int? joints = qSlope.blockSize?.numberOfJoints ?? 0;
     if (joints != numberOfJoints) {
       _jointRoughnessControllers = List.generate(
-          joints,
-          (jointIndex) => TextEditingController(
-              text: qSlope.jointCharacter?.jointRoughness?[jointIndex]
-                      .toString() ??
-                  ""));
+        joints,
+        (jointIndex) => TextEditingController(
+          text:
+              qSlope.jointCharacter?.jointRoughness?[jointIndex].toString() ??
+              "",
+        ),
+      );
       _jointAlterationControllers = List.generate(
-          joints,
-          (jointIndex) => TextEditingController(
-              text: qSlope.jointCharacter?.jointAlteration?[jointIndex]
-                      .toString() ??
-                  ""));
+        joints,
+        (jointIndex) => TextEditingController(
+          text:
+              qSlope.jointCharacter?.jointAlteration?[jointIndex].toString() ??
+              "",
+        ),
+      );
       jrCalculationType = qSlope.jointCharacter?.jrCalculationType;
       _jointSmoothnessControllers = List.generate(
-          joints,
-          (jointIndex) => TextEditingController(
-              text: qSlope.jointCharacter?.jointSmoothness?[jointIndex]
-                      .toString() ??
-                  ""));
+        joints,
+        (jointIndex) => TextEditingController(
+          text:
+              qSlope.jointCharacter?.jointSmoothness?[jointIndex].toString() ??
+              "",
+        ),
+      );
       _jointWavinessControllers = List.generate(
-          joints,
-          (jointIndex) => TextEditingController(
-              text: qSlope.jointCharacter?.jointWaviness?[jointIndex]
-                      .toString() ??
-                  ""));
+        joints,
+        (jointIndex) => TextEditingController(
+          text:
+              qSlope.jointCharacter?.jointWaviness?[jointIndex].toString() ??
+              "",
+        ),
+      );
       numberOfJoints = joints;
     }
   }
@@ -105,25 +116,29 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
         qSlope.jointCharacter?.jrCalculationType = jrCalculationType;
         qSlope.jointCharacter?.jointAlteration ??= List.empty(growable: true);
         for (var controller in _jointAlterationControllers) {
-          qSlope.jointCharacter?.jointAlteration
-              ?.add(double.tryParse(controller.text) ?? 1);
+          qSlope.jointCharacter?.jointAlteration?.add(
+            double.tryParse(controller.text) ?? 1,
+          );
         }
         qSlope.jointCharacter?.jointRoughness ??= List.empty(growable: true);
         for (var controller in _jointRoughnessControllers) {
-          qSlope.jointCharacter?.jointRoughness
-              ?.add(double.tryParse(controller.text) ?? 0);
+          qSlope.jointCharacter?.jointRoughness?.add(
+            double.tryParse(controller.text) ?? 0,
+          );
         }
         if (qSlope.jointCharacter?.jrCalculationType ==
             JrCalculationType.palmstorm) {
           qSlope.jointCharacter?.jointWaviness ??= List.empty(growable: true);
           qSlope.jointCharacter?.jointSmoothness ??= List.empty(growable: true);
           for (var controller in _jointWavinessControllers) {
-            qSlope.jointCharacter?.jointWaviness
-                ?.add(double.tryParse(controller.text) ?? 0);
+            qSlope.jointCharacter?.jointWaviness?.add(
+              double.tryParse(controller.text) ?? 0,
+            );
           }
           for (var controller in _jointSmoothnessControllers) {
-            qSlope.jointCharacter?.jointSmoothness
-                ?.add(double.tryParse(controller.text) ?? 0);
+            qSlope.jointCharacter?.jointSmoothness?.add(
+              double.tryParse(controller.text) ?? 0,
+            );
           }
         }
         widget.qSlope.value = qSlope;
@@ -158,214 +173,235 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-            child: Padding(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: getViewPortWidth(context) * 0.04,
-              vertical: getViewPortHeight(context) * 0.02),
+            horizontal: getViewPortWidth(context) * 0.04,
+            vertical: getViewPortHeight(context) * 0.02,
+          ),
           child: Form(
-              key: formKey,
-              onChanged: () {
-                formKey.currentState?.validate();
-                _onFormChange();
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              top: getViewPortHeight(context) * 0.02,
-                              bottom: getViewPortHeight(context) * 0.03),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .joinCharacterPageAppBarTitle,
-                            style: GoogleFonts.poppins(
-                                fontSize: getSubtitleLargeFontSize(context),
-                                color: primaryColor),
-                          ))),
-                  Text(
-                    AppLocalizations.of(context).jointRoughness,
-                    style: TextStyle(
-                        fontSize: getSubTitleFontSize(context),
-                        fontWeight: FontWeight.w500),
+            key: formKey,
+            onChanged: () {
+              formKey.currentState?.validate();
+              _onFormChange();
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: getViewPortHeight(context) * 0.02,
+                      bottom: getViewPortHeight(context) * 0.03,
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context).joinCharacterPageAppBarTitle,
+                      style: GoogleFonts.poppins(
+                        fontSize: getSubtitleLargeFontSize(context),
+                        color: primaryColor,
+                      ),
+                    ),
                   ),
-                  Row(children: [
-                    Radio<JrCalculationType>(
-                        value: JrCalculationType.jr,
-                        groupValue: jrCalculationType,
-                        onChanged: (value) {
-                          setState(() {
-                            jrCalculationType = value;
-                          });
-                          _resetJrControlllers();
-                        }),
-                    Expanded(
-                        child: Text(
-                      AppLocalizations.of(context).jointRoughnessByValue,
-                      style: TextStyle(fontSize: getBodyFontSize(context)),
-                    )),
-                  ]),
-                  Row(children: [
-                    Radio<JrCalculationType>(
-                        value: JrCalculationType.palmstorm,
-                        groupValue: jrCalculationType,
-                        onChanged: (value) {
-                          setState(() {
-                            jrCalculationType = value;
-                          });
-                          _resetJrControlllers();
-                        }),
-                    Expanded(
-                        child: Text(
-                      AppLocalizations.of(context).jointRoughnessByPalmstrom,
-                      style: TextStyle(fontSize: getBodyFontSize(context)),
-                    )),
-                  ]),
-                  SizedBox(
-                    height: getViewPortHeight(context) * 0.03,
+                ),
+                Text(
+                  AppLocalizations.of(context).jointRoughness,
+                  style: TextStyle(
+                    fontSize: getSubTitleFontSize(context),
+                    fontWeight: FontWeight.w500,
                   ),
-                  AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) {
-                        return FadeTransition(opacity: animation, child: child);
+                ),
+                Row(
+                  children: [
+                    Radio<JrCalculationType>(
+                      value: JrCalculationType.jr,
+                      groupValue: jrCalculationType,
+                      onChanged: (value) {
+                        setState(() {
+                          jrCalculationType = value;
+                        });
+                        _resetJrControlllers();
                       },
-                      child: jrCalculationType == JrCalculationType.jr
+                    ),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).jointRoughnessByValue,
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio<JrCalculationType>(
+                      value: JrCalculationType.palmstorm,
+                      groupValue: jrCalculationType,
+                      onChanged: (value) {
+                        setState(() {
+                          jrCalculationType = value;
+                        });
+                        _resetJrControlllers();
+                      },
+                    ),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).jointRoughnessByPalmstrom,
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.03),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  transitionBuilder: (
+                    Widget child,
+                    Animation<double> animation,
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  child:
+                      jrCalculationType == JrCalculationType.jr
                           ? JointCharacterValueWidget(
-                              inputTitle: AppLocalizations.of(context)
-                                  .jointRoughnessInputTitle,
-                              imagePath: Assets.jointRoughnessTable,
-                              inputPlaceholderText: AppLocalizations.of(context)
-                                  .jointRoughnessSymbol,
-                              validateInput: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "";
-                                }
-                                if (value.isNotEmpty &&
-                                    ((double.tryParse(value) ?? 0) <
-                                            minJointRoughnessValue ||
-                                        (double.tryParse(value) ?? 0) >
-                                            maxJointRoughnessValue)) {
-                                  return "";
-                                }
-                                return null;
-                              },
-                              textEditingControllers:
-                                  _jointRoughnessControllers,
-                            )
+                            inputTitle:
+                                AppLocalizations.of(
+                                  context,
+                                ).jointRoughnessInputTitle,
+                            imagePath: Assets.jointRoughnessTable,
+                            inputPlaceholderText:
+                                AppLocalizations.of(
+                                  context,
+                                ).jointRoughnessSymbol,
+                            validateInput: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "";
+                              }
+                              if (value.isNotEmpty &&
+                                  ((double.tryParse(value) ?? 0) <
+                                          minJointRoughnessValue ||
+                                      (double.tryParse(value) ?? 0) >
+                                          maxJointRoughnessValue)) {
+                                return "";
+                              }
+                              return null;
+                            },
+                            textEditingControllers: _jointRoughnessControllers,
+                          )
                           : jrCalculationType == JrCalculationType.palmstorm
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    JointCharacterValueWidget(
-                                      jointRoughnessControllers:
-                                          _jointRoughnessControllers,
-                                      jointSmoothnessControllers:
-                                          _jointSmoothnessControllers,
-                                      inputTitle: AppLocalizations.of(context)
-                                          .jointWavyness,
-                                      inputPlaceholderText:
-                                          AppLocalizations.of(context)
-                                              .jointWavynessSymbol,
-                                      validateInput: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "";
-                                        }
-                                        return null;
-                                      },
-                                      textEditingControllers:
-                                          _jointWavinessControllers,
-                                    ),
-                                    JointCharacterValueWidget(
-                                      jointRoughnessControllers:
-                                          _jointRoughnessControllers,
-                                      jointWavynessControllers:
-                                          _jointWavinessControllers,
-                                      inputTitle: AppLocalizations.of(context)
-                                          .jointSmoothness,
-                                      inputPlaceholderText:
-                                          AppLocalizations.of(context)
-                                              .jointSmoothnessSymbol,
-                                      validateInput: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "";
-                                        }
-                                        return null;
-                                      },
-                                      textEditingControllers:
-                                          _jointSmoothnessControllers,
-                                    ),
-                                    JointCharacterValueWidget(
-                                      readOnly: true,
-                                      shouldIncludeIndexInPlaceholderText:
-                                          false,
-                                      inputTitle: AppLocalizations.of(context)
-                                          .jointRoughnessWithLimits,
-                                      inputPlaceholderText:
-                                          "${AppLocalizations.of(context).jointRoughnessSymbol} = ${AppLocalizations.of(context).jointWavynessSymbol} x ${AppLocalizations.of(context).jointSmoothnessSymbol}",
-                                      validateInput: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "";
-                                        }
-                                        if (value.isNotEmpty &&
-                                            ((double.tryParse(value) ?? 0) <
-                                                    minJointRoughnessValue ||
-                                                (double.tryParse(value) ?? 0) >
-                                                    maxJointRoughnessValue)) {
-                                          return "";
-                                        }
-                                        return null;
-                                      },
-                                      textEditingControllers:
-                                          _jointRoughnessControllers,
-                                    ),
-                                  ],
-                                )
-                              : Container()),
-                  SizedBox(
-                    height: getViewPortHeight(context) * 0.02,
+                          ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              JointCharacterValueWidget(
+                                jointRoughnessControllers:
+                                    _jointRoughnessControllers,
+                                jointSmoothnessControllers:
+                                    _jointSmoothnessControllers,
+                                inputTitle:
+                                    AppLocalizations.of(context).jointWavyness,
+                                inputPlaceholderText:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointWavynessSymbol,
+                                validateInput: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "";
+                                  }
+                                  return null;
+                                },
+                                textEditingControllers:
+                                    _jointWavinessControllers,
+                              ),
+                              JointCharacterValueWidget(
+                                jointRoughnessControllers:
+                                    _jointRoughnessControllers,
+                                jointWavynessControllers:
+                                    _jointWavinessControllers,
+                                inputTitle:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointSmoothness,
+                                inputPlaceholderText:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointSmoothnessSymbol,
+                                validateInput: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "";
+                                  }
+                                  return null;
+                                },
+                                textEditingControllers:
+                                    _jointSmoothnessControllers,
+                              ),
+                              JointCharacterValueWidget(
+                                readOnly: true,
+                                shouldIncludeIndexInPlaceholderText: false,
+                                inputTitle:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointRoughnessWithLimits,
+                                inputPlaceholderText:
+                                    "${AppLocalizations.of(context).jointRoughnessSymbol} = ${AppLocalizations.of(context).jointWavynessSymbol} x ${AppLocalizations.of(context).jointSmoothnessSymbol}",
+                                validateInput: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "";
+                                  }
+                                  if (value.isNotEmpty &&
+                                      ((double.tryParse(value) ?? 0) <
+                                              minJointRoughnessValue ||
+                                          (double.tryParse(value) ?? 0) >
+                                              maxJointRoughnessValue)) {
+                                    return "";
+                                  }
+                                  return null;
+                                },
+                                textEditingControllers:
+                                    _jointRoughnessControllers,
+                              ),
+                            ],
+                          )
+                          : Container(),
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.02),
+                Text(
+                  AppLocalizations.of(context).jointAlteration,
+                  style: TextStyle(
+                    fontSize: getSubTitleFontSize(context),
+                    fontWeight: FontWeight.w500,
                   ),
-                  Text(
-                    AppLocalizations.of(context).jointAlteration,
-                    style: TextStyle(
-                        fontSize: getSubTitleFontSize(context),
-                        fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(
-                    height: getViewPortHeight(context) * 0.01,
-                  ),
-                  JointCharacterValueWidget(
-                    inputTitle:
-                        AppLocalizations.of(context).jointAlterationInputTitle,
-                    imagePath: Assets.jointAlterationTable,
-                    inputPlaceholderText:
-                        AppLocalizations.of(context).jointAlterationSymbol,
-                    validateInput: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "";
-                      }
-                      if (value.isNotEmpty &&
-                          ((double.tryParse(value) ?? 0) <
-                                  minJointAlterationValue ||
-                              (double.tryParse(value) ?? 0) >
-                                  maxJointAlterationValue)) {
-                        return "";
-                      }
-                      return null;
-                    },
-                    textEditingControllers: _jointAlterationControllers,
-                  ),
-                  SizedBox(
-                    height: getViewPortHeight(context) * 0.1,
-                  ),
-                ],
-              )),
-        )));
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.01),
+                JointCharacterValueWidget(
+                  inputTitle:
+                      AppLocalizations.of(context).jointAlterationInputTitle,
+                  imagePath: Assets.jointAlterationTable,
+                  inputPlaceholderText:
+                      AppLocalizations.of(context).jointAlterationSymbol,
+                  validateInput: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "";
+                    }
+                    if (value.isNotEmpty &&
+                        ((double.tryParse(value) ?? 0) <
+                                minJointAlterationValue ||
+                            (double.tryParse(value) ?? 0) >
+                                maxJointAlterationValue)) {
+                      return "";
+                    }
+                    return null;
+                  },
+                  textEditingControllers: _jointAlterationControllers,
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.1),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override

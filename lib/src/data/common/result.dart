@@ -7,8 +7,10 @@ abstract class Result<T> {
   bool get isSuccess => error == null;
   bool get isFailure => error != null;
 
-  R? when<R>(
-      {R Function(T value)? onSuccess, R Function(Error failure)? onError});
+  R? when<R>({
+    R Function(T value)? onSuccess,
+    R Function(Error failure)? onError,
+  });
 }
 
 class Success<T> extends Result<T> {
@@ -23,10 +25,10 @@ class Success<T> extends Result<T> {
   Error? get error => null;
 
   @override
-  R? when<R>(
-          {R Function(T value)? onSuccess,
-          R Function(Error failure)? onError}) =>
-      onSuccess != null ? onSuccess(data) : null;
+  R? when<R>({
+    R Function(T value)? onSuccess,
+    R Function(Error failure)? onError,
+  }) => onSuccess != null ? onSuccess(data) : null;
 }
 
 class Failure<T> extends Result<T> {
@@ -41,8 +43,8 @@ class Failure<T> extends Result<T> {
   Error get error => failure;
 
   @override
-  R? when<R>(
-          {R Function(T value)? onSuccess,
-          R Function(Error failure)? onError}) =>
-      onError != null ? onError(failure) : null;
+  R? when<R>({
+    R Function(T value)? onSuccess,
+    R Function(Error failure)? onError,
+  }) => onError != null ? onError(failure) : null;
 }

@@ -10,50 +10,55 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
   final TextEditingController locationIdController;
   final TextEditingController lithologyController;
 
-  const BlockSizePageBasicInfoWidget(
-      {super.key,
-      required this.locationIdController,
-      required this.lithologyController});
+  const BlockSizePageBasicInfoWidget({
+    super.key,
+    required this.locationIdController,
+    required this.lithologyController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Center(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
           child: Padding(
-              padding:
-                  EdgeInsets.only(bottom: getViewPortHeight(context) * 0.01),
-              child: Text(
-                AppLocalizations.of(context)
-                    .blockSizePageBasicInformationSubTitle,
-                style: GoogleFonts.poppins(
-                    fontSize: getSubtitleLargeFontSize(context),
-                    color: primaryColor),
-              ))),
-      CustomTextFormField(
-        textInputAction: TextInputAction.next,
-        textEditingController: locationIdController,
-        titleText: AppLocalizations.of(context).locationIdTextInputTitle,
-        validate: (value) {
-          if (value == null || value.isEmpty) {
-            return AppLocalizations.of(context).locationIdTextInputRequired;
-          }
-          return null;
-        },
-      ),
-      SizedBox(
-        height: getViewPortHeight(context) * 0.03,
-      ),
-      CustomTextFormField(
-        textInputAction: TextInputAction.next,
-        textEditingController: lithologyController,
-        titleText: AppLocalizations.of(context).lithologyTextInputTitle,
-        validate: (value) {
-          if (value == null || value.isEmpty) {
-            return AppLocalizations.of(context).lithologyTextInputRequired;
-          }
-          return null;
-        },
-      )
-    ]);
+            padding: EdgeInsets.only(bottom: getViewPortHeight(context) * 0.01),
+            child: Text(
+              AppLocalizations.of(
+                context,
+              ).blockSizePageBasicInformationSubTitle,
+              style: GoogleFonts.poppins(
+                fontSize: getSubtitleLargeFontSize(context),
+                color: primaryColor,
+              ),
+            ),
+          ),
+        ),
+        CustomTextFormField(
+          textInputAction: TextInputAction.next,
+          textEditingController: locationIdController,
+          titleText: AppLocalizations.of(context).locationIdTextInputTitle,
+          validate: (value) {
+            if (value == null || value.isEmpty) {
+              return AppLocalizations.of(context).locationIdTextInputRequired;
+            }
+            return null;
+          },
+        ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
+        CustomTextFormField(
+          textInputAction: TextInputAction.next,
+          textEditingController: lithologyController,
+          titleText: AppLocalizations.of(context).lithologyTextInputTitle,
+          validate: (value) {
+            if (value == null || value.isEmpty) {
+              return AppLocalizations.of(context).lithologyTextInputRequired;
+            }
+            return null;
+          },
+        ),
+      ],
+    );
   }
 }
