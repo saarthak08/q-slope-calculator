@@ -179,5 +179,17 @@
     "deleteCalculationsModalContent": "Are you sure want to delete the selected calculations?",
     "errorInLoadingQSlopeList": "Error in loading Q-slope list. Please try removing app data or re-installing the app",
     "privacyPolicyTitle": "Privacy Policy",
-    "selectDirectoryToSaveFile": "Please select a directory to save the file"
+    "selectDirectoryToSaveFile": "Please select a directory to save the file",
+    "qSlopeStabilityChart": "Q-slope Stability Chart",
+    "stabilityChart": "Stability Chart",
+    "unstableSlopes": "Unstable Slopes",
+    "slopeStabilityUncertain": "Slope Stability Uncertain",
+    "stableSlopes": "Stable Slopes",
+    "stabilityChartYAxisTitle": "Slope Angle, β (degrees)",
+    "stabilityChartXAxisTitle": "Q-slope",
+    "lineOfBestFitForStableSlopes": "Line of Best Fit for Stable Slopes",
+    "logbase10": "log base 10",
+    "slopeAngleQSlopeFormula": "Slope Angle β (degrees) = 20 x log(Q-slope) + 65°",
+    "slopeAngleSymbol": "β",
+    "degreesSymbol": "°"
 }

@@ -36,7 +36,6 @@ showGenericDialog({
               !hideCancel
                   ? TextButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.white),
                       elevation: WidgetStateProperty.all(0),
                       padding: WidgetStateProperty.all(
                         EdgeInsets.symmetric(
@@ -53,7 +52,6 @@ showGenericDialog({
                   : Container(),
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
                   elevation: WidgetStateProperty.all(0),
                   padding: WidgetStateProperty.all(
                     EdgeInsets.symmetric(

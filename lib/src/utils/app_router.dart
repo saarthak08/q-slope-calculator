@@ -3,6 +3,7 @@ import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/home_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -28,6 +29,12 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const AboutScreen(),
+        );
+      case QSlopeStabilityChartScreen.route:
+        final args = settings.arguments as List<double>;
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => QSlopeStabilityChartScreen(qSlopeValues: args),
         );
       default:
         return MaterialPageRoute(

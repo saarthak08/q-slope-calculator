@@ -255,3 +255,48 @@ double calculateJwice(
     }
   }
 }
+
+double calculateSlopeAngle(double qSlope) {
+  return ((log(qSlope) / log(10)) * 20) + 65;
+}
+
+class CartesianCoordinates {
+  final double x;
+  final double y;
+
+  CartesianCoordinates({required this.x, required this.y});
+}
+
+List<CartesianCoordinates> lineOfBestFitForStableSlopesCoordindates = [
+  CartesianCoordinates(x: 0.01, y: 25),
+  CartesianCoordinates(x: 0.1, y: 45),
+  CartesianCoordinates(x: 1, y: 65),
+  CartesianCoordinates(x: 10, y: 85),
+];
+
+List<CartesianCoordinates> stableSlopeAreaCoordinates = [
+  CartesianCoordinates(x: 0.00447, y: 0),
+  CartesianCoordinates(x: 0.00447, y: 18),
+  CartesianCoordinates(x: 1, y: 65),
+  CartesianCoordinates(x: 10, y: 85),
+  CartesianCoordinates(x: 100, y: 85),
+];
+
+List<CartesianCoordinates> unstableSlopeAreaCoordinates = [
+  CartesianCoordinates(x: 0.001, y: 90),
+  CartesianCoordinates(x: 10, y: 90),
+  CartesianCoordinates(x: 0.00447, y: 22),
+  CartesianCoordinates(x: 0.001, y: 22),
+];
+
+List<CartesianCoordinates> uncertainSlopeStabilityCoordinates = [
+  CartesianCoordinates(x: 0.001, y: 0),
+  CartesianCoordinates(x: 0.00447, y: 0),
+  CartesianCoordinates(x: 0.00447, y: 18),
+  CartesianCoordinates(x: 10, y: 85),
+  CartesianCoordinates(x: 100, y: 85),
+  CartesianCoordinates(x: 100, y: 90),
+  CartesianCoordinates(x: 10, y: 90),
+  CartesianCoordinates(x: 0.00447, y: 22),
+  CartesianCoordinates(x: 0.001, y: 22),
+];
