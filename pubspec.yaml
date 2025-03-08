@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.5+11
 
 environment:
-  sdk: ">=3.4.3 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -57,4 +57,4 @@ msix_config:
   logo_path: assets/images/icon.png
 
 lint_staged:
-  "lib/**.dart": dart format --fix && dart fix --apply
+  "lib/**.dart": dart format . && dart fix --apply
