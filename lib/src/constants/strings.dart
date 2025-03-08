@@ -3,9 +3,13 @@ String khyatiGupta = "Khyati Gupta";
 const mail = "mailto:saarthakgupta08@gmail.com";
 const reference1 = "Bar & Barton 2015";
 const reference2 = "Bar & Barton 2017";
+const reference3 =
+    "Q‑Slope: Rock Slope Engineering 10 Years on Bar & Barton 2024";
 const reference1Link =
     "https://drive.google.com/file/d/1EsSIlYLWDFlOaLePkfi8Cm63bpRwjDxZ/view?usp=sharing";
 const reference2Link =
     "https://drive.google.com/file/d/1sSVjmFOb7Rwbny5oPhkI80tRWcqEVzd4/view?usp=sharing";
+const reference3Link =
+    "https://drive.google.com/file/d/1BZzaTP4Fjj5AKQF_D1KJkJVhKcpQm7tc/view?usp=sharing";
 const privacyPolicyLink =
     "https://docs.google.com/document/d/1W7llZRHJl-HNIlpxQqHbANEbb3vgdK7KqSKIwQfyBAI/edit?usp=sharing";

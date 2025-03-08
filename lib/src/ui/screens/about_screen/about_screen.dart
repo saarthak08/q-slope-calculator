@@ -143,6 +143,25 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: getViewPortHeight(context) * 0.01),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () async {
+                        final uri = Uri.tryParse(reference3Link);
+                        if (uri != null && await canLaunchUrl(uri)) {
+                          launchUrl(uri, mode: LaunchMode.externalApplication);
+                        }
+                      },
+                      child: const Text(
+                        reference3,
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.symmetric(
                       vertical: getViewPortHeight(context) * 0.02,
