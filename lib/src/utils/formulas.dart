@@ -16,7 +16,7 @@ double f2ForToppling = 1;
 double minJWiceValue = 0.05;
 double maxJWiceValue = 1;
 
-double minSRFa = 2.5;
+double minSRFa = 0;
 double maxSRFa = 20;
 double minSRFb = 1;
 double maxSRFb = 200;
@@ -24,12 +24,17 @@ double minSRFc = 1;
 double maxSRFc = 24;
 
 double calculateRqdByDirectMethod(
-    double sumOfCorePieces, double totalDrillRun) {
+  double sumOfCorePieces,
+  double totalDrillRun,
+) {
   return (sumOfCorePieces * 100) / totalDrillRun;
 }
 
 double calculateJointVolume(
-    int numberOfRandomSets, List<double> jointSpacings, double area) {
+  int numberOfRandomSets,
+  List<double> jointSpacings,
+  double area,
+) {
   double reverseJointSpacingSum = 0;
   for (var spacing in jointSpacings) {
     reverseJointSpacingSum = reverseJointSpacingSum + (1 / spacing);
@@ -83,7 +88,10 @@ double calculateF3ForTopplingFailure(double betaJ, double betaS) {
 }
 
 double calculateOFactorByRomananAdjustmentFactor(
-    double f1, double f2, double f3) {
+  double f1,
+  double f2,
+  double f3,
+) {
   return 1.9759 * (exp(0.0339 * (f1 * f2 * f3)));
 }
 
@@ -92,14 +100,16 @@ double calculateQSlope(QSlope qSlope) {
   double qSlopeValue;
   if (oFactor != null) {
     if (oFactor.oFactorCalculationType == OFactorCalculationType.value) {
-      qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+      qSlopeValue =
+          ((qSlope.blockSize?.rqd ?? 0) /
               (qSlope.blockSize?.jointSetNumber ?? 1)) *
-          ((qSlope.jointCharacter!
-                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
-              (qSlope.jointCharacter!
-                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          ((qSlope.jointCharacter!.jointRoughness![oFactor
+                  .indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!.jointAlteration![oFactor
+                  .indexOfFirstJoint!])) *
           (oFactor.oFactorForFirstJoint ?? 0) *
-          ((qSlope.externalFactors
+          ((qSlope
+                      .externalFactors
                       ?.environmentalAndGeologicalConditionalNumber ??
                   0) /
               (qSlope.activeStress?.srf ?? 1));
@@ -108,25 +118,28 @@ double calculateQSlope(QSlope qSlope) {
         qSlopeValue = qSlopeValue * (oFactor.oFactorForSecondJoint ?? 0);
       }
     } else {
-      qSlopeValue = ((qSlope.blockSize?.rqd ?? 0) /
+      qSlopeValue =
+          ((qSlope.blockSize?.rqd ?? 0) /
               (qSlope.blockSize?.jointSetNumber ?? 1)) *
-          ((qSlope.jointCharacter!
-                  .jointRoughness![oFactor.indexOfFirstJoint!]) /
-              (qSlope.jointCharacter!
-                  .jointAlteration![oFactor.indexOfFirstJoint!])) *
+          ((qSlope.jointCharacter!.jointRoughness![oFactor
+                  .indexOfFirstJoint!]) /
+              (qSlope.jointCharacter!.jointAlteration![oFactor
+                  .indexOfFirstJoint!])) *
           (oFactor.oFactorForFirstJoint ?? 0) *
-          ((qSlope.externalFactors
+          ((qSlope
+                      .externalFactors
                       ?.environmentalAndGeologicalConditionalNumber ??
                   0) /
               (qSlope.activeStress?.srf ?? 1));
     }
     if (oFactor.indexOfSecondJoint != null &&
         oFactor.oFactorTypeOfFailure == OFactorTypeOfFailure.wedge) {
-      qSlopeValue = qSlopeValue *
-          ((qSlope.jointCharacter!
-                  .jointRoughness![oFactor.indexOfSecondJoint!]) /
-              (qSlope.jointCharacter!
-                  .jointAlteration![oFactor.indexOfSecondJoint!]));
+      qSlopeValue =
+          qSlopeValue *
+          ((qSlope.jointCharacter!.jointRoughness![oFactor
+                  .indexOfSecondJoint!]) /
+              (qSlope.jointCharacter!.jointAlteration![oFactor
+                  .indexOfSecondJoint!]));
     }
     return qSlopeValue;
   }
@@ -152,7 +165,9 @@ double calculateRatingForF3TopplingFailure(double f3) {
 }
 
 double calculateJointSetNumber(
-    double numberOfJointSets, double numberOfRandomSets) {
+  double numberOfJointSets,
+  double numberOfRandomSets,
+) {
   if (numberOfJointSets == 0) {
     return 0.5;
   } else if (numberOfJointSets == 1 && numberOfRandomSets == 0) {
@@ -175,9 +190,10 @@ double calculateJointSetNumber(
 }
 
 double calculateJwice(
-    ExternalFactorsEnvironmentConditions environmentalConditions,
-    ExternalFactorsStrengthOfRock strengthOfRock,
-    ExternalFactorsStructureType structureType) {
+  ExternalFactorsEnvironmentConditions environmentalConditions,
+  ExternalFactorsStrengthOfRock strengthOfRock,
+  ExternalFactorsStructureType structureType,
+) {
   if (environmentalConditions ==
       ExternalFactorsEnvironmentConditions.desertEnvironment) {
     if (structureType == ExternalFactorsStructureType.stable) {
