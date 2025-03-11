@@ -191,5 +191,12 @@
     "logbase10": "log base 10",
     "slopeAngleQSlopeFormula": "Slope Angle β (degrees) = 20 x log(Q-slope) + 65°",
     "slopeAngleSymbol": "β",
-    "degreesSymbol": "°"
+    "slopeAngleProvidedByUserSymbol": "α",
+    "chartPointAnnotation": "L",
+    "degreesSymbol": "°",
+    "slopeStabilityUncertainChartAreaLabel": "Slope\nStability\nUncertain",
+    "slopeAngleByUser": "Slope Angle (α) in degrees",
+    "slopeAngleProvidedAsInput": "Slope Angle Provided as Input (α) in degrees",
+    "point": "Point",
+    "notProvided": "Not Provided"
 }

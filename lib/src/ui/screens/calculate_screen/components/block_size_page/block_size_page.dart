@@ -33,6 +33,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _locationIdController = TextEditingController();
   final TextEditingController _lithologyController = TextEditingController();
+  final TextEditingController _slopeAngleByUserController =
+      TextEditingController();
   final TextEditingController _sumOfCorePiecesController =
       TextEditingController();
   final TextEditingController _totalDrillRunController =
@@ -59,6 +61,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
     QSlope qSlope = widget.qSlope.value;
     _locationIdController.text = qSlope.locationId ?? "";
     _lithologyController.text = qSlope.lithology ?? "";
+    _slopeAngleByUserController.text =
+        qSlope.slopeAngleByUser?.toString() ?? '';
     _sumOfCorePiecesController.text =
         qSlope.blockSize?.sumOfCorePieces.toString() ?? '';
     _totalDrillRunController.text =
@@ -163,6 +167,9 @@ class _BlockSizePageState extends State<BlockSizePage> {
       QSlope qSlope = widget.qSlope.value;
       qSlope.lithology = _lithologyController.text;
       qSlope.locationId = _locationIdController.text;
+      qSlope.slopeAngleByUser = double.tryParse(
+        _slopeAngleByUserController.text,
+      );
       qSlope.blockSize = BlockSize();
       qSlope.blockSize?.areaInSquareMeters = double.tryParse(
         _areaController.text,
@@ -219,6 +226,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
                 BlockSizePageBasicInfoWidget(
                   locationIdController: _locationIdController,
                   lithologyController: _lithologyController,
+                  slopeAngleByUserController: _slopeAngleByUserController,
                 ),
                 Container(
                   margin: EdgeInsets.only(

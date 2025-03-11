@@ -24,6 +24,8 @@ class QSlope {
 
   double? qSlope;
 
+  double? slopeAngleByUser;
+
   DateTime? createdAt;
 
   QSlope({
@@ -37,6 +39,7 @@ class QSlope {
     this.activeStress,
     this.qSlope,
     this.createdAt,
+    this.slopeAngleByUser,
   });
 
   QSlope copyWith({
@@ -50,6 +53,7 @@ class QSlope {
     ActiveStress? activeStress,
     double? qSlope,
     DateTime? createdAt,
+    double? slopeAngleByUser,
   }) {
     return QSlope(
       id: id ?? this.id,
@@ -62,6 +66,7 @@ class QSlope {
       activeStress: activeStress ?? this.activeStress,
       qSlope: qSlope ?? this.qSlope,
       createdAt: createdAt ?? this.createdAt,
+      slopeAngleByUser: slopeAngleByUser ?? this.slopeAngleByUser,
     );
   }
 
@@ -77,6 +82,7 @@ class QSlope {
       'activeStress': activeStress?.toMap(),
       'qSlope': qSlope?.toDouble(),
       'createdAt': createdAt?.millisecondsSinceEpoch,
+      'slopeAngleByUser': slopeAngleByUser,
     };
   }
 
@@ -98,6 +104,7 @@ class QSlope {
       ),
       qSlope: (map['qSlope']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      slopeAngleByUser: (map['slopeAngleByUser'] as double?),
     );
   }
 
@@ -108,7 +115,7 @@ class QSlope {
 
   @override
   String toString() {
-    return 'QSlope(id: $id, locationId: $locationId, lithology: $lithology, blockSize: $blockSize, jointCharacter: $jointCharacter, oFactor: $oFactor, externalFactors: $externalFactors, activeStress: $activeStress, qSlope: $qSlope, createdAt: $createdAt)';
+    return 'QSlope(id: $id, locationId: $locationId, lithology: $lithology, blockSize: $blockSize, jointCharacter: $jointCharacter, oFactor: $oFactor, externalFactors: $externalFactors, activeStress: $activeStress, qSlope: $qSlope, createdAt: $createdAt, slopeAngleByUser: $slopeAngleByUser)';
   }
 
   @override
@@ -124,7 +131,8 @@ class QSlope {
         other.externalFactors == externalFactors &&
         other.activeStress == activeStress &&
         other.qSlope == qSlope &&
-        other.createdAt == createdAt;
+        other.createdAt == createdAt &&
+        other.slopeAngleByUser == slopeAngleByUser;
   }
 
   @override
@@ -138,6 +146,7 @@ class QSlope {
         externalFactors.hashCode ^
         activeStress.hashCode ^
         qSlope.hashCode ^
-        createdAt.hashCode;
+        createdAt.hashCode ^
+        slopeAngleByUser.hashCode;
   }
 }

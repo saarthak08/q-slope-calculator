@@ -1,16 +1,21 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/components/q_slope_stability_information_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class QSlopeStabilityChartScreen extends StatelessWidget {
   static const route = "/qslope-stability-chart";
-  final List<double> qSlopeValues;
-  const QSlopeStabilityChartScreen({super.key, required this.qSlopeValues});
+  final QSlopeStabilityChartScreenArguments qSlopeStabilityChartScreenArguments;
+  const QSlopeStabilityChartScreen({
+    super.key,
+    required this.qSlopeStabilityChartScreenArguments,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,40 +52,142 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                     legend: Legend(
                       isVisible: true,
                       isResponsive: true,
+                      toggleSeriesVisibility: false,
                       overflowMode: LegendItemOverflowMode.wrap,
                     ),
                     enableAxisAnimation: true,
-                    trackballBehavior: TrackballBehavior(
-                      enable: true,
-                      activationMode: ActivationMode.longPress,
-                    ),
                     annotations:
-                        qSlopeValues
-                            .map(
-                              (qSlopeValue) => CartesianChartAnnotation(
-                                widget: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.gps_fixed_outlined,
-                                      color: Colors.black,
-                                      size: 10,
-                                    ),
-                                    Text(
-                                      "(${qSlopeValue.toStringAsFixed(2)}, ${calculateSlopeAngle(qSlopeValue).toStringAsFixed(0)})",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                        qSlopeStabilityChartScreenArguments.qSlopeValues
+                            .mapIndexed(
+                              (i, qSlopeValue) => CartesianChartAnnotation(
+                                widget: Tooltip(
+                                  message:
+                                      "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} : (${qSlopeValue.toStringAsFixed(2)},${calculateSlopeAngle(qSlopeValue).toStringAsFixed(0)})",
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: Colors.indigo,
+                                    size: 10,
+                                  ),
                                 ),
                                 coordinateUnit: CoordinateUnit.point,
                                 x: qSlopeValue,
                                 y: calculateSlopeAngle(qSlopeValue),
                               ),
                             )
-                            .toList(),
+                            .toList() +
+                        qSlopeStabilityChartScreenArguments.slopeAnglesByUser
+                            .mapIndexed(
+                              (i, slopeAngleByUser) => CartesianChartAnnotation(
+                                widget:
+                                    slopeAngleByUser != null
+                                        ? Tooltip(
+                                          message:
+                                              "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} : (${qSlopeStabilityChartScreenArguments.qSlopeValues[i].toStringAsFixed(2)},${slopeAngleByUser.toStringAsFixed(0)})",
+                                          child: Icon(
+                                            Icons.pentagon,
+                                            color: Colors.black,
+                                            size: 10,
+                                          ),
+                                        )
+                                        : Container(),
+                                coordinateUnit: CoordinateUnit.point,
+                                x:
+                                    qSlopeStabilityChartScreenArguments
+                                        .qSlopeValues[i],
+                                y: slopeAngleByUser ?? 0,
+                              ),
+                            )
+                            .toList() +
+                        ([
+                          CartesianChartAnnotation(
+                            widget: Text(
+                              AppLocalizations.of(context).unstableSlopes,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getCaptionFontSize(context),
+                              ),
+                            ),
+                            coordinateUnit: CoordinateUnit.point,
+                            x: 0.01,
+                            y: 65,
+                          ),
+                          CartesianChartAnnotation(
+                            widget: Text(
+                              AppLocalizations.of(
+                                context,
+                              ).slopeStabilityUncertainChartAreaLabel,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getCaptionFontSize(context),
+                              ),
+                            ),
+                            coordinateUnit: CoordinateUnit.point,
+                            x:
+                                ResponsiveBreakpoints.of(context).isMobile
+                                    ? 0.0028
+                                    : 0.002,
+                            y: 12,
+                          ),
+                          CartesianChartAnnotation(
+                            widget: Text(
+                              AppLocalizations.of(context).stableSlopes,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getCaptionFontSize(context),
+                              ),
+                            ),
+                            coordinateUnit: CoordinateUnit.point,
+                            x: 2,
+                            y: 25,
+                          ),
+                          CartesianChartAnnotation(
+                            widget: Text(
+                              ResponsiveBreakpoints.of(context).isMobile
+                                  ? ""
+                                  : AppLocalizations.of(
+                                    context,
+                                  ).slopeAngleQSlopeFormula,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getCaptionFontSize(context),
+                              ),
+                            ),
+                            coordinateUnit: CoordinateUnit.point,
+                            x: 1.8,
+                            y: 48,
+                          ),
+                        ]),
                     series: [
+                      LineSeries(
+                        xValueMapper: (datum, int index) {
+                          return null;
+                        },
+                        yValueMapper: (datum, int index) {
+                          return null;
+                        },
+                        isVisibleInLegend: true,
+                        legendIconType: LegendIconType.circle,
+                        color: Colors.indigo,
+                        name:
+                            '(${AppLocalizations.of(context).qSlopeSymbol}, ${AppLocalizations.of(context).slopeAngleSymbol})',
+                      ),
+                      LineSeries(
+                        xValueMapper: (datum, int index) {
+                          return null;
+                        },
+                        yValueMapper: (datum, int index) {
+                          return null;
+                        },
+                        isVisibleInLegend: true,
+                        legendIconType: LegendIconType.pentagon,
+                        color: Colors.black,
+                        name:
+                            '(${AppLocalizations.of(context).qSlopeSymbol}, ${AppLocalizations.of(context).slopeAngleProvidedByUserSymbol})',
+                      ),
                       AreaSeries(
                         xValueMapper: (coordinate, _) => coordinate.x,
                         yValueMapper: (coordinate, _) => coordinate.y,
@@ -111,16 +218,11 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                         isVisibleInLegend: true,
                       ),
                       LineSeries(
+                        enableTooltip: true,
                         dataSource: lineOfBestFitForStableSlopesCoordindates,
                         xValueMapper: (coordinate, _) => coordinate.x,
                         yValueMapper: (coordinate, _) => coordinate.y,
                         color: Colors.green,
-                        markerSettings: MarkerSettings(
-                          isVisible: true,
-                          width: 3,
-                          height: 3,
-                          borderWidth: 3,
-                        ),
                         legendItemText:
                             AppLocalizations.of(
                               context,
@@ -129,7 +231,6 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                       ),
                     ],
                     primaryXAxis: LogarithmicAxis(
-                      desiredIntervals: 200,
                       maximum: 100,
                       minimum: 0.001,
                       logBase: 10,
@@ -159,79 +260,42 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              qSlopeValues.length == 1
-                  ? Container(
-                    padding: EdgeInsets.only(
-                      left: vpW * 0.05,
-                      right: vpW * 0.03,
-                      top: vpH * 0.02,
-                    ),
-                    child: Text(
-                      "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlopeValues[0].toStringAsFixed(4)}",
-                      style: GoogleFonts.montserrat(
-                        fontFeatures: [],
-                        fontWeight: FontWeight.w600,
-                        fontSize: getSubTitleFontSize(context),
-                      ),
-                    ),
-                  )
-                  : Container(),
-              qSlopeValues.length == 1
-                  ? Container(
-                    padding: EdgeInsets.only(
-                      left: vpW * 0.05,
-                      right: vpW * 0.03,
-                      top: vpH * 0.02,
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context).slopeAngleQSlopeFormula,
-                      style: GoogleFonts.montserrat(
-                        fontFeatures: [],
-                        fontWeight: FontWeight.w600,
-                        fontSize: getSubTitleFontSize(context),
-                      ),
-                    ),
-                  )
-                  : Container(),
-              qSlopeValues.length == 1
-                  ? Container(
-                    padding: EdgeInsets.only(
-                      left: vpW * 0.05,
-                      right: vpW * 0.03,
-                      top: vpH * 0.02,
-                    ),
-                    child: Text(
-                      "${AppLocalizations.of(context).slopeAngleSymbol} = 20 x log(${qSlopeValues[0].toStringAsFixed(4)}) + 65${AppLocalizations.of(context).degreesSymbol}",
-                      style: GoogleFonts.montserrat(
-                        fontFeatures: [],
-                        fontWeight: FontWeight.w600,
-                        fontSize: getSubTitleFontSize(context),
-                      ),
-                    ),
-                  )
-                  : Container(),
-              qSlopeValues.length == 1
-                  ? Container(
-                    padding: EdgeInsets.only(
-                      left: vpW * 0.05,
-                      right: vpW * 0.03,
-                      top: vpH * 0.02,
-                    ),
-                    child: Text(
-                      "${AppLocalizations.of(context).slopeAngleSymbol} = ${calculateSlopeAngle(qSlopeValues[0]).toStringAsFixed(0)}${AppLocalizations.of(context).degreesSymbol}",
-                      style: GoogleFonts.montserrat(
-                        fontFeatures: [],
-                        fontWeight: FontWeight.w600,
-                        fontSize: getSubTitleFontSize(context),
-                      ),
-                    ),
-                  )
-                  : Container(),
-              SizedBox(height: vpH * 0.1),
+
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount:
+                    qSlopeStabilityChartScreenArguments.qSlopeValues.length,
+                itemBuilder: (context, index) {
+                  return QSlopeStabilityInformationWidget(
+                    qSlopeValue:
+                        qSlopeStabilityChartScreenArguments.qSlopeValues[index],
+                    slopeAngleByUser:
+                        qSlopeStabilityChartScreenArguments
+                            .slopeAnglesByUser[index],
+                    isSinglePoint:
+                        qSlopeStabilityChartScreenArguments
+                            .qSlopeValues
+                            .length <=
+                        1,
+                    index: index,
+                  );
+                },
+              ),
+              SizedBox(height: vpH * 0.05),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class QSlopeStabilityChartScreenArguments {
+  final List<double> qSlopeValues;
+  final List<double?> slopeAnglesByUser;
+
+  QSlopeStabilityChartScreenArguments({
+    required this.qSlopeValues,
+    required this.slopeAnglesByUser,
+  });
 }

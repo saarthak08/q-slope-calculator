@@ -159,19 +159,25 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 if (qSlopeState is QSlopeListLoaded) {
                   int index = 0;
                   var qSlopes = List<double>.empty(growable: true);
+                  var slopeAnglesByUser = List<double?>.empty(growable: true);
                   var tiles = selectedTiles;
                   if (tiles != null) {
                     for (var selectedQSlopes in tiles) {
-                      var qSlope = qSlopeState.qSlopeList[index].qSlope;
-                      if (selectedQSlopes && qSlope != null) {
-                        qSlopes.add(qSlope);
+                      var qSlope = qSlopeState.qSlopeList[index];
+                      var qSlopeValue = qSlope.qSlope;
+                      if (selectedQSlopes) {
+                        if (qSlopeValue != null) qSlopes.add(qSlopeValue);
+                        slopeAnglesByUser.add(qSlope.slopeAngleByUser);
                       }
                       index++;
                     }
                     Navigator.pushNamed(
                       context,
                       QSlopeStabilityChartScreen.route,
-                      arguments: qSlopes,
+                      arguments: QSlopeStabilityChartScreenArguments(
+                        qSlopeValues: qSlopes,
+                        slopeAnglesByUser: slopeAnglesByUser,
+                      ),
                     );
                   }
                 }

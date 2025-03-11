@@ -31,10 +31,13 @@ class AppRouter {
           builder: (context) => const AboutScreen(),
         );
       case QSlopeStabilityChartScreen.route:
-        final args = settings.arguments as List<double>;
+        final args = settings.arguments as QSlopeStabilityChartScreenArguments;
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => QSlopeStabilityChartScreen(qSlopeValues: args),
+          builder:
+              (context) => QSlopeStabilityChartScreen(
+                qSlopeStabilityChartScreenArguments: args,
+              ),
         );
       default:
         return MaterialPageRoute(

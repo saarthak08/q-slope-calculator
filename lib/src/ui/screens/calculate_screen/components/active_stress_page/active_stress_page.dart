@@ -471,9 +471,20 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                             Navigator.pushNamed(
                                               context,
                                               QSlopeStabilityChartScreen.route,
-                                              arguments: List<double>.from([
-                                                value,
-                                              ]),
+                                              arguments:
+                                                  QSlopeStabilityChartScreenArguments(
+                                                    qSlopeValues:
+                                                        List<double>.from([
+                                                          value,
+                                                        ]),
+                                                    slopeAnglesByUser:
+                                                        List<double?>.from([
+                                                          widget
+                                                              .qSlope
+                                                              .value
+                                                              .slopeAngleByUser,
+                                                        ]),
+                                                  ),
                                             );
                                           }
                                           : null,

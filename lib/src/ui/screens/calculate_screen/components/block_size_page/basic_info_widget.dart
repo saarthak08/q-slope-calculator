@@ -9,11 +9,13 @@ import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 class BlockSizePageBasicInfoWidget extends StatelessWidget {
   final TextEditingController locationIdController;
   final TextEditingController lithologyController;
+  final TextEditingController slopeAngleByUserController;
 
   const BlockSizePageBasicInfoWidget({
     super.key,
     required this.locationIdController,
     required this.lithologyController,
+    required this.slopeAngleByUserController,
   });
 
   @override
@@ -58,6 +60,14 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
             return null;
           },
         ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
+        CustomTextFormField(
+          textInputAction: TextInputAction.next,
+          textEditingController: slopeAngleByUserController,
+          titleText: AppLocalizations.of(context).slopeAngleByUser,
+          type: TextInputType.numberWithOptions(signed: false, decimal: true),
+        ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
       ],
     );
   }
