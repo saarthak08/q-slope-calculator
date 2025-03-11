@@ -260,8 +260,8 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount:
                     qSlopeStabilityChartScreenArguments.qSlopeValues.length,
