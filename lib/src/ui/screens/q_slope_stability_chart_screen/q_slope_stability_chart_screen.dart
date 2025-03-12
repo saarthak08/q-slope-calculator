@@ -62,28 +62,14 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                           qSlopeStabilityChartScreenArguments.qSlopeValues
                               .mapIndexed(
                                 (i, qSlopeValue) => CartesianChartAnnotation(
-                                  widget: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Align(
-                                        heightFactor: 2.5,
-                                        widthFactor: 2.5,
-                                        alignment: Alignment.bottomCenter,
-                                        child: Text(
-                                          "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} (${qSlopeValue.toStringAsFixed(2)},${calculateSlopeAngle(qSlopeValue).toStringAsFixed(0)})",
-                                          style: TextStyle(
-                                            fontSize: getCaptionFontSize(
-                                              context,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.circle,
-                                        color: Colors.indigo,
-                                        size: 10,
-                                      ),
-                                    ],
+                                  widget: Tooltip(
+                                    message:
+                                        "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} (${qSlopeValue.toStringAsFixed(2)},${calculateSlopeAngle(qSlopeValue).toStringAsFixed(0)})",
+                                    child: Icon(
+                                      Icons.circle,
+                                      color: Colors.indigo,
+                                      size: 10,
+                                    ),
                                   ),
                                   coordinateUnit: CoordinateUnit.point,
                                   x: qSlopeValue,
@@ -103,10 +89,9 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                                             alignment: Alignment.center,
                                             children: [
                                               Align(
-                                                heightFactor: 2.5,
-                                                widthFactor: 2.5,
-                                                alignment:
-                                                    Alignment.bottomCenter,
+                                                heightFactor: 2.25,
+                                                widthFactor: 2.25,
+                                                alignment: Alignment.topCenter,
                                                 child: Text(
                                                   "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} (${qSlopeStabilityChartScreenArguments.qSlopeValues[i].toStringAsFixed(2)},${slopeAngleByUser.toStringAsFixed(0)})",
                                                   style: TextStyle(
