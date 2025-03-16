@@ -21,6 +21,7 @@ jobs:
           cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
           cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
           architecture: x64
+          flutter-version-file: pubspec.yaml
 
       - name: Print flutter version
         run: flutter --version
@@ -52,7 +53,7 @@ jobs:
 
       - name: Zip merged_native_libs
         run: |
-          cd build/app/intermediates/merged_native_libs/prodRelease/out/lib
+          cd build/app/intermediates/merged_native_libs/prodRelease/mergeProdReleaseNativeLibs/out/lib
           zip -r merged_native_libs.zip .
 
       - name: Upload build files as artifact
@@ -62,7 +63,7 @@ jobs:
           path: |
             build/app/outputs/bundle/prodRelease/app-prod-release.aab
             build/app/outputs/mapping/prodRelease/mapping.txt
-            build/app/intermediates/merged_native_libs/prodRelease/out/lib/merged_native_libs.zip
+            build/app/intermediates/merged_native_libs/prodRelease/mergeProdReleaseNativeLibs/out/lib/merged_native_libs.zip
           overwrite: true
           include-hidden-files: true
 
@@ -83,4 +84,4 @@ jobs:
           releaseFiles: artifact/outputs/bundle/prodRelease/app-prod-release.aab
           track: internal
           mappingFile: artifact/outputs/mapping/prodRelease/mapping.txt
-          debugSymbols: artifact/intermediates/merged_native_libs/prodRelease/out/lib/merged_native_libs.zip
+          debugSymbols: artifact/intermediates/merged_native_libs/prodRelease/mergeProdReleaseNativeLibs/out/lib/merged_native_libs.zip

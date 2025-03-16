@@ -32,7 +32,8 @@ if (releaseKeystorePropertiesFile.exists()) {
 android {
     namespace = "in.sg.q_slope_calculator"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion project.hasProperty('ndkVersion') ? project.ndkVersion : '28.0.13004108'
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
