@@ -1,21 +1,28 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/src/utils/save_file.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/components/q_slope_stability_information_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:toastification/toastification.dart';
 
 class QSlopeStabilityChartScreen extends StatelessWidget {
   static const route = "/qslope-stability-chart";
   final QSlopeStabilityChartScreenArguments qSlopeStabilityChartScreenArguments;
-  const QSlopeStabilityChartScreen({
+  QSlopeStabilityChartScreen({
     super.key,
     required this.qSlopeStabilityChartScreenArguments,
   });
+  final GlobalKey<SfCartesianChartState> _cartesianChartKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +38,75 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          PopupMenuButton(
+            iconColor: primaryColor,
+            itemBuilder:
+                (buildContext) => [
+                  PopupMenuItem(
+                    onTap: () async {
+                      final ui.Image? data = await _cartesianChartKey
+                          .currentState!
+                          .toImage(pixelRatio: 3.0);
+                      final ByteData? bytes = await data!.toByteData(
+                        format: ui.ImageByteFormat.png,
+                      );
+                      final Uint8List imageBytes = bytes!.buffer.asUint8List(
+                        bytes.offsetInBytes,
+                        bytes.lengthInBytes,
+                      );
+                      final fileName =
+                          "q-slope-stability-chart_${DateTime.now().toIso8601String().replaceAll(":", "-")}.png";
+                      try {
+                        if (buildContext.mounted) {
+                          await saveFile(
+                            imageBytes.toList(),
+                            fileName,
+                            buildContext,
+                          );
+                          if (buildContext.mounted) {
+                            toastification.show(
+                              autoCloseDuration: const Duration(seconds: 2),
+                              alignment: Alignment.bottomCenter,
+                              type: ToastificationType.success,
+                              title: Text(
+                                AppLocalizations.of(
+                                  buildContext,
+                                ).exportSuccessful(fileName),
+                              ),
+                            );
+                          }
+                        }
+                      } catch (err) {
+                        if (buildContext.mounted) {
+                          toastification.show(
+                            autoCloseDuration: const Duration(seconds: 2),
+                            alignment: Alignment.bottomCenter,
+                            type: ToastificationType.error,
+                            title: Text(
+                              AppLocalizations.of(
+                                buildContext,
+                              ).chartExportFailed,
+                            ),
+                          );
+                          rethrow;
+                        }
+                      }
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.drive_folder_upload, color: primaryColor),
+                        SizedBox(width: getViewPortWidth(context) * 0.01),
+                        Text(AppLocalizations.of(context).exportChart),
+                      ],
+                    ),
+                  ),
+                ],
+          ),
+        ],
         title: Text(
           AppLocalizations.of(context).qSlopeStabilityChart,
           style: TextStyle(fontSize: getTitleFontSize(context)),
@@ -51,6 +127,8 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                   child: ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: 1000),
                     child: SfCartesianChart(
+                      backgroundColor: Colors.white,
+                      key: _cartesianChartKey,
                       legend: Legend(
                         isVisible: true,
                         isResponsive: true,

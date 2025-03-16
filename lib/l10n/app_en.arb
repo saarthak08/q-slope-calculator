@@ -198,5 +198,8 @@
     "slopeAngleByUser": "Slope Angle (α) in degrees",
     "slopeAngleProvidedAsInput": "Slope Angle Provided as Input (α) in degrees",
     "point": "Point",
-    "notProvided": "Not Provided"
+    "notProvided": "Not Provided",
+    "exportChart": "Export Chart",
+    "chartExportSuccessful": "Chart exported successfully as {fileName}",
+    "chartExportFailed": "Chart export failed"
 }
