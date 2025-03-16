@@ -5,7 +5,7 @@ An application that calculates the Q-slope of a rock to express the quality of t
 ## Tools and Technologies Used
 
 -   **Flutter** (version: >=3.18.0-18.0.pre.54)
--   **Dart** (version: >=3.4.3 <4.0.0)
+-   **Dart** (version: >=3.7.0 <4.0.0)
 -   **VS Code**
 
 ## Prerequisites

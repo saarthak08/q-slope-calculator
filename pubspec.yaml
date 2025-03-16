@@ -3,10 +3,10 @@ description: "An application which calculates Q-slope of a rock expressing the q
 
 publish_to: "none"
 
-version: 1.0.5+11
+version: 1.1.0+12
 
 environment:
-  sdk: ">=3.4.3 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -29,14 +29,15 @@ dependencies:
   url_launcher: ^6.3.0
   responsive_framework: ^1.4.0
   uuid: ^4.4.2
-  syncfusion_flutter_xlsio: ^26.2.10
   file_picker: ^8.1.2
   universal_html: ^2.2.4
+  syncfusion_flutter_xlsio: ^28.2.9
+  syncfusion_flutter_charts: ^28.2.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   husky: ^0.1.7
   lint_staged: ^0.5.1
   msix: ^3.16.7
@@ -53,8 +54,8 @@ msix_config:
   display_name: Q-slope Calculator
   publisher_display_name: Saarthak Gupta
   identity_name: in.sg.qslopecalculator
-  msix_version: 1.0.0.5
+  msix_version: 1.1.0.0
   logo_path: assets/images/icon.png
 
 lint_staged:
-  "lib/**.dart": dart format --fix && dart fix --apply
+  "lib/**.dart": dart format && dart analyze

@@ -14,15 +14,16 @@ class OFactorRatingWidget extends StatelessWidget {
   final TextEditingController ratingForF2;
   final TextEditingController ratingForF3;
 
-  const OFactorRatingWidget(
-      {super.key,
-      required this.oFactorTypeOfFailure,
-      required this.f1,
-      required this.f2,
-      required this.f3,
-      required this.ratingForF1,
-      required this.ratingForF2,
-      required this.ratingForF3});
+  const OFactorRatingWidget({
+    super.key,
+    required this.oFactorTypeOfFailure,
+    required this.f1,
+    required this.f2,
+    required this.f3,
+    required this.ratingForF1,
+    required this.ratingForF2,
+    required this.ratingForF3,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,65 +34,59 @@ class OFactorRatingWidget extends StatelessWidget {
         Text(
           "${AppLocalizations.of(context).ratingForF1} = ${AppLocalizations.of(context).formulaForRatingForF1}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.02,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.02),
         Text(
           "${AppLocalizations.of(context).ratingForF2} = ${AppLocalizations.of(context).formulaForRatingForF2}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.02,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.02),
         Text(
           oFactorTypeOfFailure == OFactorTypeOfFailure.toppling
               ? "${AppLocalizations.of(context).ratingForF3} = ${AppLocalizations.of(context).formulaForRatingForF3ForTopplingFailure}"
               : "${AppLocalizations.of(context).ratingForF3} = ${AppLocalizations.of(context).formulaForRatingForF3ForNonTopplingFailure}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.03,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
         Text(
           "${AppLocalizations.of(context).ratingForF1} = ${ratingForF1.text}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.02,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.02),
         Text(
           "${AppLocalizations.of(context).ratingForF2} = ${ratingForF2.text}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.02,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.02),
         Text(
           "${AppLocalizations.of(context).ratingForF3} = ${ratingForF3.text}",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.03,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
       ],
     );
   }

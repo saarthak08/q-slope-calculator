@@ -19,8 +19,11 @@ class BlockSizePage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
   final ValueNotifier<List<bool>> errorTabs;
 
-  const BlockSizePage(
-      {super.key, required this.qSlope, required this.errorTabs});
+  const BlockSizePage({
+    super.key,
+    required this.qSlope,
+    required this.errorTabs,
+  });
 
   @override
   State<BlockSizePage> createState() => _BlockSizePageState();
@@ -30,6 +33,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _locationIdController = TextEditingController();
   final TextEditingController _lithologyController = TextEditingController();
+  final TextEditingController _slopeAngleByUserController =
+      TextEditingController();
   final TextEditingController _sumOfCorePiecesController =
       TextEditingController();
   final TextEditingController _totalDrillRunController =
@@ -56,6 +61,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
     QSlope qSlope = widget.qSlope.value;
     _locationIdController.text = qSlope.locationId ?? "";
     _lithologyController.text = qSlope.lithology ?? "";
+    _slopeAngleByUserController.text =
+        qSlope.slopeAngleByUser?.toString() ?? '';
     _sumOfCorePiecesController.text =
         qSlope.blockSize?.sumOfCorePieces.toString() ?? '';
     _totalDrillRunController.text =
@@ -91,11 +98,14 @@ class _BlockSizePageState extends State<BlockSizePage> {
 
   void _calculateRqdByJointVolumeMethod() {
     double? numberOfJoints = double.tryParse(_numberOfJointsController.text);
-    double? numberOfRandomSets =
-        double.tryParse(_numberOfRandomSetsController.text);
+    double? numberOfRandomSets = double.tryParse(
+      _numberOfRandomSetsController.text,
+    );
     if (numberOfRandomSets != null && numberOfJoints != null) {
-      double jointSetNumber =
-          calculateJointSetNumber(numberOfJoints, numberOfRandomSets);
+      double jointSetNumber = calculateJointSetNumber(
+        numberOfJoints,
+        numberOfRandomSets,
+      );
       _jointSetNumberController.text = jointSetNumber.toString();
       _setQSlope();
     }
@@ -118,23 +128,29 @@ class _BlockSizePageState extends State<BlockSizePage> {
           spacings.add(double.tryParse(controller.text) ?? 1);
         }
         jointSpacings.value = spacings;
-        jointVolume.value = double.tryParse(calculateJointVolume(
-                int.tryParse(_numberOfRandomSetsController.text) ?? 0,
-                spacings,
-                double.tryParse(_areaController.text) ?? 1.0)
-            .toStringAsFixed(4));
+        jointVolume.value = double.tryParse(
+          calculateJointVolume(
+            int.tryParse(_numberOfRandomSetsController.text) ?? 0,
+            spacings,
+            double.tryParse(_areaController.text) ?? 1.0,
+          ).toStringAsFixed(4),
+        );
         if (rqdByJvCalculationType.value ==
             RqdByJvCalculationType.formulaWith2Point5Jv) {
           rqd.value = double.tryParse(
-              calculateRqdByTwoPointFiveJv(jointVolume.value ?? 0)
-                  .toStringAsFixed(4));
+            calculateRqdByTwoPointFiveJv(
+              jointVolume.value ?? 0,
+            ).toStringAsFixed(4),
+          );
           _setQSlope();
         }
         if (rqdByJvCalculationType.value ==
             RqdByJvCalculationType.formulaWith3Point3Jv) {
           rqd.value = double.tryParse(
-              calculateRqdByTwoPointFiveJv(jointVolume.value ?? 0)
-                  .toStringAsFixed(4));
+            calculateRqdByTwoPointFiveJv(
+              jointVolume.value ?? 0,
+            ).toStringAsFixed(4),
+          );
           _setQSlope();
         }
       }
@@ -151,24 +167,33 @@ class _BlockSizePageState extends State<BlockSizePage> {
       QSlope qSlope = widget.qSlope.value;
       qSlope.lithology = _lithologyController.text;
       qSlope.locationId = _locationIdController.text;
+      qSlope.slopeAngleByUser = double.tryParse(
+        _slopeAngleByUserController.text,
+      );
       qSlope.blockSize = BlockSize();
-      qSlope.blockSize?.areaInSquareMeters =
-          double.tryParse(_areaController.text);
+      qSlope.blockSize?.areaInSquareMeters = double.tryParse(
+        _areaController.text,
+      );
       qSlope.blockSize?.jointSpacingInMeters = jointSpacings.value;
       qSlope.blockSize?.jointVolume = jointVolume.value;
-      qSlope.blockSize?.numberOfJoints =
-          int.tryParse(_numberOfJointsController.text);
-      qSlope.blockSize?.numberOfRandomSets =
-          int.tryParse(_numberOfRandomSetsController.text);
+      qSlope.blockSize?.numberOfJoints = int.tryParse(
+        _numberOfJointsController.text,
+      );
+      qSlope.blockSize?.numberOfRandomSets = int.tryParse(
+        _numberOfRandomSetsController.text,
+      );
       qSlope.blockSize?.rqd = rqd.value;
       qSlope.blockSize?.rqdByJvCalculationType = rqdByJvCalculationType.value;
       qSlope.blockSize?.rqdCalculationType = rqdCalculationType;
-      qSlope.blockSize?.sumOfCorePieces =
-          double.tryParse(_sumOfCorePiecesController.text);
-      qSlope.blockSize?.totalDrillRun =
-          double.tryParse(_totalDrillRunController.text);
-      qSlope.blockSize?.jointSetNumber =
-          double.tryParse(_jointSetNumberController.text);
+      qSlope.blockSize?.sumOfCorePieces = double.tryParse(
+        _sumOfCorePiecesController.text,
+      );
+      qSlope.blockSize?.totalDrillRun = double.tryParse(
+        _totalDrillRunController.text,
+      );
+      qSlope.blockSize?.jointSetNumber = double.tryParse(
+        _jointSetNumberController.text,
+      );
       widget.qSlope.value = qSlope;
       widget.errorTabs.value[tabIndex] = false;
     } else {
@@ -184,11 +209,12 @@ class _BlockSizePageState extends State<BlockSizePage> {
         FocusScope.of(context).unfocus();
       },
       child: SingleChildScrollView(
-          child: Padding(
-        padding: EdgeInsets.symmetric(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: getViewPortWidth(context) * 0.04,
-            vertical: getViewPortHeight(context) * 0.04),
-        child: Form(
+            vertical: getViewPortHeight(context) * 0.04,
+          ),
+          child: Form(
             key: formKey,
             onChanged: () {
               formKey.currentState?.validate();
@@ -198,8 +224,10 @@ class _BlockSizePageState extends State<BlockSizePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BlockSizePageBasicInfoWidget(
-                    locationIdController: _locationIdController,
-                    lithologyController: _lithologyController),
+                  locationIdController: _locationIdController,
+                  lithologyController: _lithologyController,
+                  slopeAngleByUserController: _slopeAngleByUserController,
+                ),
                 Container(
                   margin: EdgeInsets.only(
                     top: getViewPortHeight(context) * 0.06,
@@ -208,19 +236,26 @@ class _BlockSizePageState extends State<BlockSizePage> {
                   child: const DividerWidget(),
                 ),
                 Center(
-                    child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: getViewPortHeight(context) * 0.03),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .blockSizePageBlockSizeSubTitle,
-                          style: GoogleFonts.poppins(
-                              fontSize: getSubtitleLargeFontSize(context),
-                              color: primaryColor),
-                        ))),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: getViewPortHeight(context) * 0.03,
+                    ),
+                    child: Text(
+                      AppLocalizations.of(
+                        context,
+                      ).blockSizePageBlockSizeSubTitle,
+                      style: GoogleFonts.poppins(
+                        fontSize: getSubtitleLargeFontSize(context),
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
                 CustomTextFormField(
                   type: const TextInputType.numberWithOptions(
-                      signed: false, decimal: false),
+                    signed: false,
+                    decimal: false,
+                  ),
                   textInputAction: TextInputAction.next,
                   textEditingController: _numberOfJointsController,
                   titleText:
@@ -228,14 +263,16 @@ class _BlockSizePageState extends State<BlockSizePage> {
                   validate: (value) {
                     if (rqdCalculationType == RqdCalculationType.jv &&
                         (value == null || value.isEmpty)) {
-                      return AppLocalizations.of(context)
-                          .numberOfJointsTextInputRequired;
+                      return AppLocalizations.of(
+                        context,
+                      ).numberOfJointsTextInputRequired;
                     }
                     if (value != null &&
                         value.isNotEmpty &&
                         (int.tryParse(value) ?? 0) > 100) {
-                      return AppLocalizations.of(context)
-                          .numberOfJointsNotMoreThanHundred;
+                      return AppLocalizations.of(
+                        context,
+                      ).numberOfJointsNotMoreThanHundred;
                     }
                     return null;
                   },
@@ -245,13 +282,14 @@ class _BlockSizePageState extends State<BlockSizePage> {
                       if (_jointSpacingControllers.value.length < intValue &&
                           intValue <= 100) {
                         List<TextEditingController> controller = List.from(
-                            _jointSpacingControllers.value,
-                            growable: true);
-                        for (int i = 0;
-                            i <
-                                intValue -
-                                    _jointSpacingControllers.value.length;
-                            i++) {
+                          _jointSpacingControllers.value,
+                          growable: true,
+                        );
+                        for (
+                          int i = 0;
+                          i < intValue - _jointSpacingControllers.value.length;
+                          i++
+                        ) {
                           controller.add(TextEditingController());
                         }
                         _jointSpacingControllers.value = controller;
@@ -260,57 +298,62 @@ class _BlockSizePageState extends State<BlockSizePage> {
                     _calculateRqdByJointVolumeMethod();
                   },
                 ),
-                SizedBox(
-                  height: getViewPortHeight(context) * 0.03,
-                ),
+                SizedBox(height: getViewPortHeight(context) * 0.03),
                 CustomTextFormField(
                   onChanged: (value) {
                     _calculateRqdByJointVolumeMethod();
                   },
                   type: const TextInputType.numberWithOptions(
-                      signed: false, decimal: false),
+                    signed: false,
+                    decimal: false,
+                  ),
                   textInputAction: TextInputAction.next,
                   textEditingController: _numberOfRandomSetsController,
-                  titleText: AppLocalizations.of(context)
-                      .numberOfRandomSetsTextInputTitle,
+                  titleText:
+                      AppLocalizations.of(
+                        context,
+                      ).numberOfRandomSetsTextInputTitle,
                   validate: (value) {
                     if (rqdCalculationType == RqdCalculationType.jv &&
                         (value == null || value.isEmpty)) {
-                      return AppLocalizations.of(context)
-                          .numberOfRandomSetsTextInputRequired;
+                      return AppLocalizations.of(
+                        context,
+                      ).numberOfRandomSetsTextInputRequired;
                     }
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: getViewPortHeight(context) * 0.03,
-                ),
+                SizedBox(height: getViewPortHeight(context) * 0.03),
                 CustomTextFormField(
                   onChanged: (value) {
                     _calculateRqdByJointVolumeMethod();
                   },
                   icon: Icons.help_outline,
                   onClickIcon: () {
-                    Navigator.pushNamed(context, PhotoViewScreen.route,
-                        arguments:
-                            const AssetImage(Assets.jointSetNumberTable));
+                    Navigator.pushNamed(
+                      context,
+                      PhotoViewScreen.route,
+                      arguments: const AssetImage(Assets.jointSetNumberTable),
+                    );
                   },
                   type: const TextInputType.numberWithOptions(
-                      signed: false, decimal: true),
+                    signed: false,
+                    decimal: true,
+                  ),
                   textInputAction: TextInputAction.next,
                   textEditingController: _jointSetNumberController,
                   titleText: AppLocalizations.of(context).jointSetNumber,
                 ),
-                SizedBox(
-                  height: getViewPortHeight(context) * 0.04,
-                ),
+                SizedBox(height: getViewPortHeight(context) * 0.04),
                 Text(
-                  AppLocalizations.of(context)
-                      .rockQualityDesignationCalculation,
+                  AppLocalizations.of(
+                    context,
+                  ).rockQualityDesignationCalculation,
                   style: TextStyle(fontSize: getSubTitleFontSize(context)),
                 ),
-                Row(children: [
-                  Radio<RqdCalculationType>(
+                Row(
+                  children: [
+                    Radio<RqdCalculationType>(
                       value: RqdCalculationType.jv,
                       groupValue: rqdCalculationType,
                       onChanged: (value) {
@@ -318,15 +361,19 @@ class _BlockSizePageState extends State<BlockSizePage> {
                           rqdCalculationType = value;
                         });
                         rqd.value = null;
-                      }),
-                  Expanded(
+                      },
+                    ),
+                    Expanded(
                       child: Text(
-                    AppLocalizations.of(context).byUsingJointVolumeMethod,
-                    style: TextStyle(fontSize: getBodyFontSize(context)),
-                  )),
-                ]),
-                Row(children: [
-                  Radio<RqdCalculationType>(
+                        AppLocalizations.of(context).byUsingJointVolumeMethod,
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio<RqdCalculationType>(
                       value: RqdCalculationType.directMethod,
                       groupValue: rqdCalculationType,
                       onChanged: (value) {
@@ -334,59 +381,65 @@ class _BlockSizePageState extends State<BlockSizePage> {
                           rqdCalculationType = value;
                         });
                         rqd.value = null;
-                      }),
-                  Expanded(
-                      child: Text(
-                    AppLocalizations.of(context).byUsingDirectMethod,
-                    style: TextStyle(fontSize: getBodyFontSize(context)),
-                  )),
-                ]),
-                Container(
-                    margin:
-                        EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
-                    key: const ValueKey<int>(1),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) {
-                        return FadeTransition(opacity: animation, child: child);
                       },
-                      child: rqdCalculationType ==
-                              RqdCalculationType.directMethod
-                          ? BlockSizePageDirectMethodWidget(
+                    ),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).byUsingDirectMethod,
+                        style: TextStyle(fontSize: getBodyFontSize(context)),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: getViewPortHeight(context) * 0.02,
+                  ),
+                  key: const ValueKey<int>(1),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                    ) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                    child:
+                        rqdCalculationType == RqdCalculationType.directMethod
+                            ? BlockSizePageDirectMethodWidget(
                               setQSlope: _setQSlope,
                               rqd: rqd,
                               sumOfCorePiecesController:
                                   _sumOfCorePiecesController,
                               totalDrillRunController: _totalDrillRunController,
-                              rqdCalculationType: rqdCalculationType)
-                          : rqdCalculationType == RqdCalculationType.jv
-                              ? BlockSizePageJoinVolumeWidget(
-                                  calculateRqdByJointVolumeMethod:
-                                      _calculateRqdByJointVolumeMethod,
-                                  jointSetNumberController:
-                                      _jointSetNumberController,
-                                  jointSpacings: jointSpacings,
-                                  numberOfJointsController:
-                                      _numberOfJointsController,
-                                  jointSpacingControllers:
-                                      _jointSpacingControllers,
-                                  numberOfRandomSetsController:
-                                      _numberOfRandomSetsController,
-                                  areaController: _areaController,
-                                  rqd: rqd,
-                                  rqdByJvCalculationType:
-                                      rqdByJvCalculationType,
-                                  jointVolume: jointVolume,
-                                )
-                              : Container(),
-                    )),
-                SizedBox(
-                  height: getViewPortHeight(context) * 0.1,
+                              rqdCalculationType: rqdCalculationType,
+                            )
+                            : rqdCalculationType == RqdCalculationType.jv
+                            ? BlockSizePageJoinVolumeWidget(
+                              calculateRqdByJointVolumeMethod:
+                                  _calculateRqdByJointVolumeMethod,
+                              jointSetNumberController:
+                                  _jointSetNumberController,
+                              jointSpacings: jointSpacings,
+                              numberOfJointsController:
+                                  _numberOfJointsController,
+                              jointSpacingControllers: _jointSpacingControllers,
+                              numberOfRandomSetsController:
+                                  _numberOfRandomSetsController,
+                              areaController: _areaController,
+                              rqd: rqd,
+                              rqdByJvCalculationType: rqdByJvCalculationType,
+                              jointVolume: jointVolume,
+                            )
+                            : Container(),
+                  ),
                 ),
+                SizedBox(height: getViewPortHeight(context) * 0.1),
               ],
-            )),
-      )),
+            ),
+          ),
+        ),
+      ),
     );
   }
 

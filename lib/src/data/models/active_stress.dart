@@ -8,12 +8,7 @@ class ActiveStress {
   /// [MAX_AMONG_SRFA_SRFB_SRFC]
   double? srf;
 
-  ActiveStress({
-    this.srfA = 0,
-    this.srfB = 0,
-    this.srfC = 0,
-    this.srf = 0,
-  });
+  ActiveStress({this.srfA = 0, this.srfB = 0, this.srfC = 0, this.srf = 0});
 
   ActiveStress copyWith({
     double? srfA,

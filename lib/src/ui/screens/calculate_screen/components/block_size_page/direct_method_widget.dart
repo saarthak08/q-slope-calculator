@@ -13,22 +13,25 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
   final RqdCalculationType? rqdCalculationType;
   final ValueNotifier<double?> rqd;
   final void Function() setQSlope;
-  const BlockSizePageDirectMethodWidget(
-      {super.key,
-      required this.sumOfCorePiecesController,
-      required this.totalDrillRunController,
-      required this.rqdCalculationType,
-      required this.rqd,
-      required this.setQSlope});
+  const BlockSizePageDirectMethodWidget({
+    super.key,
+    required this.sumOfCorePiecesController,
+    required this.totalDrillRunController,
+    required this.rqdCalculationType,
+    required this.rqd,
+    required this.setQSlope,
+  });
 
   void _calculateRqd() {
     if (sumOfCorePiecesController.text.isNotEmpty &&
         totalDrillRunController.text.isNotEmpty &&
         int.tryParse(totalDrillRunController.text) != 0) {
-      rqd.value = double.tryParse(calculateRqdByDirectMethod(
-              double.tryParse(sumOfCorePiecesController.text) ?? 0,
-              double.tryParse(totalDrillRunController.text) ?? 1)
-          .toStringAsFixed(4));
+      rqd.value = double.tryParse(
+        calculateRqdByDirectMethod(
+          double.tryParse(sumOfCorePiecesController.text) ?? 0,
+          double.tryParse(totalDrillRunController.text) ?? 1,
+        ).toStringAsFixed(4),
+      );
       setQSlope();
     }
   }
@@ -46,8 +49,9 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
           validate: (value) {
             if (rqdCalculationType == RqdCalculationType.directMethod &&
                 (value == null || value.isEmpty)) {
-              return AppLocalizations.of(context)
-                  .sumOfCorePiecesTextInputRequired;
+              return AppLocalizations.of(
+                context,
+              ).sumOfCorePiecesTextInputRequired;
             }
             return null;
           },
@@ -56,9 +60,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
           },
           hintText: AppLocalizations.of(context).sumOfCorePiecesTextInputHint,
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.03,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.03),
         CustomTextFormField(
           type: const TextInputType.numberWithOptions(signed: false),
           textInputAction: TextInputAction.done,
@@ -67,8 +69,9 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
           validate: (value) {
             if (rqdCalculationType == RqdCalculationType.directMethod &&
                 (value == null || value.isEmpty)) {
-              return AppLocalizations.of(context)
-                  .totalDrillRunTextInputRequired;
+              return AppLocalizations.of(
+                context,
+              ).totalDrillRunTextInputRequired;
             }
             if (value != null && value.isNotEmpty && int.tryParse(value) == 0) {
               return AppLocalizations.of(context).totalDrillRunTextNotZero;
@@ -79,30 +82,35 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
             _calculateRqd();
           },
         ),
-        SizedBox(
-          height: getViewPortHeight(context) * 0.05,
-        ),
+        SizedBox(height: getViewPortHeight(context) * 0.05),
         Text(
           "${AppLocalizations.of(context).rockQualityDesignation} = ((${AppLocalizations.of(context).sumOfCorePieces}) / (${AppLocalizations.of(context).totalDrillRun})) x 100 %",
           style: GoogleFonts.montserrat(
-              fontFeatures: [],
-              fontWeight: FontWeight.w600,
-              fontSize: getSubTitleFontSize(context)),
+            fontFeatures: [],
+            fontWeight: FontWeight.w600,
+            fontSize: getSubTitleFontSize(context),
+          ),
         ),
         ValueListenableBuilder(
-            valueListenable: rqd,
-            builder: (context, rqdValue, child) => rqdValue != null
-                ? Container(
-                    margin:
-                        EdgeInsets.only(top: getViewPortHeight(context) * 0.03),
-                    child: Text(
-                      "${AppLocalizations.of(context).rockQualityDesignation} = ${rqdValue.toStringAsFixed(4)} %",
-                      style: GoogleFonts.montserrat(
-                          fontFeatures: [],
-                          fontWeight: FontWeight.w600,
-                          fontSize: getSubTitleFontSize(context)),
-                    ))
-                : Container())
+          valueListenable: rqd,
+          builder:
+              (context, rqdValue, child) =>
+                  rqdValue != null
+                      ? Container(
+                        margin: EdgeInsets.only(
+                          top: getViewPortHeight(context) * 0.03,
+                        ),
+                        child: Text(
+                          "${AppLocalizations.of(context).rockQualityDesignation} = ${rqdValue.toStringAsFixed(4)} %",
+                          style: GoogleFonts.montserrat(
+                            fontFeatures: [],
+                            fontWeight: FontWeight.w600,
+                            fontSize: getSubTitleFontSize(context),
+                          ),
+                        ),
+                      )
+                      : Container(),
+        ),
       ],
     );
   }

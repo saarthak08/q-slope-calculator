@@ -101,10 +101,12 @@ class _OFactorPageState extends State<OFactorPage> {
         qSlope.oFactor?.ratingForF1 = double.tryParse(ratingForF1.text);
         qSlope.oFactor?.ratingForF2 = double.tryParse(ratingForF2.text);
         qSlope.oFactor?.ratingForF3 = double.tryParse(ratingForF3.text);
-        qSlope.oFactor?.oFactorForFirstJoint =
-            double.tryParse(_joint1OFactor.text);
-        qSlope.oFactor?.oFactorForSecondJoint =
-            double.tryParse(_joint2OFactor.text);
+        qSlope.oFactor?.oFactorForFirstJoint = double.tryParse(
+          _joint1OFactor.text,
+        );
+        qSlope.oFactor?.oFactorForSecondJoint = double.tryParse(
+          _joint2OFactor.text,
+        );
         qSlope.oFactor?.indexOfFirstJoint = _joint1Index.value;
         qSlope.oFactor?.indexOfSecondJoint = _joint2Index.value;
         qSlope.oFactor?.oFactorTypeOfFailure = _oFactorTypeOfFailure.value;
@@ -122,249 +124,229 @@ class _OFactorPageState extends State<OFactorPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getViewPortWidth(context) * 0.04,
-                    vertical: getViewPortHeight(context) * 0.02),
-                child: Form(
-                    key: formKey,
-                    onChanged: () {
-                      formKey.currentState?.validate();
-                      _setQSlope();
-                    },
-                    child: ValueListenableBuilder(
-                        valueListenable: _oFactorTypeOfFailure,
-                        builder: (context, oFactorTypeOfFailure, child) =>
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                      child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: getViewPortHeight(context) *
-                                                  0.02,
-                                              bottom:
-                                                  getViewPortHeight(context) *
-                                                      0.02),
-                                          child: Text(
-                                            AppLocalizations.of(context)
-                                                .oFactor,
-                                            style: GoogleFonts.poppins(
-                                                fontSize:
-                                                    getSubtitleLargeFontSize(
-                                                        context),
-                                                color: primaryColor),
-                                          ))),
-                                  OFactorTypeOfFailureWidget(
-                                      joint1IndexValueNotifier: _joint1Index,
-                                      joint2IndexValueNotifier: _joint2Index,
-                                      oFactorTypeOfFailure:
-                                          _oFactorTypeOfFailure,
-                                      currentValue: oFactorTypeOfFailure),
-                                  SizedBox(
-                                    height: getViewPortHeight(context) * 0.01,
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: getViewPortWidth(context) * 0.04,
+            vertical: getViewPortHeight(context) * 0.02,
+          ),
+          child: Form(
+            key: formKey,
+            onChanged: () {
+              formKey.currentState?.validate();
+              _setQSlope();
+            },
+            child: ValueListenableBuilder(
+              valueListenable: _oFactorTypeOfFailure,
+              builder:
+                  (context, oFactorTypeOfFailure, child) => Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: getViewPortHeight(context) * 0.02,
+                            bottom: getViewPortHeight(context) * 0.02,
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context).oFactor,
+                            style: GoogleFonts.poppins(
+                              fontSize: getSubtitleLargeFontSize(context),
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      OFactorTypeOfFailureWidget(
+                        joint1IndexValueNotifier: _joint1Index,
+                        joint2IndexValueNotifier: _joint2Index,
+                        oFactorTypeOfFailure: _oFactorTypeOfFailure,
+                        currentValue: oFactorTypeOfFailure,
+                      ),
+                      SizedBox(height: getViewPortHeight(context) * 0.01),
+                      ValueListenableBuilder(
+                        valueListenable: _joint1Index,
+                        builder:
+                            (
+                              context,
+                              joint1Index,
+                              child,
+                            ) => ValueListenableBuilder(
+                              valueListenable: _joint2Index,
+                              builder:
+                                  (context, joint2Index, child) => Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      OFactorJointsOfFailureWidget(
+                                        setQSlope: _setQSlope,
+                                        joint1IndexValueNotifier: _joint1Index,
+                                        joint2IndexValueNotifier: _joint2Index,
+                                        qSlope: widget.qSlope,
+                                        joint1Index: joint1Index,
+                                        joint2Index: joint2Index,
+                                        oFactorTypeOfFailure:
+                                            oFactorTypeOfFailure,
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getViewPortHeight(context) * 0.04,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              getViewPortWidth(context) * 0.01,
+                                        ),
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          ).oFactorCalculation,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black87,
+                                            fontSize: getSubTitleFontSize(
+                                              context,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Radio<OFactorCalculationType>(
+                                            value: OFactorCalculationType.value,
+                                            groupValue: _oFactorCalculationType,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _oFactorCalculationType = value;
+                                              });
+                                              _joint1OFactor.text = "";
+                                              _joint2OFactor.text = "";
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).oFactorByValue,
+                                              style: TextStyle(
+                                                fontSize: getBodyFontSize(
+                                                  context,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Radio<OFactorCalculationType>(
+                                            value:
+                                                OFactorCalculationType
+                                                    .romanaAdjacentFactor,
+                                            groupValue: _oFactorCalculationType,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _oFactorCalculationType = value;
+                                              });
+                                              _joint1OFactor.text = "";
+                                              _joint2OFactor.text = "";
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).oFactorByRomanaAdjustmentFactor,
+                                              style: TextStyle(
+                                                fontSize: getBodyFontSize(
+                                                  context,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top:
+                                              getViewPortHeight(context) * 0.02,
+                                        ),
+                                        key: const ValueKey<int>(1),
+                                        child: AnimatedSwitcher(
+                                          duration: const Duration(
+                                            milliseconds: 500,
+                                          ),
+                                          transitionBuilder: (
+                                            Widget child,
+                                            Animation<double> animation,
+                                          ) {
+                                            return FadeTransition(
+                                              opacity: animation,
+                                              child: child,
+                                            );
+                                          },
+                                          child:
+                                              _oFactorCalculationType ==
+                                                      OFactorCalculationType
+                                                          .value
+                                                  ? OFactorValueWidget(
+                                                    joint1OFactor:
+                                                        _joint1OFactor,
+                                                    joint2OFactor:
+                                                        _joint2OFactor,
+                                                    joint1Index: joint1Index,
+                                                    joint2Index: joint2Index,
+                                                    oFactorCalculationType:
+                                                        _oFactorCalculationType,
+                                                    oFactorTypeOfFailure:
+                                                        oFactorTypeOfFailure,
+                                                  )
+                                                  : _oFactorCalculationType ==
+                                                      OFactorCalculationType
+                                                          .romanaAdjacentFactor
+                                                  ? OFactorRomanaAdjustmentFactorWidget(
+                                                    oFactorRomanaValueType:
+                                                        _oFactorRomanaValueType,
+                                                    setQSlope: _setQSlope,
+                                                    oFactorTypeOfFailure:
+                                                        oFactorTypeOfFailure,
+                                                    alphaI: _alphaI,
+                                                    alphaJ: _alphaJ,
+                                                    alphaS: _alphaS,
+                                                    betaI: _betaI,
+                                                    betaJ: _betaJ,
+                                                    betaS: _betaS,
+                                                    f1: f1,
+                                                    f2: f2,
+                                                    f3: f3,
+                                                    oFactor: _joint1OFactor,
+                                                    ratingForF1: ratingForF1,
+                                                    ratingForF2: ratingForF2,
+                                                    ratingForF3: ratingForF3,
+                                                  )
+                                                  : Container(),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            getViewPortHeight(context) * 0.1,
+                                      ),
+                                    ],
                                   ),
-                                  ValueListenableBuilder(
-                                    valueListenable: _joint1Index,
-                                    builder: (context, joint1Index, child) =>
-                                        ValueListenableBuilder(
-                                            valueListenable: _joint2Index,
-                                            builder: (context, joint2Index,
-                                                    child) =>
-                                                Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      OFactorJointsOfFailureWidget(
-                                                        setQSlope: _setQSlope,
-                                                        joint1IndexValueNotifier:
-                                                            _joint1Index,
-                                                        joint2IndexValueNotifier:
-                                                            _joint2Index,
-                                                        qSlope: widget.qSlope,
-                                                        joint1Index:
-                                                            joint1Index,
-                                                        joint2Index:
-                                                            joint2Index,
-                                                        oFactorTypeOfFailure:
-                                                            oFactorTypeOfFailure,
-                                                      ),
-                                                      SizedBox(
-                                                        height:
-                                                            getViewPortHeight(
-                                                                    context) *
-                                                                0.04,
-                                                      ),
-                                                      Padding(
-                                                          padding: EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  getViewPortWidth(
-                                                                          context) *
-                                                                      0.01),
-                                                          child: Text(
-                                                            AppLocalizations.of(
-                                                                    context)
-                                                                .oFactorCalculation,
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black87,
-                                                                fontSize:
-                                                                    getSubTitleFontSize(
-                                                                        context)),
-                                                          )),
-                                                      Row(children: [
-                                                        Radio<
-                                                                OFactorCalculationType>(
-                                                            value:
-                                                                OFactorCalculationType
-                                                                    .value,
-                                                            groupValue:
-                                                                _oFactorCalculationType,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                _oFactorCalculationType =
-                                                                    value;
-                                                              });
-                                                              _joint1OFactor
-                                                                  .text = "";
-                                                              _joint2OFactor
-                                                                  .text = "";
-                                                            }),
-                                                        Expanded(
-                                                            child: Text(
-                                                          AppLocalizations.of(
-                                                                  context)
-                                                              .oFactorByValue,
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  getBodyFontSize(
-                                                                      context)),
-                                                        )),
-                                                      ]),
-                                                      Row(children: [
-                                                        Radio<
-                                                                OFactorCalculationType>(
-                                                            value: OFactorCalculationType
-                                                                .romanaAdjacentFactor,
-                                                            groupValue:
-                                                                _oFactorCalculationType,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                _oFactorCalculationType =
-                                                                    value;
-                                                              });
-                                                              _joint1OFactor
-                                                                  .text = "";
-                                                              _joint2OFactor
-                                                                  .text = "";
-                                                            }),
-                                                        Expanded(
-                                                            child: Text(
-                                                          AppLocalizations.of(
-                                                                  context)
-                                                              .oFactorByRomanaAdjustmentFactor,
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  getBodyFontSize(
-                                                                      context)),
-                                                        )),
-                                                      ]),
-                                                      Container(
-                                                          margin: EdgeInsets.only(
-                                                              top: getViewPortHeight(
-                                                                      context) *
-                                                                  0.02),
-                                                          key: const ValueKey<
-                                                              int>(1),
-                                                          child:
-                                                              AnimatedSwitcher(
-                                                            duration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        500),
-                                                            transitionBuilder: (Widget
-                                                                    child,
-                                                                Animation<
-                                                                        double>
-                                                                    animation) {
-                                                              return FadeTransition(
-                                                                  opacity:
-                                                                      animation,
-                                                                  child: child);
-                                                            },
-                                                            child: _oFactorCalculationType ==
-                                                                    OFactorCalculationType
-                                                                        .value
-                                                                ? OFactorValueWidget(
-                                                                    joint1OFactor:
-                                                                        _joint1OFactor,
-                                                                    joint2OFactor:
-                                                                        _joint2OFactor,
-                                                                    joint1Index:
-                                                                        joint1Index,
-                                                                    joint2Index:
-                                                                        joint2Index,
-                                                                    oFactorCalculationType:
-                                                                        _oFactorCalculationType,
-                                                                    oFactorTypeOfFailure:
-                                                                        oFactorTypeOfFailure,
-                                                                  )
-                                                                : _oFactorCalculationType ==
-                                                                        OFactorCalculationType
-                                                                            .romanaAdjacentFactor
-                                                                    ? OFactorRomanaAdjustmentFactorWidget(
-                                                                        oFactorRomanaValueType:
-                                                                            _oFactorRomanaValueType,
-                                                                        setQSlope:
-                                                                            _setQSlope,
-                                                                        oFactorTypeOfFailure:
-                                                                            oFactorTypeOfFailure,
-                                                                        alphaI:
-                                                                            _alphaI,
-                                                                        alphaJ:
-                                                                            _alphaJ,
-                                                                        alphaS:
-                                                                            _alphaS,
-                                                                        betaI:
-                                                                            _betaI,
-                                                                        betaJ:
-                                                                            _betaJ,
-                                                                        betaS:
-                                                                            _betaS,
-                                                                        f1: f1,
-                                                                        f2: f2,
-                                                                        f3: f3,
-                                                                        oFactor:
-                                                                            _joint1OFactor,
-                                                                        ratingForF1:
-                                                                            ratingForF1,
-                                                                        ratingForF2:
-                                                                            ratingForF2,
-                                                                        ratingForF3:
-                                                                            ratingForF3,
-                                                                      )
-                                                                    : Container(),
-                                                          )),
-                                                      SizedBox(
-                                                        height:
-                                                            getViewPortHeight(
-                                                                    context) *
-                                                                0.1,
-                                                      ),
-                                                    ])),
-                                  )
-                                ]))))));
+                            ),
+                      ),
+                    ],
+                  ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override

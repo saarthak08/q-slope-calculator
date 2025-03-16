@@ -12,16 +12,19 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   final configuredApp = AppConfig(
-      environment: _flavor == null
-          ? AppEnvironment.production
-          : _flavor == AppEnvironment.production.value
-              ? AppEnvironment.production
-              : AppEnvironment.development,
-      appTitle: _flavor == null
-          ? appName
-          : _flavor == AppEnvironment.production.value
-              ? appName
-              : "[DEV] $appName",
-      child: App());
+    environment:
+        _flavor == null
+            ? AppEnvironment.production
+            : _flavor == AppEnvironment.production.value
+            ? AppEnvironment.production
+            : AppEnvironment.development,
+    appTitle:
+        _flavor == null
+            ? appName
+            : _flavor == AppEnvironment.production.value
+            ? appName
+            : "[DEV] $appName",
+    child: App(),
+  );
   runApp(configuredApp);
 }

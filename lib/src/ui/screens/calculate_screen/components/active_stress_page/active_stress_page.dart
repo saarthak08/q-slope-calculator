@@ -8,6 +8,7 @@ import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
+import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,8 +22,11 @@ class ActiveStressPage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
   final ValueNotifier<List<bool>> errorTabs;
 
-  const ActiveStressPage(
-      {super.key, required this.qSlope, required this.errorTabs});
+  const ActiveStressPage({
+    super.key,
+    required this.qSlope,
+    required this.errorTabs,
+  });
 
   @override
   State<ActiveStressPage> createState() => _ActiveStressPageState();
@@ -64,9 +68,13 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
       qSlope.activeStress?.srfB = double.tryParse(srfB.text) ?? 0;
       qSlope.activeStress?.srfC = double.tryParse(srfC.text) ?? 0;
       double preMax = max<double>(
-          qSlope.activeStress?.srfA ?? 0, qSlope.activeStress?.srfB ?? 0);
-      srf.text = max<double>(preMax, qSlope.activeStress?.srfC ?? 0)
-          .toStringAsFixed(4);
+        qSlope.activeStress?.srfA ?? 0,
+        qSlope.activeStress?.srfB ?? 0,
+      );
+      srf.text = max<double>(
+        preMax,
+        qSlope.activeStress?.srfC ?? 0,
+      ).toStringAsFixed(4);
       widget.errorTabs.value[tabIndex] = false;
       widget.errorTabs.value = List.from(widget.errorTabs.value);
       qSlope.activeStress?.srf = double.tryParse(srf.text) ?? 1;
@@ -92,280 +100,279 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getViewPortWidth(context) * 0.04,
-                    vertical: getViewPortHeight(context) * 0.02),
-                child: Form(
-                  key: formKey,
-                  onChanged: () {
-                    formKey.currentState?.validate();
-                    if (_qSlope.value == null) {
-                      widget.errorTabs.value[tabIndex] = true;
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: getViewPortWidth(context) * 0.04,
+            vertical: getViewPortHeight(context) * 0.02,
+          ),
+          child: Form(
+            key: formKey,
+            onChanged: () {
+              formKey.currentState?.validate();
+              if (_qSlope.value == null) {
+                widget.errorTabs.value[tabIndex] = true;
+              }
+              widget.errorTabs.value = List.from(widget.errorTabs.value);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: getViewPortHeight(context) * 0.02,
+                      bottom: getViewPortHeight(context) * 0.03,
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context).activeStress,
+                      style: GoogleFonts.poppins(
+                        fontSize: getSubtitleLargeFontSize(context),
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                CustomTextFormField(
+                  type: const TextInputType.numberWithOptions(signed: false),
+                  textInputAction: TextInputAction.done,
+                  textEditingController: srfA,
+                  titleText: AppLocalizations.of(context).srfAInputTitle,
+                  validate: (value) {
+                    if (value != null &&
+                        value.isNotEmpty &&
+                        ((double.tryParse(value) ?? 0) < minSRFa ||
+                            (double.tryParse(value) ?? 0) > maxSRFa)) {
+                      return AppLocalizations.of(context).srfAInputConstraints;
                     }
-                    widget.errorTabs.value = List.from(widget.errorTabs.value);
+                    return null;
                   },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: getViewPortHeight(context) * 0.02,
-                                  bottom: getViewPortHeight(context) * 0.03),
-                              child: Text(
-                                AppLocalizations.of(context).activeStress,
-                                style: GoogleFonts.poppins(
-                                    fontSize: getSubtitleLargeFontSize(context),
-                                    color: primaryColor),
-                              ))),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfA,
-                        titleText: AppLocalizations.of(context).srfAInputTitle,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFa ||
-                                  (double.tryParse(value) ?? 0) > maxSRFa)) {
-                            return AppLocalizations.of(context)
-                                .srfAInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.02,
-                      ),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfB,
-                        titleText: AppLocalizations.of(context).srfBInputTitle,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFb ||
-                                  (double.tryParse(value) ?? 0) > maxSRFb)) {
-                            return AppLocalizations.of(context)
-                                .srfBInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      SizedBox(
-                        height: getViewPortHeight(context) * 0.02,
-                      ),
-                      CustomTextFormField(
-                        type: const TextInputType.numberWithOptions(
-                            signed: false),
-                        textInputAction: TextInputAction.done,
-                        textEditingController: srfC,
-                        titleText: AppLocalizations.of(context).srfCInputTitle,
-                        validate: (value) {
-                          if (value != null &&
-                              value.isNotEmpty &&
-                              ((double.tryParse(value) ?? 0) < minSRFc ||
-                                  (double.tryParse(value) ?? 0) > maxSRFc)) {
-                            return AppLocalizations.of(context)
-                                .srfCInputConstraints;
-                          }
-                          return null;
-                        },
-                        onChanged: (_) {
-                          _calculateQSlope();
-                        },
-                      ),
-                      ValueListenableBuilder(
-                          valueListenable: _qSlope,
-                          builder: (context, qSlope, child) => qSlope != null
+                  onChanged: (_) {
+                    _calculateQSlope();
+                  },
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.02),
+                CustomTextFormField(
+                  type: const TextInputType.numberWithOptions(signed: false),
+                  textInputAction: TextInputAction.done,
+                  textEditingController: srfB,
+                  titleText: AppLocalizations.of(context).srfBInputTitle,
+                  validate: (value) {
+                    if (value != null &&
+                        value.isNotEmpty &&
+                        ((double.tryParse(value) ?? 0) < minSRFb ||
+                            (double.tryParse(value) ?? 0) > maxSRFb)) {
+                      return AppLocalizations.of(context).srfBInputConstraints;
+                    }
+                    return null;
+                  },
+                  onChanged: (_) {
+                    _calculateQSlope();
+                  },
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.02),
+                CustomTextFormField(
+                  type: const TextInputType.numberWithOptions(signed: false),
+                  textInputAction: TextInputAction.done,
+                  textEditingController: srfC,
+                  titleText: AppLocalizations.of(context).srfCInputTitle,
+                  validate: (value) {
+                    if (value != null &&
+                        value.isNotEmpty &&
+                        ((double.tryParse(value) ?? 0) < minSRFc ||
+                            (double.tryParse(value) ?? 0) > maxSRFc)) {
+                      return AppLocalizations.of(context).srfCInputConstraints;
+                    }
+                    return null;
+                  },
+                  onChanged: (_) {
+                    _calculateQSlope();
+                  },
+                ),
+                ValueListenableBuilder(
+                  valueListenable: _qSlope,
+                  builder:
+                      (context, qSlope, child) =>
+                          qSlope != null
                               ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.04,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).stressReductionFactorSymbol} = ${AppLocalizations.of(context).maxOf} (${AppLocalizations.of(context).srfA}, ${AppLocalizations.of(context).srfB}, ${AppLocalizations.of(context).srfC})",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getSubTitleFontSize(context)),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.02,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).stressReductionFactor} = ${srf.text}",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getSubTitleFontSize(context)),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.03,
-                                      ),
-                                      const Divider(),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.03,
-                                      ),
-                                      Center(
-                                          child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  bottom: getViewPortHeight(
-                                                          context) *
-                                                      0.03),
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                    .qSlopeCalculation,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize:
-                                                        getSubtitleLargeFontSize(
-                                                            context),
-                                                    color: primaryColor),
-                                              ))),
-                                      Text(
-                                        "${AppLocalizations.of(context).qSlopeSymbol} = (${AppLocalizations.of(context).rockQualityDesignationSymbol} / ${AppLocalizations.of(context).jointSetNumberSymbol}) x (${AppLocalizations.of(context).jointRoughnessSymbol} / ${AppLocalizations.of(context).jointAlterationSymbol}) x (${AppLocalizations.of(context).oFactor}) x (${AppLocalizations.of(context).enviornmentalAndGeologicalConditionalNumberSymbol} / ${AppLocalizations.of(context).stressReductionFactorSymbol})",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getSubTitleFontSize(context)),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            getViewPortHeight(context) * 0.02,
-                                      ),
-                                      Text(
-                                        "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(4)}",
-                                        style: GoogleFonts.montserrat(
-                                            fontFeatures: [],
-                                            fontWeight: FontWeight.w600,
-                                            fontSize:
-                                                getSubTitleFontSize(context)),
-                                      ),
-                                    ])
-                              : Container()),
-                      ValueListenableBuilder(
-                          valueListenable: _qSlope,
-                          builder: (context, value, child) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height: getViewPortHeight(context) * 0.1,
+                                    height: getViewPortHeight(context) * 0.04,
                                   ),
-                                  Center(
-                                      child: ElevatedButton(
-                                          onPressed: value != null
-                                              ? () async {
-                                                  QSlope qSlope =
-                                                      widget.qSlope.value;
-                                                  if (qSlope.activeStress !=
-                                                          null &&
-                                                      qSlope.jointCharacter !=
-                                                          null &&
-                                                      qSlope.externalFactors !=
-                                                          null &&
-                                                      qSlope.blockSize !=
-                                                          null &&
-                                                      qSlope.oFactor != null &&
-                                                      widget.errorTabs.value
-                                                              .firstWhereOrNull(
-                                                                  (value) =>
-                                                                      value) ==
-                                                          null) {
-                                                    qSlope.createdAt =
-                                                        DateTime.now();
-                                                    widget.qSlope.value =
-                                                        qSlope.copyWith();
-                                                    try {
-                                                      String fileName =
-                                                          await exportExcelFile(
-                                                              List.from(
-                                                                  [qSlope]),
-                                                              context);
-                                                      if (context.mounted) {
-                                                        toastification.show(
-                                                            autoCloseDuration:
-                                                                const Duration(
-                                                                    seconds: 2),
-                                                            alignment: Alignment
-                                                                .bottomCenter,
-                                                            type:
-                                                                ToastificationType
-                                                                    .success,
-                                                            title: Text(AppLocalizations
-                                                                    .of(context)
-                                                                .exportSuccessful(
-                                                                    fileName)));
-                                                      }
-                                                    } catch (err) {
-                                                      if (context.mounted) {
-                                                        toastification.show(
-                                                            autoCloseDuration:
-                                                                const Duration(
-                                                                    seconds: 2),
-                                                            alignment: Alignment
-                                                                .bottomCenter,
-                                                            type:
-                                                                ToastificationType
-                                                                    .error,
-                                                            title: Text(
-                                                                AppLocalizations.of(
-                                                                        context)
-                                                                    .exportFailed));
-                                                        rethrow;
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              : null,
-                                          style: ButtonStyle(
-                                              shape: WidgetStatePropertyAll(
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                              fixedSize: WidgetStatePropertyAll(
-                                                  Size(
-                                                      getViewPortWidth(
-                                                              context) *
-                                                          0.35,
-                                                      getViewPortHeight(
-                                                              context) *
-                                                          0.05))),
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              AppLocalizations.of(context)
-                                                  .exportFileTitle,
-                                            ),
-                                          ))),
+                                  Text(
+                                    "${AppLocalizations.of(context).stressReductionFactorSymbol} = ${AppLocalizations.of(context).maxOf} (${AppLocalizations.of(context).srfA}, ${AppLocalizations.of(context).srfB}, ${AppLocalizations.of(context).srfC})",
+                                    style: GoogleFonts.montserrat(
+                                      fontFeatures: [],
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: getSubTitleFontSize(context),
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: getViewPortHeight(context) * 0.02,
                                   ),
+                                  Text(
+                                    "${AppLocalizations.of(context).stressReductionFactor} = ${srf.text}",
+                                    style: GoogleFonts.montserrat(
+                                      fontFeatures: [],
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: getSubTitleFontSize(context),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: getViewPortHeight(context) * 0.03,
+                                  ),
+                                  const Divider(),
+                                  SizedBox(
+                                    height: getViewPortHeight(context) * 0.03,
+                                  ),
                                   Center(
-                                      child: ElevatedButton(
-                                    onPressed: value != null
-                                        ? () {
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom:
+                                            getViewPortHeight(context) * 0.03,
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(
+                                          context,
+                                        ).qSlopeCalculation,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: getSubtitleLargeFontSize(
+                                            context,
+                                          ),
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    "${AppLocalizations.of(context).qSlopeSymbol} = (${AppLocalizations.of(context).rockQualityDesignationSymbol} / ${AppLocalizations.of(context).jointSetNumberSymbol}) x (${AppLocalizations.of(context).jointRoughnessSymbol} / ${AppLocalizations.of(context).jointAlterationSymbol}) x (${AppLocalizations.of(context).oFactor}) x (${AppLocalizations.of(context).enviornmentalAndGeologicalConditionalNumberSymbol} / ${AppLocalizations.of(context).stressReductionFactorSymbol})",
+                                    style: GoogleFonts.montserrat(
+                                      fontFeatures: [],
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: getSubTitleFontSize(context),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: getViewPortHeight(context) * 0.02,
+                                  ),
+                                  Text(
+                                    "${AppLocalizations.of(context).qSlopeSymbol} = ${qSlope.toStringAsFixed(4)}",
+                                    style: GoogleFonts.montserrat(
+                                      fontFeatures: [],
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: getSubTitleFontSize(context),
+                                    ),
+                                  ),
+                                ],
+                              )
+                              : Container(),
+                ),
+                SizedBox(height: getViewPortHeight(context) * 0.04),
+                ValueListenableBuilder(
+                  valueListenable: _qSlope,
+                  builder:
+                      (context, value, child) => Column(
+                        children: [
+                          Center(
+                            child: ElevatedButton(
+                              onPressed:
+                                  value != null
+                                      ? () {
+                                        QSlope qSlope = widget.qSlope.value;
+                                        if (qSlope.activeStress != null &&
+                                            qSlope.jointCharacter != null &&
+                                            qSlope.externalFactors != null &&
+                                            qSlope.blockSize != null &&
+                                            qSlope.oFactor != null &&
+                                            widget.errorTabs.value
+                                                    .firstWhereOrNull(
+                                                      (value) => value,
+                                                    ) ==
+                                                null) {
+                                          qSlope.createdAt = DateTime.now();
+                                          widget.qSlope.value =
+                                              qSlope.copyWith();
+                                          context
+                                              .read<QSlopeListCubit>()
+                                              .saveQSlopeToList(qSlope)
+                                              .then((result) {
+                                                if (result.isSuccess &&
+                                                    context.mounted) {
+                                                  toastification.show(
+                                                    autoCloseDuration:
+                                                        const Duration(
+                                                          seconds: 2,
+                                                        ),
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    type:
+                                                        ToastificationType
+                                                            .success,
+                                                    title: Text(
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      ).saveCalculationSuccessful,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  if (result.error
+                                                          is QSlopeError &&
+                                                      context.mounted) {
+                                                    toastification.show(
+                                                      autoCloseDuration:
+                                                          const Duration(
+                                                            seconds: 2,
+                                                          ),
+                                                      alignment:
+                                                          Alignment
+                                                              .bottomCenter,
+                                                      type:
+                                                          ToastificationType
+                                                              .error,
+                                                      title: Text(
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        ).errorInSavingCalculation,
+                                                      ),
+                                                    );
+                                                  }
+                                                }
+                                              });
+                                        }
+                                      }
+                                      : null,
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                fixedSize: WidgetStatePropertyAll(
+                                  Size(
+                                    getViewPortWidth(context) * 0.8,
+                                    getViewPortHeight(context) * 0.05,
+                                  ),
+                                ),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(AppLocalizations.of(context).save),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: getViewPortHeight(context) * 0.01),
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed:
+                                      value != null
+                                          ? () async {
                                             QSlope qSlope = widget.qSlope.value;
                                             if (qSlope.activeStress != null &&
                                                 qSlope.jointCharacter != null &&
@@ -375,70 +382,145 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                                 qSlope.oFactor != null &&
                                                 widget.errorTabs.value
                                                         .firstWhereOrNull(
-                                                            (value) => value) ==
+                                                          (value) => value,
+                                                        ) ==
                                                     null) {
                                               qSlope.createdAt = DateTime.now();
                                               widget.qSlope.value =
                                                   qSlope.copyWith();
-                                              context
-                                                  .read<QSlopeListCubit>()
-                                                  .saveQSlopeToList(qSlope)
-                                                  .then((result) {
-                                                if (result.isSuccess &&
-                                                    context.mounted) {
+                                              try {
+                                                String fileName =
+                                                    await exportExcelFile(
+                                                      List.from([qSlope]),
+                                                      context,
+                                                    );
+                                                if (context.mounted) {
                                                   toastification.show(
-                                                      autoCloseDuration:
-                                                          const Duration(
-                                                              seconds: 2),
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      type: ToastificationType
-                                                          .success,
-                                                      title: Text(AppLocalizations
-                                                              .of(context)
-                                                          .saveCalculationSuccessful));
-                                                } else {
-                                                  if (result.error
-                                                          is QSlopeError &&
-                                                      context.mounted) {
-                                                    toastification.show(
-                                                        autoCloseDuration:
-                                                            const Duration(
-                                                                seconds: 2),
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        type: ToastificationType
-                                                            .error,
-                                                        title: Text(
-                                                            AppLocalizations.of(
-                                                                    context)
-                                                                .errorInSavingCalculation));
-                                                  }
+                                                    autoCloseDuration:
+                                                        const Duration(
+                                                          seconds: 2,
+                                                        ),
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    type:
+                                                        ToastificationType
+                                                            .success,
+                                                    title: Text(
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      ).exportSuccessful(
+                                                        fileName,
+                                                      ),
+                                                    ),
+                                                  );
                                                 }
-                                              });
+                                              } catch (err) {
+                                                if (context.mounted) {
+                                                  toastification.show(
+                                                    autoCloseDuration:
+                                                        const Duration(
+                                                          seconds: 2,
+                                                        ),
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    type:
+                                                        ToastificationType
+                                                            .error,
+                                                    title: Text(
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      ).exportFailed,
+                                                    ),
+                                                  );
+                                                  rethrow;
+                                                }
+                                              }
                                             }
                                           }
-                                        : null,
-                                    style: ButtonStyle(
-                                        shape: WidgetStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5))),
-                                        fixedSize: WidgetStatePropertyAll(Size(
-                                            getViewPortWidth(context) * 0.35,
-                                            getViewPortHeight(context) *
-                                                0.05))),
-                                    child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                          AppLocalizations.of(context).save,
-                                        )),
-                                  ))
-                                ],
-                              ))
-                    ],
-                  ),
-                ))));
+                                          : null,
+                                  style: ButtonStyle(
+                                    shape: WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    fixedSize: WidgetStatePropertyAll(
+                                      Size(
+                                        getViewPortWidth(context) * 0.4,
+                                        getViewPortHeight(context) * 0.05,
+                                      ),
+                                    ),
+                                  ),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      AppLocalizations.of(
+                                        context,
+                                      ).exportFileTitle,
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  width: getViewPortWidth(context) * 0.02,
+                                ),
+                                ElevatedButton(
+                                  onPressed:
+                                      value != null
+                                          ? () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              QSlopeStabilityChartScreen.route,
+                                              arguments:
+                                                  QSlopeStabilityChartScreenArguments(
+                                                    qSlopeValues:
+                                                        List<double>.from([
+                                                          value,
+                                                        ]),
+                                                    slopeAnglesByUser:
+                                                        List<double?>.from([
+                                                          widget
+                                                              .qSlope
+                                                              .value
+                                                              .slopeAngleByUser,
+                                                        ]),
+                                                  ),
+                                            );
+                                          }
+                                          : null,
+                                  style: ButtonStyle(
+                                    shape: WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    fixedSize: WidgetStatePropertyAll(
+                                      Size(
+                                        getViewPortWidth(context) * 0.4,
+                                        getViewPortHeight(context) * 0.05,
+                                      ),
+                                    ),
+                                  ),
+                                  child: FittedBox(
+                                    child: Text(
+                                      "${AppLocalizations.of(context).qSlopeSymbol}\n ${AppLocalizations.of(context).stabilityChart}",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: getViewPortHeight(context) * 0.08),
+                        ],
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override

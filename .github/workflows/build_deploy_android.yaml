@@ -58,12 +58,13 @@ jobs:
       - name: Upload build files as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: prod-release
+          name: q-slope-calculator-android
           path: |
             build/app/outputs/bundle/prodRelease/app-prod-release.aab
             build/app/outputs/mapping/prodRelease/mapping.txt
             build/app/intermediates/merged_native_libs/prodRelease/out/lib/merged_native_libs.zip
           overwrite: true
+          include-hidden-files: true
 
   deploy-playstore:
     runs-on: ubuntu-latest
@@ -72,7 +73,7 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: prod-release
+          name: q-slope-calculator-android
           path: artifact
 
       - uses: r0adkll/upload-google-play@v1

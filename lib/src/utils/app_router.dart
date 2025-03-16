@@ -3,26 +3,42 @@ import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/home_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-            settings: settings, builder: (context) => const HomeScreen());
+          settings: settings,
+          builder: (context) => const HomeScreen(),
+        );
       case CalculateScreen.route:
         final args = settings.arguments as CalculateScreenArguments;
         return MaterialPageRoute(
-            settings: settings,
-            builder: (context) => CalculateScreen(qSlope: args.qSlope));
+          settings: settings,
+          builder: (context) => CalculateScreen(qSlope: args.qSlope),
+        );
       case PhotoViewScreen.route:
         final args = settings.arguments as ImageProvider;
         return MaterialPageRoute(
-            settings: settings,
-            builder: (context) => PhotoViewScreen(imageProvider: args));
+          settings: settings,
+          builder: (context) => PhotoViewScreen(imageProvider: args),
+        );
       case AboutScreen.route:
         return MaterialPageRoute(
-            settings: settings, builder: (context) => const AboutScreen());
+          settings: settings,
+          builder: (context) => const AboutScreen(),
+        );
+      case QSlopeStabilityChartScreen.route:
+        final args = settings.arguments as QSlopeStabilityChartScreenArguments;
+        return MaterialPageRoute(
+          settings: settings,
+          builder:
+              (context) => QSlopeStabilityChartScreen(
+                qSlopeStabilityChartScreenArguments: args,
+              ),
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const Text("No Route Found"),

@@ -14,13 +14,15 @@ class CustomProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final vpH = getViewPortHeight(context);
     return SizedBox(
-        height: size ?? vpH * 0.025,
-        width: size ?? vpH * 0.025,
-        child: Platform.isIOS
-            ? CupertinoActivityIndicator(color: color)
-            : CircularProgressIndicator(
+      height: size ?? vpH * 0.025,
+      width: size ?? vpH * 0.025,
+      child:
+          Platform.isIOS
+              ? CupertinoActivityIndicator(color: color)
+              : CircularProgressIndicator(
                 strokeWidth: 1,
                 color: color ?? primaryColor,
-              ));
+              ),
+    );
   }
 }

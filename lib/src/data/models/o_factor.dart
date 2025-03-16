@@ -45,71 +45,74 @@ class OFactor {
 
   OFactorRomanaValueType? oFactorRomanaValueType;
 
-  OFactor(
-      {this.oFactorCalculationType,
-      this.f1,
-      this.f2,
-      this.f3,
-      this.alphaI,
-      this.alphaJ,
-      this.alphaS,
-      this.betaI,
-      this.betaJ,
-      this.betaS,
-      this.indexOfFirstJoint,
-      this.indexOfSecondJoint,
-      this.oFactorForFirstJoint,
-      this.oFactorForSecondJoint,
-      this.oFactorTypeOfFailure,
-      this.ratingForF1,
-      this.ratingForF2,
-      this.ratingForF3,
-      this.oFactorRomanaValueType});
+  OFactor({
+    this.oFactorCalculationType,
+    this.f1,
+    this.f2,
+    this.f3,
+    this.alphaI,
+    this.alphaJ,
+    this.alphaS,
+    this.betaI,
+    this.betaJ,
+    this.betaS,
+    this.indexOfFirstJoint,
+    this.indexOfSecondJoint,
+    this.oFactorForFirstJoint,
+    this.oFactorForSecondJoint,
+    this.oFactorTypeOfFailure,
+    this.ratingForF1,
+    this.ratingForF2,
+    this.ratingForF3,
+    this.oFactorRomanaValueType,
+  });
 
-  OFactor copyWith(
-      {double? oFactor,
-      OFactorCalculationType? oFactorCalculationType,
-      double? f1,
-      double? f2,
-      double? f3,
-      double? alphaI,
-      double? alphaJ,
-      double? alphaS,
-      double? betaI,
-      double? betaJ,
-      double? betaS,
-      int? indexOfFirstJoint,
-      int? indexOfSecondJoint,
-      double? oFactorForFirstJoint,
-      double? oFactorForSecondJoint,
-      double? ratingForF1,
-      double? ratingForF2,
-      double? ratingForF3,
-      OFactorTypeOfFailure? oFactorTypeOfFailure,
-      OFactorRomanaValueType? oFactorRomanaValueType}) {
+  OFactor copyWith({
+    double? oFactor,
+    OFactorCalculationType? oFactorCalculationType,
+    double? f1,
+    double? f2,
+    double? f3,
+    double? alphaI,
+    double? alphaJ,
+    double? alphaS,
+    double? betaI,
+    double? betaJ,
+    double? betaS,
+    int? indexOfFirstJoint,
+    int? indexOfSecondJoint,
+    double? oFactorForFirstJoint,
+    double? oFactorForSecondJoint,
+    double? ratingForF1,
+    double? ratingForF2,
+    double? ratingForF3,
+    OFactorTypeOfFailure? oFactorTypeOfFailure,
+    OFactorRomanaValueType? oFactorRomanaValueType,
+  }) {
     return OFactor(
-        oFactorCalculationType:
-            oFactorCalculationType ?? this.oFactorCalculationType,
-        f1: f1 ?? this.f1,
-        f2: f2 ?? this.f2,
-        f3: f3 ?? this.f3,
-        alphaI: alphaI ?? this.alphaI,
-        alphaJ: alphaJ ?? this.alphaJ,
-        alphaS: alphaS ?? this.alphaS,
-        betaI: betaI ?? this.betaI,
-        betaJ: betaJ ?? this.betaJ,
-        betaS: betaS ?? this.betaS,
-        ratingForF1: ratingForF1 ?? this.ratingForF1,
-        ratingForF2: ratingForF2 ?? this.ratingForF2,
-        ratingForF3: ratingForF3 ?? this.ratingForF3,
-        indexOfFirstJoint: indexOfFirstJoint ?? this.indexOfFirstJoint,
-        indexOfSecondJoint: indexOfSecondJoint ?? this.indexOfSecondJoint,
-        oFactorForFirstJoint: oFactorForFirstJoint ?? this.oFactorForFirstJoint,
-        oFactorForSecondJoint:
-            oFactorForSecondJoint ?? this.oFactorForSecondJoint,
-        oFactorTypeOfFailure: oFactorTypeOfFailure ?? this.oFactorTypeOfFailure,
-        oFactorRomanaValueType:
-            oFactorRomanaValueType ?? this.oFactorRomanaValueType);
+      oFactorCalculationType:
+          oFactorCalculationType ?? this.oFactorCalculationType,
+      f1: f1 ?? this.f1,
+      f2: f2 ?? this.f2,
+      f3: f3 ?? this.f3,
+      alphaI: alphaI ?? this.alphaI,
+      alphaJ: alphaJ ?? this.alphaJ,
+      alphaS: alphaS ?? this.alphaS,
+      betaI: betaI ?? this.betaI,
+      betaJ: betaJ ?? this.betaJ,
+      betaS: betaS ?? this.betaS,
+      ratingForF1: ratingForF1 ?? this.ratingForF1,
+      ratingForF2: ratingForF2 ?? this.ratingForF2,
+      ratingForF3: ratingForF3 ?? this.ratingForF3,
+      indexOfFirstJoint: indexOfFirstJoint ?? this.indexOfFirstJoint,
+      indexOfSecondJoint: indexOfSecondJoint ?? this.indexOfSecondJoint,
+      oFactorForFirstJoint: oFactorForFirstJoint ?? this.oFactorForFirstJoint,
+      oFactorForSecondJoint:
+          oFactorForSecondJoint ?? this.oFactorForSecondJoint,
+      oFactorTypeOfFailure: oFactorTypeOfFailure ?? this.oFactorTypeOfFailure,
+      oFactorRomanaValueType:
+          oFactorRomanaValueType ?? this.oFactorRomanaValueType,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -132,58 +135,66 @@ class OFactor {
       'oFactorForFirstJoint': oFactorForFirstJoint,
       'oFactorForSecondJoint': oFactorForSecondJoint,
       'oFactorTypeOfFailure': oFactorTypeOfFailure?.name,
-      'oFactorRomanaValueType': oFactorRomanaValueType?.name
+      'oFactorRomanaValueType': oFactorRomanaValueType?.name,
     };
   }
 
   factory OFactor.fromMap(Map<String, dynamic> map) {
     return OFactor(
-        oFactorCalculationType: map['oFactorCalculationType'] != null
-            ? map['oFactorCalculationType'] ==
-                    OFactorCalculationType.romanaAdjacentFactor.name
-                ? OFactorCalculationType.romanaAdjacentFactor
-                : OFactorCalculationType.value
-            : null,
-        oFactorRomanaValueType: map['oFactorRomanaValueType'] != null
-            ? map['oFactorRomanaValueType'] == OFactorRomanaValueType.value
-                ? OFactorRomanaValueType.value
-                : OFactorRomanaValueType.calculation
-            : null,
-        f1: map['f1'] != null ? map['f1'] as double : null,
-        f2: map['f2'] != null ? map['f2'] as double : null,
-        f3: map['f3'] != null ? map['f3'] as double : null,
-        alphaI: map['alphaI'] != null ? map['alphaI'] as double : null,
-        alphaJ: map['alphaJ'] != null ? map['alphaJ'] as double : null,
-        alphaS: map['alphaS'] != null ? map['alphaS'] as double : null,
-        betaI: map['betaI'] != null ? map['betaI'] as double : null,
-        betaJ: map['betaJ'] != null ? map['betaJ'] as double : null,
-        betaS: map['betaS'] != null ? map['betaS'] as double : null,
-        ratingForF1:
-            map['ratingForF1'] != null ? map['ratingForF1'] as double : null,
-        ratingForF2:
-            map['ratingForF2'] != null ? map['ratingForF2'] as double : null,
-        ratingForF3:
-            map['ratingForF3'] != null ? map['ratingForF3'] as double : null,
-        indexOfFirstJoint: map['indexOfFirstJoint'] != null
-            ? map['indexOfFirstJoint'] as int
-            : null,
-        indexOfSecondJoint: map['indexOfSecondJoint'] != null
-            ? map['indexOfSecondJoint'] as int
-            : null,
-        oFactorForFirstJoint: map['oFactorForFirstJoint'] != null
-            ? map['oFactorForFirstJoint'] as double
-            : null,
-        oFactorForSecondJoint: map['oFactorForSecondJoint'] != null
-            ? map['oFactorForSecondJoint'] as double
-            : null,
-        oFactorTypeOfFailure: map['oFactorTypeOfFailure'] != null
-            ? map['oFactorTypeOfFailure'] == OFactorTypeOfFailure.planar.name
-                ? OFactorTypeOfFailure.planar
-                : map['oFactorTypeOfFailure'] ==
-                        OFactorTypeOfFailure.toppling.name
-                    ? OFactorTypeOfFailure.toppling
-                    : OFactorTypeOfFailure.wedge
-            : null);
+      oFactorCalculationType:
+          map['oFactorCalculationType'] != null
+              ? map['oFactorCalculationType'] ==
+                      OFactorCalculationType.romanaAdjacentFactor.name
+                  ? OFactorCalculationType.romanaAdjacentFactor
+                  : OFactorCalculationType.value
+              : null,
+      oFactorRomanaValueType:
+          map['oFactorRomanaValueType'] != null
+              ? map['oFactorRomanaValueType'] == OFactorRomanaValueType.value
+                  ? OFactorRomanaValueType.value
+                  : OFactorRomanaValueType.calculation
+              : null,
+      f1: map['f1'] != null ? map['f1'] as double : null,
+      f2: map['f2'] != null ? map['f2'] as double : null,
+      f3: map['f3'] != null ? map['f3'] as double : null,
+      alphaI: map['alphaI'] != null ? map['alphaI'] as double : null,
+      alphaJ: map['alphaJ'] != null ? map['alphaJ'] as double : null,
+      alphaS: map['alphaS'] != null ? map['alphaS'] as double : null,
+      betaI: map['betaI'] != null ? map['betaI'] as double : null,
+      betaJ: map['betaJ'] != null ? map['betaJ'] as double : null,
+      betaS: map['betaS'] != null ? map['betaS'] as double : null,
+      ratingForF1:
+          map['ratingForF1'] != null ? map['ratingForF1'] as double : null,
+      ratingForF2:
+          map['ratingForF2'] != null ? map['ratingForF2'] as double : null,
+      ratingForF3:
+          map['ratingForF3'] != null ? map['ratingForF3'] as double : null,
+      indexOfFirstJoint:
+          map['indexOfFirstJoint'] != null
+              ? map['indexOfFirstJoint'] as int
+              : null,
+      indexOfSecondJoint:
+          map['indexOfSecondJoint'] != null
+              ? map['indexOfSecondJoint'] as int
+              : null,
+      oFactorForFirstJoint:
+          map['oFactorForFirstJoint'] != null
+              ? map['oFactorForFirstJoint'] as double
+              : null,
+      oFactorForSecondJoint:
+          map['oFactorForSecondJoint'] != null
+              ? map['oFactorForSecondJoint'] as double
+              : null,
+      oFactorTypeOfFailure:
+          map['oFactorTypeOfFailure'] != null
+              ? map['oFactorTypeOfFailure'] == OFactorTypeOfFailure.planar.name
+                  ? OFactorTypeOfFailure.planar
+                  : map['oFactorTypeOfFailure'] ==
+                      OFactorTypeOfFailure.toppling.name
+                  ? OFactorTypeOfFailure.toppling
+                  : OFactorTypeOfFailure.wedge
+              : null,
+    );
   }
 
   String toJson() => json.encode(toMap());

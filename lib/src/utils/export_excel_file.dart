@@ -10,7 +10,9 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<String> exportExcelFile(
-    List<QSlope> qSlopes, BuildContext context) async {
+  List<QSlope> qSlopes,
+  BuildContext context,
+) async {
   final Workbook workbook = Workbook();
 
   Worksheet worksheet = workbook.worksheets[0];
@@ -27,32 +29,56 @@ Future<String> exportExcelFile(
     worksheet
         .getRangeByName("D$index")
         .setNumber(qSlope.blockSize?.jointSetNumber);
-    worksheet.getRangeByName("E$index").setNumber(qSlope.jointCharacter
-        ?.jointRoughness?[qSlope.oFactor?.indexOfFirstJoint ?? 0]);
-    worksheet.getRangeByName("F$index").setNumber(qSlope.jointCharacter
-        ?.jointAlteration?[qSlope.oFactor?.indexOfFirstJoint ?? 0]);
-    worksheet.getRangeByName("G$index").setText(
-        qSlope.oFactor?.indexOfSecondJoint != null
-            ? (qSlope.jointCharacter
-                ?.jointRoughness?[qSlope.oFactor!.indexOfSecondJoint!]
-                .toString())
-            : "-");
-    worksheet.getRangeByName("H$index").setText(
-        qSlope.oFactor?.indexOfSecondJoint != null
-            ? (qSlope.jointCharacter
-                ?.jointAlteration?[qSlope.oFactor!.indexOfSecondJoint!]
-                .toString())
-            : "-");
+    worksheet
+        .getRangeByName("E$index")
+        .setNumber(
+          qSlope
+              .jointCharacter
+              ?.jointRoughness?[qSlope.oFactor?.indexOfFirstJoint ?? 0],
+        );
+    worksheet
+        .getRangeByName("F$index")
+        .setNumber(
+          qSlope
+              .jointCharacter
+              ?.jointAlteration?[qSlope.oFactor?.indexOfFirstJoint ?? 0],
+        );
+    worksheet
+        .getRangeByName("G$index")
+        .setText(
+          qSlope.oFactor?.indexOfSecondJoint != null
+              ? (qSlope
+                  .jointCharacter
+                  ?.jointRoughness?[qSlope.oFactor!.indexOfSecondJoint!]
+                  .toString())
+              : "-",
+        );
+    worksheet
+        .getRangeByName("H$index")
+        .setText(
+          qSlope.oFactor?.indexOfSecondJoint != null
+              ? (qSlope
+                  .jointCharacter
+                  ?.jointAlteration?[qSlope.oFactor!.indexOfSecondJoint!]
+                  .toString())
+              : "-",
+        );
     worksheet
         .getRangeByName("I$index")
         .setNumber(qSlope.oFactor?.oFactorForFirstJoint);
-    worksheet.getRangeByName("J$index").setText(
-        qSlope.oFactor?.oFactorForSecondJoint != null &&
-                qSlope.oFactor?.oFactorForSecondJoint != 0
-            ? (qSlope.oFactor?.oFactorForSecondJoint)?.toString()
-            : "-");
-    worksheet.getRangeByName("K$index").setNumber(
-        qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber);
+    worksheet
+        .getRangeByName("J$index")
+        .setText(
+          qSlope.oFactor?.oFactorForSecondJoint != null &&
+                  qSlope.oFactor?.oFactorForSecondJoint != 0
+              ? (qSlope.oFactor?.oFactorForSecondJoint)?.toString()
+              : "-",
+        );
+    worksheet
+        .getRangeByName("K$index")
+        .setNumber(
+          qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber,
+        );
     worksheet.getRangeByName("L$index").setNumber(qSlope.activeStress?.srf);
     worksheet.getRangeByName("M$index").setNumber(qSlope.qSlope);
 
@@ -114,8 +140,11 @@ void _setHeader(Worksheet worksheet, Style headerStyle, BuildContext context) {
   of2.cellStyle = headerStyle;
 
   Range jwice = worksheet.getRangeByName("K1");
-  jwice.setText(AppLocalizations.of(context)
-      .enviornmentalAndGeologicalConditionalNumberSymbol);
+  jwice.setText(
+    AppLocalizations.of(
+      context,
+    ).enviornmentalAndGeologicalConditionalNumberSymbol,
+  );
   jwice.cellStyle = headerStyle;
 
   Range srf = worksheet.getRangeByName("L1");
@@ -128,7 +157,10 @@ void _setHeader(Worksheet worksheet, Style headerStyle, BuildContext context) {
 }
 
 Future<String?> _saveFile(
-    List<int> bytes, String fileName, BuildContext context) async {
+  List<int> bytes,
+  String fileName,
+  BuildContext context,
+) async {
   if (kIsWeb) {
     _saveFileInWeb(bytes, fileName);
     return "";
@@ -136,25 +168,31 @@ Future<String?> _saveFile(
     return _saveFileInWindows(bytes, fileName, context);
   } else {
     return FilePicker.platform.saveFile(
-        fileName: fileName,
-        bytes: Uint8List.fromList(bytes),
-        dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile);
+      fileName: fileName,
+      bytes: Uint8List.fromList(bytes),
+      dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
+    );
   }
 }
 
 Future<void> _saveFileInWeb(List<int> bytes, String fileName) async {
   html.AnchorElement(
       href:
-          'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+          'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}',
+    )
     ..setAttribute('download', fileName)
     ..click();
 }
 
 Future<String?> _saveFileInWindows(
-    List<int> bytes, String fileName, BuildContext context) async {
+  List<int> bytes,
+  String fileName,
+  BuildContext context,
+) async {
   String? directory = await FilePicker.platform.getDirectoryPath(
-      lockParentWindow: true,
-      dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile);
+    lockParentWindow: true,
+    dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
+  );
   if (directory != null) {
     File("$directory/$fileName").writeAsBytesSync(bytes);
   }

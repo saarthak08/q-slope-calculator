@@ -47,16 +47,16 @@ class _CalculateScreenState extends State<CalculateScreen>
             qSlope.blockSize!.numberOfRandomSets == null ||
             qSlope.blockSize!.rqd == null) {
           showGenericDialog(
-              titleText: AppLocalizations.of(context).completeDialogTitle,
-              context: context,
-              label:
-                  AppLocalizations.of(context).pleaseCompleteBlockSizeSection,
-              barrierDismissable: false,
-              hideCancel: true,
-              onOk: () async {
-                _tabController?.animateTo(0, curve: Curves.easeIn);
-                Navigator.pop(context);
-              });
+            titleText: AppLocalizations.of(context).completeDialogTitle,
+            context: context,
+            label: AppLocalizations.of(context).pleaseCompleteBlockSizeSection,
+            barrierDismissable: false,
+            hideCancel: true,
+            onOk: () async {
+              _tabController?.animateTo(0, curve: Curves.easeIn);
+              Navigator.pop(context);
+            },
+          );
         }
       }
     });
@@ -84,72 +84,83 @@ class _CalculateScreenState extends State<CalculateScreen>
           overflow: TextOverflow.visible,
         ),
         bottom: TabBar(
-            dividerColor: primaryColorShade100,
-            controller: _tabController,
-            tabAlignment: ResponsiveBreakpoints.of(context).screenWidth < 700
-                ? TabAlignment.start
-                : null,
-            isScrollable: ResponsiveBreakpoints.of(context).screenWidth < 700,
-            tabs: [
-              TabWidget(
-                  errorTabs: _errorTabs,
-                  tabText:
-                      AppLocalizations.of(context).blockSizePageAppBarTitle,
-                  tabBarIndex: 0),
-              TabWidget(
-                  errorTabs: _errorTabs,
-                  tabText:
-                      AppLocalizations.of(context).joinCharacterPageAppBarTitle,
-                  tabBarIndex: 1),
-              TabWidget(
-                  errorTabs: _errorTabs,
-                  tabText: AppLocalizations.of(context).oFactorPageAppBarTitle,
-                  tabBarIndex: 2),
-              TabWidget(
-                  errorTabs: _errorTabs,
-                  tabText: AppLocalizations.of(context)
-                      .externalFactorsPageAppBarTitle,
-                  tabBarIndex: 3),
-              TabWidget(
-                  errorTabs: _errorTabs,
-                  tabText:
-                      AppLocalizations.of(context).activeStressPageAppBarTitle,
-                  tabBarIndex: 4),
-            ]),
+          dividerColor: primaryColorShade100,
+          controller: _tabController,
+          tabAlignment:
+              ResponsiveBreakpoints.of(context).screenWidth < 700
+                  ? TabAlignment.start
+                  : null,
+          isScrollable: ResponsiveBreakpoints.of(context).screenWidth < 700,
+          tabs: [
+            TabWidget(
+              errorTabs: _errorTabs,
+              tabText: AppLocalizations.of(context).blockSizePageAppBarTitle,
+              tabBarIndex: 0,
+            ),
+            TabWidget(
+              errorTabs: _errorTabs,
+              tabText:
+                  AppLocalizations.of(context).joinCharacterPageAppBarTitle,
+              tabBarIndex: 1,
+            ),
+            TabWidget(
+              errorTabs: _errorTabs,
+              tabText: AppLocalizations.of(context).oFactorPageAppBarTitle,
+              tabBarIndex: 2,
+            ),
+            TabWidget(
+              errorTabs: _errorTabs,
+              tabText:
+                  AppLocalizations.of(context).externalFactorsPageAppBarTitle,
+              tabBarIndex: 3,
+            ),
+            TabWidget(
+              errorTabs: _errorTabs,
+              tabText: AppLocalizations.of(context).activeStressPageAppBarTitle,
+              tabBarIndex: 4,
+            ),
+          ],
+        ),
         elevation: 1,
         shadowColor: Colors.white,
         actions: [
           widget.qSlope != null
               ? IconButton(
-                  onPressed: () async {
-                    final QSlope qSlope = _qSlope.value;
-                    var result = await context
-                        .read<QSlopeListCubit>()
-                        .deleteQSlopeFromList(qSlope.id);
-                    if (result.isSuccess && buildContext.mounted) {
+                onPressed: () async {
+                  final QSlope qSlope = _qSlope.value;
+                  var result = await context
+                      .read<QSlopeListCubit>()
+                      .deleteQSlopeFromList(qSlope.id);
+                  if (result.isSuccess && buildContext.mounted) {
+                    toastification.show(
+                      autoCloseDuration: const Duration(seconds: 2),
+                      alignment: Alignment.bottomCenter,
+                      type: ToastificationType.success,
+                      title: Text(
+                        AppLocalizations.of(
+                          buildContext,
+                        ).deleteCalculationSuccessful,
+                      ),
+                    );
+                    Navigator.pop(buildContext);
+                    if (result.isFailure &&
+                        result.error is QSlopeError &&
+                        buildContext.mounted) {
                       toastification.show(
-                          autoCloseDuration: const Duration(seconds: 2),
-                          alignment: Alignment.bottomCenter,
-                          type: ToastificationType.success,
-                          title: Text(AppLocalizations.of(buildContext)
-                              .deleteCalculationSuccessful));
-                      Navigator.pop(buildContext);
-                      if (result.isFailure &&
-                          result.error is QSlopeError &&
-                          buildContext.mounted) {
-                        toastification.show(
-                            autoCloseDuration: const Duration(seconds: 2),
-                            alignment: Alignment.bottomCenter,
-                            type: ToastificationType.error,
-                            title: Text(AppLocalizations.of(buildContext)
-                                .errorInDeletingCalculation));
-                      }
+                        autoCloseDuration: const Duration(seconds: 2),
+                        alignment: Alignment.bottomCenter,
+                        type: ToastificationType.error,
+                        title: Text(
+                          AppLocalizations.of(
+                            buildContext,
+                          ).errorInDeletingCalculation,
+                        ),
+                      );
                     }
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                    color: primaryColor,
-                  ))
+                  }
+                },
+                icon: Icon(Icons.delete, color: primaryColor),
+              )
               : Container(),
         ],
       ),
@@ -157,26 +168,11 @@ class _CalculateScreenState extends State<CalculateScreen>
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: [
-          BlockSizePage(
-            errorTabs: _errorTabs,
-            qSlope: _qSlope,
-          ),
-          JointCharacterPage(
-            qSlope: _qSlope,
-            errorTabs: _errorTabs,
-          ),
-          OFactorPage(
-            qSlope: _qSlope,
-            errorTabs: _errorTabs,
-          ),
-          ExternalFactorsPage(
-            qSlope: _qSlope,
-            errorTabs: _errorTabs,
-          ),
-          ActiveStressPage(
-            qSlope: _qSlope,
-            errorTabs: _errorTabs,
-          ),
+          BlockSizePage(errorTabs: _errorTabs, qSlope: _qSlope),
+          JointCharacterPage(qSlope: _qSlope, errorTabs: _errorTabs),
+          OFactorPage(qSlope: _qSlope, errorTabs: _errorTabs),
+          ExternalFactorsPage(qSlope: _qSlope, errorTabs: _errorTabs),
+          ActiveStressPage(qSlope: _qSlope, errorTabs: _errorTabs),
         ],
       ),
     );

@@ -53,190 +53,212 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
     return Scaffold(
-        appBar: AppBar(
-            actions: [
-              _selectedTiles?.firstWhereOrNull((val) => val) != null
-                  ? AppBarListSelectionMenuWidget(
-                      selectedTiles: _selectedTiles,
-                      setSelectedTiles: _setSelectedTiles)
-                  : Container(),
-              Padding(
-                  padding: EdgeInsets.all(getViewPortHeight(context) * 0.01),
-                  child: Ink(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: primaryColor, width: 1.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: InkWell(
-                          borderRadius: BorderRadius.circular(30),
-                          onTap: () {
-                            Navigator.pushNamed(context, AboutScreen.route);
-                          },
-                          child: Image.asset(
-                            Assets.pngIcon,
-                            scale: getBodyFontSize(context) * 2,
-                          ))))
-            ],
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context).appName,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getTitleFontSize(context)),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
+      appBar: AppBar(
+        actions: [
+          _selectedTiles?.firstWhereOrNull((val) => val) != null
+              ? AppBarListSelectionMenuWidget(
+                selectedTiles: _selectedTiles,
+                setSelectedTiles: _setSelectedTiles,
+              )
+              : Container(),
+          Padding(
+            padding: EdgeInsets.all(getViewPortHeight(context) * 0.01),
+            child: Ink(
+              decoration: BoxDecoration(
+                border: Border.all(color: primaryColor, width: 1.5),
+                shape: BoxShape.circle,
+              ),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () {
+                  Navigator.pushNamed(context, AboutScreen.route);
+                },
+                child: Image.asset(
+                  Assets.pngIcon,
+                  scale: getBodyFontSize(context) * 2,
                 ),
-              ],
-            )),
-        floatingActionButton: FloatingActionButton.extended(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          splashColor: primaryColor.withOpacity(0.2),
-          label: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add,
-                color: primaryColor,
               ),
-              SizedBox(
-                width: getViewPortWidth(context) * 0.02,
-              ),
-              Text(
-                AppLocalizations.of(context).homeScreenCalculateButtonText,
-                style: TextStyle(color: primaryColor),
-              ),
-            ],
+            ),
           ),
-          backgroundColor: white,
-          onPressed: () {
-            Navigator.pushNamed(context, CalculateScreen.route,
-                arguments: CalculateScreenArguments(qSlope: null));
-          },
+        ],
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppLocalizations.of(context).appName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: getTitleFontSize(context),
+              ),
+              softWrap: true,
+              overflow: TextOverflow.visible,
+            ),
+          ],
         ),
-        body: BlocBuilder<QSlopeListCubit, QSlopeListState>(
-            bloc: BlocProvider.of<QSlopeListCubit>(context),
-            builder: (context, state) => state is QSlopeListEmpty
-                ? Center(
-                    child: IllustrationWidget(
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        splashColor: primaryColor.withValues(alpha: 0.2),
+        label: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.add, color: primaryColor),
+            SizedBox(width: getViewPortWidth(context) * 0.02),
+            Text(
+              AppLocalizations.of(context).homeScreenCalculateButtonText,
+              style: TextStyle(color: primaryColor),
+            ),
+          ],
+        ),
+        backgroundColor: white,
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            CalculateScreen.route,
+            arguments: CalculateScreenArguments(qSlope: null),
+          );
+        },
+      ),
+      body: BlocBuilder<QSlopeListCubit, QSlopeListState>(
+        bloc: BlocProvider.of<QSlopeListCubit>(context),
+        builder:
+            (context, state) =>
+                state is QSlopeListEmpty
+                    ? Center(
+                      child: IllustrationWidget(
                         assetPath: Assets.noData,
-                        text: AppLocalizations.of(context)
-                            .homeScreenNoPreviousCalculationsFound,
-                        onRefresh: null))
-                : state is QSlopeListLoaded
+                        text:
+                            AppLocalizations.of(
+                              context,
+                            ).homeScreenNoPreviousCalculationsFound,
+                        onRefresh: null,
+                      ),
+                    )
+                    : state is QSlopeListLoaded
                     ? Container(
-                        padding: EdgeInsets.only(
-                            right: getViewPortWidth(context) * 0.02,
-                            left: getViewPortWidth(context) * 0.02,
-                            bottom: getViewPortHeight(context) * 0.01,
-                            top: getViewPortHeight(context) * 0.01),
-                        child: ListView.builder(
-                            itemCount: state.qSlopeList.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(
-                                      top: getViewPortHeight(context) * 0.015),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        _selectedTiles?.firstWhereOrNull(
-                                                    (val) => val) !=
-                                                null
-                                            ? Container(
-                                                margin: EdgeInsets.only(
-                                                    right: getViewPortWidth(
-                                                            context) *
-                                                        0.005),
-                                                child: Checkbox(
-                                                    value: (_selectedTiles
-                                                                    ?.length ??
-                                                                0) >
-                                                            index
-                                                        ? (_selectedTiles?[
-                                                                index] ??
-                                                            false)
-                                                        : false,
-                                                    onChanged: (value) {
-                                                      _selectedTiles?[index] =
-                                                          value ?? false;
-                                                      setState(() {
-                                                        _selectedTiles =
-                                                            List.from(
-                                                                _selectedTiles ??
-                                                                    []);
-                                                      });
-                                                    }))
-                                            : Container(),
-                                        Expanded(
-                                            child: Material(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderOnForeground: true,
-                                                type: MaterialType.card,
-                                                elevation: 0.5,
-                                                child: ListTile(
-                                                  onLongPress: () {
-                                                    _selectedTiles?[index] =
-                                                        (!(_selectedTiles?[
-                                                                index] ??
-                                                            true));
-                                                    setState(() {
-                                                      _selectedTiles =
-                                                          List.from(
-                                                              _selectedTiles ??
-                                                                  []);
-                                                    });
-                                                  },
-                                                  onTap: () {
-                                                    Navigator.pushNamed(context,
-                                                        CalculateScreen.route,
-                                                        arguments:
-                                                            CalculateScreenArguments(
-                                                                qSlope: state
-                                                                    .qSlopeList[
-                                                                        index]
-                                                                    .copyWith()));
-                                                  },
-                                                  title: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            "${AppLocalizations.of(context).listLocationId}: ${state.qSlopeList[index].locationId}"),
-                                                        Text(
-                                                            "${AppLocalizations.of(context).listLithology}: ${state.qSlopeList[index].lithology}")
-                                                      ]),
-                                                  subtitle: Container(
-                                                      margin: EdgeInsets.only(
-                                                          top:
-                                                              getViewPortHeight(
-                                                                      context) *
-                                                                  0.01),
-                                                      child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                                "${AppLocalizations.of(context).qSlopeSymbol}: ${state.qSlopeList[index].qSlope?.toStringAsFixed(4)}"),
-                                                            Text(
-                                                                "${AppLocalizations.of(context).createdAt}: ${state.qSlopeList[index].createdAt != null ? formatDateTime(state.qSlopeList[index].createdAt!) : ""}")
-                                                          ])),
-                                                )))
-                                      ]));
-                            }))
+                      padding: EdgeInsets.only(
+                        right: getViewPortWidth(context) * 0.02,
+                        left: getViewPortWidth(context) * 0.02,
+                        bottom: getViewPortHeight(context) * 0.01,
+                        top: getViewPortHeight(context) * 0.01,
+                      ),
+                      child: ListView.builder(
+                        itemCount: state.qSlopeList.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                              top: getViewPortHeight(context) * 0.015,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                _selectedTiles?.firstWhereOrNull(
+                                          (val) => val,
+                                        ) !=
+                                        null
+                                    ? Container(
+                                      margin: EdgeInsets.only(
+                                        right:
+                                            getViewPortWidth(context) * 0.005,
+                                      ),
+                                      child: Checkbox(
+                                        value:
+                                            (_selectedTiles?.length ?? 0) >
+                                                    index
+                                                ? (_selectedTiles?[index] ??
+                                                    false)
+                                                : false,
+                                        onChanged: (value) {
+                                          _selectedTiles?[index] =
+                                              value ?? false;
+                                          setState(() {
+                                            _selectedTiles = List.from(
+                                              _selectedTiles ?? [],
+                                            );
+                                          });
+                                        },
+                                      ),
+                                    )
+                                    : Container(),
+                                Expanded(
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderOnForeground: true,
+                                    type: MaterialType.card,
+                                    elevation: 0.5,
+                                    child: ListTile(
+                                      onLongPress: () {
+                                        _selectedTiles?[index] =
+                                            (!(_selectedTiles?[index] ?? true));
+                                        setState(() {
+                                          _selectedTiles = List.from(
+                                            _selectedTiles ?? [],
+                                          );
+                                        });
+                                      },
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          CalculateScreen.route,
+                                          arguments: CalculateScreenArguments(
+                                            qSlope:
+                                                state.qSlopeList[index]
+                                                    .copyWith(),
+                                          ),
+                                        );
+                                      },
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${AppLocalizations.of(context).listLocationId}: ${state.qSlopeList[index].locationId}",
+                                          ),
+                                          Text(
+                                            "${AppLocalizations.of(context).listLithology}: ${state.qSlopeList[index].lithology}",
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: Container(
+                                        margin: EdgeInsets.only(
+                                          top:
+                                              getViewPortHeight(context) * 0.01,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${AppLocalizations.of(context).qSlopeSymbol}: ${state.qSlopeList[index].qSlope?.toStringAsFixed(4)}",
+                                            ),
+                                            Text(
+                                              "${AppLocalizations.of(context).createdAt}: ${state.qSlopeList[index].createdAt != null ? formatDateTime(state.qSlopeList[index].createdAt!) : ""}",
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
                     : state is QSlopeListLoading
-                        ? const Center(child: CustomProgressIndicator())
-                        : Center(
-                            child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Text(AppLocalizations.of(context)
-                                    .errorInLoadingQSlopeList)))));
+                    ? const Center(child: CustomProgressIndicator())
+                    : Center(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          AppLocalizations.of(context).errorInLoadingQSlopeList,
+                        ),
+                      ),
+                    ),
+      ),
+    );
   }
 }
