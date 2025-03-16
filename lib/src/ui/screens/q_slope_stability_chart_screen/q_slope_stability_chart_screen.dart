@@ -93,7 +93,7 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                                                 widthFactor: 2.25,
                                                 alignment: Alignment.topCenter,
                                                 child: Text(
-                                                  "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1} (${qSlopeStabilityChartScreenArguments.qSlopeValues[i].toStringAsFixed(2)},${slopeAngleByUser.toStringAsFixed(0)})",
+                                                  "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1}",
                                                   style: TextStyle(
                                                     fontSize:
                                                         getCaptionFontSize(
@@ -102,10 +102,14 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.pentagon,
-                                                color: Colors.black,
-                                                size: 10,
+                                              Tooltip(
+                                                message:
+                                                    "(${qSlopeStabilityChartScreenArguments.qSlopeValues[i].toStringAsFixed(2)},${slopeAngleByUser.toStringAsFixed(0)})",
+                                                child: Icon(
+                                                  Icons.pentagon,
+                                                  color: Colors.black,
+                                                  size: 10,
+                                                ),
                                               ),
                                             ],
                                           )
