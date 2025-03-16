@@ -167,9 +167,8 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                                             alignment: Alignment.center,
                                             children: [
                                               Align(
-                                                heightFactor: 2.25,
-                                                widthFactor: 2.25,
-                                                alignment: Alignment.topCenter,
+                                                widthFactor: 2.75,
+                                                alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   "${AppLocalizations.of(context).chartPointAnnotation}-${i + 1}",
                                                   style: TextStyle(
