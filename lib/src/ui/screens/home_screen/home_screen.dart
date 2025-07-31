@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart';
@@ -11,7 +12,6 @@ import 'package:q_slope_calculator/src/utils/color_pallet.dart';
 import 'package:q_slope_calculator/src/utils/custom_progress_indicator.dart';
 import 'package:q_slope_calculator/src/utils/date_time_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 

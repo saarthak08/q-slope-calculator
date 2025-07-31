@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
