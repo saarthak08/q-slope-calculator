@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<String?> saveFile(
   List<int> bytes,

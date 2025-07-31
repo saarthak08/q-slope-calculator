@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/joints_of_failure_widget.dart';
@@ -7,7 +8,6 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/romana_adjustment_factor_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/type_of_failure_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';

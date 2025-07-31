@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:q_slope_calculator/src/data/common/app_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<String> exportExcelFile(
   List<QSlope> qSlopes,
