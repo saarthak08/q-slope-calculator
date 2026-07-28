@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -15,6 +15,10 @@ import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
 
+/// A visual representation screen that renders the Q-Slope stability chart.
+/// It uses a semi-logarithmic `SfCartesianChart` to plot empirical stability zones
+/// (Stable, Uncertain, Unstable) against user-calculated Q-Slope values and angles.
+/// It also provides functionality to export the rendered chart as an image.
 class QSlopeStabilityChartScreen extends StatelessWidget {
   static const route = "/qslope-stability-chart";
   final QSlopeStabilityChartScreenArguments qSlopeStabilityChartScreenArguments;
@@ -400,6 +404,8 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
   }
 }
 
+/// Arguments passed to [QSlopeStabilityChartScreen] containing the data points
+/// required to plot user evaluations onto the empirical stability graph.
 class QSlopeStabilityChartScreenArguments {
   final List<double> qSlopeValues;
   final List<double?> slopeAnglesByUser;

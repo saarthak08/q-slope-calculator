@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
-import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 
 class OFactorTypeOfFailureWidget extends StatelessWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;

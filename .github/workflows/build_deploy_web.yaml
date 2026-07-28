@@ -29,8 +29,11 @@ jobs:
       - name: Create .env file
         env:
           RELEASE_ENV: ${{ secrets.RELEASE_ENV }}
-        run: echo -n "${RELEASE_ENV}" > .env 
-      
+        run: echo -n "${RELEASE_ENV}" > .env
+
+      - name: Test code
+        run: flutter test
+
       - run: flutter analyze -v
 
       - name: Build Flutter Web

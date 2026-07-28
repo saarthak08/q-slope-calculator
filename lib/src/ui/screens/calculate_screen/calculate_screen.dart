@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
@@ -17,6 +17,10 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 import 'package:uuid/uuid.dart';
 
+/// A multi-step form screen that orchestrates the Q-Slope calculation process.
+/// It utilizes a [TabController] to navigate through five logical segments:
+/// Block Size, Joint Character, O-Factor, External Factors, and Active Stress.
+/// The state of the form is managed via `ValueNotifier` and synchronized with the bloc.
 class CalculateScreen extends StatefulWidget {
   static const String route = '/calculate';
   final QSlope? qSlope;

@@ -4,6 +4,10 @@ import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 
+/// This library contains all the empirical mathematical formulas 
+/// required for calculating Q-Slope parameters such as RQD, Joint Volume (Jv),
+/// and the final Q-Slope stability angle.
+
 double minJointRoughnessValue = 0.5;
 double maxJointRoughnessValue = 4;
 double minJointAlterationValue = 0.75;

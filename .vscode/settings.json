@@ -2,7 +2,7 @@
     "editor.codeActionsOnSave": {
         "source.fixAll": "explicit"
     },
-    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.updateBuildConfiguration": "disabled",
     "arb-editor.suppressedWarnings": [
         "missing_metadata_for_key",
         "placeholder_without_metadata"
