@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/src/utils/custom_progress_indicator.dart';
 
-void showFullScreenLoader(context) {
+void showFullScreenLoader(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false,

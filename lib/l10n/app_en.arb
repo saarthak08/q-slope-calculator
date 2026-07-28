@@ -2,15 +2,6 @@
     "@@locale": "en",
     "appName": "Q-slope Calculator",
     "homeScreenAppBarSubtitle": "by {author}",
-    "@homeScreenAppBarSubtitle": {
-        "context": "Home Screen",
-        "placeholders": {
-            "author": {
-                "description": "The author of the application.",
-                "example": "Ram Chandra"
-            }
-        }
-    },
     "homeScreenCalculateButtonText": "Calculate",
     "homeScreenNoPreviousCalculationsFound": "No previous calculations found",
     "blockSizePageAppBarTitle": "Basic Info & Block Size",

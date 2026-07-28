@@ -54,7 +54,7 @@ class CustomTextFormField extends StatelessWidget {
                       titleText ?? "",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: Colors.black87,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                         fontSize: getBodyFontSize(context),
                       ),
                     ),
@@ -112,7 +112,10 @@ class CustomTextFormField extends StatelessWidget {
             helperMaxLines: 3,
             helperText: hintText,
             helperStyle: GoogleFonts.openSans(
-              color: Colors.grey.shade700,
+              color:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey.shade400
+                      : Colors.grey.shade700,
               fontSize: getCaptionFontSize(context),
             ),
             floatingLabelBehavior: FloatingLabelBehavior.never,

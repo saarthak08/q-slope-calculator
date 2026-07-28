@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
@@ -17,7 +18,7 @@ class CustomProgressIndicator extends StatelessWidget {
       height: size ?? vpH * 0.025,
       width: size ?? vpH * 0.025,
       child:
-          Platform.isIOS
+          !kIsWeb && (Platform.isIOS && Platform.isMacOS)
               ? CupertinoActivityIndicator(color: color)
               : CircularProgressIndicator(
                 strokeWidth: 1,

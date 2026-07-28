@@ -5,6 +5,7 @@ import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_rating_widget.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
@@ -168,21 +169,23 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                     ).calculateRomanaAdjustmentFactor,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: Colors.black87,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                       fontSize: getSubTitleFontSize(context),
                     ),
                   ),
                 ),
                 Row(
                   children: [
-                    Radio<OFactorRomanaValueType>(
-                      value: OFactorRomanaValueType.value,
+                    RadioGroup<OFactorRomanaValueType>(
                       groupValue: oFactorRomanaValueType,
                       onChanged: (value) {
                         setState(() {
                           widget.oFactorRomanaValueType.value = value;
                         });
                       },
+                      child: Radio<OFactorRomanaValueType>(
+                        value: OFactorRomanaValueType.value,
+                      ),
                     ),
                     Expanded(
                       child: Text(
@@ -196,8 +199,7 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                 ),
                 Row(
                   children: [
-                    Radio<OFactorRomanaValueType>(
-                      value: OFactorRomanaValueType.calculation,
+                    RadioGroup<OFactorRomanaValueType>(
                       groupValue: oFactorRomanaValueType,
                       onChanged: (value) {
                         setState(() {
@@ -205,6 +207,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                         });
                         widget.oFactor.text = "";
                       },
+                      child: Radio<OFactorRomanaValueType>(
+                        value: OFactorRomanaValueType.calculation,
+                      ),
                     ),
                     Expanded(
                       child: Text(

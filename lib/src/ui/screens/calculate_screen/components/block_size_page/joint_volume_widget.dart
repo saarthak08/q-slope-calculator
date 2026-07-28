@@ -4,6 +4,7 @@ import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 
 class BlockSizePageJoinVolumeWidget extends StatefulWidget {
@@ -80,7 +81,10 @@ class _BlockSizePageJoinVolumeWidgetState
                                       ).jointSpacingInMeters,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black87,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
                                         fontSize: getBodyFontSize(context),
                                       ),
                                     ),
@@ -224,16 +228,16 @@ class _BlockSizePageJoinVolumeWidgetState
                                     ).rockQualityDesignationCalculation,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.black87,
+                                      color:
+                                          Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium?.color,
                                       fontSize: getBodyFontSize(context),
                                     ),
                                   ),
                                   Row(
                                     children: [
-                                      Radio<RqdByJvCalculationType>(
-                                        value:
-                                            RqdByJvCalculationType
-                                                .formulaWith3Point3Jv,
+                                      RadioGroup<RqdByJvCalculationType>(
                                         groupValue: rqdByJvCalculationValue,
                                         onChanged: (value) {
                                           widget.rqdByJvCalculationType.value =
@@ -241,6 +245,11 @@ class _BlockSizePageJoinVolumeWidgetState
                                           widget
                                               .calculateRqdByJointVolumeMethod();
                                         },
+                                        child: Radio<RqdByJvCalculationType>(
+                                          value:
+                                              RqdByJvCalculationType
+                                                  .formulaWith3Point3Jv,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -254,10 +263,7 @@ class _BlockSizePageJoinVolumeWidgetState
                                   ),
                                   Row(
                                     children: [
-                                      Radio<RqdByJvCalculationType>(
-                                        value:
-                                            RqdByJvCalculationType
-                                                .formulaWith2Point5Jv,
+                                      RadioGroup<RqdByJvCalculationType>(
                                         groupValue: rqdByJvCalculationValue,
                                         onChanged: (value) {
                                           widget.rqdByJvCalculationType.value =
@@ -265,6 +271,11 @@ class _BlockSizePageJoinVolumeWidgetState
                                           widget
                                               .calculateRqdByJointVolumeMethod();
                                         },
+                                        child: Radio<RqdByJvCalculationType>(
+                                          value:
+                                              RqdByJvCalculationType
+                                                  .formulaWith2Point5Jv,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(

@@ -10,6 +10,7 @@ import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 
 class AppBarListSelectionMenuWidget extends StatelessWidget {
   final List<bool>? selectedTiles;

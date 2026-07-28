@@ -3,6 +3,7 @@ import 'package:q_slope_calculator/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 
 class OFactorTypeOfFailureWidget extends StatelessWidget {
   final ValueNotifier<OFactorTypeOfFailure?> oFactorTypeOfFailure;
@@ -31,7 +32,7 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
             AppLocalizations.of(context).typeOfFailure,
             style: TextStyle(
               fontWeight: FontWeight.w500,
-              color: Colors.black87,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
               fontSize: getSubTitleFontSize(context),
             ),
           ),
@@ -39,14 +40,16 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
         SizedBox(height: getViewPortHeight(context) * 0.01),
         Row(
           children: [
-            Radio<OFactorTypeOfFailure>(
-              value: OFactorTypeOfFailure.planar,
+            RadioGroup<OFactorTypeOfFailure>(
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
                 joint1IndexValueNotifier.value = null;
                 joint2IndexValueNotifier.value = null;
               },
+              child: Radio<OFactorTypeOfFailure>(
+                value: OFactorTypeOfFailure.planar,
+              ),
             ),
             Expanded(
               child: Text(
@@ -58,14 +61,16 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Radio<OFactorTypeOfFailure>(
-              value: OFactorTypeOfFailure.wedge,
+            RadioGroup<OFactorTypeOfFailure>(
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
                 joint1IndexValueNotifier.value = null;
                 joint2IndexValueNotifier.value = null;
               },
+              child: Radio<OFactorTypeOfFailure>(
+                value: OFactorTypeOfFailure.wedge,
+              ),
             ),
             Expanded(
               child: Text(
@@ -77,12 +82,14 @@ class OFactorTypeOfFailureWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Radio<OFactorTypeOfFailure>(
-              value: OFactorTypeOfFailure.toppling,
+            RadioGroup<OFactorTypeOfFailure>(
               groupValue: currentValue,
               onChanged: (value) {
                 oFactorTypeOfFailure.value = value;
               },
+              child: Radio<OFactorTypeOfFailure>(
+                value: OFactorTypeOfFailure.toppling,
+              ),
             ),
             Expanded(
               child: Text(

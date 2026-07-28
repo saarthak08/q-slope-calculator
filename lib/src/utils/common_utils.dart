@@ -1,4 +1,4 @@
-getCountryFlag() {
+String getCountryFlag() {
   String countryCode = 'in';
   return countryCode.toUpperCase().replaceAllMapped(
     RegExp(r'[A-Z]'),

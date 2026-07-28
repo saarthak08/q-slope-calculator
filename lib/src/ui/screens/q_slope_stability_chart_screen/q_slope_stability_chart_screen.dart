@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -184,7 +184,11 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                                                     "(${qSlopeStabilityChartScreenArguments.qSlopeValues[i].toStringAsFixed(2)},${slopeAngleByUser.toStringAsFixed(0)})",
                                                 child: Icon(
                                                   Icons.pentagon,
-                                                  color: Colors.black,
+                                                  color:
+                                                      Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium
+                                                          ?.color,
                                                   size: 10,
                                                 ),
                                               ),
@@ -289,7 +293,7 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                           },
                           isVisibleInLegend: true,
                           legendIconType: LegendIconType.pentagon,
-                          color: Colors.black,
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                           name:
                               '(${AppLocalizations.of(context).qSlopeSymbol}, ${AppLocalizations.of(context).slopeAngleProvidedByUserSymbol})',
                         ),

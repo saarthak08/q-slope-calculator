@@ -12,8 +12,10 @@ import 'package:q_slope_calculator/src/utils/color_pallet.dart';
 import 'package:q_slope_calculator/src/utils/custom_progress_indicator.dart';
 import 'package:q_slope_calculator/src/utils/date_time_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/generated/l10n/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
+import 'package:q_slope_calculator/src/logic/cubit/settings/settings_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,6 +63,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 setSelectedTiles: _setSelectedTiles,
               )
               : Container(),
+          Builder(
+            builder: (context) {
+              final currentMode =
+                  context.watch<SettingsCubit>().state.themeMode;
+              final isCurrentlyDark =
+                  currentMode == ThemeMode.dark ||
+                  (currentMode == ThemeMode.system &&
+                      MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark);
+              return IconButton(
+                icon: Icon(
+                  isCurrentlyDark ? Icons.light_mode : Icons.dark_mode,
+                  color: primaryColor,
+                ),
+                onPressed: () {
+                  context.read<SettingsCubit>().setThemeMode(
+                    isCurrentlyDark ? ThemeMode.light : ThemeMode.dark,
+                  );
+                },
+              );
+            },
+          ),
           Padding(
             padding: EdgeInsets.all(getViewPortHeight(context) * 0.01),
             child: Ink(
@@ -81,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        backgroundColor: white,
+        backgroundColor:
+            Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey.shade800
+                : white,
         onPressed: () {
           Navigator.pushNamed(
             context,
