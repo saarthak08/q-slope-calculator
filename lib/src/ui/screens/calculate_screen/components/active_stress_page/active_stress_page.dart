@@ -347,6 +347,18 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                       }
                                       : null,
                               style: ButtonStyle(
+                                backgroundColor:
+                                    Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? WidgetStatePropertyAll(
+                                          Colors.grey.shade800,
+                                        )
+                                        : null,
+                                foregroundColor:
+                                    Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? WidgetStatePropertyAll(primaryColor)
+                                        : null,
                                 shape: WidgetStatePropertyAll(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -440,6 +452,20 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           }
                                           : null,
                                   style: ButtonStyle(
+                                    backgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              Colors.grey.shade800,
+                                            )
+                                            : null,
+                                    foregroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              primaryColor,
+                                            )
+                                            : null,
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
@@ -490,6 +516,20 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           }
                                           : null,
                                   style: ButtonStyle(
+                                    backgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              Colors.grey.shade800,
+                                            )
+                                            : null,
+                                    foregroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              primaryColor,
+                                            )
+                                            : null,
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
