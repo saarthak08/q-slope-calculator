@@ -89,22 +89,40 @@ class QSlope {
   factory QSlope.fromMap(Map<String, dynamic> map) {
     return QSlope(
       id: map['id'],
-      locationId: map['locationId'] as String,
-      lithology: map['lithology'] as String,
-      blockSize: BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>),
-      jointCharacter: JointCharacter.fromMap(
-        map['jointCharacter'] as Map<String, dynamic>,
-      ),
-      oFactor: OFactor.fromMap(map['oFactor'] as Map<String, dynamic>),
-      externalFactors: ExternalFactors.fromMap(
-        map['externalFactors'] as Map<String, dynamic>,
-      ),
-      activeStress: ActiveStress.fromMap(
-        map['activeStress'] as Map<String, dynamic>,
-      ),
-      qSlope: (map['qSlope']),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
-      slopeAngleByUser: (map['slopeAngleByUser'] as double?),
+      locationId: map['locationId'] as String?,
+      lithology: map['lithology'] as String?,
+      blockSize:
+          map['blockSize'] != null
+              ? BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>)
+              : null,
+      jointCharacter:
+          map['jointCharacter'] != null
+              ? JointCharacter.fromMap(
+                map['jointCharacter'] as Map<String, dynamic>,
+              )
+              : null,
+      oFactor:
+          map['oFactor'] != null
+              ? OFactor.fromMap(map['oFactor'] as Map<String, dynamic>)
+              : null,
+      externalFactors:
+          map['externalFactors'] != null
+              ? ExternalFactors.fromMap(
+                map['externalFactors'] as Map<String, dynamic>,
+              )
+              : null,
+      activeStress:
+          map['activeStress'] != null
+              ? ActiveStress.fromMap(
+                map['activeStress'] as Map<String, dynamic>,
+              )
+              : null,
+      qSlope: map['qSlope'] as double?,
+      createdAt:
+          map['createdAt'] != null
+              ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
+              : null,
+      slopeAngleByUser: map['slopeAngleByUser'] as double?,
     );
   }
 

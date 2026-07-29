@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 
 class OFactorJointsOfFailureWidget extends StatelessWidget {
   final OFactorTypeOfFailure? oFactorTypeOfFailure;
@@ -37,7 +38,7 @@ class OFactorJointsOfFailureWidget extends StatelessWidget {
               AppLocalizations.of(context).selectJointsHavingFailure,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
                 fontSize: getSubTitleFontSize(context),
               ),
             ),

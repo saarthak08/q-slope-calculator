@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.inputs.tag_version }}
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@2.23.0
         with:
           channel: "stable"
           cache: true
           cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
           cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
           architecture: x64
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: .fvmrc
 
       - name: Install dependencies
         run: flutter pub get
@@ -29,15 +29,18 @@ jobs:
       - name: Create .env file
         env:
           RELEASE_ENV: ${{ secrets.RELEASE_ENV }}
-        run: echo -n "${RELEASE_ENV}" > .env 
-      
+        run: echo -n "${RELEASE_ENV}" > .env
+
+      - name: Test code
+        run: flutter test
+
       - run: flutter analyze -v
 
       - name: Build Flutter Web
         run: flutter build web --release --base-href="/q-slope-calculator/"
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v7
         with:
           name: web-build
           path: build/web/
@@ -48,13 +51,13 @@ jobs:
     needs: build-web
     steps:
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v8
         with:
           name: web-build
           path: build/web
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web

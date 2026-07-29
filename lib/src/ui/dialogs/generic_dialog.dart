@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 
-showGenericDialog({
+Future<Future<dynamic>> showGenericDialog({
   required BuildContext context,
   String? titleText,
   required String label,

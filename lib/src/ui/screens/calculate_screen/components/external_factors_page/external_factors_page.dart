@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/photo_view_screen/photo_view_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
@@ -138,7 +139,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                     AppLocalizations.of(context).jWiceCalculationBy,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: Colors.black87,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                       fontSize: getSubTitleFontSize(context),
                     ),
                   ),
@@ -146,14 +147,16 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                 SizedBox(height: getViewPortHeight(context) * 0.01),
                 Row(
                   children: [
-                    Radio<ExternalFactorsCalculationType>(
-                      value: ExternalFactorsCalculationType.value,
+                    RadioGroup<ExternalFactorsCalculationType>(
                       groupValue: _externalFactorsCalculationType,
                       onChanged: (value) {
                         setState(() {
                           _externalFactorsCalculationType = value;
                         });
                       },
+                      child: Radio<ExternalFactorsCalculationType>(
+                        value: ExternalFactorsCalculationType.value,
+                      ),
                     ),
                     Expanded(
                       child: Text(
@@ -165,14 +168,16 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                 ),
                 Row(
                   children: [
-                    Radio<ExternalFactorsCalculationType>(
-                      value: ExternalFactorsCalculationType.factors,
+                    RadioGroup<ExternalFactorsCalculationType>(
                       groupValue: _externalFactorsCalculationType,
                       onChanged: (value) {
                         setState(() {
                           _externalFactorsCalculationType = value;
                         });
                       },
+                      child: Radio<ExternalFactorsCalculationType>(
+                        value: ExternalFactorsCalculationType.factors,
+                      ),
                     ),
                     Expanded(
                       child: Text(
@@ -244,7 +249,10 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                         ).externalFactorsPageAppBarTitle,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          color: Colors.black87,
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
                                           fontSize: getSubTitleFontSize(
                                             context,
                                           ),
@@ -288,16 +296,17 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       ).externalFactorStructure,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black87,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
                                         fontSize: getSubTitleFontSize(context),
                                       ),
                                     ),
                                   ),
                                   Row(
                                     children: [
-                                      Radio<ExternalFactorsStructureType>(
-                                        value:
-                                            ExternalFactorsStructureType.stable,
+                                      RadioGroup<ExternalFactorsStructureType>(
                                         groupValue:
                                             _externalFactorsStructureType,
                                         onChanged: (value) {
@@ -307,6 +316,12 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child:
+                                            Radio<ExternalFactorsStructureType>(
+                                              value:
+                                                  ExternalFactorsStructureType
+                                                      .stable,
+                                            ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -322,10 +337,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<ExternalFactorsStructureType>(
-                                        value:
-                                            ExternalFactorsStructureType
-                                                .unstable,
+                                      RadioGroup<ExternalFactorsStructureType>(
                                         groupValue:
                                             _externalFactorsStructureType,
                                         onChanged: (value) {
@@ -335,6 +347,12 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child:
+                                            Radio<ExternalFactorsStructureType>(
+                                              value:
+                                                  ExternalFactorsStructureType
+                                                      .unstable,
+                                            ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -367,7 +385,10 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       ).strengthOfRock,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black87,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
                                         fontSize: getSubTitleFontSize(context),
                                       ),
                                     ),
@@ -391,10 +412,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<ExternalFactorsStrengthOfRock>(
-                                        value:
-                                            ExternalFactorsStrengthOfRock
-                                                .competent,
+                                      RadioGroup<ExternalFactorsStrengthOfRock>(
                                         groupValue:
                                             _externalFactorsStrengthOfRock,
                                         onChanged: (value) {
@@ -404,6 +422,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsStrengthOfRock
+                                        >(
+                                          value:
+                                              ExternalFactorsStrengthOfRock
+                                                  .competent,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -419,10 +444,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<ExternalFactorsStrengthOfRock>(
-                                        value:
-                                            ExternalFactorsStrengthOfRock
-                                                .incompetent,
+                                      RadioGroup<ExternalFactorsStrengthOfRock>(
                                         groupValue:
                                             _externalFactorsStrengthOfRock,
                                         onChanged: (value) {
@@ -432,6 +454,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsStrengthOfRock
+                                        >(
+                                          value:
+                                              ExternalFactorsStrengthOfRock
+                                                  .incompetent,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -464,19 +493,19 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                       ).environmentalConditions,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black87,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
                                         fontSize: getSubTitleFontSize(context),
                                       ),
                                     ),
                                   ),
                                   Row(
                                     children: [
-                                      Radio<
+                                      RadioGroup<
                                         ExternalFactorsEnvironmentConditions
                                       >(
-                                        value:
-                                            ExternalFactorsEnvironmentConditions
-                                                .desertEnvironment,
                                         groupValue:
                                             _externalFactorsEnvironmentConditions,
                                         onChanged: (value) {
@@ -486,6 +515,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsEnvironmentConditions
+                                        >(
+                                          value:
+                                              ExternalFactorsEnvironmentConditions
+                                                  .desertEnvironment,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -501,12 +537,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<
+                                      RadioGroup<
                                         ExternalFactorsEnvironmentConditions
                                       >(
-                                        value:
-                                            ExternalFactorsEnvironmentConditions
-                                                .wetEnvironment,
                                         groupValue:
                                             _externalFactorsEnvironmentConditions,
                                         onChanged: (value) {
@@ -516,6 +549,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsEnvironmentConditions
+                                        >(
+                                          value:
+                                              ExternalFactorsEnvironmentConditions
+                                                  .wetEnvironment,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -531,12 +571,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<
+                                      RadioGroup<
                                         ExternalFactorsEnvironmentConditions
                                       >(
-                                        value:
-                                            ExternalFactorsEnvironmentConditions
-                                                .tropicalStorms,
                                         groupValue:
                                             _externalFactorsEnvironmentConditions,
                                         onChanged: (value) {
@@ -546,6 +583,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsEnvironmentConditions
+                                        >(
+                                          value:
+                                              ExternalFactorsEnvironmentConditions
+                                                  .tropicalStorms,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
@@ -561,12 +605,9 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Radio<
+                                      RadioGroup<
                                         ExternalFactorsEnvironmentConditions
                                       >(
-                                        value:
-                                            ExternalFactorsEnvironmentConditions
-                                                .iceWedging,
                                         groupValue:
                                             _externalFactorsEnvironmentConditions,
                                         onChanged: (value) {
@@ -576,6 +617,13 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
                                           });
                                           _calculateJwice();
                                         },
+                                        child: Radio<
+                                          ExternalFactorsEnvironmentConditions
+                                        >(
+                                          value:
+                                              ExternalFactorsEnvironmentConditions
+                                                  .iceWedging,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(

@@ -49,7 +49,7 @@ class JointCharacterValueWidget extends StatelessWidget {
                   inputTitle,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     fontSize: getBodyFontSize(context),
                   ),
                 ),

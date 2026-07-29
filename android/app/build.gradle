@@ -31,8 +31,8 @@ if (releaseKeystorePropertiesFile.exists()) {
 
 android {
     namespace = "in.sg.q_slope_calculator"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion project.hasProperty('ndkVersion') ? project.ndkVersion : '28.0.13004108'
+    compileSdk = 37
+    ndkVersion project.hasProperty('ndkVersion') ? project.ndkVersion : '30.0.14904198'
 
 
     compileOptions {
@@ -50,8 +50,8 @@ android {
 
     defaultConfig {
         applicationId = "in.sg.q_slope_calculator"
-        minSdk = 21
-        targetSdk = flutter.targetSdkVersion
+        minSdkVersion = flutter.minSdkVersion
+        targetSdk = 37
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
         multiDexEnabled true

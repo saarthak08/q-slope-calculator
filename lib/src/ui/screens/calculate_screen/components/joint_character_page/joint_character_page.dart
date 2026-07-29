@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/joint_character_value_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
@@ -215,8 +216,7 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                 ),
                 Row(
                   children: [
-                    Radio<JrCalculationType>(
-                      value: JrCalculationType.jr,
+                    RadioGroup<JrCalculationType>(
                       groupValue: jrCalculationType,
                       onChanged: (value) {
                         setState(() {
@@ -224,6 +224,9 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                         });
                         _resetJrControlllers();
                       },
+                      child: Radio<JrCalculationType>(
+                        value: JrCalculationType.jr,
+                      ),
                     ),
                     Expanded(
                       child: Text(
@@ -235,8 +238,7 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                 ),
                 Row(
                   children: [
-                    Radio<JrCalculationType>(
-                      value: JrCalculationType.palmstorm,
+                    RadioGroup<JrCalculationType>(
                       groupValue: jrCalculationType,
                       onChanged: (value) {
                         setState(() {
@@ -244,6 +246,9 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                         });
                         _resetJrControlllers();
                       },
+                      child: Radio<JrCalculationType>(
+                        value: JrCalculationType.palmstorm,
+                      ),
                     ),
                     Expanded(
                       child: Text(

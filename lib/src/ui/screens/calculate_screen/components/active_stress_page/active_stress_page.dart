@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
@@ -12,6 +12,7 @@ import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cub
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
@@ -346,6 +347,18 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                       }
                                       : null,
                               style: ButtonStyle(
+                                backgroundColor:
+                                    Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? WidgetStatePropertyAll(
+                                          Colors.grey.shade800,
+                                        )
+                                        : null,
+                                foregroundColor:
+                                    Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? WidgetStatePropertyAll(primaryColor)
+                                        : null,
                                 shape: WidgetStatePropertyAll(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -439,6 +452,20 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           }
                                           : null,
                                   style: ButtonStyle(
+                                    backgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              Colors.grey.shade800,
+                                            )
+                                            : null,
+                                    foregroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              primaryColor,
+                                            )
+                                            : null,
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
@@ -489,6 +516,20 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           }
                                           : null,
                                   style: ButtonStyle(
+                                    backgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              Colors.grey.shade800,
+                                            )
+                                            : null,
+                                    foregroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? WidgetStatePropertyAll(
+                                              primaryColor,
+                                            )
+                                            : null,
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),

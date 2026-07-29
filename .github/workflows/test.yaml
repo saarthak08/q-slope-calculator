@@ -1,30 +1,33 @@
 name: Test
 
 on:
-    push:
-        branches: [master, dev]
-    pull_request:
-        branches: [master, dev]
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4.1.7
-            - uses: subosito/flutter-action@v2
-              with:
-                  channel: "stable"
-                  cache: true
-                  cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
-                  cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
-                  architecture: x64
-            - run: flutter --version
-            - run: cp .env.sample .env
-            - run: flutter pub get
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2.23.0
+        with:
+          channel: "stable"
+          cache: true
+          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
+          architecture: x64
+          flutter-version-file: .fvmrc
+      - run: flutter --version
+      - run: cp .env.sample .env
+      - run: flutter pub get
 
-            - name: Analyze code
-              run: flutter analyze
-            - name: Ensure the Dart code is formatted correctly
-              run: dart format -o none --set-exit-if-changed .
-            - name: Run Flutter unit tests
-              run: flutter test
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Ensure the Dart code is formatted correctly
+        run: dart format -o none --set-exit-if-changed .
+
+      - name: Run Flutter tests
+        run: flutter test

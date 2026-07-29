@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/constants/strings.dart';
 import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/common_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,10 +38,13 @@ class AboutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Image.asset(
-                  Assets.pngIcon,
-                  height: getViewPortHeight(context) * 0.2,
+              Container(
+                margin: EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
+                child: Center(
+                  child: Image.asset(
+                    Assets.pngIcon,
+                    height: getViewPortHeight(context) * 0.2,
+                  ),
                 ),
               ),
               Column(
@@ -228,7 +232,8 @@ class AboutScreen extends StatelessWidget {
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: getCaptionFontSize(context),
-                              color: Colors.black54,
+                              color:
+                                  Theme.of(context).textTheme.bodySmall?.color,
                             ),
                           ),
                     ),

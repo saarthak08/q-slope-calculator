@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:q_slope_calculator/l10n/app_localizations.dart';
+
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/joints_of_failure_widget.dart';
@@ -8,6 +8,7 @@ import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/romana_adjustment_factor_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/type_of_failure_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
@@ -208,7 +209,10 @@ class _OFactorPageState extends State<OFactorPage> {
                                           ).oFactorCalculation,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.black87,
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).textTheme.bodyMedium?.color,
                                             fontSize: getSubTitleFontSize(
                                               context,
                                             ),
@@ -217,8 +221,7 @@ class _OFactorPageState extends State<OFactorPage> {
                                       ),
                                       Row(
                                         children: [
-                                          Radio<OFactorCalculationType>(
-                                            value: OFactorCalculationType.value,
+                                          RadioGroup<OFactorCalculationType>(
                                             groupValue: _oFactorCalculationType,
                                             onChanged: (value) {
                                               setState(() {
@@ -227,6 +230,12 @@ class _OFactorPageState extends State<OFactorPage> {
                                               _joint1OFactor.text = "";
                                               _joint2OFactor.text = "";
                                             },
+                                            child:
+                                                Radio<OFactorCalculationType>(
+                                                  value:
+                                                      OFactorCalculationType
+                                                          .value,
+                                                ),
                                           ),
                                           Expanded(
                                             child: Text(
@@ -244,10 +253,7 @@ class _OFactorPageState extends State<OFactorPage> {
                                       ),
                                       Row(
                                         children: [
-                                          Radio<OFactorCalculationType>(
-                                            value:
-                                                OFactorCalculationType
-                                                    .romanaAdjacentFactor,
+                                          RadioGroup<OFactorCalculationType>(
                                             groupValue: _oFactorCalculationType,
                                             onChanged: (value) {
                                               setState(() {
@@ -256,6 +262,12 @@ class _OFactorPageState extends State<OFactorPage> {
                                               _joint1OFactor.text = "";
                                               _joint2OFactor.text = "";
                                             },
+                                            child:
+                                                Radio<OFactorCalculationType>(
+                                                  value:
+                                                      OFactorCalculationType
+                                                          .romanaAdjacentFactor,
+                                                ),
                                           ),
                                           Expanded(
                                             child: Text(
