@@ -18,6 +18,7 @@ jobs:
           cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
           cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
           architecture: x64
+          flutter-version-file: .fvmrc
       - run: flutter --version
       - run: cp .env.sample .env
       - run: flutter pub get

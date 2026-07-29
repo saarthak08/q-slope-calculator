@@ -21,7 +21,7 @@ jobs:
           cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
           cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
           architecture: x64
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: .fvmrc
 
       - name: Print flutter version
         run: flutter --version

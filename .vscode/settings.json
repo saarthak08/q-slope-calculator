@@ -1,10 +1,18 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit"
-    },
-    "java.configuration.updateBuildConfiguration": "disabled",
-    "arb-editor.suppressedWarnings": [
-        "missing_metadata_for_key",
-        "placeholder_without_metadata"
-    ]
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "arb-editor.suppressedWarnings": [
+    "missing_metadata_for_key",
+    "placeholder_without_metadata"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.44.8",
+  "search.exclude": {
+    "**/.fvm": true
+  },
+  "files.exclude": {
+    "**/.fvm": true
+  },
+  "java.compile.nullAnalysis.mode": "automatic"
 }

@@ -32,7 +32,7 @@ if (releaseKeystorePropertiesFile.exists()) {
 android {
     namespace = "in.sg.q_slope_calculator"
     compileSdk = 37
-    ndkVersion project.hasProperty('ndkVersion') ? project.ndkVersion : '28.0.13004108'
+    ndkVersion project.hasProperty('ndkVersion') ? project.ndkVersion : '30.0.14904198'
 
 
     compileOptions {
