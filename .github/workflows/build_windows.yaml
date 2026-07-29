@@ -32,11 +32,11 @@ jobs:
       - name: Test code
         run: flutter test
 
-  #       - name: Upload build files as artifact
-  #         uses: actions/upload-artifact@7
-  #         with:
-  #           name: q-slope-calculator-windows
-  #           path: |
-  #             build/windows/x64/runner/Release
-  #           overwrite: true
-  #           include-hidden-files: true
+      - name: Upload build files as artifact
+        uses: actions/upload-artifact@7
+        with:
+          name: q-slope-calculator-windows
+          path: |
+            build/windows/x64/runner/Release
+          overwrite: true
+          include-hidden-files: true
