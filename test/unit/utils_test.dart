@@ -5,7 +5,9 @@ import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 void main() {
   group('Dimensions utils', () {
-    testWidgets('getDeviceWidth returns correct width', (WidgetTester tester) async {
+    testWidgets('getDeviceWidth returns correct width', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
@@ -19,7 +21,9 @@ void main() {
       );
     });
 
-    testWidgets('getDeviceHeight returns correct height', (WidgetTester tester) async {
+    testWidgets('getDeviceHeight returns correct height', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
@@ -35,7 +39,9 @@ void main() {
   });
 
   group('ThemeData utils', () {
-    testWidgets('getThemeData returns light theme', (WidgetTester tester) async {
+    testWidgets('getThemeData returns light theme', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
@@ -50,7 +56,9 @@ void main() {
       );
     });
 
-    testWidgets('getDarkThemeData returns dark theme', (WidgetTester tester) async {
+    testWidgets('getDarkThemeData returns dark theme', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(

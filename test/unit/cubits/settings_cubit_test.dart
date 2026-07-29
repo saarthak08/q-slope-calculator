@@ -19,22 +19,34 @@ void main() {
     blocTest<SettingsCubit, SettingsState>(
       'loadSettings emits state with saved ThemeMode.dark',
       build: () {
-        SharedPreferences.setMockInitialValues({'themeMode': ThemeMode.dark.index});
+        SharedPreferences.setMockInitialValues({
+          'themeMode': ThemeMode.dark.index,
+        });
         return SettingsCubit();
       },
       act: (cubit) => cubit.loadSettings(),
-      expect: () => [
-        isA<SettingsState>().having((state) => state.themeMode, 'themeMode', ThemeMode.dark),
-      ],
+      expect:
+          () => [
+            isA<SettingsState>().having(
+              (state) => state.themeMode,
+              'themeMode',
+              ThemeMode.dark,
+            ),
+          ],
     );
 
     blocTest<SettingsCubit, SettingsState>(
       'setThemeMode updates state and SharedPreferences',
       build: () => SettingsCubit(),
       act: (cubit) => cubit.setThemeMode(ThemeMode.light),
-      expect: () => [
-        isA<SettingsState>().having((state) => state.themeMode, 'themeMode', ThemeMode.light),
-      ],
+      expect:
+          () => [
+            isA<SettingsState>().having(
+              (state) => state.themeMode,
+              'themeMode',
+              ThemeMode.light,
+            ),
+          ],
       verify: (_) async {
         final prefs = await SharedPreferences.getInstance();
         expect(prefs.getInt('themeMode'), ThemeMode.light.index);

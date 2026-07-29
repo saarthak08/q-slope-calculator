@@ -6,7 +6,7 @@ import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cub
 
 void main() {
   SharedPreferences.setMockInitialValues({});
-  
+
   group('QSlopeListCubit', () {
     final mockQSlope = QSlope(
       id: 'test_id',
@@ -31,10 +31,7 @@ void main() {
         return QSlopeListCubit();
       },
       act: (cubit) => cubit.loadQSlopeList(),
-      expect: () => [
-        isA<QSlopeListLoading>(),
-        isA<QSlopeListEmpty>(),
-      ],
+      expect: () => [isA<QSlopeListLoading>(), isA<QSlopeListEmpty>()],
     );
 
     blocTest<QSlopeListCubit, QSlopeListState>(
@@ -47,14 +44,15 @@ void main() {
         return QSlopeListCubit();
       },
       act: (cubit) => cubit.loadQSlopeList(),
-      expect: () => [
-        isA<QSlopeListLoading>(),
-        isA<QSlopeListLoaded>().having(
-          (state) => state.qSlopeList.length,
-          'length',
-          1,
-        ),
-      ],
+      expect:
+          () => [
+            isA<QSlopeListLoading>(),
+            isA<QSlopeListLoaded>().having(
+              (state) => state.qSlopeList.length,
+              'length',
+              1,
+            ),
+          ],
     );
 
     blocTest<QSlopeListCubit, QSlopeListState>(
@@ -63,14 +61,15 @@ void main() {
         return QSlopeListCubit();
       },
       act: (cubit) => cubit.saveQSlopeToList(mockQSlope),
-      expect: () => [
-        isA<QSlopeListLoading>(),
-        isA<QSlopeListLoaded>().having(
-          (state) => state.qSlopeList.length,
-          'length',
-          1,
-        ),
-      ],
+      expect:
+          () => [
+            isA<QSlopeListLoading>(),
+            isA<QSlopeListLoaded>().having(
+              (state) => state.qSlopeList.length,
+              'length',
+              1,
+            ),
+          ],
     );
 
     blocTest<QSlopeListCubit, QSlopeListState>(
@@ -83,10 +82,7 @@ void main() {
         return QSlopeListCubit();
       },
       act: (cubit) => cubit.clearQSlopeList(),
-      expect: () => [
-        isA<QSlopeListLoading>(),
-        isA<QSlopeListEmpty>(),
-      ],
+      expect: () => [isA<QSlopeListLoading>(), isA<QSlopeListEmpty>()],
     );
 
     blocTest<QSlopeListCubit, QSlopeListState>(
@@ -99,10 +95,7 @@ void main() {
         return QSlopeListCubit();
       },
       act: (cubit) => cubit.deleteQSlopeFromList('test_id'),
-      expect: () => [
-        isA<QSlopeListLoading>(),
-        isA<QSlopeListEmpty>(),
-      ],
+      expect: () => [isA<QSlopeListLoading>(), isA<QSlopeListEmpty>()],
     );
   });
 }

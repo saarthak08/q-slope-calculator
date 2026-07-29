@@ -15,25 +15,29 @@ void main() {
     test('generates home route correctly', () {
       final route = appRouter.generateRoute(const RouteSettings(name: '/'));
       expect(route, isA<MaterialPageRoute>());
-      
+
       final builder = (route as MaterialPageRoute).builder;
       final context = _MockBuildContext();
       expect(builder(context), isA<HomeScreen>());
     });
 
     test('generates about route correctly', () {
-      final route = appRouter.generateRoute(const RouteSettings(name: AboutScreen.route));
+      final route = appRouter.generateRoute(
+        const RouteSettings(name: AboutScreen.route),
+      );
       expect(route, isA<MaterialPageRoute>());
-      
+
       final builder = (route as MaterialPageRoute).builder;
       final context = _MockBuildContext();
       expect(builder(context), isA<AboutScreen>());
     });
 
     test('returns Text for unknown routes', () {
-      final route = appRouter.generateRoute(const RouteSettings(name: '/unknown'));
+      final route = appRouter.generateRoute(
+        const RouteSettings(name: '/unknown'),
+      );
       expect(route, isA<MaterialPageRoute>());
-      
+
       final builder = (route as MaterialPageRoute).builder;
       final context = _MockBuildContext();
       expect(builder(context), isA<Text>());

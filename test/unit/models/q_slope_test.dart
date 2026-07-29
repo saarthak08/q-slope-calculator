@@ -12,10 +12,7 @@ void main() {
         blockSize: BlockSize(rqd: 80, jointSetNumber: 2),
       );
 
-      final updatedSlope = slope.copyWith(
-        locationId: 'Loc2',
-        qSlope: 15.5,
-      );
+      final updatedSlope = slope.copyWith(locationId: 'Loc2', qSlope: 15.5);
 
       expect(updatedSlope.id, '1');
       expect(updatedSlope.locationId, 'Loc2');

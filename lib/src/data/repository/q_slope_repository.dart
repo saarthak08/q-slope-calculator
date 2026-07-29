@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// A Singleton repository responsible for managing the local storage 
-/// and retrieval of [QSlope] data. It acts as the single source of truth 
+/// A Singleton repository responsible for managing the local storage
+/// and retrieval of [QSlope] data. It acts as the single source of truth
 /// for the app's persistent state using [SharedPreferences].
 class QSlopeRepository {
   static final QSlopeRepository _instance = QSlopeRepository._internal();
@@ -20,11 +20,10 @@ class QSlopeRepository {
       SharedPreferences.getInstance();
 
   Future<List<QSlope>> getAllQSlopes() {
-    return _sharedPreferences
-        .then((pref) {
-          final list = pref.getStringList(_qSlopeSharedPreferenceKey);
-          return (list ?? []).map((value) => QSlope.fromJson(value)).toList();
-        });
+    return _sharedPreferences.then((pref) {
+      final list = pref.getStringList(_qSlopeSharedPreferenceKey);
+      return (list ?? []).map((value) => QSlope.fromJson(value)).toList();
+    });
   }
 
   Future<bool> saveQSlope(QSlope qSlope) async {

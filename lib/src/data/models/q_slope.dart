@@ -91,25 +91,37 @@ class QSlope {
       id: map['id'],
       locationId: map['locationId'] as String?,
       lithology: map['lithology'] as String?,
-      blockSize: map['blockSize'] != null 
-          ? BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>)
-          : null,
-      jointCharacter: map['jointCharacter'] != null 
-          ? JointCharacter.fromMap(map['jointCharacter'] as Map<String, dynamic>)
-          : null,
-      oFactor: map['oFactor'] != null 
-          ? OFactor.fromMap(map['oFactor'] as Map<String, dynamic>)
-          : null,
-      externalFactors: map['externalFactors'] != null 
-          ? ExternalFactors.fromMap(map['externalFactors'] as Map<String, dynamic>)
-          : null,
-      activeStress: map['activeStress'] != null 
-          ? ActiveStress.fromMap(map['activeStress'] as Map<String, dynamic>)
-          : null,
+      blockSize:
+          map['blockSize'] != null
+              ? BlockSize.fromMap(map['blockSize'] as Map<String, dynamic>)
+              : null,
+      jointCharacter:
+          map['jointCharacter'] != null
+              ? JointCharacter.fromMap(
+                map['jointCharacter'] as Map<String, dynamic>,
+              )
+              : null,
+      oFactor:
+          map['oFactor'] != null
+              ? OFactor.fromMap(map['oFactor'] as Map<String, dynamic>)
+              : null,
+      externalFactors:
+          map['externalFactors'] != null
+              ? ExternalFactors.fromMap(
+                map['externalFactors'] as Map<String, dynamic>,
+              )
+              : null,
+      activeStress:
+          map['activeStress'] != null
+              ? ActiveStress.fromMap(
+                map['activeStress'] as Map<String, dynamic>,
+              )
+              : null,
       qSlope: map['qSlope'] as double?,
-      createdAt: map['createdAt'] != null 
-          ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
-          : null,
+      createdAt:
+          map['createdAt'] != null
+              ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
+              : null,
       slopeAngleByUser: map['slopeAngleByUser'] as double?,
     );
   }

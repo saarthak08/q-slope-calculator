@@ -10,7 +10,7 @@ part 'q_slope_list_state.dart';
 
 /// Manages the state of the Q-Slope list throughout the application.
 /// It interacts with the [QSlopeListService] to load, save, and delete records,
-/// and emits states ([QSlopeListLoading], [QSlopeListLoaded], [QSlopeListEmpty]) 
+/// and emits states ([QSlopeListLoading], [QSlopeListLoaded], [QSlopeListEmpty])
 /// to update the UI reactively.
 class QSlopeListCubit extends Cubit<QSlopeListState> {
   final QSlopeListService _qSlopeListService = QSlopeListService();

@@ -13,14 +13,24 @@ void main() {
     });
 
     test('toMap and fromMap work correctly', () {
-      final activeStress = ActiveStress(srfA: 1.5, srfB: 2.5, srfC: 3.5, srf: 3.5);
+      final activeStress = ActiveStress(
+        srfA: 1.5,
+        srfB: 2.5,
+        srfC: 3.5,
+        srf: 3.5,
+      );
       final map = activeStress.toMap();
       final fromMap = ActiveStress.fromMap(map);
       expect(fromMap, activeStress);
     });
 
     test('toJson and fromJson work correctly', () {
-      final activeStress = ActiveStress(srfA: 1.0, srfB: 2.0, srfC: 3.0, srf: 3.0);
+      final activeStress = ActiveStress(
+        srfA: 1.0,
+        srfB: 2.0,
+        srfC: 3.0,
+        srf: 3.0,
+      );
       final jsonStr = activeStress.toJson();
       final fromJson = ActiveStress.fromJson(jsonStr);
       expect(fromJson, activeStress);
@@ -67,7 +77,7 @@ void main() {
         createdAt: DateTime(2023, 1, 1),
       );
       final map = qSlope.toMap();
-      
+
       // Note: QSlope.fromMap currently crashes if nested objects are null.
       // This test might fail, requiring a fix in QSlope.fromMap.
       try {

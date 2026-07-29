@@ -39,16 +39,21 @@ void main() {
 
     test('calculateJwice returns correct values for desert environment', () {
       expect(
-          calculateJwice(
-              ExternalFactorsEnvironmentConditions.desertEnvironment,
-              ExternalFactorsStrengthOfRock.competent,
-              ExternalFactorsStructureType.stable),
-          1.0);
+        calculateJwice(
+          ExternalFactorsEnvironmentConditions.desertEnvironment,
+          ExternalFactorsStrengthOfRock.competent,
+          ExternalFactorsStructureType.stable,
+        ),
+        1.0,
+      );
     });
 
     test('calculateF1ForPlanarFailure calculates correctly', () {
       expect(calculateF1ForPlanarFailure(150, 20), 130);
-      expect(calculateF1ForPlanarFailure(10, 200), 170); // 190 > 180 => 360-190=170
+      expect(
+        calculateF1ForPlanarFailure(10, 200),
+        170,
+      ); // 190 > 180 => 360-190=170
     });
 
     test('calculateSlopeAngle calculates correctly', () {

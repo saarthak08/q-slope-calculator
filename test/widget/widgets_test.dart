@@ -7,19 +7,22 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   group('UI Widgets Tests', () {
-    testWidgets('CustomTextFormField renders correctly', (WidgetTester tester) async {
+    testWidgets('CustomTextFormField renders correctly', (
+      WidgetTester tester,
+    ) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
         MaterialApp(
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-            ],
-          ),
+          builder:
+              (context, child) => ResponsiveBreakpoints.builder(
+                child: child!,
+                breakpoints: [
+                  const Breakpoint(start: 0, end: 450, name: MOBILE),
+                  const Breakpoint(start: 451, end: 800, name: TABLET),
+                  const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+                ],
+              ),
           home: Scaffold(
             body: CustomTextFormField(
               textEditingController: controller,
@@ -40,9 +43,7 @@ void main() {
     testWidgets('DividerWidget renders correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: DividerWidget(color: Colors.red),
-          ),
+          home: Scaffold(body: DividerWidget(color: Colors.red)),
         ),
       );
 
@@ -53,17 +54,20 @@ void main() {
       expect(decoration.color, Colors.red);
     });
 
-    testWidgets('IllustrationWidget renders correctly', (WidgetTester tester) async {
+    testWidgets('IllustrationWidget renders correctly', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-            ],
-          ),
+          builder:
+              (context, child) => ResponsiveBreakpoints.builder(
+                child: child!,
+                breakpoints: [
+                  const Breakpoint(start: 0, end: 450, name: MOBILE),
+                  const Breakpoint(start: 451, end: 800, name: TABLET),
+                  const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+                ],
+              ),
           home: Scaffold(
             body: IllustrationWidget(
               assetPath: 'assets/illustrations/test.svg',

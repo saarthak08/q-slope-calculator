@@ -13,7 +13,9 @@ import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('E2E Test: Navigates calculation flow and checks history/result', (WidgetTester tester) async {
+  testWidgets('E2E Test: Navigates calculation flow and checks history/result', (
+    WidgetTester tester,
+  ) async {
     // 1. Setup mock data in SharedPreferences
     final mockQSlope = QSlope(
       id: 'mock-123',
@@ -22,24 +24,16 @@ void main() {
       qSlope: 25.0,
       createdAt: DateTime.now(),
       slopeAngleByUser: 45.0,
-      blockSize: BlockSize(
-        rqd: 50,
-        jointSetNumber: 2,
-      ),
+      blockSize: BlockSize(rqd: 50, jointSetNumber: 2),
       jointCharacter: JointCharacter(
         jointRoughness: [1.0],
         jointAlteration: [1.0],
       ),
-      oFactor: OFactor(
-        oFactorForFirstJoint: 1.0,
-      ),
+      oFactor: OFactor(oFactorForFirstJoint: 1.0),
       externalFactors: ExternalFactors(
         environmentalAndGeologicalConditionalNumber: 1.0,
       ),
-      activeStress: ActiveStress(
-        srfA: 1.0,
-        srf: 1.0,
-      ),
+      activeStress: ActiveStress(srfA: 1.0, srf: 1.0),
     );
 
     final prefs = await SharedPreferences.getInstance();
@@ -62,7 +56,7 @@ void main() {
     // Let's modify the Location ID.
     final textFields = find.byType(TextFormField);
     expect(textFields, findsWidgets);
-    
+
     // We enter a new Location ID in the first field
     await tester.enterText(textFields.first, 'Loc-Test-Modified');
     await tester.pumpAndSettle();
@@ -81,7 +75,7 @@ void main() {
     // 8. Go back to Home Screen
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
-    
+
     // Clear prefs at the end
     await prefs.clear();
   });

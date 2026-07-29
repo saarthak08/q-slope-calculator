@@ -5,7 +5,9 @@ import 'package:q_slope_calculator/src/utils/app_config.dart';
 
 void main() {
   group('AppConfig Tests', () {
-    testWidgets('provides configuration correctly', (WidgetTester tester) async {
+    testWidgets('provides configuration correctly', (
+      WidgetTester tester,
+    ) async {
       const String testTitle = 'Test App Title';
       const AppEnvironment testEnv = AppEnvironment.development;
 
@@ -29,7 +31,9 @@ void main() {
       expect(extractedConfig.environment, testEnv);
     });
 
-    testWidgets('updateShouldNotify always returns false', (WidgetTester tester) async {
+    testWidgets('updateShouldNotify always returns false', (
+      WidgetTester tester,
+    ) async {
       final config1 = AppConfig(
         appTitle: 'Title 1',
         environment: AppEnvironment.production,
