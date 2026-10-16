@@ -18,11 +18,11 @@ Future<String?> saveFile(
   } else if (Platform.isWindows) {
     return _saveFileInWindows(bytes, fileName, context);
   } else {
-    return FilePicker.platform.saveFile(
+    return FilePicker.saveFile(
       fileName: fileName,
       bytes: Uint8List.fromList(bytes),
       dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
-    );
+    ).then((uri) => uri.toString());
   }
 }
 
@@ -40,8 +40,8 @@ Future<String?> _saveFileInWindows(
   String fileName,
   BuildContext context,
 ) async {
-  String? directory = await FilePicker.platform.getDirectoryPath(
-    lockParentWindow: true,
+  String? directory = await FilePicker.getDirectoryPath(
+    linuxOptions: LinuxOptions(lockParentWindow: true),
     dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
   );
   if (directory != null) {

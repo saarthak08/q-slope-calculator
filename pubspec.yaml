@@ -14,11 +14,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^2.0.0
   flutter_svg: ^2.0.10
   flutter_dotenv: ^6.0.1
   intl: ^0.20.2
-  google_fonts: ^8.2.0
+  google_fonts: ^9.0.0
   shared_preferences: ^2.5.5
   path_provider: ^2.1.4
   collection: ^1.18.0
@@ -26,22 +26,22 @@ dependencies:
   logger: ^2.4.0
   photo_view: ^0.15.0
   toastification: ^3.2.0
-  package_info_plus: ^9.0.1
+  package_info_plus: ^10.2.2
   url_launcher: ^6.3.0
   responsive_framework: ^1.4.0
   uuid: ^4.6.0
-  file_picker: ^8.1.2
+  file_picker: ^13.1.0
   universal_html: ^2.3.0
-  syncfusion_flutter_xlsio: ^34.1.33
-  syncfusion_flutter_charts: ^34.1.33
+  syncfusion_flutter_xlsio: ^35.1.40+1
+  syncfusion_flutter_charts: ^35.1.40+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^10.0.0
-  mocktail: ^1.0.4
   integration_test:
     sdk: flutter
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
   flutter_lints: ^6.0.0
   husky: ^0.1.7
   lint_staged: ^0.5.1
