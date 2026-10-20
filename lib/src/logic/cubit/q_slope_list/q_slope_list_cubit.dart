@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/common/result.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+import 'package:q_slope_calculator/src/data/repository/q_slope_repository.dart';
 import 'package:q_slope_calculator/src/logic/service/q_slope_list_service.dart';
 
 part 'q_slope_list_state.dart';
@@ -77,6 +78,25 @@ class QSlopeListCubit extends Cubit<QSlopeListState> {
 
   Future<Result> deleteMultipleQSlopesFromList(List<String> ids) async {
     var result = await _qSlopeListService.deleteMultipleQSlopes(ids);
+    result.when(
+      onError: (error) {
+        if (error is QSlopeError) {
+          emit(QSlopeListOperationErrorState(error));
+        }
+      },
+    );
+    await loadQSlopeList();
+    return result;
+  }
+
+  Future<Result<int>> importQSlopes(
+    List<QSlope> incoming, {
+    ImportConflictStrategy strategy = ImportConflictStrategy.overwrite,
+  }) async {
+    var result = await _qSlopeListService.saveMultipleQSlopes(
+      incoming,
+      strategy: strategy,
+    );
     result.when(
       onError: (error) {
         if (error is QSlopeError) {

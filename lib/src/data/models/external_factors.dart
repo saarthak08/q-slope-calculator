@@ -58,7 +58,8 @@ class ExternalFactors {
   factory ExternalFactors.fromMap(Map<String, dynamic> map) {
     return ExternalFactors(
       environmentalAndGeologicalConditionalNumber:
-          map['environmentalAndGeologicalConditionalNumber'] as double,
+          (map['environmentalAndGeologicalConditionalNumber'] as num?)
+              ?.toDouble(),
       externalFactorsStrengthOfRock:
           map['externalFactorsStrengthOfRock'] != null
               ? map['externalFactorsStrengthOfRock'] ==

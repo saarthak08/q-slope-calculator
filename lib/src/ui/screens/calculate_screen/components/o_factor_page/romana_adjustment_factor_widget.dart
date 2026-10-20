@@ -54,7 +54,21 @@ class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
 
 class _OFactorRomanaAdjustmentFactorWidgetState
     extends State<OFactorRomanaAdjustmentFactorWidget> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _calculateOFactor();
+      }
+    });
+  }
+
   void _calculateOFactor() {
+    if (widget.oFactorRomanaValueType.value !=
+        OFactorRomanaValueType.calculation) {
+      return;
+    }
     if (widget.oFactorTypeOfFailure != null) {
       double alphaI = double.tryParse(widget.alphaI.text) ?? 0;
       double alphaJ = double.tryParse(widget.alphaJ.text) ?? 0;

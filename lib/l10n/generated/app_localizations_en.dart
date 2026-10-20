@@ -625,4 +625,138 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chartExportFailed => 'Chart export failed';
+
+  @override
+  String get statusStable => 'Stable';
+
+  @override
+  String get statusUncertain => 'Uncertain';
+
+  @override
+  String get statusUnstable => 'Unstable';
+
+  @override
+  String get statusUnknown => 'Unknown';
+
+  @override
+  String get safetyMargin => 'Safety Margin (Δβ)';
+
+  @override
+  String get allowableAngle => 'Allowable (β)';
+
+  @override
+  String get actualAngle => 'Actual (α)';
+
+  @override
+  String get searchPlaceholder => 'Search by location or lithology...';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get sortBy => 'Sort By';
+
+  @override
+  String get sortDateNewest => 'Date (Newest)';
+
+  @override
+  String get sortDateOldest => 'Date (Oldest)';
+
+  @override
+  String get sortQSlopeHigh => 'Q-slope (Highest)';
+
+  @override
+  String get sortQSlopeLow => 'Q-slope (Lowest)';
+
+  @override
+  String get sortLocationAZ => 'Location (A-Z)';
+
+  @override
+  String get sortLocationZA => 'Location (Z-A)';
+
+  @override
+  String get noCalculationsMatchFilter =>
+      'No calculations match your search or filter';
+
+  @override
+  String get exportJson => 'Export JSON';
+
+  @override
+  String get importJson => 'Import JSON';
+
+  @override
+  String get exportCsv => 'Export CSV';
+
+  @override
+  String get importCsv => 'Import CSV';
+
+  @override
+  String importSuccessful(Object count) {
+    return 'Successfully imported $count calculation(s)';
+  }
+
+  @override
+  String importFailed(Object error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get importConflictTitle => 'Import Calculations';
+
+  @override
+  String get importConflictContent =>
+      'How would you like to handle existing calculations?';
+
+  @override
+  String get skipDuplicates => 'Skip Duplicates';
+
+  @override
+  String get overwriteExisting => 'Overwrite Existing';
+
+  @override
+  String get importAsNew => 'Import As New Copies';
+
+  @override
+  String get noFileSelected => 'No file selected';
+
+  @override
+  String get invalidFormat => 'Invalid file format or corrupted file';
+
+  @override
+  String get importData => 'Import Data';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get saveFailed => 'Save failed';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get exportAll => 'Export All';
+
+  @override
+  String get exportAllExcel => 'Export All (Excel)';
+
+  @override
+  String get exportAllJson => 'Export All (JSON)';
+
+  @override
+  String get exportAllCsv => 'Export All (CSV)';
+
+  @override
+  String get bulkSelect => 'Select Calculations';
+
+  @override
+  String selectedCount(Object count) {
+    return '$count selected';
+  }
+
+  @override
+  String get options => 'Options';
 }

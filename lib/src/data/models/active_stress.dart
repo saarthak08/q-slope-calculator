@@ -35,10 +35,10 @@ class ActiveStress {
 
   factory ActiveStress.fromMap(Map<String, dynamic> map) {
     return ActiveStress(
-      srfA: map['srfA'] as double,
-      srfB: map['srfB'] as double,
-      srfC: map['srfC'] as double,
-      srf: map['srf'] as double,
+      srfA: (map['srfA'] as num?)?.toDouble(),
+      srfB: (map['srfB'] as num?)?.toDouble(),
+      srfC: (map['srfC'] as num?)?.toDouble(),
+      srf: (map['srf'] as num?)?.toDouble(),
     );
   }
 

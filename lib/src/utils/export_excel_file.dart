@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:q_slope_calculator/src/constants/strings.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:q_slope_calculator/src/data/common/app_error.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
@@ -83,8 +84,10 @@ Future<String> exportExcelFile(
   }
 
   final List<int> bytes = workbook.saveAsStream();
-  final fileName =
-      "q-slope-calculations_${DateTime.now().toIso8601String().replaceAll(":", "-")}.xlsx";
+  final fileName = generateExportFileName(
+    excelExportFilePrefix,
+    excelFileExtension,
+  );
   String? result = await saveFile(bytes, fileName, context);
 
   if (result == null) {

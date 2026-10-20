@@ -26,7 +26,7 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
   void _calculateRqd() {
     if (sumOfCorePiecesController.text.isNotEmpty &&
         totalDrillRunController.text.isNotEmpty &&
-        int.tryParse(totalDrillRunController.text) != 0) {
+        (double.tryParse(totalDrillRunController.text) ?? 0) != 0) {
       rqd.value = double.tryParse(
         calculateRqdByDirectMethod(
           double.tryParse(sumOfCorePiecesController.text) ?? 0,
@@ -74,7 +74,9 @@ class BlockSizePageDirectMethodWidget extends StatelessWidget {
                 context,
               ).totalDrillRunTextInputRequired;
             }
-            if (value != null && value.isNotEmpty && int.tryParse(value) == 0) {
+            if (value != null &&
+                value.isNotEmpty &&
+                double.tryParse(value) == 0) {
               return AppLocalizations.of(context).totalDrillRunTextNotZero;
             }
             return null;

@@ -49,12 +49,18 @@ class JointCharacter {
     return JointCharacter(
       jointRoughness:
           map['jointRoughness'] != null
-              ? (map['jointRoughness'] as List).cast<double>()
+              ? (map['jointRoughness'] as List)
+                  .map((e) => (e as num).toDouble())
+                  .toList()
               : null,
       jointWaviness:
-          map['jw'] != null ? (map['jw'] as List).cast<double>() : null,
+          map['jw'] != null
+              ? (map['jw'] as List).map((e) => (e as num).toDouble()).toList()
+              : null,
       jointSmoothness:
-          map['js'] != null ? (map['js'] as List).cast<double>() : null,
+          map['js'] != null
+              ? (map['js'] as List).map((e) => (e as num).toDouble()).toList()
+              : null,
       jrCalculationType:
           map['jrCalculationType'] != null
               ? map['jrCalculationType'] == JrCalculationType.jr.name
@@ -63,7 +69,9 @@ class JointCharacter {
               : null,
       jointAlteration:
           map['jointAlteration'] != null
-              ? (map['jointAlteration'] as List).cast<double>()
+              ? (map['jointAlteration'] as List)
+                  .map((e) => (e as num).toDouble())
+                  .toList()
               : null,
     );
   }

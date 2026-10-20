@@ -36,39 +36,47 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
   int numberOfJoints = -1;
 
   void _initiateControllers(QSlope qSlope) {
-    int? joints = qSlope.blockSize?.numberOfJoints ?? 0;
+    int joints = qSlope.blockSize?.numberOfJoints ??
+        (qSlope.jointCharacter?.jointRoughness?.length ?? 1);
+    if (joints <= 0) joints = 1;
+
     if (joints != numberOfJoints) {
       _jointRoughnessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
-          text:
-              qSlope.jointCharacter?.jointRoughness?[jointIndex].toString() ??
-              "",
+          text: (qSlope.jointCharacter?.jointRoughness != null &&
+                  qSlope.jointCharacter!.jointRoughness!.length > jointIndex)
+              ? qSlope.jointCharacter!.jointRoughness![jointIndex].toString()
+              : "",
         ),
       );
       _jointAlterationControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
-          text:
-              qSlope.jointCharacter?.jointAlteration?[jointIndex].toString() ??
-              "",
+          text: (qSlope.jointCharacter?.jointAlteration != null &&
+                  qSlope.jointCharacter!.jointAlteration!.length > jointIndex)
+              ? qSlope.jointCharacter!.jointAlteration![jointIndex].toString()
+              : "",
         ),
       );
-      jrCalculationType = qSlope.jointCharacter?.jrCalculationType;
+      jrCalculationType =
+          qSlope.jointCharacter?.jrCalculationType ?? JrCalculationType.jr;
       _jointSmoothnessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
-          text:
-              qSlope.jointCharacter?.jointSmoothness?[jointIndex].toString() ??
-              "",
+          text: (qSlope.jointCharacter?.jointSmoothness != null &&
+                  qSlope.jointCharacter!.jointSmoothness!.length > jointIndex)
+              ? qSlope.jointCharacter!.jointSmoothness![jointIndex].toString()
+              : "",
         ),
       );
       _jointWavinessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
-          text:
-              qSlope.jointCharacter?.jointWaviness?[jointIndex].toString() ??
-              "",
+          text: (qSlope.jointCharacter?.jointWaviness != null &&
+                  qSlope.jointCharacter!.jointWaviness!.length > jointIndex)
+              ? qSlope.jointCharacter!.jointWaviness![jointIndex].toString()
+              : "",
         ),
       );
       numberOfJoints = joints;
@@ -168,6 +176,11 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
   @override
   void initState() {
     _initiateControllers(widget.qSlope.value);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _onFormChange();
+      }
+    });
     super.initState();
   }
 

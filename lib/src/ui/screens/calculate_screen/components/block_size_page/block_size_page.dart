@@ -64,10 +64,30 @@ class _BlockSizePageState extends State<BlockSizePage> {
     _lithologyController.text = qSlope.lithology ?? "";
     _slopeAngleByUserController.text =
         qSlope.slopeAngleByUser?.toString() ?? '';
+    final existingRqd = qSlope.blockSize?.rqd;
+    double? sumOfCorePieces = qSlope.blockSize?.sumOfCorePieces;
+    double? totalDrillRun = qSlope.blockSize?.totalDrillRun;
+
+    if (existingRqd != null &&
+        (sumOfCorePieces == null || totalDrillRun == null)) {
+      sumOfCorePieces ??= existingRqd;
+      totalDrillRun ??= 100.0;
+      qSlope.blockSize?.sumOfCorePieces = sumOfCorePieces;
+      qSlope.blockSize?.totalDrillRun = totalDrillRun;
+    }
+
     _sumOfCorePiecesController.text =
-        qSlope.blockSize?.sumOfCorePieces.toString() ?? '';
+        sumOfCorePieces != null
+            ? (sumOfCorePieces % 1 == 0
+                ? sumOfCorePieces.toInt().toString()
+                : sumOfCorePieces.toString())
+            : '';
     _totalDrillRunController.text =
-        qSlope.blockSize?.totalDrillRun.toString() ?? '';
+        totalDrillRun != null
+            ? (totalDrillRun % 1 == 0
+                ? totalDrillRun.toInt().toString()
+                : totalDrillRun.toString())
+            : '';
     if (qSlope.blockSize != null &&
         qSlope.blockSize!.jointSpacingInMeters != null &&
         qSlope.blockSize!.jointSpacingInMeters!.isNotEmpty) {
@@ -81,9 +101,20 @@ class _BlockSizePageState extends State<BlockSizePage> {
     }
     jointSpacings.value = qSlope.blockSize?.jointSpacingInMeters ?? [];
     _numberOfJointsController.text =
-        qSlope.blockSize?.numberOfJoints?.toString() ?? '';
+        qSlope.blockSize?.numberOfJoints?.toString() ??
+        (qSlope.jointCharacter?.jointRoughness?.length.toString() ?? '');
+    int intNumOfJoints = int.tryParse(_numberOfJointsController.text) ?? 0;
+    if (intNumOfJoints > 0 && intNumOfJoints <= 100) {
+      List<TextEditingController> currentControllers = List.from(
+        _jointSpacingControllers.value,
+      );
+      while (currentControllers.length < intNumOfJoints) {
+        currentControllers.add(TextEditingController(text: '1.0'));
+      }
+      _jointSpacingControllers.value = currentControllers;
+    }
     _numberOfRandomSetsController.text =
-        qSlope.blockSize?.numberOfRandomSets?.toString() ?? '';
+        qSlope.blockSize?.numberOfRandomSets?.toString() ?? '0';
     _areaController.text =
         qSlope.blockSize?.areaInSquareMeters?.toString() ?? '';
     rqd.value = qSlope.blockSize?.rqd;
@@ -92,7 +123,13 @@ class _BlockSizePageState extends State<BlockSizePage> {
         qSlope.blockSize?.jointSetNumber?.toString() ?? "";
     rqdByJvCalculationType.value = qSlope.blockSize?.rqdByJvCalculationType;
     setState(() {
-      rqdCalculationType = qSlope.blockSize?.rqdCalculationType;
+      rqdCalculationType = qSlope.blockSize?.rqdCalculationType ??
+          (qSlope.blockSize?.rqd != null ? RqdCalculationType.directMethod : null);
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _setQSlope();
+      }
     });
     super.initState();
   }
@@ -159,19 +196,20 @@ class _BlockSizePageState extends State<BlockSizePage> {
   }
 
   void _setQSlope() {
-    if (_locationIdController.text.isNotEmpty &&
-        _lithologyController.text.isNotEmpty &&
-        rqd.value != null &&
-        _numberOfJointsController.text.isNotEmpty &&
-        _numberOfRandomSetsController.text.isNotEmpty &&
-        _jointSetNumberController.text.isNotEmpty) {
+    final hasLocation = _locationIdController.text.isNotEmpty;
+    final hasLithology = _lithologyController.text.isNotEmpty;
+    final hasRqd = rqd.value != null;
+    final hasJoints = _numberOfJointsController.text.isNotEmpty;
+    final hasJn = _jointSetNumberController.text.isNotEmpty;
+
+    if (hasLocation && hasLithology && hasRqd && hasJoints && hasJn) {
       QSlope qSlope = widget.qSlope.value;
       qSlope.lithology = _lithologyController.text;
       qSlope.locationId = _locationIdController.text;
       qSlope.slopeAngleByUser = double.tryParse(
         _slopeAngleByUserController.text,
       );
-      qSlope.blockSize = BlockSize();
+      qSlope.blockSize ??= BlockSize();
       qSlope.blockSize?.areaInSquareMeters = double.tryParse(
         _areaController.text,
       );
@@ -179,10 +217,10 @@ class _BlockSizePageState extends State<BlockSizePage> {
       qSlope.blockSize?.jointVolume = jointVolume.value;
       qSlope.blockSize?.numberOfJoints = int.tryParse(
         _numberOfJointsController.text,
-      );
+      ) ?? 1;
       qSlope.blockSize?.numberOfRandomSets = int.tryParse(
         _numberOfRandomSetsController.text,
-      );
+      ) ?? 0;
       qSlope.blockSize?.rqd = rqd.value;
       qSlope.blockSize?.rqdByJvCalculationType = rqdByJvCalculationType.value;
       qSlope.blockSize?.rqdCalculationType = rqdCalculationType;
@@ -382,7 +420,28 @@ class _BlockSizePageState extends State<BlockSizePage> {
                         setState(() {
                           rqdCalculationType = value;
                         });
-                        rqd.value = null;
+                        if (_sumOfCorePiecesController.text.isNotEmpty &&
+                            _totalDrillRunController.text.isNotEmpty) {
+                          final sum =
+                              double.tryParse(
+                                _sumOfCorePiecesController.text,
+                              ) ??
+                              0;
+                          final total =
+                              double.tryParse(_totalDrillRunController.text) ??
+                              100;
+                          if (total != 0) {
+                            rqd.value = double.tryParse(
+                              calculateRqdByDirectMethod(
+                                sum,
+                                total,
+                              ).toStringAsFixed(4),
+                            );
+                            _setQSlope();
+                          }
+                        } else {
+                          rqd.value = null;
+                        }
                       },
                       child: Radio<RqdCalculationType>(
                         value: RqdCalculationType.directMethod,

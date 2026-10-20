@@ -51,27 +51,46 @@ class _OFactorPageState extends State<OFactorPage> {
   @override
   void initState() {
     QSlope? qSlope = widget.qSlope.value;
-    _joint1OFactor.text = qSlope.oFactor?.oFactorForFirstJoint.toString() ?? "";
+    _joint1OFactor.text =
+        qSlope.oFactor?.oFactorForFirstJoint?.toString() ?? "1.0";
     _joint2OFactor.text =
-        qSlope.oFactor?.oFactorForSecondJoint.toString() ?? "";
-    _joint1Index.value = qSlope.oFactor?.indexOfFirstJoint;
-    _joint2Index.value = qSlope.oFactor?.indexOfSecondJoint;
+        qSlope.oFactor?.oFactorForSecondJoint?.toString() ?? "";
+    _joint1Index.value = qSlope.oFactor?.indexOfFirstJoint ?? 0;
+    _joint2Index.value = qSlope.oFactor?.indexOfSecondJoint ??
+        ((qSlope.jointCharacter?.jointRoughness?.length ?? 1) > 1 ? 1 : null);
     ratingForF1.text = qSlope.oFactor?.ratingForF1?.toString() ?? "";
     ratingForF2.text = qSlope.oFactor?.ratingForF2?.toString() ?? "";
     ratingForF3.text = qSlope.oFactor?.ratingForF3?.toString() ?? "";
-    _alphaI.text = qSlope.oFactor?.alphaI.toString() ?? "";
-    _alphaJ.text = qSlope.oFactor?.alphaJ.toString() ?? "";
-    _alphaS.text = qSlope.oFactor?.alphaS.toString() ?? "";
-    _betaI.text = qSlope.oFactor?.betaI.toString() ?? "";
-    _betaJ.text = qSlope.oFactor?.betaJ.toString() ?? "";
-    _betaS.text = qSlope.oFactor?.betaS.toString() ?? "";
-    f1.text = qSlope.oFactor?.f1.toString() ?? "";
-    f2.text = qSlope.oFactor?.f2.toString() ?? "";
-    f3.text = qSlope.oFactor?.f3.toString() ?? "";
-    _oFactorTypeOfFailure.value = qSlope.oFactor?.oFactorTypeOfFailure;
-    _oFactorRomanaValueType.value = qSlope.oFactor?.oFactorRomanaValueType;
+    _alphaI.text = qSlope.oFactor?.alphaI?.toString() ?? "";
+    _alphaJ.text = qSlope.oFactor?.alphaJ?.toString() ?? "";
+    _alphaS.text = qSlope.oFactor?.alphaS?.toString() ?? "";
+    _betaI.text = qSlope.oFactor?.betaI?.toString() ?? "";
+    _betaJ.text = qSlope.oFactor?.betaJ?.toString() ?? "";
+    _betaS.text = qSlope.oFactor?.betaS?.toString() ?? "";
+    f1.text = qSlope.oFactor?.f1?.toString() ?? "";
+    f2.text = qSlope.oFactor?.f2?.toString() ?? "";
+    f3.text = qSlope.oFactor?.f3?.toString() ?? "";
+    _oFactorTypeOfFailure.value = qSlope.oFactor?.oFactorTypeOfFailure ??
+        ((qSlope.jointCharacter?.jointRoughness?.length ?? 1) > 1
+            ? OFactorTypeOfFailure.wedge
+            : OFactorTypeOfFailure.planar);
+    _oFactorRomanaValueType.value = qSlope.oFactor?.oFactorRomanaValueType ??
+        (qSlope.oFactor?.alphaI != null ||
+                qSlope.oFactor?.alphaJ != null ||
+                qSlope.oFactor?.f1 != null
+            ? OFactorRomanaValueType.calculation
+            : (qSlope.oFactor?.oFactorCalculationType ==
+                    OFactorCalculationType.romanaAdjacentFactor
+                ? OFactorRomanaValueType.value
+                : null));
     setState(() {
-      _oFactorCalculationType = qSlope.oFactor?.oFactorCalculationType;
+      _oFactorCalculationType = qSlope.oFactor?.oFactorCalculationType ??
+          OFactorCalculationType.value;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _setQSlope();
+      }
     });
     super.initState();
   }
@@ -85,7 +104,12 @@ class _OFactorPageState extends State<OFactorPage> {
         double.parse(_joint1OFactor.text) >= minOFactorValue &&
         double.parse(_joint1OFactor.text) <= maxOFactorValue) {
       if (_oFactorTypeOfFailure.value == OFactorTypeOfFailure.wedge &&
-          _joint2Index.value == null) {
+          (_joint2Index.value == null ||
+              (_oFactorCalculationType == OFactorCalculationType.value &&
+                  (_joint2OFactor.text.isEmpty ||
+                      double.tryParse(_joint2OFactor.text) == null ||
+                      double.parse(_joint2OFactor.text) < minOFactorValue ||
+                      double.parse(_joint2OFactor.text) > maxOFactorValue)))) {
         widget.errorTabs.value[tabIndex] = true;
       } else {
         QSlope qSlope = widget.qSlope.value;

@@ -1,8 +1,13 @@
 import 'dart:math';
 
+import 'package:q_slope_calculator/src/data/models/cartesian_coordinates.dart';
 import 'package:q_slope_calculator/src/data/models/external_factors.dart';
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+import 'package:q_slope_calculator/src/data/models/slope_stability_status.dart';
+
+export 'package:q_slope_calculator/src/data/models/cartesian_coordinates.dart';
+export 'package:q_slope_calculator/src/data/models/slope_stability_status.dart';
 
 /// This library contains all the empirical mathematical formulas
 /// required for calculating Q-Slope parameters such as RQD, Joint Volume (Jv),
@@ -261,14 +266,40 @@ double calculateJwice(
 }
 
 double calculateSlopeAngle(double qSlope) {
+  if (qSlope <= 0) return 0;
   return ((log(qSlope) / log(10)) * 20) + 65;
 }
 
-class CartesianCoordinates {
-  final double x;
-  final double y;
+/// Calculates the safety margin in degrees (allowable slope angle - actual slope angle).
+/// A positive value indicates the actual angle is flatter than allowable (stable margin).
+/// A negative value indicates the actual angle is steeper than allowable (oversteepened).
+double? calculateSafetyMargin(double? qSlope, double? actualSlopeAngle) {
+  if (qSlope == null || qSlope <= 0 || actualSlopeAngle == null) {
+    return null;
+  }
+  return calculateSlopeAngle(qSlope) - actualSlopeAngle;
+}
 
-  CartesianCoordinates({required this.x, required this.y});
+/// Evaluates empirical slope stability with a ±2.5° tolerance band around the boundary line:
+/// - [SlopeStabilityStatus.stable]: actual angle <= allowable - 2.5°
+/// - [SlopeStabilityStatus.uncertain]: within ±2.5° of the allowable boundary
+/// - [SlopeStabilityStatus.unstable]: actual angle > allowable + 2.5°
+/// - [SlopeStabilityStatus.unknown]: actual slope angle or qSlope is not provided
+SlopeStabilityStatus getSlopeStabilityStatus(
+  double? qSlope,
+  double? actualSlopeAngle,
+) {
+  if (qSlope == null || qSlope <= 0 || actualSlopeAngle == null) {
+    return SlopeStabilityStatus.unknown;
+  }
+  double margin = calculateSafetyMargin(qSlope, actualSlopeAngle)!;
+  if (margin >= 2.5) {
+    return SlopeStabilityStatus.stable;
+  } else if (margin > -2.5) {
+    return SlopeStabilityStatus.uncertain;
+  } else {
+    return SlopeStabilityStatus.unstable;
+  }
 }
 
 List<CartesianCoordinates> lineOfBestFitForStableSlopesCoordindates = [

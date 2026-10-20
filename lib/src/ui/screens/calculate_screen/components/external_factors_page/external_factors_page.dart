@@ -44,13 +44,19 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
         "";
     setState(() {
       _externalFactorsCalculationType =
-          qSlope.externalFactors?.externalFactorsCalculationType;
+          qSlope.externalFactors?.externalFactorsCalculationType ??
+          ExternalFactorsCalculationType.value;
       _externalFactorsEnvironmentConditions =
           qSlope.externalFactors?.externalFactorsEnvironmentConditions;
       _externalFactorsStructureType =
           qSlope.externalFactors?.externalFactorsStructureType;
       _externalFactorsStrengthOfRock =
           qSlope.externalFactors?.externalFactorsStrengthOfRock;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _setQSlope();
+      }
     });
     super.initState();
   }

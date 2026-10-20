@@ -11,10 +11,12 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
+import 'package:q_slope_calculator/src/utils/csv_service.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/json_backup_service.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
@@ -49,7 +51,18 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
     srfB.text = qSlope.activeStress?.srfB.toString() ?? "";
     srfC.text = qSlope.activeStress?.srfC.toString() ?? "";
     srf.text = qSlope.activeStress?.srf.toString() ?? "";
+    if (srf.text.isNotEmpty &&
+        srfA.text.isEmpty &&
+        srfB.text.isEmpty &&
+        srfC.text.isEmpty) {
+      srfA.text = srf.text;
+    }
     _qSlope.value = qSlope.qSlope;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _calculateQSlope();
+      }
+    });
     super.initState();
   }
 
@@ -95,6 +108,58 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
     } else {
       widget.errorTabs.value[tabIndex] = true;
       widget.errorTabs.value = List.from(widget.errorTabs.value);
+    }
+  }
+
+  Future<void> _handleExport(BuildContext context, String format) async {
+    QSlope qSlope = widget.qSlope.value;
+    if (qSlope.activeStress != null &&
+        qSlope.jointCharacter != null &&
+        qSlope.externalFactors != null &&
+        qSlope.blockSize != null &&
+        qSlope.oFactor != null &&
+        widget.errorTabs.value.firstWhereOrNull((value) => value) == null) {
+      qSlope.createdAt = DateTime.now();
+      widget.qSlope.value = qSlope.copyWith();
+      try {
+        String fileName;
+        if (format == 'excel') {
+          fileName = await exportExcelFile(
+            List.from([qSlope]),
+            context,
+          );
+        } else if (format == 'json') {
+          fileName = await JsonBackupService.exportJson(
+            List.from([qSlope]),
+            context,
+          );
+        } else {
+          fileName = await CsvService.exportCsv(
+            List.from([qSlope]),
+            context,
+          );
+        }
+
+        if (context.mounted) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.success,
+            title: Text(
+              AppLocalizations.of(context).exportSuccessful(fileName),
+            ),
+          );
+        }
+      } catch (err) {
+        if (context.mounted) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.error,
+            title: Text(AppLocalizations.of(context).exportFailed),
+          );
+        }
+      }
     }
   }
 
@@ -382,108 +447,130 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ElevatedButton(
-                                  onPressed:
-                                      value != null
-                                          ? () async {
-                                            QSlope qSlope = widget.qSlope.value;
-                                            if (qSlope.activeStress != null &&
-                                                qSlope.jointCharacter != null &&
-                                                qSlope.externalFactors !=
-                                                    null &&
-                                                qSlope.blockSize != null &&
-                                                qSlope.oFactor != null &&
-                                                widget.errorTabs.value
-                                                        .firstWhereOrNull(
-                                                          (value) => value,
-                                                        ) ==
-                                                    null) {
-                                              qSlope.createdAt = DateTime.now();
-                                              widget.qSlope.value =
-                                                  qSlope.copyWith();
-                                              try {
-                                                String fileName =
-                                                    await exportExcelFile(
-                                                      List.from([qSlope]),
-                                                      context,
-                                                    );
-                                                if (context.mounted) {
-                                                  toastification.show(
-                                                    autoCloseDuration:
-                                                        const Duration(
-                                                          seconds: 2,
-                                                        ),
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    type:
-                                                        ToastificationType
-                                                            .success,
-                                                    title: Text(
-                                                      AppLocalizations.of(
-                                                        context,
-                                                      ).exportSuccessful(
-                                                        fileName,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              } catch (err) {
-                                                if (context.mounted) {
-                                                  toastification.show(
-                                                    autoCloseDuration:
-                                                        const Duration(
-                                                          seconds: 2,
-                                                        ),
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    type:
-                                                        ToastificationType
-                                                            .error,
-                                                    title: Text(
-                                                      AppLocalizations.of(
-                                                        context,
-                                                      ).exportFailed,
-                                                    ),
-                                                  );
-                                                  rethrow;
-                                                }
-                                              }
-                                            }
-                                          }
-                                          : null,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              Colors.grey.shade800,
-                                            )
-                                            : null,
-                                    foregroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              primaryColor,
-                                            )
-                                            : null,
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                                PopupMenuButton<String>(
+                                  enabled: value != null,
+                                  tooltip: AppLocalizations.of(context).export,
+                                  onSelected: (format) =>
+                                      _handleExport(context, format),
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      value: 'excel',
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.table_chart_outlined,
+                                            color: primaryColor,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).exportFileTitle,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(
-                                        getViewPortWidth(context) * 0.4,
-                                        getViewPortHeight(context) * 0.05,
+                                    PopupMenuItem(
+                                      value: 'json',
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.code,
+                                            color: primaryColor,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).exportJson,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      AppLocalizations.of(
-                                        context,
-                                      ).exportFileTitle,
+                                    PopupMenuItem(
+                                      value: 'csv',
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.grid_on_outlined,
+                                            color: primaryColor,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).exportCsv,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                  child: Container(
+                                    width: getViewPortWidth(context) * 0.4,
+                                    height: getViewPortHeight(context) * 0.05,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          value != null
+                                              ? (Theme.of(context).brightness ==
+                                                      Brightness.dark
+                                                  ? Colors.grey.shade800
+                                                  : primaryColor)
+                                              : Colors.grey.shade400,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.file_download_outlined,
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? primaryColor
+                                                    : Colors.white,
+                                            size: 18,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            ).export,
+                                            style: TextStyle(
+                                              color:
+                                                  Theme.of(context).brightness ==
+                                                          Brightness.dark
+                                                      ? primaryColor
+                                                      : Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_drop_down,
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? primaryColor
+                                                    : Colors.white,
+                                            size: 18,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

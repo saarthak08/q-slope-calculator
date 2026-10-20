@@ -1251,6 +1251,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chart export failed'**
   String get chartExportFailed;
+
+  /// No description provided for @statusStable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get statusStable;
+
+  /// No description provided for @statusUncertain.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncertain'**
+  String get statusUncertain;
+
+  /// No description provided for @statusUnstable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unstable'**
+  String get statusUnstable;
+
+  /// No description provided for @statusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get statusUnknown;
+
+  /// No description provided for @safetyMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Margin (Δβ)'**
+  String get safetyMargin;
+
+  /// No description provided for @allowableAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowable (β)'**
+  String get allowableAngle;
+
+  /// No description provided for @actualAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual (α)'**
+  String get actualAngle;
+
+  /// No description provided for @searchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by location or lithology...'**
+  String get searchPlaceholder;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get sortBy;
+
+  /// No description provided for @sortDateNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Newest)'**
+  String get sortDateNewest;
+
+  /// No description provided for @sortDateOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Oldest)'**
+  String get sortDateOldest;
+
+  /// No description provided for @sortQSlopeHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Q-slope (Highest)'**
+  String get sortQSlopeHigh;
+
+  /// No description provided for @sortQSlopeLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Q-slope (Lowest)'**
+  String get sortQSlopeLow;
+
+  /// No description provided for @sortLocationAZ.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (A-Z)'**
+  String get sortLocationAZ;
+
+  /// No description provided for @sortLocationZA.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (Z-A)'**
+  String get sortLocationZA;
+
+  /// No description provided for @noCalculationsMatchFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No calculations match your search or filter'**
+  String get noCalculationsMatchFilter;
+
+  /// No description provided for @exportJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Export JSON'**
+  String get exportJson;
+
+  /// No description provided for @importJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Import JSON'**
+  String get importJson;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get exportCsv;
+
+  /// No description provided for @importCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Import CSV'**
+  String get importCsv;
+
+  /// No description provided for @importSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully imported {count} calculation(s)'**
+  String importSuccessful(Object count);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String importFailed(Object error);
+
+  /// No description provided for @importConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Calculations'**
+  String get importConflictTitle;
+
+  /// No description provided for @importConflictContent.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to handle existing calculations?'**
+  String get importConflictContent;
+
+  /// No description provided for @skipDuplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip Duplicates'**
+  String get skipDuplicates;
+
+  /// No description provided for @overwriteExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Overwrite Existing'**
+  String get overwriteExisting;
+
+  /// No description provided for @importAsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Import As New Copies'**
+  String get importAsNew;
+
+  /// No description provided for @noFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get noFileSelected;
+
+  /// No description provided for @invalidFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid file format or corrupted file'**
+  String get invalidFormat;
+
+  /// No description provided for @importData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Data'**
+  String get importData;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Save failed'**
+  String get saveFailed;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// No description provided for @exportAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All'**
+  String get exportAll;
+
+  /// No description provided for @exportAllExcel.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (Excel)'**
+  String get exportAllExcel;
+
+  /// No description provided for @exportAllJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (JSON)'**
+  String get exportAllJson;
+
+  /// No description provided for @exportAllCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (CSV)'**
+  String get exportAllCsv;
+
+  /// No description provided for @bulkSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Calculations'**
+  String get bulkSelect;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedCount(Object count);
+
+  /// No description provided for @options.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get options;
 }
 
 class _AppLocalizationsDelegate

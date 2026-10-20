@@ -117,12 +117,14 @@ class QSlope {
                 map['activeStress'] as Map<String, dynamic>,
               )
               : null,
-      qSlope: map['qSlope'] as double?,
+      qSlope: (map['qSlope'] as num?)?.toDouble(),
       createdAt:
           map['createdAt'] != null
-              ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
+              ? (map['createdAt'] is int
+                  ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int)
+                  : DateTime.tryParse(map['createdAt'].toString()))
               : null,
-      slopeAngleByUser: map['slopeAngleByUser'] as double?,
+      slopeAngleByUser: (map['slopeAngleByUser'] as num?)?.toDouble(),
     );
   }
 

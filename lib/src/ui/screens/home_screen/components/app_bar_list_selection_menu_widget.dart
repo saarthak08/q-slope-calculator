@@ -1,282 +1,329 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
-import 'package:q_slope_calculator/src/utils/dimensions.dart';
+import 'package:q_slope_calculator/src/utils/csv_service.dart';
 import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
+import 'package:q_slope_calculator/src/utils/json_backup_service.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
-import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
+
+enum SelectionMenuAction {
+  toggleSelect,
+  exportExcel,
+  exportJson,
+  exportCsv,
+  chart,
+  delete,
+}
 
 class AppBarListSelectionMenuWidget extends StatelessWidget {
-  final List<bool>? selectedTiles;
-  final void Function(List<bool> selectedTiles) setSelectedTiles;
+  final Set<String> selectedIds;
+  final List<QSlope> currentList;
+  final void Function(Set<String> selectedIds) setSelectedIds;
+  final VoidCallback? onExitSelectionMode;
+
   const AppBarListSelectionMenuWidget({
     super.key,
-    required this.selectedTiles,
-    required this.setSelectedTiles,
+    required this.selectedIds,
+    required this.currentList,
+    required this.setSelectedIds,
+    this.onExitSelectionMode,
   });
+
+  List<QSlope> get _selectedQSlopes {
+    return currentList.where((item) => selectedIds.contains(item.id)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool deselectAll = true;
-    for (var value in selectedTiles ?? []) {
-      if (!value) {
-        deselectAll = false;
-        break;
-      }
-    }
-    if (selectedTiles == null || selectedTiles!.isEmpty) {
-      deselectAll = false;
-    }
+    final bool deselectAll =
+        currentList.isNotEmpty &&
+        currentList.every((item) => selectedIds.contains(item.id));
 
-    final qSlopeListState = context.watch<QSlopeListCubit>().state;
-
-    return PopupMenuButton(
+    return PopupMenuButton<SelectionMenuAction>(
       iconColor: primaryColor,
       itemBuilder:
           (context) => [
             PopupMenuItem(
-              onTap: () {
-                var qSlopeState = qSlopeListState;
-                if (qSlopeState is QSlopeListLoaded) {
-                  if (deselectAll) {
-                    setSelectedTiles(
-                      List.filled(qSlopeState.qSlopeList.length, false),
-                    );
-                  } else {
-                    setSelectedTiles(
-                      List.filled(qSlopeState.qSlopeList.length, true),
-                    );
-                  }
-                }
-              },
+              value: SelectionMenuAction.toggleSelect,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     deselectAll ? Icons.deselect : Icons.select_all,
                     color: primaryColor,
                   ),
-                  SizedBox(width: getViewPortWidth(context) * 0.02),
-                  Text(
-                    deselectAll
-                        ? AppLocalizations.of(context).deselectAll
-                        : AppLocalizations.of(context).selectAll,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      deselectAll
+                          ? AppLocalizations.of(context).deselectAll
+                          : AppLocalizations.of(context).selectAll,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
             ),
             PopupMenuItem(
-              onTap: () {
-                showGenericDialog(
-                  context: context,
-                  titleText: AppLocalizations.of(context).exportFileTitle,
-                  label: AppLocalizations.of(context).exportFileContent,
-                  onOk: () async {
-                    var qSlopeState = qSlopeListState;
-                    if (qSlopeState is QSlopeListLoaded) {
-                      int index = 0;
-                      var qSlopes = List<QSlope>.empty(growable: true);
-                      var tiles = selectedTiles;
-                      if (tiles != null) {
-                        for (var selectedQSlopes in tiles) {
-                          if (selectedQSlopes) {
-                            qSlopes.add(qSlopeState.qSlopeList[index]);
-                          }
-                          index++;
-                        }
-                        showFullScreenLoader(context);
-                        try {
-                          String fileName = await exportExcelFile(
-                            qSlopes,
-                            context,
-                          );
-                          if (context.mounted) {
-                            toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.success,
-                              title: Text(
-                                AppLocalizations.of(
-                                  context,
-                                ).exportSuccessful(fileName),
-                              ),
-                            );
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                          }
-                        } catch (err) {
-                          if (context.mounted) {
-                            toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.error,
-                              title: Text(
-                                AppLocalizations.of(context).exportFailed,
-                              ),
-                            );
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            rethrow;
-                          }
-                        }
-                      }
-                      setSelectedTiles(
-                        List.filled(qSlopeState.qSlopeList.length, false),
-                      );
-                    }
-                  },
-                );
-              },
+              value: SelectionMenuAction.exportExcel,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.file_upload_outlined, color: primaryColor),
-                  SizedBox(width: getViewPortWidth(context) * 0.02),
-                  Text(AppLocalizations.of(context).export),
+                  Icon(Icons.table_chart_outlined, color: primaryColor),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).exportFileTitle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
             PopupMenuItem(
-              onTap: () async {
-                var qSlopeState = qSlopeListState;
-                if (qSlopeState is QSlopeListLoaded) {
-                  int index = 0;
-                  var qSlopes = List<double>.empty(growable: true);
-                  var slopeAnglesByUser = List<double?>.empty(growable: true);
-                  var tiles = selectedTiles;
-                  if (tiles != null) {
-                    for (var selectedQSlopes in tiles) {
-                      var qSlope = qSlopeState.qSlopeList[index];
-                      var qSlopeValue = qSlope.qSlope;
-                      if (selectedQSlopes) {
-                        if (qSlopeValue != null) qSlopes.add(qSlopeValue);
-                        slopeAnglesByUser.add(qSlope.slopeAngleByUser);
-                      }
-                      index++;
-                    }
-                    Navigator.pushNamed(
-                      context,
-                      QSlopeStabilityChartScreen.route,
-                      arguments: QSlopeStabilityChartScreenArguments(
-                        qSlopeValues: qSlopes,
-                        slopeAnglesByUser: slopeAnglesByUser,
-                      ),
-                    );
-                  }
-                }
-              },
+              value: SelectionMenuAction.exportJson,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.code, color: primaryColor),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).exportJson,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: SelectionMenuAction.exportCsv,
+              child: Row(
+                children: [
+                  Icon(Icons.grid_on_outlined, color: primaryColor),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).exportCsv,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: SelectionMenuAction.chart,
+              child: Row(
                 children: [
                   Icon(Icons.area_chart, color: primaryColor),
-                  SizedBox(width: getViewPortWidth(context) * 0.02),
-                  Text(AppLocalizations.of(context).qSlopeStabilityChart),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).qSlopeStabilityChart,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
             PopupMenuItem(
-              onTap: () async {
-                showGenericDialog(
-                  context: context,
-                  titleText:
-                      AppLocalizations.of(context).deleteCalculationsModalTitle,
-                  label:
-                      AppLocalizations.of(
-                        context,
-                      ).deleteCalculationsModalContent,
-                  onOk: () async {
-                    var qSlopeState = qSlopeListState;
-                    if (qSlopeState is QSlopeListLoaded) {
-                      int index = 0;
-                      var qSlopes = List<String>.empty(growable: true);
-                      var tiles = selectedTiles;
-                      if (tiles != null) {
-                        for (var selectedQSlopes in tiles) {
-                          if (selectedQSlopes) {
-                            qSlopes.add(qSlopeState.qSlopeList[index].id);
-                          }
-                          index++;
-                        }
-                        showFullScreenLoader(context);
-                        try {
-                          await context
-                              .read<QSlopeListCubit>()
-                              .deleteMultipleQSlopesFromList(qSlopes);
-                          if (context.mounted) {
-                            toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.success,
-                              title: Text(
-                                AppLocalizations.of(
-                                  context,
-                                ).deleteCalculationSuccessful,
-                              ),
-                            );
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                          }
-                        } catch (err) {
-                          if (context.mounted) {
-                            toastification.show(
-                              autoCloseDuration: const Duration(seconds: 2),
-                              alignment: Alignment.bottomCenter,
-                              type: ToastificationType.error,
-                              title: Text(
-                                AppLocalizations.of(
-                                  context,
-                                ).errorInDeletingCalculation,
-                              ),
-                            );
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                            rethrow;
-                          }
-                        }
-                      }
-                    }
-                  },
-                );
-              },
+              value: SelectionMenuAction.delete,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.delete, color: Colors.red),
-                  SizedBox(width: getViewPortWidth(context) * 0.02),
-                  Text(AppLocalizations.of(context).delete),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).delete,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
+      onSelected: (value) async {
+        switch (value) {
+          case SelectionMenuAction.toggleSelect:
+            if (deselectAll) {
+              setSelectedIds({});
+            } else {
+              setSelectedIds(currentList.map((e) => e.id).toSet());
+            }
+            break;
+
+          case SelectionMenuAction.exportExcel:
+            _exportExcel(context);
+            break;
+
+          case SelectionMenuAction.exportJson:
+            _exportJson(context);
+            break;
+
+          case SelectionMenuAction.exportCsv:
+            _exportCsv(context);
+            break;
+
+          case SelectionMenuAction.chart:
+            final selected = _selectedQSlopes;
+            final qSlopes =
+                selected
+                    .where((q) => q.qSlope != null)
+                    .map((q) => q.qSlope!)
+                    .toList();
+            final slopeAngles =
+                selected.map((q) => q.slopeAngleByUser).toList();
+
+            Navigator.pushNamed(
+              context,
+              QSlopeStabilityChartScreen.route,
+              arguments: QSlopeStabilityChartScreenArguments(
+                qSlopeValues: qSlopes,
+                slopeAnglesByUser: slopeAngles,
+              ),
+            );
+            break;
+
+          case SelectionMenuAction.delete:
+            _confirmDelete(context);
+            break;
+        }
+      },
+    );
+  }
+
+  void _exportExcel(BuildContext context) {
+    showGenericDialog(
+      context: context,
+      titleText: AppLocalizations.of(context).exportFileTitle,
+      label: AppLocalizations.of(context).exportFileContent,
+      onOk: () async {
+        Navigator.pop(context); // Dismiss the confirm dialog
+        final qSlopes = _selectedQSlopes;
+        showFullScreenLoader(context);
+        try {
+          final fileName = await exportExcelFile(qSlopes, context);
+          if (context.mounted) {
+            Navigator.pop(context); // loader
+            toastification.show(
+              autoCloseDuration: const Duration(seconds: 2),
+              alignment: Alignment.bottomCenter,
+              type: ToastificationType.success,
+              title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
+            );
+            setSelectedIds({});
+            onExitSelectionMode?.call();
+          }
+        } catch (err) {
+          if (context.mounted) {
+            Navigator.pop(context); // loader
+            toastification.show(
+              autoCloseDuration: const Duration(seconds: 2),
+              alignment: Alignment.bottomCenter,
+              type: ToastificationType.error,
+              title: Text(AppLocalizations.of(context).exportFailed),
+            );
+          }
+        }
+      },
+    );
+  }
+
+  void _exportJson(BuildContext context) async {
+    final qSlopes = _selectedQSlopes;
+    showFullScreenLoader(context);
+    try {
+      final fileName = await JsonBackupService.exportJson(qSlopes, context);
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        toastification.show(
+          autoCloseDuration: const Duration(seconds: 2),
+          alignment: Alignment.bottomCenter,
+          type: ToastificationType.success,
+          title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
+        );
+        setSelectedIds({});
+        onExitSelectionMode?.call();
+      }
+    } catch (err) {
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        toastification.show(
+          autoCloseDuration: const Duration(seconds: 2),
+          alignment: Alignment.bottomCenter,
+          type: ToastificationType.error,
+          title: Text(AppLocalizations.of(context).exportFailed),
+        );
+      }
+    }
+  }
+
+  void _exportCsv(BuildContext context) async {
+    final qSlopes = _selectedQSlopes;
+    showFullScreenLoader(context);
+    try {
+      final fileName = await CsvService.exportCsv(qSlopes, context);
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        toastification.show(
+          autoCloseDuration: const Duration(seconds: 2),
+          alignment: Alignment.bottomCenter,
+          type: ToastificationType.success,
+          title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
+        );
+        setSelectedIds({});
+        onExitSelectionMode?.call();
+      }
+    } catch (err) {
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        toastification.show(
+          autoCloseDuration: const Duration(seconds: 2),
+          alignment: Alignment.bottomCenter,
+          type: ToastificationType.error,
+          title: Text(AppLocalizations.of(context).exportFailed),
+        );
+      }
+    }
+  }
+
+  void _confirmDelete(BuildContext context) {
+    showGenericDialog(
+      context: context,
+      titleText: AppLocalizations.of(context).deleteCalculationsModalTitle,
+      label: AppLocalizations.of(context).deleteCalculationsModalContent,
+      onOk: () async {
+        Navigator.pop(context); // Dismiss the confirm dialog
+        final ids = selectedIds.toList();
+        showFullScreenLoader(context);
+        try {
+          await context.read<QSlopeListCubit>().deleteMultipleQSlopesFromList(ids);
+          if (context.mounted) {
+            Navigator.pop(context); // loader
+            toastification.show(
+              autoCloseDuration: const Duration(seconds: 2),
+              alignment: Alignment.bottomCenter,
+              type: ToastificationType.success,
+              title: Text(AppLocalizations.of(context).deleteCalculationSuccessful),
+            );
+            setSelectedIds({});
+            onExitSelectionMode?.call();
+          }
+        } catch (err) {
+          if (context.mounted) {
+            Navigator.pop(context); // loader
+            toastification.show(
+              autoCloseDuration: const Duration(seconds: 2),
+              alignment: Alignment.bottomCenter,
+              type: ToastificationType.error,
+              title: Text(AppLocalizations.of(context).errorInDeletingCalculation),
+            );
+          }
+        }
+      },
     );
   }
 }

@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
+import 'package:q_slope_calculator/src/constants/strings.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -59,8 +60,10 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                         bytes.offsetInBytes,
                         bytes.lengthInBytes,
                       );
-                      final fileName =
-                          "q-slope-stability-chart_${DateTime.now().toIso8601String().replaceAll(":", "-")}.png";
+                      final fileName = generateExportFileName(
+                        chartExportFilePrefix,
+                        pngFileExtension,
+                      );
                       try {
                         if (buildContext.mounted) {
                           await saveFile(

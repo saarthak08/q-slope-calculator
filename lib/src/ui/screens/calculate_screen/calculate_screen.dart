@@ -45,11 +45,14 @@ class _CalculateScreenState extends State<CalculateScreen>
       if (_tabController!.indexIsChanging &&
           (_tabController!.index == 1 || _tabController!.index == 2)) {
         QSlope qSlope = _qSlope.value;
-        if (qSlope.blockSize == null ||
-            qSlope.blockSize!.jointSetNumber == null ||
-            qSlope.blockSize!.numberOfJoints == null ||
-            qSlope.blockSize!.numberOfRandomSets == null ||
-            qSlope.blockSize!.rqd == null) {
+        final bs = qSlope.blockSize;
+        final hasJoints = (bs?.numberOfJoints != null && bs!.numberOfJoints! > 0) ||
+            (qSlope.jointCharacter?.jointRoughness != null &&
+                qSlope.jointCharacter!.jointRoughness!.isNotEmpty);
+        final hasRqd = bs?.rqd != null;
+        final hasJn = bs?.jointSetNumber != null;
+
+        if (bs == null || !hasRqd || !hasJn || !hasJoints) {
           showGenericDialog(
             titleText: AppLocalizations.of(context).completeDialogTitle,
             context: context,
@@ -61,6 +64,13 @@ class _CalculateScreenState extends State<CalculateScreen>
               Navigator.pop(context);
             },
           );
+        } else {
+          // Normalize optional/default fields if they were omitted in import
+          bs.numberOfRandomSets ??= 0;
+          if (bs.numberOfJoints == null &&
+              qSlope.jointCharacter?.jointRoughness != null) {
+            bs.numberOfJoints = qSlope.jointCharacter!.jointRoughness!.length;
+          }
         }
       }
     });
