@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 class JointCharacter {
   /// [JR_USING_PALMSTROM]
@@ -103,20 +104,20 @@ class JointCharacter {
   bool operator ==(covariant JointCharacter other) {
     if (identical(this, other)) return true;
 
-    return other.jointRoughness == jointRoughness &&
-        other.jointWaviness == jointWaviness &&
-        other.jointSmoothness == jointSmoothness &&
+    return listEquals(other.jointRoughness, jointRoughness) &&
+        listEquals(other.jointWaviness, jointWaviness) &&
+        listEquals(other.jointSmoothness, jointSmoothness) &&
         other.jrCalculationType == jrCalculationType &&
-        other.jointAlteration == jointAlteration;
+        listEquals(other.jointAlteration, jointAlteration);
   }
 
   @override
   int get hashCode {
-    return jointRoughness.hashCode ^
-        jointWaviness.hashCode ^
-        jointSmoothness.hashCode ^
+    return Object.hashAll(jointRoughness ?? const []) ^
+        Object.hashAll(jointWaviness ?? const []) ^
+        Object.hashAll(jointSmoothness ?? const []) ^
         jrCalculationType.hashCode ^
-        jointAlteration.hashCode;
+        Object.hashAll(jointAlteration ?? const []);
   }
 }
 

@@ -133,8 +133,8 @@ class ExternalFactors {
             environmentalAndGeologicalConditionalNumber &&
         other.externalFactorsStructureType == externalFactorsStructureType &&
         other.externalFactorsStrengthOfRock == externalFactorsStrengthOfRock &&
-        other.environmentalAndGeologicalConditionalNumber ==
-            environmentalAndGeologicalConditionalNumber &&
+        other.externalFactorsEnvironmentConditions ==
+            externalFactorsEnvironmentConditions &&
         other.externalFactorsCalculationType == externalFactorsCalculationType;
   }
 

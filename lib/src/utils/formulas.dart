@@ -62,11 +62,13 @@ double calculateJointVolume(
 }
 
 double calculateRqdByTwoPointFiveJv(double jv) {
-  return 110 - (2.5 * jv);
+  final double result = 110 - (2.5 * jv);
+  return result.clamp(0.0, 100.0);
 }
 
 double calculateRqdByThreePointThreeJv(double jv) {
-  return 115 - (3.3 * jv);
+  final double result = 115 - (3.3 * jv);
+  return result.clamp(0.0, 100.0);
 }
 
 double calculateF1ForPlanarFailure(double alphaJ, double alphaS) {
@@ -111,7 +113,8 @@ double calculateOFactorByRomananAdjustmentFactor(
   double f2,
   double f3,
 ) {
-  return 1.9759 * (exp(0.0339 * (f1 * f2 * f3)));
+  final double result = 1.9759 * (exp(0.0339 * (f1 * f2 * f3)));
+  return result.clamp(minOFactorValue, maxOFactorValue);
 }
 
 double calculateQSlope(QSlope qSlope) {
@@ -313,7 +316,8 @@ double calculateJwice(
 
 double calculateSlopeAngle(double qSlope) {
   if (qSlope <= 0) return 0;
-  return ((log(qSlope) / log(10)) * 20) + 65;
+  final double angle = ((log(qSlope) / log(10)) * 20) + 65;
+  return angle.clamp(0.0, 90.0);
 }
 
 /// Calculates the safety margin in degrees (allowable slope angle - actual slope angle).

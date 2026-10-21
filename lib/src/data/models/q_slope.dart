@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
 import 'package:q_slope_calculator/src/data/models/external_factors.dart';
@@ -201,7 +202,8 @@ class QSlope {
         other.latitude == latitude &&
         other.longitude == longitude &&
         other.elevation == elevation &&
-        other.benchHeight == benchHeight;
+        other.benchHeight == benchHeight &&
+        listEquals(other.imagePaths, imagePaths);
   }
 
   @override
@@ -220,6 +222,7 @@ class QSlope {
         latitude.hashCode ^
         longitude.hashCode ^
         elevation.hashCode ^
-        benchHeight.hashCode;
+        benchHeight.hashCode ^
+        Object.hashAll(imagePaths ?? const []);
   }
 }
