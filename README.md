@@ -4,10 +4,9 @@
 [![Flutter](https://img.shields.io/badge/Flutter-Pinned%20FVM-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-%3E%3D3.7.0%20%3C4.0.0-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Tests](https://img.shields.io/badge/Tests-126%20Passing%20(100%25)-success?style=for-the-badge&logo=checkmarx&logoColor=white)]()
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web%20%7C%20Windows%20%7C%20macOS%20%7C%20Linux-blue?style=for-the-badge)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-An advanced, cross-platform geotechnical engineering application for rock slope stability assessment and rock mass characterization using the empirical **Q-slope** method (Bar & Barton, 2017).
+An advanced cross-platform geotechnical engineering application for rock slope stability assessment and rock mass characterization using the empirical **Q-slope** method
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=in.sg.q_slope_calculator">
@@ -68,19 +67,6 @@ Where:
 
 ### 2. Empirical Slope Angle ($\beta$)
 $$\beta = 20 \log_{10}(Q_{slope}) + 65^\circ$$
-
----
-
-## 💻 Cross-Platform Support
-
-| Platform | Support | Storage / Export | File / Camera Integration |
-|---|---|---|---|
-| **Android** | Native Release | Local App Storage / Downloads | Camera & File Picker |
-| **iOS** | Native Release | Documents Directory / Files App | Native Camera & Photo Library |
-| **Windows** | Native Desktop (Win32) | `%USERPROFILE%\Documents` | Windows File Picker & Dialogs |
-| **macOS** | Native Desktop | `~/Documents` / Native Save | macOS Sandbox File Picker |
-| **Linux** | Native Desktop | `~/.local/share` | Linux Native File Chooser |
-| **Web** | Modern Browsers | Browser IndexedDB / Blob Downloads | In-browser File & Image Handling |
 
 ---
 
@@ -155,7 +141,7 @@ The codebase enforces strict static analysis and includes a comprehensive automa
   ```sh
   fvm flutter analyze
   ```
-* **Run Test Suite** (139 / 139 passing):
+* **Run Test Suite** (126 / 126 passing):
   ```sh
   fvm flutter test
   ```
@@ -168,12 +154,11 @@ The codebase enforces strict static analysis and includes a comprehensive automa
 
 ## 📚 Scientific References
 
-1. **Bar, N., & Barton, N. (2017)**. *The Q-slope method for rock slope engineering*. Rock Mechanics and Rock Engineering, 50(12), 3307-3345.
-2. **Barton, N., & Choubey, V. (1977)**. *The shear strength of rock joints in theory and practice*. Rock Mechanics, 10(1-2), 1-54.
-3. **Goodman, R. E. (1980)**. *Introduction to Rock Mechanics*. John Wiley & Sons, New York.
-4. **Hoek, E., & Bray, J. D. (1981)**. *Rock Slope Engineering*. Institution of Mining and Metallurgy, London.
+1. **Bar, N., & Barton, N. (2015)**.
+2. **Bar, N., & Barton, N. (2017)**. *The Q-slope method for rock slope engineering*. Rock Mechanics and Rock Engineering, 50(12), 3307-3345.
+3. **Bar, N., & Barton, N. (2024)**. *Q‑Slope: Rock Slope Engineering 10 Years on*.
+4. **Romana, M. (1985)**. *New adjustment ratings for application of Bieniawski's classification to slopes*. In International Symposium on the Role of Rock Mechanics, Zacatecas.
 5. **Palmström, A. (1982)**. *The volumetric joint count—a useful and simple measure of the degree of rock jointing*. In 4th Congress of the International Association of Engineering Geology, New Delhi.
-6. **Romana, M. (1985)**. *New adjustment ratings for application of Bieniawski's classification to slopes*. In International Symposium on the Role of Rock Mechanics, Zacatecas.
 
 ---
 
