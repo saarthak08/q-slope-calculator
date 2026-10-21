@@ -8,59 +8,88 @@ import 'package:path_provider/path_provider.dart';
 
 class ImageUtils {
   static final ImagePicker _imagePicker = ImagePicker();
+  static int _fileCounter = 0;
 
-  /// Captures an image from the camera or picks one from the gallery.
-  /// Persists the image into the application storage so it remains accessible permanently.
+  /// Captures an image from the camera or picks one or more images from the gallery.
+  /// Persists each image into the application storage so it remains accessible permanently.
   /// Falls back gracefully to FilePicker if ImagePicker is unsupported on the platform.
-  static Future<String?> captureOrPickImage({required bool fromCamera}) async {
+  static Future<List<String>> captureOrPickImages({
+    required bool fromCamera,
+  }) async {
     try {
-      XFile? image;
       if (fromCamera) {
-        image = await _imagePicker.pickImage(
+        final image = await _imagePicker.pickImage(
           source: ImageSource.camera,
           maxWidth: 1920,
           maxHeight: 1080,
           imageQuality: 85,
         );
+        if (image != null) {
+          final bytes = await image.readAsBytes();
+          final path = await persistImage(
+            bytes: bytes,
+            sourcePath: image.path,
+            fileName: image.name,
+          );
+          return [path];
+        }
+        return [];
       } else {
+        List<XFile> images = [];
+        bool fallbackToFilePicker = false;
         try {
-          image = await _imagePicker.pickImage(
-            source: ImageSource.gallery,
+          images = await _imagePicker.pickMultiImage(
             maxWidth: 1920,
             maxHeight: 1080,
             imageQuality: 85,
           );
-        } catch (_) {
-          // Fallback to FilePicker
+        } catch (e) {
+          debugPrint('ImagePicker.pickMultiImage error, trying FilePicker: $e');
+          fallbackToFilePicker = true;
         }
-      }
 
-      if (image != null) {
-        final bytes = await image.readAsBytes();
-        return await persistImage(
-          bytes: bytes,
-          sourcePath: image.path,
-          fileName: image.name,
-        );
-      }
+        if (images.isNotEmpty) {
+          final List<String> paths = [];
+          for (final img in images) {
+            final bytes = await img.readAsBytes();
+            final path = await persistImage(
+              bytes: bytes,
+              sourcePath: img.path,
+              fileName: img.name,
+            );
+            paths.add(path);
+          }
+          return paths;
+        }
 
-      // Fallback via FilePicker if not from camera
-      if (!fromCamera) {
-        final result = await FilePicker.pickFiles(type: FileType.image);
-        if (result.isNotEmpty) {
-          final file = result.first;
-          final bytes = await file.readAsBytes();
-          return await persistImage(
-            bytes: bytes,
-            sourcePath: file.path,
-            fileName: file.name,
-          );
+        // Fallback via FilePicker if image_picker was not supported or failed
+        if (fallbackToFilePicker) {
+          final result = await FilePicker.pickFiles(type: FileType.image);
+          if (result.isNotEmpty) {
+            final List<String> paths = [];
+            for (final file in result) {
+              final bytes = await file.readAsBytes();
+              final path = await persistImage(
+                bytes: bytes,
+                sourcePath: file.path,
+                fileName: file.name,
+              );
+              paths.add(path);
+            }
+            return paths;
+          }
         }
       }
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      debugPrint('Error picking images: $e');
     }
-    return null;
+    return [];
+  }
+
+  /// Backward-compatible single-image picker.
+  static Future<String?> captureOrPickImage({required bool fromCamera}) async {
+    final images = await captureOrPickImages(fromCamera: fromCamera);
+    return images.isNotEmpty ? images.first : null;
   }
 
   /// Saves image bytes or file to persistent local storage or base64 data URI for Web
@@ -88,7 +117,7 @@ class ImageUtils {
             : 'jpg';
     final targetPath = p.join(
       imagesDir.path,
-      'img_${DateTime.now().millisecondsSinceEpoch}.$ext',
+      'img_${DateTime.now().millisecondsSinceEpoch}_${_fileCounter++}.$ext',
     );
     final targetFile = File(targetPath);
 

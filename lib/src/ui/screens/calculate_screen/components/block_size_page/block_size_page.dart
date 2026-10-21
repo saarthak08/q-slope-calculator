@@ -440,11 +440,11 @@ class _BlockSizePageState extends State<BlockSizePage> {
     );
 
     if (source != null) {
-      final path = await ImageUtils.captureOrPickImage(
+      final paths = await ImageUtils.captureOrPickImages(
         fromCamera: source == ImageSource.camera,
       );
-      if (path != null) {
-        _photoPaths.value = [..._photoPaths.value, path];
+      if (paths.isNotEmpty) {
+        _photoPaths.value = [..._photoPaths.value, ...paths];
         _setQSlope();
       }
     }
@@ -497,15 +497,15 @@ class _BlockSizePageState extends State<BlockSizePage> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                    top: getViewPortHeight(context) * 0.06,
-                    bottom: getViewPortHeight(context) * 0.03,
+                    top: getViewPortHeight(context) * 0.02,
+                    bottom: getViewPortHeight(context) * 0.02,
                   ),
                   child: const DividerWidget(),
                 ),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      bottom: getViewPortHeight(context) * 0.03,
+                      bottom: getViewPortHeight(context) * 0.02,
                     ),
                     child: Text(
                       AppLocalizations.of(

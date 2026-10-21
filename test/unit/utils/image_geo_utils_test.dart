@@ -80,5 +80,20 @@ void main() {
         expect(result, isNull);
       },
     );
+
+    test(
+      'ImageUtils.captureOrPickImages gracefully handles multi-image picking in headless test',
+      () async {
+        final resultsGallery = await ImageUtils.captureOrPickImages(
+          fromCamera: false,
+        );
+        expect(resultsGallery, isEmpty);
+
+        final resultsCamera = await ImageUtils.captureOrPickImages(
+          fromCamera: true,
+        );
+        expect(resultsCamera, isEmpty);
+      },
+    );
   });
 }
