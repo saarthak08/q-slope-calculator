@@ -105,6 +105,7 @@ class KinematicOrientationControls extends StatelessWidget {
 
         // Second Joint Toggle (Wedge)
         SwitchListTile(
+          contentPadding: EdgeInsets.zero,
           title: Text(l10n.includeJoint2Wedge),
           subtitle: const Text('Calculates intersection line trend & plunge'),
           value: enableJoint2,

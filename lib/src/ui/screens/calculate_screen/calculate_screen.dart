@@ -92,11 +92,12 @@ class _CalculateScreenState extends State<CalculateScreen>
             Navigator.pop(context);
           },
         ),
-        title: Text(
-          AppLocalizations.of(context).qSlopeCalculation,
-          style: TextStyle(fontSize: getTitleFontSize(context)),
-          softWrap: true,
-          overflow: TextOverflow.visible,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            AppLocalizations.of(context).qSlopeCalculation,
+            style: TextStyle(fontSize: getTitleFontSize(context)),
+          ),
         ),
         bottom: TabBar(
           dividerColor: primaryColorShade100,

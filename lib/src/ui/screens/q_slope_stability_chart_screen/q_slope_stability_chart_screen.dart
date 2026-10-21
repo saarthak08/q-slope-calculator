@@ -117,11 +117,12 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                 ],
           ),
         ],
-        title: Text(
-          AppLocalizations.of(context).qSlopeStabilityChart,
-          style: TextStyle(fontSize: getTitleFontSize(context)),
-          softWrap: true,
-          overflow: TextOverflow.visible,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            AppLocalizations.of(context).qSlopeStabilityChart,
+            style: TextStyle(fontSize: getTitleFontSize(context)),
+          ),
         ),
       ),
       body: SingleChildScrollView(
