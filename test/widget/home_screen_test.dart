@@ -7,9 +7,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/common/result.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
+import 'package:q_slope_calculator/src/data/repository/q_slope_repository.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/logic/cubit/settings/settings_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/components/app_bar_list_selection_menu_widget.dart';
+import 'package:q_slope_calculator/src/ui/screens/home_screen/components/home_app_bar_overflow_menu.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/home_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/stability_badge.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -24,6 +26,11 @@ class MockSettingsCubit extends MockCubit<SettingsState>
 void main() {
   late MockQSlopeListCubit mockQSlopeListCubit;
   late MockSettingsCubit mockSettingsCubit;
+
+  setUpAll(() {
+    registerFallbackValue(ImportConflictStrategy.overwrite);
+    registerFallbackValue(<QSlope>[]);
+  });
 
   setUp(() {
     mockQSlopeListCubit = MockQSlopeListCubit();
@@ -77,7 +84,40 @@ void main() {
       // Wait for app localization to load
       final noDataFinder = find.text('No previous calculations found');
       expect(noDataFinder, findsOneWidget);
+      expect(find.text('Load Sample Calculations'), findsOneWidget);
     });
+
+    testWidgets(
+      'tapping Load Sample Calculations on empty state imports sample data',
+      (WidgetTester tester) async {
+        when(
+          () => mockSettingsCubit.state,
+        ).thenReturn(SettingsState(themeMode: ThemeMode.light));
+        when(() => mockQSlopeListCubit.state).thenReturn(QSlopeListEmpty());
+        when(
+          () => mockQSlopeListCubit.importQSlopes(
+            any(),
+            strategy: any(named: 'strategy'),
+          ),
+        ).thenAnswer((_) async => const Success(5));
+
+        await tester.pumpWidget(buildHomeScreen());
+        await tester.pumpAndSettle();
+
+        final loadButton = find.text('Load Sample Calculations');
+        expect(loadButton, findsOneWidget);
+        await tester.tap(loadButton);
+        await tester.pumpAndSettle();
+
+        verify(
+          () => mockQSlopeListCubit.importQSlopes(
+            any(),
+            strategy: ImportConflictStrategy.overwrite,
+          ),
+        ).called(1);
+        await tester.pump(const Duration(seconds: 3));
+      },
+    );
 
     testWidgets('renders loaded state with list correctly', (
       WidgetTester tester,
@@ -171,6 +211,13 @@ void main() {
         // Verify menu items appear
         expect(find.text('Dark Mode'), findsOneWidget);
         expect(find.text('Import Calculations'), findsOneWidget);
+        expect(
+          find.descendant(
+            of: find.byType(PopupMenuItem<HomeOverflowMenuAction>),
+            matching: find.text('Load Sample Calculations'),
+          ),
+          findsOneWidget,
+        );
         expect(find.text('About Q-slope'), findsOneWidget);
 
         // Verify export options are NOT in the home overflow menu

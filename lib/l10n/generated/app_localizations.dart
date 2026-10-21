@@ -2025,6 +2025,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'NONE'**
   String get riskNone;
+
+  /// No description provided for @loadSampleCalculations.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Sample Calculations'**
+  String get loadSampleCalculations;
+
+  /// No description provided for @sampleCalculationsLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sample calculations loaded successfully'**
+  String sampleCalculationsLoaded(int count);
+
+  /// No description provided for @locationServicesDisabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Services Disabled'**
+  String get locationServicesDisabledTitle;
+
+  /// No description provided for @locationServicesDisabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location services (GPS) are turned off. Please turn on location services on your device to capture outcrop coordinates.'**
+  String get locationServicesDisabledMessage;
+
+  /// No description provided for @locationPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Permission Required'**
+  String get locationPermissionDeniedTitle;
+
+  /// No description provided for @locationPermissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission was denied. Please allow location access to capture outcrop GPS coordinates.'**
+  String get locationPermissionDeniedMessage;
+
+  /// No description provided for @locationPermissionPermanentlyDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is permanently denied. Please open App Settings and grant location permission.'**
+  String get locationPermissionPermanentlyDeniedMessage;
+
+  /// No description provided for @openLocationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Location Settings'**
+  String get openLocationSettings;
+
+  /// No description provided for @openAppSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open App Settings'**
+  String get openAppSettings;
 }
 
 class _AppLocalizationsDelegate

@@ -44,6 +44,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
   final TextEditingController _elevationController = TextEditingController();
+  bool _isCapturingGps = false;
   final ValueNotifier<List<String>> _photoPaths = ValueNotifier([]);
   final TextEditingController _sumOfCorePiecesController =
       TextEditingController();
@@ -273,32 +274,127 @@ class _BlockSizePageState extends State<BlockSizePage> {
   }
 
   Future<void> _handleCaptureGps() async {
-    final pos = await GeoUtils.getCurrentLocation();
-    if (pos != null) {
-      setState(() {
-        _latitudeController.text = pos.latitude.toStringAsFixed(6);
-        _longitudeController.text = pos.longitude.toStringAsFixed(6);
-        if (pos.altitude != null) {
-          _elevationController.text = pos.altitude!.toStringAsFixed(1);
-        }
-      });
-      _setQSlope();
-      if (mounted) {
+    setState(() {
+      _isCapturingGps = true;
+    });
+
+    try {
+      final result = await GeoUtils.getCurrentLocationResult();
+      if (!mounted) return;
+
+      if (result.isSuccess && result.position != null) {
+        final pos = result.position!;
+        setState(() {
+          _latitudeController.text = pos.latitude.toStringAsFixed(6);
+          _longitudeController.text = pos.longitude.toStringAsFixed(6);
+          if (pos.altitude != null) {
+            _elevationController.text = pos.altitude!.toStringAsFixed(1);
+          }
+        });
+        _setQSlope();
         toastification.show(
           context: context,
           title: Text(AppLocalizations.of(context).gpsCaptured),
           type: ToastificationType.success,
           autoCloseDuration: const Duration(seconds: 2),
         );
+      } else {
+        final l10n = AppLocalizations.of(context);
+        switch (result.failureReason) {
+          case GeoFailureReason.serviceDisabled:
+            if (!mounted) return;
+            await showDialog(
+              context: context,
+              builder:
+                  (ctx) => AlertDialog(
+                    title: Row(
+                      children: [
+                        Icon(Icons.location_off, color: primaryColor),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(l10n.locationServicesDisabledTitle),
+                        ),
+                      ],
+                    ),
+                    content: Text(l10n.locationServicesDisabledMessage),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: Text(l10n.cancel),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          GeoUtils.openLocationSettings();
+                        },
+                        child: Text(l10n.openLocationSettings),
+                      ),
+                    ],
+                  ),
+            );
+            break;
+
+          case GeoFailureReason.permissionDeniedForever:
+            if (!mounted) return;
+            await showDialog(
+              context: context,
+              builder:
+                  (ctx) => AlertDialog(
+                    title: Row(
+                      children: [
+                        Icon(Icons.security, color: primaryColor),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(l10n.locationPermissionDeniedTitle),
+                        ),
+                      ],
+                    ),
+                    content: Text(
+                      l10n.locationPermissionPermanentlyDeniedMessage,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: Text(l10n.cancel),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          GeoUtils.openAppSettings();
+                        },
+                        child: Text(l10n.openAppSettings),
+                      ),
+                    ],
+                  ),
+            );
+            break;
+
+          case GeoFailureReason.permissionDenied:
+            toastification.show(
+              context: context,
+              title: Text(l10n.locationPermissionDeniedMessage),
+              type: ToastificationType.warning,
+              autoCloseDuration: const Duration(seconds: 3),
+            );
+            break;
+
+          case GeoFailureReason.timeout:
+          case GeoFailureReason.error:
+          case null:
+            toastification.show(
+              context: context,
+              title: Text(l10n.gpsFailed),
+              type: ToastificationType.warning,
+              autoCloseDuration: const Duration(seconds: 3),
+            );
+            break;
+        }
       }
-    } else {
+    } finally {
       if (mounted) {
-        toastification.show(
-          context: context,
-          title: Text(AppLocalizations.of(context).gpsFailed),
-          type: ToastificationType.warning,
-          autoCloseDuration: const Duration(seconds: 3),
-        );
+        setState(() {
+          _isCapturingGps = false;
+        });
       }
     }
   }
@@ -392,6 +488,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
                   latitudeController: _latitudeController,
                   longitudeController: _longitudeController,
                   elevationController: _elevationController,
+                  isCapturingGps: _isCapturingGps,
                   photoPaths: _photoPaths,
                   onCaptureGps: _handleCaptureGps,
                   onViewMap: _handleViewMap,

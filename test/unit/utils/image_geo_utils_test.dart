@@ -29,6 +29,41 @@ void main() {
       expect(pos.accuracy, isNull);
     });
 
+    test('GeoResult handles success and failure states', () {
+      const pos = GeoPositionData(latitude: 12.34, longitude: 56.78);
+      const successResult = GeoResult.success(pos);
+      expect(successResult.isSuccess, isTrue);
+      expect(successResult.position, pos);
+      expect(successResult.failureReason, isNull);
+
+      const failResult = GeoResult.failure(
+        GeoFailureReason.permissionDenied,
+        'denied',
+      );
+      expect(failResult.isSuccess, isFalse);
+      expect(failResult.position, isNull);
+      expect(failResult.failureReason, GeoFailureReason.permissionDenied);
+      expect(failResult.errorMessage, 'denied');
+    });
+
+    test(
+      'GeoUtils handles headless test environment without throwing',
+      () async {
+        final res = await GeoUtils.getCurrentLocationResult();
+        expect(res.isSuccess, isFalse);
+        expect(res.failureReason, isNotNull);
+
+        final loc = await GeoUtils.getCurrentLocation();
+        expect(loc, isNull);
+
+        final settingsResult = await GeoUtils.openAppSettings();
+        expect(settingsResult, isFalse);
+
+        final locSettingsResult = await GeoUtils.openLocationSettings();
+        expect(locSettingsResult, isFalse);
+      },
+    );
+
     test('GeoUtils.openInMap does not crash with coordinates', () async {
       // In headless unit test environment, url_launcher returns false gracefully
       final result = await GeoUtils.openInMap(-31.95, 115.86);

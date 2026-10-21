@@ -41,6 +41,12 @@
 			<string>UIInterfaceOrientationLandscapeLeft</string>
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app requires access to device location to record GPS coordinates and elevation for rock slope field outcrop calculations.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>This app requires access to the camera to take outcrop photographs for rock slope stability assessments.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>This app requires access to the photo library to attach rock slope outcrop images to calculations.</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>

@@ -18,6 +18,7 @@ enum HomeOverflowMenuAction {
   openSupportGuide,
   openKinematicCompass,
   importCalculations,
+  loadSampleData,
   about,
 }
 
@@ -25,12 +26,14 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
   final List<QSlope> allQSlopes;
   final Future<void> Function(BuildContext context) onImport;
   final VoidCallback? onBulkSelect;
+  final VoidCallback? onLoadSampleData;
 
   const HomeAppBarOverflowMenu({
     super.key,
     required this.allQSlopes,
     required this.onImport,
     this.onBulkSelect,
+    this.onLoadSampleData,
   });
 
   @override
@@ -74,6 +77,10 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
 
           case HomeOverflowMenuAction.importCalculations:
             onImport(context);
+            break;
+
+          case HomeOverflowMenuAction.loadSampleData:
+            onLoadSampleData?.call();
             break;
 
           case HomeOverflowMenuAction.about:
@@ -196,6 +203,21 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
                   Expanded(
                     child: Text(
                       AppLocalizations.of(context).importCalculations,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: HomeOverflowMenuAction.loadSampleData,
+              child: Row(
+                children: [
+                  Icon(Icons.science_outlined, color: primaryColor, size: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).loadSampleCalculations,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

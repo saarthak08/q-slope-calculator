@@ -322,5 +322,21 @@
     "riskCritical": "CRITICAL",
     "riskModerate": "MODERATE",
     "riskLow": "LOW",
-    "riskNone": "NONE"
+    "riskNone": "NONE",
+    "loadSampleCalculations": "Load Sample Calculations",
+    "sampleCalculationsLoaded": "{count} sample calculations loaded successfully",
+    "@sampleCalculationsLoaded": {
+      "placeholders": {
+        "count": {
+          "type": "int"
+        }
+      }
+    },
+    "locationServicesDisabledTitle": "Location Services Disabled",
+    "locationServicesDisabledMessage": "Location services (GPS) are turned off. Please turn on location services on your device to capture outcrop coordinates.",
+    "locationPermissionDeniedTitle": "Location Permission Required",
+    "locationPermissionDeniedMessage": "Location permission was denied. Please allow location access to capture outcrop GPS coordinates.",
+    "locationPermissionPermanentlyDeniedMessage": "Location permission is permanently denied. Please open App Settings and grant location permission.",
+    "openLocationSettings": "Open Location Settings",
+    "openAppSettings": "Open App Settings"
 }

@@ -20,6 +20,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
   final TextEditingController? elevationController;
   final ValueNotifier<List<String>>? imagePaths;
   ValueNotifier<List<String>>? get photoPaths => imagePaths;
+  final bool isCapturingGps;
   final VoidCallback? onCaptureGps;
   final VoidCallback? onViewMap;
   final VoidCallback? onAddImage;
@@ -36,6 +37,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
     this.latitudeController,
     this.longitudeController,
     this.elevationController,
+    this.isCapturingGps = false,
     ValueNotifier<List<String>>? imagePaths,
     ValueNotifier<List<String>>? photoPaths,
     this.onCaptureGps,
@@ -173,7 +175,17 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                           ),
                         if (onCaptureGps != null)
                           ElevatedButton.icon(
-                            icon: const Icon(Icons.my_location, size: 15),
+                            icon:
+                                isCapturingGps
+                                    ? const SizedBox(
+                                      width: 14,
+                                      height: 14,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : const Icon(Icons.my_location, size: 15),
                             label: Text(
                               AppLocalizations.of(context).captureGps,
                             ),
@@ -186,7 +198,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                                 vertical: 4,
                               ),
                             ),
-                            onPressed: onCaptureGps,
+                            onPressed: isCapturingGps ? null : onCaptureGps,
                           ),
                       ],
                     ),

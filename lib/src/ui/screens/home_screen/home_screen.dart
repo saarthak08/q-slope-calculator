@@ -4,6 +4,7 @@ import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/data/repository/q_slope_repository.dart';
+import 'package:q_slope_calculator/src/data/sample_data.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
@@ -229,6 +230,41 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _handleLoadSampleData() async {
+    final sampleQSlopes = SampleData.getSampleQSlopes();
+    final cubit = context.read<QSlopeListCubit>();
+    showFullScreenLoader(context);
+    final result = await cubit.importQSlopes(
+      sampleQSlopes,
+      strategy: ImportConflictStrategy.overwrite,
+    );
+    if (!mounted) return;
+    Navigator.pop(context);
+
+    if (result.isSuccess) {
+      final count = result.value ?? sampleQSlopes.length;
+      toastification.show(
+        autoCloseDuration: const Duration(seconds: 2),
+        alignment: Alignment.bottomCenter,
+        type: ToastificationType.success,
+        title: Text(
+          AppLocalizations.of(context).sampleCalculationsLoaded(count),
+        ),
+      );
+    } else {
+      toastification.show(
+        autoCloseDuration: const Duration(seconds: 2),
+        alignment: Alignment.bottomCenter,
+        type: ToastificationType.error,
+        title: Text(
+          AppLocalizations.of(
+            context,
+          ).importFailed(AppLocalizations.of(context).saveFailed),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final qSlopeListState = context.watch<QSlopeListCubit>().state;
@@ -292,6 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeAppBarOverflowMenu(
                 allQSlopes: rawList,
                 onImport: _handleImport,
+                onLoadSampleData: _handleLoadSampleData,
                 onBulkSelect: () {
                   setState(() {
                     _isSelectionMode = true;
@@ -366,13 +403,44 @@ class _HomeScreenState extends State<HomeScreen> {
             child:
                 qSlopeListState is QSlopeListEmpty
                     ? Center(
-                      child: IllustrationWidget(
-                        assetPath: Assets.noData,
-                        text:
-                            AppLocalizations.of(
-                              context,
-                            ).homeScreenNoPreviousCalculationsFound,
-                        onRefresh: null,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IllustrationWidget(
+                              height: getViewPortHeight(context) * 0.7,
+                              assetPath: Assets.noData,
+                              text:
+                                  AppLocalizations.of(
+                                    context,
+                                  ).homeScreenNoPreviousCalculationsFound,
+                              onRefresh: null,
+                            ),
+                            const SizedBox(height: 12),
+                            OutlinedButton.icon(
+                              onPressed: _handleLoadSampleData,
+                              icon: const Icon(Icons.science_outlined),
+                              label: Text(
+                                AppLocalizations.of(
+                                  context,
+                                ).loadSampleCalculations,
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: primaryColor,
+                                side: BorderSide(color: primaryColor),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 10,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 32),
+                          ],
+                        ),
                       ),
                     )
                     : qSlopeListState is QSlopeListLoaded

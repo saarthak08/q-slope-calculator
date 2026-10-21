@@ -1046,4 +1046,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get riskNone => 'NONE';
+
+  @override
+  String get loadSampleCalculations => 'Load Sample Calculations';
+
+  @override
+  String sampleCalculationsLoaded(int count) {
+    return '$count sample calculations loaded successfully';
+  }
+
+  @override
+  String get locationServicesDisabledTitle => 'Location Services Disabled';
+
+  @override
+  String get locationServicesDisabledMessage =>
+      'Location services (GPS) are turned off. Please turn on location services on your device to capture outcrop coordinates.';
+
+  @override
+  String get locationPermissionDeniedTitle => 'Location Permission Required';
+
+  @override
+  String get locationPermissionDeniedMessage =>
+      'Location permission was denied. Please allow location access to capture outcrop GPS coordinates.';
+
+  @override
+  String get locationPermissionPermanentlyDeniedMessage =>
+      'Location permission is permanently denied. Please open App Settings and grant location permission.';
+
+  @override
+  String get openLocationSettings => 'Open Location Settings';
+
+  @override
+  String get openAppSettings => 'Open App Settings';
 }
