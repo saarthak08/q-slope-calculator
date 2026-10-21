@@ -143,8 +143,10 @@ class OFactor {
     return OFactor(
       oFactorCalculationType:
           map['oFactorCalculationType'] != null
-              ? map['oFactorCalculationType'] ==
-                      OFactorCalculationType.romanaAdjacentFactor.name
+              ? (map['oFactorCalculationType'] ==
+                          OFactorCalculationType.romanaAdjacentFactor.name ||
+                      map['oFactorCalculationType'] ==
+                          OFactorCalculationType.romanaAdjacentFactor)
                   ? OFactorCalculationType.romanaAdjacentFactor
                   : OFactorCalculationType.value
               : null,
@@ -183,10 +185,15 @@ class OFactor {
               : null,
       oFactorTypeOfFailure:
           map['oFactorTypeOfFailure'] != null
-              ? map['oFactorTypeOfFailure'] == OFactorTypeOfFailure.planar.name
+              ? (map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.planar.name ||
+                      map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.planar)
                   ? OFactorTypeOfFailure.planar
-                  : map['oFactorTypeOfFailure'] ==
-                      OFactorTypeOfFailure.toppling.name
+                  : (map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.toppling.name ||
+                      map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.toppling)
                   ? OFactorTypeOfFailure.toppling
                   : OFactorTypeOfFailure.wedge
               : null,

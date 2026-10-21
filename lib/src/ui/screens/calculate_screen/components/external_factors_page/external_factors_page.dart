@@ -40,7 +40,7 @@ class _ExternalFactorsPageState extends State<ExternalFactorsPage> {
     QSlope? qSlope = widget.qSlope.value;
     _jWice.text =
         qSlope.externalFactors?.environmentalAndGeologicalConditionalNumber
-            .toString() ??
+            ?.toString() ??
         "";
     setState(() {
       _externalFactorsCalculationType =

@@ -27,20 +27,13 @@ class QSlopeListItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        top: getViewPortHeight(context) * 0.015,
-      ),
+      padding: EdgeInsets.only(top: getViewPortHeight(context) * 0.015),
       child: Row(
         children: [
           if (isSelectionMode)
             Container(
-              margin: EdgeInsets.only(
-                right: getViewPortWidth(context) * 0.005,
-              ),
-              child: Checkbox(
-                value: isSelected,
-                onChanged: onCheckboxChanged,
-              ),
+              margin: EdgeInsets.only(right: getViewPortWidth(context) * 0.005),
+              child: Checkbox(value: isSelected, onChanged: onCheckboxChanged),
             ),
           Expanded(
             child: Material(
@@ -64,9 +57,8 @@ class QSlopeListItemCard extends StatelessWidget {
                         children: [
                           Text(
                             "${AppLocalizations.of(context).listLocationId}: ${item.locationId ?? ''}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                            softWrap: true,
                           ),
                           const SizedBox(height: 2),
                           Text(
@@ -75,10 +67,13 @@ class QSlopeListItemCard extends StatelessWidget {
                               color: Colors.grey.shade600,
                               fontSize: 13,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                     ),
+                    const SizedBox(width: 8),
                     StabilityBadge(
                       qSlope: item.qSlope,
                       actualSlopeAngle: item.slopeAngleByUser,
@@ -90,13 +85,18 @@ class QSlopeListItemCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${AppLocalizations.of(context).qSlopeSymbol}: ${item.qSlope?.toStringAsFixed(4) ?? '-'}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor,
+                      Flexible(
+                        child: Text(
+                          "${AppLocalizations.of(context).qSlopeSymbol}: ${item.qSlope?.toStringAsFixed(4) ?? '-'}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: primaryColor,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      const SizedBox(width: 8),
                       Text(
                         item.createdAt != null
                             ? (formatDateTime(item.createdAt!) ?? '')
@@ -105,6 +105,7 @@ class QSlopeListItemCard extends StatelessWidget {
                           fontSize: 12,
                           color: Colors.grey.shade500,
                         ),
+                        maxLines: 1,
                       ),
                     ],
                   ),

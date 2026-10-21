@@ -4,19 +4,26 @@ import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/settings/settings_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 enum HomeOverflowMenuAction {
   toggleTheme,
   bulkSelect,
-  importJson,
-  importCsv,
+  openSensitivitySimulator,
+  openInverseCalculator,
+  openSupportGuide,
+  openKinematicCompass,
+  importCalculations,
   about,
 }
 
 class HomeAppBarOverflowMenu extends StatelessWidget {
   final List<QSlope> allQSlopes;
-  final Future<void> Function(BuildContext context, bool isJson) onImport;
+  final Future<void> Function(BuildContext context) onImport;
   final VoidCallback? onBulkSelect;
 
   const HomeAppBarOverflowMenu({
@@ -49,12 +56,24 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
             onBulkSelect?.call();
             break;
 
-          case HomeOverflowMenuAction.importJson:
-            onImport(context, true);
+          case HomeOverflowMenuAction.openSensitivitySimulator:
+            Navigator.pushNamed(context, SensitivitySimulatorScreen.route);
             break;
 
-          case HomeOverflowMenuAction.importCsv:
-            onImport(context, false);
+          case HomeOverflowMenuAction.openInverseCalculator:
+            Navigator.pushNamed(context, InverseCalculatorScreen.route);
+            break;
+
+          case HomeOverflowMenuAction.openSupportGuide:
+            Navigator.pushNamed(context, SupportGuideScreen.route);
+            break;
+
+          case HomeOverflowMenuAction.openKinematicCompass:
+            Navigator.pushNamed(context, KinematicCompassScreen.route);
+            break;
+
+          case HomeOverflowMenuAction.importCalculations:
+            onImport(context);
             break;
 
           case HomeOverflowMenuAction.about:
@@ -89,11 +108,7 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
                 value: HomeOverflowMenuAction.bulkSelect,
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.checklist_rtl,
-                      color: primaryColor,
-                      size: 20,
-                    ),
+                    Icon(Icons.checklist_rtl, color: primaryColor, size: 20),
                     const SizedBox(width: 12),
                     Text(AppLocalizations.of(context).bulkSelect),
                   ],
@@ -103,24 +118,87 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
 
             const PopupMenuDivider(),
 
-            // Import section
+            // Engineering Analysis Tools Section
             PopupMenuItem(
-              value: HomeOverflowMenuAction.importJson,
+              value: HomeOverflowMenuAction.openSensitivitySimulator,
               child: Row(
                 children: [
-                  Icon(Icons.code, color: primaryColor, size: 20),
+                  Icon(Icons.tune, color: primaryColor, size: 20),
                   const SizedBox(width: 12),
-                  Text(AppLocalizations.of(context).importJson),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).sensitivitySimulator,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
             PopupMenuItem(
-              value: HomeOverflowMenuAction.importCsv,
+              value: HomeOverflowMenuAction.openInverseCalculator,
               child: Row(
                 children: [
-                  Icon(Icons.grid_on_outlined, color: primaryColor, size: 20),
+                  Icon(Icons.architecture, color: primaryColor, size: 20),
                   const SizedBox(width: 12),
-                  Text(AppLocalizations.of(context).importCsv),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).inverseDesignCalculator,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: HomeOverflowMenuAction.openSupportGuide,
+              child: Row(
+                children: [
+                  Icon(Icons.construction, color: primaryColor, size: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).slopeSupportGuide,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: HomeOverflowMenuAction.openKinematicCompass,
+              child: Row(
+                children: [
+                  Icon(Icons.explore_outlined, color: primaryColor, size: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).kinematicCompass,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const PopupMenuDivider(),
+
+            // Import calculations (geologist friendly)
+            PopupMenuItem(
+              value: HomeOverflowMenuAction.importCalculations,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.file_upload_outlined,
+                    color: primaryColor,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).importCalculations,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -134,7 +212,12 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
                 children: [
                   Icon(Icons.info_outline, color: primaryColor, size: 20),
                   const SizedBox(width: 12),
-                  Text(AppLocalizations.of(context).aboutQSlope),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).aboutQSlope,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),

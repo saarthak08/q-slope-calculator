@@ -35,7 +35,9 @@ void main() {
       expect(find.byType(AboutScreen), findsOneWidget);
     });
 
-    testWidgets('renders properly on mobile form factor', (WidgetTester tester) async {
+    testWidgets('renders properly on mobile form factor', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -47,7 +49,9 @@ void main() {
       expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
 
-    testWidgets('renders properly on tablet form factor', (WidgetTester tester) async {
+    testWidgets('renders properly on tablet form factor', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = const Size(834, 1194);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -59,7 +63,9 @@ void main() {
       expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
 
-    testWidgets('renders properly on desktop/web form factor', (WidgetTester tester) async {
+    testWidgets('renders properly on desktop/web form factor', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = const Size(1920, 1080);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);

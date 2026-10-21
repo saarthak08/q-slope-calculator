@@ -40,7 +40,9 @@ class AboutScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: getViewPortHeight(context) * 0.02),
+                  margin: EdgeInsets.only(
+                    top: getViewPortHeight(context) * 0.02,
+                  ),
                   child: Center(
                     child: Image.asset(
                       Assets.pngIcon,
@@ -117,7 +119,10 @@ class AboutScreen extends StatelessWidget {
                         onTap: () async {
                           final uri = Uri.tryParse(reference1Link);
                           if (uri != null && await canLaunchUrl(uri)) {
-                            launchUrl(uri, mode: LaunchMode.externalApplication);
+                            launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           }
                         },
                         child: const Text(
@@ -136,7 +141,10 @@ class AboutScreen extends StatelessWidget {
                         onTap: () async {
                           final uri = Uri.tryParse(reference2Link);
                           if (uri != null && await canLaunchUrl(uri)) {
-                            launchUrl(uri, mode: LaunchMode.externalApplication);
+                            launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           }
                         },
                         child: const Text(
@@ -155,7 +163,10 @@ class AboutScreen extends StatelessWidget {
                         onTap: () async {
                           final uri = Uri.tryParse(reference3Link);
                           if (uri != null && await canLaunchUrl(uri)) {
-                            launchUrl(uri, mode: LaunchMode.externalApplication);
+                            launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           }
                         },
                         child: const Text(
@@ -209,7 +220,10 @@ class AboutScreen extends StatelessWidget {
                         onTap: () async {
                           final uri = Uri.tryParse(privacyPolicyLink);
                           if (uri != null && await canLaunchUrl(uri)) {
-                            launchUrl(uri, mode: LaunchMode.externalApplication);
+                            launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           }
                         },
                         child: Text(
@@ -234,7 +248,9 @@ class AboutScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: getCaptionFontSize(context),
                                 color:
-                                    Theme.of(context).textTheme.bodySmall?.color,
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.color,
                               ),
                             ),
                       ),

@@ -9,14 +9,18 @@ import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
+import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
-import 'package:q_slope_calculator/src/utils/csv_service.dart';
+import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
-import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
+import 'package:q_slope_calculator/src/utils/excel_utils.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
-import 'package:q_slope_calculator/src/utils/json_backup_service.dart';
+import 'package:q_slope_calculator/src/utils/pdf_report_utils.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
@@ -47,10 +51,23 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
   @override
   void initState() {
     QSlope? qSlope = widget.qSlope.value;
-    srfA.text = qSlope.activeStress?.srfA.toString() ?? "";
-    srfB.text = qSlope.activeStress?.srfB.toString() ?? "";
-    srfC.text = qSlope.activeStress?.srfC.toString() ?? "";
-    srf.text = qSlope.activeStress?.srf.toString() ?? "";
+    final active = qSlope.activeStress;
+    if (active != null) {
+      srfA.text =
+          (active.srfA != null && active.srfA! > 0)
+              ? active.srfA!.toString()
+              : "";
+      srfB.text =
+          (active.srfB != null && active.srfB! > 0)
+              ? active.srfB!.toString()
+              : "";
+      srfC.text =
+          (active.srfC != null && active.srfC! > 0)
+              ? active.srfC!.toString()
+              : "";
+      srf.text =
+          (active.srf != null && active.srf! > 0) ? active.srf!.toString() : "";
+    }
     if (srf.text.isNotEmpty &&
         srfA.text.isEmpty &&
         srfB.text.isEmpty &&
@@ -67,31 +84,34 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
   }
 
   void _calculateQSlope() {
-    if ((srfA.text.isNotEmpty &&
-            (double.tryParse(srfA.text) ?? 0) <= maxSRFa &&
-            (double.tryParse(srfA.text) ?? 0) >= minSRFa) ||
-        (srfB.text.isNotEmpty &&
-            (double.tryParse(srfB.text) ?? 0) <= maxSRFb &&
-            (double.tryParse(srfB.text) ?? 0) >= minSRFb) ||
-        (srfC.text.isNotEmpty &&
-            (double.tryParse(srfC.text) ?? 0) <= maxSRFc &&
-            (double.tryParse(srfC.text) ?? 0) >= minSRFc)) {
+    final parsedA = double.tryParse(srfA.text);
+    final parsedB = double.tryParse(srfB.text);
+    final parsedC = double.tryParse(srfC.text);
+
+    final bool isAValid =
+        parsedA != null && parsedA <= maxSRFa && parsedA >= minSRFa;
+    final bool isBValid =
+        parsedB != null && parsedB <= maxSRFb && parsedB >= minSRFb;
+    final bool isCValid =
+        parsedC != null && parsedC <= maxSRFc && parsedC >= minSRFc;
+
+    if (isAValid || isBValid || isCValid) {
       QSlope qSlope = widget.qSlope.value;
-      qSlope.activeStress = ActiveStress();
-      qSlope.activeStress?.srfA = double.tryParse(srfA.text) ?? 0;
-      qSlope.activeStress?.srfB = double.tryParse(srfB.text) ?? 0;
-      qSlope.activeStress?.srfC = double.tryParse(srfC.text) ?? 0;
-      double preMax = max<double>(
-        qSlope.activeStress?.srfA ?? 0,
-        qSlope.activeStress?.srfB ?? 0,
-      );
-      srf.text = max<double>(
-        preMax,
-        qSlope.activeStress?.srfC ?? 0,
-      ).toStringAsFixed(4);
+      qSlope.activeStress ??= ActiveStress();
+      qSlope.activeStress?.srfA = isAValid ? parsedA : null;
+      qSlope.activeStress?.srfB = isBValid ? parsedB : null;
+      qSlope.activeStress?.srfC = isCValid ? parsedC : null;
+      final List<double> validSrfs = [
+        if (isAValid) parsedA,
+        if (isBValid) parsedB,
+        if (isCValid) parsedC,
+      ];
+      final double calculatedMaxSrf =
+          validSrfs.isNotEmpty ? validSrfs.reduce(max) : 1.0;
+      srf.text = calculatedMaxSrf.toStringAsFixed(4);
       widget.errorTabs.value[tabIndex] = false;
       widget.errorTabs.value = List.from(widget.errorTabs.value);
-      qSlope.activeStress?.srf = double.tryParse(srf.text) ?? 1;
+      qSlope.activeStress?.srf = calculatedMaxSrf;
       if (qSlope.activeStress != null &&
           qSlope.jointCharacter != null &&
           qSlope.externalFactors != null &&
@@ -122,22 +142,29 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
       qSlope.createdAt = DateTime.now();
       widget.qSlope.value = qSlope.copyWith();
       try {
-        String fileName;
+        String? fileName;
+        final dialogTitle =
+            AppLocalizations.of(context).selectDirectoryToSaveFile;
         if (format == 'excel') {
-          fileName = await exportExcelFile(
+          fileName = await ExcelUtils.exportExcelFile(
             List.from([qSlope]),
-            context,
+            dialogTitle: dialogTitle,
           );
-        } else if (format == 'json') {
-          fileName = await JsonBackupService.exportJson(
-            List.from([qSlope]),
-            context,
+        } else if (format == 'pdf') {
+          fileName = await PdfReportUtils.exportPdfReport(
+            qSlope,
+            dialogTitle: dialogTitle,
           );
         } else {
-          fileName = await CsvService.exportCsv(
+          fileName = await CsvUtils.exportCsv(
             List.from([qSlope]),
-            context,
+            dialogTitle: dialogTitle,
           );
+        }
+
+        if (fileName == null || fileName.isEmpty) {
+          // User cancelled file save dialog
+          return;
         }
 
         if (context.mounted) {
@@ -450,73 +477,78 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                 PopupMenuButton<String>(
                                   enabled: value != null,
                                   tooltip: AppLocalizations.of(context).export,
-                                  onSelected: (format) =>
-                                      _handleExport(context, format),
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      value: 'excel',
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.table_chart_outlined,
-                                            color: primaryColor,
-                                            size: 20,
+                                  onSelected:
+                                      (format) =>
+                                          _handleExport(context, format),
+                                  itemBuilder:
+                                      (context) => [
+                                        PopupMenuItem(
+                                          value: 'pdf',
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.picture_as_pdf,
+                                                color: primaryColor,
+                                                size: 20,
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: Text(
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  ).exportPdf,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text(
-                                              AppLocalizations.of(
-                                                context,
-                                              ).exportFileTitle,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                        ),
+                                        PopupMenuItem(
+                                          value: 'excel',
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.table_chart_outlined,
+                                                color: primaryColor,
+                                                size: 20,
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: Text(
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  ).exportExcel,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 'json',
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.code,
-                                            color: primaryColor,
-                                            size: 20,
+                                        ),
+                                        PopupMenuItem(
+                                          value: 'csv',
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.grid_on_outlined,
+                                                color: primaryColor,
+                                                size: 20,
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: Text(
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  ).exportCalculations,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text(
-                                              AppLocalizations.of(
-                                                context,
-                                              ).exportJson,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 'csv',
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.grid_on_outlined,
-                                            color: primaryColor,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text(
-                                              AppLocalizations.of(
-                                                context,
-                                              ).exportCsv,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                        ),
+                                      ],
                                   child: Container(
                                     width: getViewPortWidth(context) * 0.4,
                                     height: getViewPortHeight(context) * 0.05,
@@ -548,12 +580,12 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           ),
                                           const SizedBox(width: 4),
                                           Text(
-                                            AppLocalizations.of(
-                                              context,
-                                            ).export,
+                                            AppLocalizations.of(context).export,
                                             style: TextStyle(
                                               color:
-                                                  Theme.of(context).brightness ==
+                                                  Theme.of(
+                                                            context,
+                                                          ).brightness ==
                                                           Brightness.dark
                                                       ? primaryColor
                                                       : Colors.white,
@@ -639,6 +671,115 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                               ],
                             ),
                           ),
+                          if (value != null) ...[
+                            SizedBox(height: getViewPortHeight(context) * 0.02),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.tune,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).sensitivitySimulator,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      SensitivitySimulatorScreen.route,
+                                      arguments:
+                                          SensitivitySimulatorScreenArguments(
+                                            qSlope: widget.qSlope.value,
+                                          ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.construction,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).slopeSupportGuide,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      SupportGuideScreen.route,
+                                      arguments: SupportGuideScreenArguments(
+                                        qSlope: widget.qSlope.value,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.explore_outlined,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).kinematicCompass,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    final o = widget.qSlope.value.oFactor;
+                                    Navigator.pushNamed(
+                                      context,
+                                      KinematicCompassScreen.route,
+                                      arguments:
+                                          KinematicCompassScreenArguments(
+                                            slopeDip: o?.betaS ?? 65.0,
+                                            slopeDipDirection:
+                                                o?.alphaS ?? 120.0,
+                                            joint1Dip: o?.betaJ ?? 45.0,
+                                            joint1DipDirection:
+                                                o?.alphaJ ?? 110.0,
+                                            joint2Dip: o?.betaI,
+                                            joint2DipDirection: o?.alphaI,
+                                          ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.architecture,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).inverseDesignCalculator,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      InverseCalculatorScreen.route,
+                                      arguments:
+                                          InverseCalculatorScreenArguments(
+                                            qSlope: widget.qSlope.value,
+                                          ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                           SizedBox(height: getViewPortHeight(context) * 0.08),
                         ],
                       ),

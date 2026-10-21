@@ -15,10 +15,9 @@ import 'package:q_slope_calculator/src/ui/screens/home_screen/components/q_slope
 import 'package:q_slope_calculator/src/ui/widgets/custom_progress_indicator.dart';
 import 'package:q_slope_calculator/src/ui/widgets/illustration_widget.dart';
 import 'package:q_slope_calculator/src/utils/color_pallet.dart';
-import 'package:q_slope_calculator/src/utils/csv_service.dart';
+import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
-import 'package:q_slope_calculator/src/utils/json_backup_service.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
@@ -139,12 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return filtered;
   }
 
-  Future<void> _handleImport(BuildContext context, bool isJson) async {
+  Future<void> _handleImport(BuildContext context) async {
     try {
-      final items =
-          isJson
-              ? await JsonBackupService.pickAndParseJson()
-              : await CsvService.pickAndParseCsv();
+      final items = await CsvUtils.pickAndParseCsv();
 
       if (items == null || items.isEmpty) return;
 
@@ -321,8 +317,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: getTitleFontSize(context),
                     ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
         ),
         floatingActionButton: FloatingActionButton.extended(

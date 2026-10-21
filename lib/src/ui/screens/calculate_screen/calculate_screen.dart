@@ -46,7 +46,8 @@ class _CalculateScreenState extends State<CalculateScreen>
           (_tabController!.index == 1 || _tabController!.index == 2)) {
         QSlope qSlope = _qSlope.value;
         final bs = qSlope.blockSize;
-        final hasJoints = (bs?.numberOfJoints != null && bs!.numberOfJoints! > 0) ||
+        final hasJoints =
+            (bs?.numberOfJoints != null && bs!.numberOfJoints! > 0) ||
             (qSlope.jointCharacter?.jointRoughness != null &&
                 qSlope.jointCharacter!.jointRoughness!.isNotEmpty);
         final hasRqd = bs?.rqd != null;

@@ -4,10 +4,7 @@ import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 class HomeEmptyFilterView extends StatelessWidget {
   final VoidCallback onClearFilters;
 
-  const HomeEmptyFilterView({
-    super.key,
-    required this.onClearFilters,
-  });
+  const HomeEmptyFilterView({super.key, required this.onClearFilters});
 
   @override
   Widget build(BuildContext context) {

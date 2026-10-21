@@ -5,18 +5,26 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
+import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
-import 'package:q_slope_calculator/src/utils/csv_service.dart';
-import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
-import 'package:q_slope_calculator/src/utils/json_backup_service.dart';
+import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
+import 'package:q_slope_calculator/src/utils/csv_utils.dart';
+import 'package:q_slope_calculator/src/utils/excel_utils.dart';
+import 'package:q_slope_calculator/src/utils/pdf_report_utils.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
 
 enum SelectionMenuAction {
   toggleSelect,
+  openSensitivitySimulator,
+  openSupportGuide,
+  openKinematicCompass,
+  openInverseCalculator,
+  exportPdf,
   exportExcel,
-  exportJson,
-  exportCsv,
+  exportCalculations,
   chart,
   delete,
 }
@@ -44,6 +52,7 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
     final bool deselectAll =
         currentList.isNotEmpty &&
         currentList.every((item) => selectedIds.contains(item.id));
+    final bool isSingleSelection = selectedIds.length == 1;
 
     return PopupMenuButton<SelectionMenuAction>(
       iconColor: primaryColor,
@@ -69,6 +78,103 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 ],
               ),
             ),
+            if (isSingleSelection) ...[
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: SelectionMenuAction.openSensitivitySimulator,
+                child: Row(
+                  children: [
+                    Icon(Icons.tune, color: primaryColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).sensitivitySimulator,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: SelectionMenuAction.openSupportGuide,
+                child: Row(
+                  children: [
+                    Icon(Icons.construction, color: primaryColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).slopeSupportGuide,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: SelectionMenuAction.openKinematicCompass,
+                child: Row(
+                  children: [
+                    Icon(Icons.explore_outlined, color: primaryColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).kinematicCompass,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: SelectionMenuAction.openInverseCalculator,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.swap_vertical_circle_outlined,
+                      color: primaryColor,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).inverseDesignCalculator,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: SelectionMenuAction.exportPdf,
+                child: Row(
+                  children: [
+                    Icon(Icons.picture_as_pdf, color: primaryColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).exportPdf,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            const PopupMenuDivider(),
+            PopupMenuItem(
+              value: SelectionMenuAction.exportCalculations,
+              child: Row(
+                children: [
+                  Icon(Icons.grid_on_outlined, color: primaryColor),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).exportCalculations,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             PopupMenuItem(
               value: SelectionMenuAction.exportExcel,
               child: Row(
@@ -77,37 +183,7 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      AppLocalizations.of(context).exportFileTitle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: SelectionMenuAction.exportJson,
-              child: Row(
-                children: [
-                  Icon(Icons.code, color: primaryColor),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context).exportJson,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: SelectionMenuAction.exportCsv,
-              child: Row(
-                children: [
-                  Icon(Icons.grid_on_outlined, color: primaryColor),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context).exportCsv,
+                      AppLocalizations.of(context).exportExcel,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -129,6 +205,7 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 ],
               ),
             ),
+            const PopupMenuDivider(),
             PopupMenuItem(
               value: SelectionMenuAction.delete,
               child: Row(
@@ -155,16 +232,60 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
             }
             break;
 
+          case SelectionMenuAction.openSensitivitySimulator:
+            final single = _selectedQSlopes.first;
+            Navigator.pushNamed(
+              context,
+              SensitivitySimulatorScreen.route,
+              arguments: SensitivitySimulatorScreenArguments(qSlope: single),
+            );
+            break;
+
+          case SelectionMenuAction.openSupportGuide:
+            final single = _selectedQSlopes.first;
+            Navigator.pushNamed(
+              context,
+              SupportGuideScreen.route,
+              arguments: SupportGuideScreenArguments(qSlope: single),
+            );
+            break;
+
+          case SelectionMenuAction.openKinematicCompass:
+            final single = _selectedQSlopes.first;
+            Navigator.pushNamed(
+              context,
+              KinematicCompassScreen.route,
+              arguments: KinematicCompassScreenArguments(
+                slopeDip:
+                    single.slopeAngleByUser ?? single.oFactor?.betaS ?? 65.0,
+                slopeDipDirection: single.oFactor?.alphaS ?? 120.0,
+                joint1Dip: single.oFactor?.betaJ ?? 45.0,
+                joint1DipDirection: single.oFactor?.alphaJ ?? 115.0,
+                joint2Dip: single.oFactor?.betaI,
+                joint2DipDirection: single.oFactor?.alphaI,
+              ),
+            );
+            break;
+
+          case SelectionMenuAction.openInverseCalculator:
+            final single = _selectedQSlopes.first;
+            Navigator.pushNamed(
+              context,
+              InverseCalculatorScreen.route,
+              arguments: InverseCalculatorScreenArguments(qSlope: single),
+            );
+            break;
+
+          case SelectionMenuAction.exportPdf:
+            _exportPdf(context);
+            break;
+
           case SelectionMenuAction.exportExcel:
             _exportExcel(context);
             break;
 
-          case SelectionMenuAction.exportJson:
-            _exportJson(context);
-            break;
-
-          case SelectionMenuAction.exportCsv:
-            _exportCsv(context);
+          case SelectionMenuAction.exportCalculations:
+            _exportCalculations(context);
             break;
 
           case SelectionMenuAction.chart:
@@ -195,27 +316,70 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
     );
   }
 
+  void _exportPdf(BuildContext context) async {
+    final qSlope = _selectedQSlopes.first;
+    showFullScreenLoader(context);
+    try {
+      final fileName = await PdfReportUtils.exportPdfReport(
+        qSlope,
+        dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
+      );
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        if (fileName != null && fileName.isNotEmpty) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.success,
+            title: Text(
+              AppLocalizations.of(context).exportPdfSuccessful(fileName),
+            ),
+          );
+          setSelectedIds({});
+          onExitSelectionMode?.call();
+        }
+      }
+    } catch (err) {
+      if (context.mounted) {
+        Navigator.pop(context); // loader
+        toastification.show(
+          autoCloseDuration: const Duration(seconds: 2),
+          alignment: Alignment.bottomCenter,
+          type: ToastificationType.error,
+          title: Text(AppLocalizations.of(context).exportPdfFailed),
+        );
+      }
+    }
+  }
+
   void _exportExcel(BuildContext context) {
     showGenericDialog(
       context: context,
-      titleText: AppLocalizations.of(context).exportFileTitle,
+      titleText: AppLocalizations.of(context).exportExcel,
       label: AppLocalizations.of(context).exportFileContent,
       onOk: () async {
         Navigator.pop(context); // Dismiss the confirm dialog
         final qSlopes = _selectedQSlopes;
         showFullScreenLoader(context);
         try {
-          final fileName = await exportExcelFile(qSlopes, context);
+          final fileName = await ExcelUtils.exportExcelFile(
+            qSlopes,
+            dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
+          );
           if (context.mounted) {
             Navigator.pop(context); // loader
-            toastification.show(
-              autoCloseDuration: const Duration(seconds: 2),
-              alignment: Alignment.bottomCenter,
-              type: ToastificationType.success,
-              title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
-            );
-            setSelectedIds({});
-            onExitSelectionMode?.call();
+            if (fileName != null && fileName.isNotEmpty) {
+              toastification.show(
+                autoCloseDuration: const Duration(seconds: 2),
+                alignment: Alignment.bottomCenter,
+                type: ToastificationType.success,
+                title: Text(
+                  AppLocalizations.of(context).exportSuccessful(fileName),
+                ),
+              );
+              setSelectedIds({});
+              onExitSelectionMode?.call();
+            }
           }
         } catch (err) {
           if (context.mounted) {
@@ -232,50 +396,28 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
     );
   }
 
-  void _exportJson(BuildContext context) async {
+  void _exportCalculations(BuildContext context) async {
     final qSlopes = _selectedQSlopes;
     showFullScreenLoader(context);
     try {
-      final fileName = await JsonBackupService.exportJson(qSlopes, context);
+      final fileName = await CsvUtils.exportCsv(
+        qSlopes,
+        dialogTitle: AppLocalizations.of(context).selectDirectoryToSaveFile,
+      );
       if (context.mounted) {
         Navigator.pop(context); // loader
-        toastification.show(
-          autoCloseDuration: const Duration(seconds: 2),
-          alignment: Alignment.bottomCenter,
-          type: ToastificationType.success,
-          title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
-        );
-        setSelectedIds({});
-        onExitSelectionMode?.call();
-      }
-    } catch (err) {
-      if (context.mounted) {
-        Navigator.pop(context); // loader
-        toastification.show(
-          autoCloseDuration: const Duration(seconds: 2),
-          alignment: Alignment.bottomCenter,
-          type: ToastificationType.error,
-          title: Text(AppLocalizations.of(context).exportFailed),
-        );
-      }
-    }
-  }
-
-  void _exportCsv(BuildContext context) async {
-    final qSlopes = _selectedQSlopes;
-    showFullScreenLoader(context);
-    try {
-      final fileName = await CsvService.exportCsv(qSlopes, context);
-      if (context.mounted) {
-        Navigator.pop(context); // loader
-        toastification.show(
-          autoCloseDuration: const Duration(seconds: 2),
-          alignment: Alignment.bottomCenter,
-          type: ToastificationType.success,
-          title: Text(AppLocalizations.of(context).exportSuccessful(fileName)),
-        );
-        setSelectedIds({});
-        onExitSelectionMode?.call();
+        if (fileName != null && fileName.isNotEmpty) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.success,
+            title: Text(
+              AppLocalizations.of(context).exportSuccessful(fileName),
+            ),
+          );
+          setSelectedIds({});
+          onExitSelectionMode?.call();
+        }
       }
     } catch (err) {
       if (context.mounted) {
@@ -296,33 +438,12 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
       titleText: AppLocalizations.of(context).deleteCalculationsModalTitle,
       label: AppLocalizations.of(context).deleteCalculationsModalContent,
       onOk: () async {
-        Navigator.pop(context); // Dismiss the confirm dialog
-        final ids = selectedIds.toList();
-        showFullScreenLoader(context);
-        try {
-          await context.read<QSlopeListCubit>().deleteMultipleQSlopesFromList(ids);
-          if (context.mounted) {
-            Navigator.pop(context); // loader
-            toastification.show(
-              autoCloseDuration: const Duration(seconds: 2),
-              alignment: Alignment.bottomCenter,
-              type: ToastificationType.success,
-              title: Text(AppLocalizations.of(context).deleteCalculationSuccessful),
-            );
-            setSelectedIds({});
-            onExitSelectionMode?.call();
-          }
-        } catch (err) {
-          if (context.mounted) {
-            Navigator.pop(context); // loader
-            toastification.show(
-              autoCloseDuration: const Duration(seconds: 2),
-              alignment: Alignment.bottomCenter,
-              type: ToastificationType.error,
-              title: Text(AppLocalizations.of(context).errorInDeletingCalculation),
-            );
-          }
-        }
+        Navigator.pop(context); // Close the confirm dialog
+        final cubit = context.read<QSlopeListCubit>();
+        final idsToDelete = selectedIds.toList();
+        await cubit.deleteMultipleQSlopesFromList(idsToDelete);
+        setSelectedIds({});
+        onExitSelectionMode?.call();
       },
     );
   }

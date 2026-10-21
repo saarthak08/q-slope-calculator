@@ -62,18 +62,20 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                         color: primaryColor,
                         size: 20,
                       ),
-                      suffixIcon: searchController.text.isNotEmpty
-                          ? IconButton(
-                            icon: const Icon(Icons.clear, size: 18),
-                            onPressed: onSearchCleared,
-                          )
-                          : null,
+                      suffixIcon:
+                          searchController.text.isNotEmpty
+                              ? IconButton(
+                                icon: const Icon(Icons.clear, size: 18),
+                                onPressed: onSearchCleared,
+                              )
+                              : null,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 0,
                       ),
                       filled: true,
-                      fillColor: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
+                      fillColor:
+                          isDark ? Colors.grey.shade900 : Colors.grey.shade100,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
@@ -84,7 +86,10 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
-                          color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                          color:
+                              isDark
+                                  ? Colors.grey.shade800
+                                  : Colors.grey.shade300,
                           width: 1,
                         ),
                       ),
@@ -104,7 +109,8 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                     color: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(
-                      color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                      color:
+                          isDark ? Colors.grey.shade800 : Colors.grey.shade300,
                     ),
                   ),
                   child: Icon(Icons.sort, color: primaryColor, size: 20),
@@ -212,11 +218,12 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                   label: AppLocalizations.of(context).statusStable,
                   color: Colors.green,
                   isSelected: selectedStatus == SlopeStabilityStatus.stable,
-                  onSelected: () => onStatusFilterChanged(
-                    selectedStatus == SlopeStabilityStatus.stable
-                        ? null
-                        : SlopeStabilityStatus.stable,
-                  ),
+                  onSelected:
+                      () => onStatusFilterChanged(
+                        selectedStatus == SlopeStabilityStatus.stable
+                            ? null
+                            : SlopeStabilityStatus.stable,
+                      ),
                   context: context,
                 ),
                 const SizedBox(width: 6),
@@ -224,11 +231,12 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                   label: AppLocalizations.of(context).statusUncertain,
                   color: Colors.orange,
                   isSelected: selectedStatus == SlopeStabilityStatus.uncertain,
-                  onSelected: () => onStatusFilterChanged(
-                    selectedStatus == SlopeStabilityStatus.uncertain
-                        ? null
-                        : SlopeStabilityStatus.uncertain,
-                  ),
+                  onSelected:
+                      () => onStatusFilterChanged(
+                        selectedStatus == SlopeStabilityStatus.uncertain
+                            ? null
+                            : SlopeStabilityStatus.uncertain,
+                      ),
                   context: context,
                 ),
                 const SizedBox(width: 6),
@@ -236,11 +244,12 @@ class HomeSearchAndFilterBar extends StatelessWidget {
                   label: AppLocalizations.of(context).statusUnstable,
                   color: Colors.red,
                   isSelected: selectedStatus == SlopeStabilityStatus.unstable,
-                  onSelected: () => onStatusFilterChanged(
-                    selectedStatus == SlopeStabilityStatus.unstable
-                        ? null
-                        : SlopeStabilityStatus.unstable,
-                  ),
+                  onSelected:
+                      () => onStatusFilterChanged(
+                        selectedStatus == SlopeStabilityStatus.unstable
+                            ? null
+                            : SlopeStabilityStatus.unstable,
+                      ),
                   context: context,
                 ),
               ],
@@ -268,17 +277,20 @@ class HomeSearchAndFilterBar extends StatelessWidget {
         style: TextStyle(
           fontSize: 12,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          color: isSelected
-              ? Colors.white
-              : (isDark ? Colors.white70 : Colors.black87),
+          color:
+              isSelected
+                  ? Colors.white
+                  : (isDark ? Colors.white70 : Colors.black87),
         ),
       ),
       selectedColor: effectiveColor,
       backgroundColor: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
       side: BorderSide(
-        color: isSelected
-            ? effectiveColor
-            : (color?.withValues(alpha: 0.5) ?? (isDark ? Colors.grey.shade800 : Colors.grey.shade300)),
+        color:
+            isSelected
+                ? effectiveColor
+                : (color?.withValues(alpha: 0.5) ??
+                    (isDark ? Colors.grey.shade800 : Colors.grey.shade300)),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       showCheckmark: false,

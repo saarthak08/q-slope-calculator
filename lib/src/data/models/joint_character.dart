@@ -49,29 +49,42 @@ class JointCharacter {
     return JointCharacter(
       jointRoughness:
           map['jointRoughness'] != null
-              ? (map['jointRoughness'] as List)
-                  .map((e) => (e as num).toDouble())
-                  .toList()
+              ? (map['jointRoughness'] is List
+                  ? (map['jointRoughness'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jointRoughness'] as num).toDouble()])
               : null,
       jointWaviness:
           map['jw'] != null
-              ? (map['jw'] as List).map((e) => (e as num).toDouble()).toList()
+              ? (map['jw'] is List
+                  ? (map['jw'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jw'] as num).toDouble()])
               : null,
       jointSmoothness:
           map['js'] != null
-              ? (map['js'] as List).map((e) => (e as num).toDouble()).toList()
+              ? (map['js'] is List
+                  ? (map['js'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['js'] as num).toDouble()])
               : null,
       jrCalculationType:
           map['jrCalculationType'] != null
-              ? map['jrCalculationType'] == JrCalculationType.jr.name
+              ? (map['jrCalculationType'] == JrCalculationType.jr.name ||
+                      map['jrCalculationType'] == JrCalculationType.jr)
                   ? JrCalculationType.jr
                   : JrCalculationType.palmstorm
               : null,
       jointAlteration:
           map['jointAlteration'] != null
-              ? (map['jointAlteration'] as List)
-                  .map((e) => (e as num).toDouble())
-                  .toList()
+              ? (map['jointAlteration'] is List
+                  ? (map['jointAlteration'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jointAlteration'] as num).toDouble()])
               : null,
     );
   }

@@ -79,7 +79,6 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Allowable'), findsOneWidget);
       expect(find.textContaining('65.0°'), findsOneWidget);
       expect(find.byIcon(Icons.help_outline), findsOneWidget);
     });

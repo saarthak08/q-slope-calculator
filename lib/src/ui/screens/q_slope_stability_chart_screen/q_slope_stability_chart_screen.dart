@@ -66,11 +66,14 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                       );
                       try {
                         if (buildContext.mounted) {
-                          await saveFile(
+                          final savedPath = await saveFile(
                             imageBytes.toList(),
                             fileName,
                             buildContext,
                           );
+                          if (savedPath == null || savedPath.isEmpty) {
+                            return;
+                          }
                           if (buildContext.mounted) {
                             toastification.show(
                               autoCloseDuration: const Duration(seconds: 2),

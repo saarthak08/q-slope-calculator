@@ -27,25 +27,28 @@ class StabilityBadge extends StatelessWidget {
 
     switch (status) {
       case SlopeStabilityStatus.stable:
-        bgColor = isDark
-            ? Colors.green.shade900.withValues(alpha: 0.35)
-            : Colors.green.shade50;
+        bgColor =
+            isDark
+                ? Colors.green.shade900.withValues(alpha: 0.35)
+                : Colors.green.shade50;
         fgColor = isDark ? Colors.greenAccent.shade400 : Colors.green.shade700;
         icon = Icons.check_circle_outline;
         statusText = AppLocalizations.of(context).statusStable;
         break;
       case SlopeStabilityStatus.uncertain:
-        bgColor = isDark
-            ? Colors.amber.shade900.withValues(alpha: 0.35)
-            : Colors.amber.shade50;
+        bgColor =
+            isDark
+                ? Colors.amber.shade900.withValues(alpha: 0.35)
+                : Colors.amber.shade50;
         fgColor = isDark ? Colors.amberAccent.shade200 : Colors.orange.shade800;
         icon = Icons.warning_amber_rounded;
         statusText = AppLocalizations.of(context).statusUncertain;
         break;
       case SlopeStabilityStatus.unstable:
-        bgColor = isDark
-            ? Colors.red.shade900.withValues(alpha: 0.35)
-            : Colors.red.shade50;
+        bgColor =
+            isDark
+                ? Colors.red.shade900.withValues(alpha: 0.35)
+                : Colors.red.shade50;
         fgColor = isDark ? Colors.redAccent.shade100 : Colors.red.shade700;
         icon = Icons.dangerous_outlined;
         statusText = AppLocalizations.of(context).statusUnstable;
@@ -57,16 +60,17 @@ class StabilityBadge extends StatelessWidget {
         if (qSlope != null && qSlope! > 0) {
           final allowable = calculateSlopeAngle(qSlope!);
           statusText =
-              "${AppLocalizations.of(context).allowableAngle}: ${allowable.toStringAsFixed(1)}°";
+              "${AppLocalizations.of(context).slopeAngleSymbol} = ${allowable.toStringAsFixed(1)}°";
         } else {
           statusText = AppLocalizations.of(context).statusUnknown;
         }
         break;
     }
 
-    final marginString = (margin != null && showSafetyMargin)
-        ? " (Δβ: ${margin >= 0 ? '+' : ''}${margin.toStringAsFixed(1)}°)"
-        : "";
+    final marginString =
+        (margin != null && showSafetyMargin)
+            ? " (Δβ: ${margin >= 0 ? '+' : ''}${margin.toStringAsFixed(1)}°)"
+            : "";
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -80,12 +84,16 @@ class StabilityBadge extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: fgColor),
           const SizedBox(width: 4),
-          Text(
-            "$statusText$marginString",
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: fgColor,
+          Flexible(
+            child: Text(
+              "$statusText$marginString",
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: fgColor,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

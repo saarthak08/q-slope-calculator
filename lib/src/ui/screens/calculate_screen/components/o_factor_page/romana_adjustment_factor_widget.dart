@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:q_slope_calculator/src/data/models/o_factor.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/o_factor_page/o_factor_rating_widget.dart';
+import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
@@ -620,6 +621,96 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                           widget.ratingForF2,
                                                       ratingForF3:
                                                           widget.ratingForF3,
+                                                    ),
+                                                    SizedBox(
+                                                      height:
+                                                          getViewPortHeight(
+                                                            context,
+                                                          ) *
+                                                          0.02,
+                                                    ),
+                                                    OutlinedButton.icon(
+                                                      icon: const Icon(
+                                                        Icons.explore_outlined,
+                                                        size: 18,
+                                                      ),
+                                                      label: Text(
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        ).kinematicCompass,
+                                                      ),
+                                                      style:
+                                                          OutlinedButton.styleFrom(
+                                                            foregroundColor:
+                                                                Theme.of(
+                                                                  context,
+                                                                ).primaryColor,
+                                                            side: BorderSide(
+                                                              color:
+                                                                  Theme.of(
+                                                                    context,
+                                                                  ).primaryColor,
+                                                            ),
+                                                          ),
+                                                      onPressed: () {
+                                                        final double slopeDip =
+                                                            double.tryParse(
+                                                              widget.betaS.text,
+                                                            ) ??
+                                                            65.0;
+                                                        final double
+                                                        slopeDipDir =
+                                                            double.tryParse(
+                                                              widget
+                                                                  .alphaS
+                                                                  .text,
+                                                            ) ??
+                                                            120.0;
+                                                        final double joint1Dip =
+                                                            double.tryParse(
+                                                              widget.betaJ.text,
+                                                            ) ??
+                                                            45.0;
+                                                        final double
+                                                        joint1DipDir =
+                                                            double.tryParse(
+                                                              widget
+                                                                  .alphaJ
+                                                                  .text,
+                                                            ) ??
+                                                            110.0;
+                                                        final double?
+                                                        joint2Dip =
+                                                            double.tryParse(
+                                                              widget.betaI.text,
+                                                            );
+                                                        final double?
+                                                        joint2DipDir =
+                                                            double.tryParse(
+                                                              widget
+                                                                  .alphaI
+                                                                  .text,
+                                                            );
+
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          KinematicCompassScreen
+                                                              .route,
+                                                          arguments: KinematicCompassScreenArguments(
+                                                            slopeDip: slopeDip,
+                                                            slopeDipDirection:
+                                                                slopeDipDir,
+                                                            joint1Dip:
+                                                                joint1Dip,
+                                                            joint1DipDirection:
+                                                                joint1DipDir,
+                                                            joint2Dip:
+                                                                joint2Dip,
+                                                            joint2DipDirection:
+                                                                joint2DipDir,
+                                                          ),
+                                                        );
+                                                      },
                                                     ),
                                                     SizedBox(
                                                       height:

@@ -114,7 +114,11 @@ void main() {
         expect(rF2, isNotNull);
         expect(rF3, isNotNull);
 
-        final oFactor = calculateOFactorByRomananAdjustmentFactor(rF1, rF2, rF3);
+        final oFactor = calculateOFactorByRomananAdjustmentFactor(
+          rF1,
+          rF2,
+          rF3,
+        );
         expect(oFactor, isPositive);
       });
 
@@ -128,7 +132,11 @@ void main() {
         final rF2 = calculateRatingForF2(35);
         final rF3 = calculateRatingForF3NonTopplingFailure(f3);
 
-        final oFactor = calculateOFactorByRomananAdjustmentFactor(rF1, rF2, rF3);
+        final oFactor = calculateOFactorByRomananAdjustmentFactor(
+          rF1,
+          rF2,
+          rF3,
+        );
         expect(oFactor, isPositive);
       });
 
@@ -144,7 +152,11 @@ void main() {
         // For toppling failure, F2 is always 1
         final rF3 = calculateRatingForF3TopplingFailure(f3);
 
-        final oFactor = calculateOFactorByRomananAdjustmentFactor(rF1, 1.0, rF3);
+        final oFactor = calculateOFactorByRomananAdjustmentFactor(
+          rF1,
+          1.0,
+          rF3,
+        );
         expect(oFactor, isPositive);
       });
 
@@ -173,58 +185,65 @@ void main() {
         expect(result, closeTo(20.0, 0.001));
       });
 
-      test('calculateQSlope with Direct OFactor - Wedge failure with 2 joints', () {
-        final q = QSlope(
-          id: 'q_wedge',
-          blockSize: BlockSize(rqd: 90, jointSetNumber: 3),
-          jointCharacter: JointCharacter(
-            jointRoughness: [3.0, 1.5],
-            jointAlteration: [1.0, 2.0],
-          ),
-          oFactor: OFactor(
-            indexOfFirstJoint: 0,
-            indexOfSecondJoint: 1,
-            oFactorForFirstJoint: 1.1,
-            oFactorForSecondJoint: 0.9,
-            oFactorCalculationType: OFactorCalculationType.value,
-            oFactorTypeOfFailure: OFactorTypeOfFailure.wedge,
-          ),
-          externalFactors: ExternalFactors(
-            environmentalAndGeologicalConditionalNumber: 0.75,
-          ),
-          activeStress: ActiveStress(srf: 2.5),
-        );
+      test(
+        'calculateQSlope with Direct OFactor - Wedge failure with 2 joints',
+        () {
+          final q = QSlope(
+            id: 'q_wedge',
+            blockSize: BlockSize(rqd: 90, jointSetNumber: 3),
+            jointCharacter: JointCharacter(
+              jointRoughness: [3.0, 1.5],
+              jointAlteration: [1.0, 2.0],
+            ),
+            oFactor: OFactor(
+              indexOfFirstJoint: 0,
+              indexOfSecondJoint: 1,
+              oFactorForFirstJoint: 1.1,
+              oFactorForSecondJoint: 0.9,
+              oFactorCalculationType: OFactorCalculationType.value,
+              oFactorTypeOfFailure: OFactorTypeOfFailure.wedge,
+            ),
+            externalFactors: ExternalFactors(
+              environmentalAndGeologicalConditionalNumber: 0.75,
+            ),
+            activeStress: ActiveStress(srf: 2.5),
+          );
 
-        // Q = (90/3) * (3/1) * 1.1 * (0.75/2.5) * (1.5/2) * 0.9
-        //   = 30 * 3 * 1.1 * 0.3 * 0.75 * 0.9 = 20.0475
-        final result = calculateQSlope(q);
-        expect(result, closeTo(20.0475, 0.001));
-      });
+          // Q = (90/3) * (3/1) * 1.1 * (0.75/2.5) * (1.5/2) * 0.9
+          //   = 30 * 3 * 1.1 * 0.3 * 0.75 * 0.9 = 20.0475
+          final result = calculateQSlope(q);
+          expect(result, closeTo(20.0475, 0.001));
+        },
+      );
 
-      test('calculateQSlope with Romana Adjustment Factor - Toppling failure', () {
-        final q = QSlope(
-          id: 'q_toppling',
-          blockSize: BlockSize(rqd: 70, jointSetNumber: 6),
-          jointCharacter: JointCharacter(
-            jointRoughness: [1.5],
-            jointAlteration: [2.0],
-          ),
-          oFactor: OFactor(
-            indexOfFirstJoint: 0,
-            oFactorForFirstJoint: 0.85,
-            oFactorCalculationType: OFactorCalculationType.romanaAdjacentFactor,
-            oFactorTypeOfFailure: OFactorTypeOfFailure.toppling,
-          ),
-          externalFactors: ExternalFactors(
-            environmentalAndGeologicalConditionalNumber: 0.6,
-          ),
-          activeStress: ActiveStress(srf: 3.0),
-        );
+      test(
+        'calculateQSlope with Romana Adjustment Factor - Toppling failure',
+        () {
+          final q = QSlope(
+            id: 'q_toppling',
+            blockSize: BlockSize(rqd: 70, jointSetNumber: 6),
+            jointCharacter: JointCharacter(
+              jointRoughness: [1.5],
+              jointAlteration: [2.0],
+            ),
+            oFactor: OFactor(
+              indexOfFirstJoint: 0,
+              oFactorForFirstJoint: 0.85,
+              oFactorCalculationType:
+                  OFactorCalculationType.romanaAdjacentFactor,
+              oFactorTypeOfFailure: OFactorTypeOfFailure.toppling,
+            ),
+            externalFactors: ExternalFactors(
+              environmentalAndGeologicalConditionalNumber: 0.6,
+            ),
+            activeStress: ActiveStress(srf: 3.0),
+          );
 
-        // Q = (70/6) * (1.5/2) * 0.85 * (0.6/3) = 11.6667 * 0.75 * 0.85 * 0.2 = 1.4875
-        final result = calculateQSlope(q);
-        expect(result, closeTo(1.4875, 0.001));
-      });
+          // Q = (70/6) * (1.5/2) * 0.85 * (0.6/3) = 11.6667 * 0.75 * 0.85 * 0.2 = 1.4875
+          final result = calculateQSlope(q);
+          expect(result, closeTo(1.4875, 0.001));
+        },
+      );
     });
   });
 }

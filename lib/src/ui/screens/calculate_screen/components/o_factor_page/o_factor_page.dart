@@ -56,7 +56,8 @@ class _OFactorPageState extends State<OFactorPage> {
     _joint2OFactor.text =
         qSlope.oFactor?.oFactorForSecondJoint?.toString() ?? "";
     _joint1Index.value = qSlope.oFactor?.indexOfFirstJoint ?? 0;
-    _joint2Index.value = qSlope.oFactor?.indexOfSecondJoint ??
+    _joint2Index.value =
+        qSlope.oFactor?.indexOfSecondJoint ??
         ((qSlope.jointCharacter?.jointRoughness?.length ?? 1) > 1 ? 1 : null);
     ratingForF1.text = qSlope.oFactor?.ratingForF1?.toString() ?? "";
     ratingForF2.text = qSlope.oFactor?.ratingForF2?.toString() ?? "";
@@ -70,11 +71,13 @@ class _OFactorPageState extends State<OFactorPage> {
     f1.text = qSlope.oFactor?.f1?.toString() ?? "";
     f2.text = qSlope.oFactor?.f2?.toString() ?? "";
     f3.text = qSlope.oFactor?.f3?.toString() ?? "";
-    _oFactorTypeOfFailure.value = qSlope.oFactor?.oFactorTypeOfFailure ??
+    _oFactorTypeOfFailure.value =
+        qSlope.oFactor?.oFactorTypeOfFailure ??
         ((qSlope.jointCharacter?.jointRoughness?.length ?? 1) > 1
             ? OFactorTypeOfFailure.wedge
             : OFactorTypeOfFailure.planar);
-    _oFactorRomanaValueType.value = qSlope.oFactor?.oFactorRomanaValueType ??
+    _oFactorRomanaValueType.value =
+        qSlope.oFactor?.oFactorRomanaValueType ??
         (qSlope.oFactor?.alphaI != null ||
                 qSlope.oFactor?.alphaJ != null ||
                 qSlope.oFactor?.f1 != null
@@ -84,7 +87,8 @@ class _OFactorPageState extends State<OFactorPage> {
                 ? OFactorRomanaValueType.value
                 : null));
     setState(() {
-      _oFactorCalculationType = qSlope.oFactor?.oFactorCalculationType ??
+      _oFactorCalculationType =
+          qSlope.oFactor?.oFactorCalculationType ??
           OFactorCalculationType.value;
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {

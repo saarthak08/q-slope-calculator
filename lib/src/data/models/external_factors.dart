@@ -62,37 +62,54 @@ class ExternalFactors {
               ?.toDouble(),
       externalFactorsStrengthOfRock:
           map['externalFactorsStrengthOfRock'] != null
-              ? map['externalFactorsStrengthOfRock'] ==
-                      ExternalFactorsStrengthOfRock.competent.name
+              ? (map['externalFactorsStrengthOfRock'] ==
+                          ExternalFactorsStrengthOfRock.competent.name ||
+                      map['externalFactorsStrengthOfRock'] ==
+                          ExternalFactorsStrengthOfRock.competent)
                   ? ExternalFactorsStrengthOfRock.competent
                   : ExternalFactorsStrengthOfRock.incompetent
               : null,
       externalFactorsStructureType:
           map['externalFactorsStructureType'] != null
-              ? map['externalFactorsStructureType'] ==
-                      ExternalFactorsStructureType.stable.name
+              ? (map['externalFactorsStructureType'] ==
+                          ExternalFactorsStructureType.stable.name ||
+                      map['externalFactorsStructureType'] ==
+                          ExternalFactorsStructureType.stable)
                   ? ExternalFactorsStructureType.stable
                   : ExternalFactorsStructureType.unstable
               : null,
       externalFactorsCalculationType:
           map['externalFactorsCalculationType'] != null
-              ? map['externalFactorsCalculationType'] ==
-                      ExternalFactorsCalculationType.value.name
+              ? (map['externalFactorsCalculationType'] ==
+                          ExternalFactorsCalculationType.value.name ||
+                      map['externalFactorsCalculationType'] ==
+                          ExternalFactorsCalculationType.value)
                   ? ExternalFactorsCalculationType.value
                   : ExternalFactorsCalculationType.factors
               : null,
       externalFactorsEnvironmentConditions:
           map['externalFactorsEnvironmentConditions'] != null
-              ? map['externalFactorsEnvironmentConditions'] ==
-                      ExternalFactorsEnvironmentConditions
-                          .desertEnvironment
-                          .name
+              ? (map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions
+                              .desertEnvironment
+                              .name ||
+                      map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions
+                              .desertEnvironment)
                   ? ExternalFactorsEnvironmentConditions.desertEnvironment
-                  : map['externalFactorsEnvironmentConditions'] ==
-                      ExternalFactorsEnvironmentConditions.iceWedging.name
+                  : (map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions
+                              .iceWedging
+                              .name ||
+                      map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions.iceWedging)
                   ? ExternalFactorsEnvironmentConditions.iceWedging
-                  : map['externalFactorsEnvironmentConditions'] ==
-                      ExternalFactorsEnvironmentConditions.tropicalStorms.name
+                  : (map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions
+                              .tropicalStorms
+                              .name ||
+                      map['externalFactorsEnvironmentConditions'] ==
+                          ExternalFactorsEnvironmentConditions.tropicalStorms)
                   ? ExternalFactorsEnvironmentConditions.tropicalStorms
                   : ExternalFactorsEnvironmentConditions.wetEnvironment
               : null,

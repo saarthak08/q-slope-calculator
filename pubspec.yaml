@@ -34,6 +34,11 @@ dependencies:
   universal_html: ^2.3.0
   syncfusion_flutter_xlsio: ^35.1.40+1
   syncfusion_flutter_charts: ^35.1.40+1
+  pdf: ^3.13.1
+  printing: ^5.15.1
+  geolocator: ^14.0.1
+  image_picker: ^1.2.4
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
@@ -63,4 +68,7 @@ msix_config:
   logo_path: assets/images/icon.png
 
 lint_staged:
-  "lib/**.dart": dart format && dart analyze
+  "**/*.dart":
+    - dart format
+    - git add
+    - dart analyze

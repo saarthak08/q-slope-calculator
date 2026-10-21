@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/block_size.dart';
@@ -13,8 +14,11 @@ import 'package:q_slope_calculator/src/ui/widgets/divider_widget.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/geo_utils.dart';
+import 'package:q_slope_calculator/src/utils/image_utils.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
+import 'package:toastification/toastification.dart';
 
 class BlockSizePage extends StatefulWidget {
   final ValueNotifier<QSlope> qSlope;
@@ -36,6 +40,11 @@ class _BlockSizePageState extends State<BlockSizePage> {
   final TextEditingController _lithologyController = TextEditingController();
   final TextEditingController _slopeAngleByUserController =
       TextEditingController();
+  final TextEditingController _benchHeightController = TextEditingController();
+  final TextEditingController _latitudeController = TextEditingController();
+  final TextEditingController _longitudeController = TextEditingController();
+  final TextEditingController _elevationController = TextEditingController();
+  final ValueNotifier<List<String>> _photoPaths = ValueNotifier([]);
   final TextEditingController _sumOfCorePiecesController =
       TextEditingController();
   final TextEditingController _totalDrillRunController =
@@ -64,6 +73,11 @@ class _BlockSizePageState extends State<BlockSizePage> {
     _lithologyController.text = qSlope.lithology ?? "";
     _slopeAngleByUserController.text =
         qSlope.slopeAngleByUser?.toString() ?? '';
+    _benchHeightController.text = qSlope.benchHeight?.toString() ?? '';
+    _latitudeController.text = qSlope.latitude?.toString() ?? '';
+    _longitudeController.text = qSlope.longitude?.toString() ?? '';
+    _elevationController.text = qSlope.elevation?.toString() ?? '';
+    _photoPaths.value = List.from(qSlope.photoPaths ?? []);
     final existingRqd = qSlope.blockSize?.rqd;
     double? sumOfCorePieces = qSlope.blockSize?.sumOfCorePieces;
     double? totalDrillRun = qSlope.blockSize?.totalDrillRun;
@@ -119,12 +133,25 @@ class _BlockSizePageState extends State<BlockSizePage> {
         qSlope.blockSize?.areaInSquareMeters?.toString() ?? '';
     rqd.value = qSlope.blockSize?.rqd;
     jointVolume.value = qSlope.blockSize?.jointVolume;
-    _jointSetNumberController.text =
-        qSlope.blockSize?.jointSetNumber?.toString() ?? "";
+    final double? existingJn = qSlope.blockSize?.jointSetNumber;
+    if (existingJn != null && existingJn > 0) {
+      _jointSetNumberController.text = existingJn.toString();
+    } else if (intNumOfJoints > 0) {
+      final double derivedJn = calculateJointSetNumber(
+        intNumOfJoints.toDouble(),
+        (qSlope.blockSize?.numberOfRandomSets ?? 0).toDouble(),
+      );
+      _jointSetNumberController.text = derivedJn.toString();
+    } else {
+      _jointSetNumberController.text = "";
+    }
     rqdByJvCalculationType.value = qSlope.blockSize?.rqdByJvCalculationType;
     setState(() {
-      rqdCalculationType = qSlope.blockSize?.rqdCalculationType ??
-          (qSlope.blockSize?.rqd != null ? RqdCalculationType.directMethod : null);
+      rqdCalculationType =
+          qSlope.blockSize?.rqdCalculationType ??
+          (qSlope.blockSize?.rqd != null
+              ? RqdCalculationType.directMethod
+              : null);
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
@@ -209,18 +236,22 @@ class _BlockSizePageState extends State<BlockSizePage> {
       qSlope.slopeAngleByUser = double.tryParse(
         _slopeAngleByUserController.text,
       );
+      qSlope.benchHeight = double.tryParse(_benchHeightController.text);
+      qSlope.latitude = double.tryParse(_latitudeController.text);
+      qSlope.longitude = double.tryParse(_longitudeController.text);
+      qSlope.elevation = double.tryParse(_elevationController.text);
+      qSlope.photoPaths =
+          _photoPaths.value.isNotEmpty ? _photoPaths.value : null;
       qSlope.blockSize ??= BlockSize();
       qSlope.blockSize?.areaInSquareMeters = double.tryParse(
         _areaController.text,
       );
       qSlope.blockSize?.jointSpacingInMeters = jointSpacings.value;
       qSlope.blockSize?.jointVolume = jointVolume.value;
-      qSlope.blockSize?.numberOfJoints = int.tryParse(
-        _numberOfJointsController.text,
-      ) ?? 1;
-      qSlope.blockSize?.numberOfRandomSets = int.tryParse(
-        _numberOfRandomSetsController.text,
-      ) ?? 0;
+      qSlope.blockSize?.numberOfJoints =
+          int.tryParse(_numberOfJointsController.text) ?? 1;
+      qSlope.blockSize?.numberOfRandomSets =
+          int.tryParse(_numberOfRandomSetsController.text) ?? 0;
       qSlope.blockSize?.rqd = rqd.value;
       qSlope.blockSize?.rqdByJvCalculationType = rqdByJvCalculationType.value;
       qSlope.blockSize?.rqdCalculationType = rqdCalculationType;
@@ -239,6 +270,97 @@ class _BlockSizePageState extends State<BlockSizePage> {
       widget.errorTabs.value[tabIndex] = true;
     }
     widget.errorTabs.value = List.from(widget.errorTabs.value);
+  }
+
+  Future<void> _handleCaptureGps() async {
+    final pos = await GeoUtils.getCurrentLocation();
+    if (pos != null) {
+      setState(() {
+        _latitudeController.text = pos.latitude.toStringAsFixed(6);
+        _longitudeController.text = pos.longitude.toStringAsFixed(6);
+        if (pos.altitude != null) {
+          _elevationController.text = pos.altitude!.toStringAsFixed(1);
+        }
+      });
+      _setQSlope();
+      if (mounted) {
+        toastification.show(
+          context: context,
+          title: Text(AppLocalizations.of(context).gpsCaptured),
+          type: ToastificationType.success,
+          autoCloseDuration: const Duration(seconds: 2),
+        );
+      }
+    } else {
+      if (mounted) {
+        toastification.show(
+          context: context,
+          title: Text(AppLocalizations.of(context).gpsFailed),
+          type: ToastificationType.warning,
+          autoCloseDuration: const Duration(seconds: 3),
+        );
+      }
+    }
+  }
+
+  Future<void> _handleViewMap() async {
+    final lat = double.tryParse(_latitudeController.text);
+    final lng = double.tryParse(_longitudeController.text);
+    if (lat != null && lng != null) {
+      await GeoUtils.openInMap(lat, lng);
+    }
+  }
+
+  Future<void> _handleAddPhoto() async {
+    final l10n = AppLocalizations.of(context);
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder:
+          (sheetContext) => SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.camera_alt, color: primaryColor),
+                    title: Text(l10n.takePhoto),
+                    onTap:
+                        () => Navigator.pop(sheetContext, ImageSource.camera),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.photo_library, color: primaryColor),
+                    title: Text(l10n.pickFromGallery),
+                    onTap:
+                        () => Navigator.pop(sheetContext, ImageSource.gallery),
+                  ),
+                ],
+              ),
+            ),
+          ),
+    );
+
+    if (source != null) {
+      final path = await ImageUtils.captureOrPickImage(
+        fromCamera: source == ImageSource.camera,
+      );
+      if (path != null) {
+        _photoPaths.value = [..._photoPaths.value, path];
+        _setQSlope();
+      }
+    }
+  }
+
+  void _handleRemovePhoto(int index) {
+    final current = List<String>.from(_photoPaths.value);
+    if (index >= 0 && index < current.length) {
+      current.removeAt(index);
+      _photoPaths.value = current;
+      _setQSlope();
+    }
   }
 
   @override
@@ -266,6 +388,15 @@ class _BlockSizePageState extends State<BlockSizePage> {
                   locationIdController: _locationIdController,
                   lithologyController: _lithologyController,
                   slopeAngleByUserController: _slopeAngleByUserController,
+                  benchHeightController: _benchHeightController,
+                  latitudeController: _latitudeController,
+                  longitudeController: _longitudeController,
+                  elevationController: _elevationController,
+                  photoPaths: _photoPaths,
+                  onCaptureGps: _handleCaptureGps,
+                  onViewMap: _handleViewMap,
+                  onAddPhoto: _handleAddPhoto,
+                  onRemovePhoto: _handleRemovePhoto,
                 ),
                 Container(
                   margin: EdgeInsets.only(

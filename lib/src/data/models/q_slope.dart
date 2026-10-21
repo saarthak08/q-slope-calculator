@@ -28,6 +28,20 @@ class QSlope {
 
   DateTime? createdAt;
 
+  double? latitude;
+
+  double? longitude;
+
+  double? elevation;
+
+  List<String>? imagePaths;
+
+  /// Backward-compatibility alias for [imagePaths].
+  List<String>? get photoPaths => imagePaths;
+  set photoPaths(List<String>? val) => imagePaths = val;
+
+  double? benchHeight;
+
   QSlope({
     required this.id,
     this.locationId,
@@ -40,7 +54,13 @@ class QSlope {
     this.qSlope,
     this.createdAt,
     this.slopeAngleByUser,
-  });
+    this.latitude,
+    this.longitude,
+    this.elevation,
+    List<String>? imagePaths,
+    List<String>? photoPaths,
+    this.benchHeight,
+  }) : imagePaths = imagePaths ?? photoPaths;
 
   QSlope copyWith({
     String? id,
@@ -54,6 +74,12 @@ class QSlope {
     double? qSlope,
     DateTime? createdAt,
     double? slopeAngleByUser,
+    double? latitude,
+    double? longitude,
+    double? elevation,
+    List<String>? imagePaths,
+    List<String>? photoPaths,
+    double? benchHeight,
   }) {
     return QSlope(
       id: id ?? this.id,
@@ -67,6 +93,11 @@ class QSlope {
       qSlope: qSlope ?? this.qSlope,
       createdAt: createdAt ?? this.createdAt,
       slopeAngleByUser: slopeAngleByUser ?? this.slopeAngleByUser,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      elevation: elevation ?? this.elevation,
+      imagePaths: imagePaths ?? photoPaths ?? this.imagePaths,
+      benchHeight: benchHeight ?? this.benchHeight,
     );
   }
 
@@ -83,6 +114,12 @@ class QSlope {
       'qSlope': qSlope?.toDouble(),
       'createdAt': createdAt?.millisecondsSinceEpoch,
       'slopeAngleByUser': slopeAngleByUser,
+      'latitude': latitude,
+      'longitude': longitude,
+      'elevation': elevation,
+      'imagePaths': imagePaths,
+      'photoPaths': imagePaths,
+      'benchHeight': benchHeight,
     };
   }
 
@@ -125,6 +162,14 @@ class QSlope {
                   : DateTime.tryParse(map['createdAt'].toString()))
               : null,
       slopeAngleByUser: (map['slopeAngleByUser'] as num?)?.toDouble(),
+      latitude: (map['latitude'] as num?)?.toDouble(),
+      longitude: (map['longitude'] as num?)?.toDouble(),
+      elevation: (map['elevation'] as num?)?.toDouble(),
+      imagePaths:
+          ((map['imagePaths'] ?? map['photoPaths']) as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList(),
+      benchHeight: (map['benchHeight'] as num?)?.toDouble(),
     );
   }
 
@@ -135,7 +180,7 @@ class QSlope {
 
   @override
   String toString() {
-    return 'QSlope(id: $id, locationId: $locationId, lithology: $lithology, blockSize: $blockSize, jointCharacter: $jointCharacter, oFactor: $oFactor, externalFactors: $externalFactors, activeStress: $activeStress, qSlope: $qSlope, createdAt: $createdAt, slopeAngleByUser: $slopeAngleByUser)';
+    return 'QSlope(id: $id, locationId: $locationId, lithology: $lithology, blockSize: $blockSize, jointCharacter: $jointCharacter, oFactor: $oFactor, externalFactors: $externalFactors, activeStress: $activeStress, qSlope: $qSlope, createdAt: $createdAt, slopeAngleByUser: $slopeAngleByUser, latitude: $latitude, longitude: $longitude, elevation: $elevation, imagePaths: $imagePaths, benchHeight: $benchHeight)';
   }
 
   @override
@@ -152,7 +197,11 @@ class QSlope {
         other.activeStress == activeStress &&
         other.qSlope == qSlope &&
         other.createdAt == createdAt &&
-        other.slopeAngleByUser == slopeAngleByUser;
+        other.slopeAngleByUser == slopeAngleByUser &&
+        other.latitude == latitude &&
+        other.longitude == longitude &&
+        other.elevation == elevation &&
+        other.benchHeight == benchHeight;
   }
 
   @override
@@ -167,6 +216,10 @@ class QSlope {
         activeStress.hashCode ^
         qSlope.hashCode ^
         createdAt.hashCode ^
-        slopeAngleByUser.hashCode;
+        slopeAngleByUser.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode ^
+        elevation.hashCode ^
+        benchHeight.hashCode;
   }
 }
