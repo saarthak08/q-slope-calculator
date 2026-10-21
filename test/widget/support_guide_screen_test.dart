@@ -32,9 +32,24 @@ void main() {
       );
     }
 
+    testWidgets(
+      'renders empirical slope support guide on small mobile without overflow',
+      (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+        await tester.pumpWidget(createWidgetUnderTest());
+        await tester.pumpAndSettle();
+
+        expect(find.text('Empirical Slope Support Guide'), findsOneWidget);
+        expect(find.text('Active Geotechnical Assessment'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
     testWidgets('renders empirical slope support guide and category cards', (
       tester,
     ) async {
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       await tester.binding.setSurfaceSize(const Size(1000, 1400));
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();

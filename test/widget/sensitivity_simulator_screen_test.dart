@@ -39,9 +39,25 @@ void main() {
       );
     }
 
+    testWidgets(
+      'renders sensitivity simulator on small mobile viewport without overflow',
+      (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+        await tester.pumpWidget(createWidgetUnderTest());
+        await tester.pumpAndSettle();
+
+        expect(find.text('Live Sensitivity Simulator'), findsOneWidget);
+        expect(find.text('Q-Slope Rating'), findsOneWidget);
+        expect(find.text('Interactive Parameter Sliders'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
     testWidgets('renders sensitivity simulator controls and results card', (
       tester,
     ) async {
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       await tester.binding.setSurfaceSize(const Size(1000, 1200));
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();

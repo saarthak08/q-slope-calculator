@@ -33,8 +33,23 @@ void main() {
     }
 
     testWidgets(
+      'renders inverse slope design calculator on small mobile without overflow',
+      (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+        await tester.pumpWidget(createWidgetUnderTest());
+        await tester.pumpAndSettle();
+
+        expect(find.text('Inverse Slope Design'), findsOneWidget);
+        expect(find.text('Target Slope Angle (β)'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
       'renders inverse slope design calculator and target angle slider',
       (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
         await tester.binding.setSurfaceSize(const Size(1000, 1200));
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pumpAndSettle();

@@ -474,197 +474,204 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                PopupMenuButton<String>(
-                                  enabled: value != null,
-                                  tooltip: AppLocalizations.of(context).export,
-                                  onSelected:
-                                      (format) =>
-                                          _handleExport(context, format),
-                                  itemBuilder:
-                                      (context) => [
-                                        PopupMenuItem(
-                                          value: 'pdf',
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.picture_as_pdf,
-                                                color: primaryColor,
-                                                size: 20,
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(
-                                                    context,
-                                                  ).exportPdf,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                Expanded(
+                                  child: PopupMenuButton<String>(
+                                    enabled: value != null,
+                                    tooltip:
+                                        AppLocalizations.of(context).export,
+                                    onSelected:
+                                        (format) =>
+                                            _handleExport(context, format),
+                                    itemBuilder:
+                                        (context) => [
+                                          PopupMenuItem(
+                                            value: 'pdf',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.picture_as_pdf,
+                                                  color: primaryColor,
+                                                  size: 20,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 'excel',
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.table_chart_outlined,
-                                                color: primaryColor,
-                                                size: 20,
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(
-                                                    context,
-                                                  ).exportExcel,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    ).exportPdf,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 'csv',
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.grid_on_outlined,
-                                                color: primaryColor,
-                                                size: 20,
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(
-                                                    context,
-                                                  ).exportCalculations,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                          PopupMenuItem(
+                                            value: 'excel',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.table_chart_outlined,
+                                                  color: primaryColor,
+                                                  size: 20,
                                                 ),
-                                              ),
-                                            ],
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    ).exportExcel,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                  child: Container(
-                                    width: getViewPortWidth(context) * 0.4,
-                                    height: getViewPortHeight(context) * 0.05,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          value != null
-                                              ? (Theme.of(context).brightness ==
-                                                      Brightness.dark
-                                                  ? Colors.grey.shade800
-                                                  : primaryColor)
-                                              : Colors.grey.shade400,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.file_download_outlined,
-                                            color:
-                                                Theme.of(context).brightness ==
+                                          PopupMenuItem(
+                                            value: 'csv',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.grid_on_outlined,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    ).exportCalculations,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                    child: Container(
+                                      height:
+                                          getViewPortHeight(context) * 0.05,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            value != null
+                                                ? (Theme.of(context)
+                                                            .brightness ==
                                                         Brightness.dark
-                                                    ? primaryColor
-                                                    : Colors.white,
-                                            size: 18,
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            AppLocalizations.of(context).export,
-                                            style: TextStyle(
+                                                    ? Colors.grey.shade800
+                                                    : primaryColor)
+                                                : Colors.grey.shade400,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.file_download_outlined,
                                               color:
-                                                  Theme.of(
-                                                            context,
-                                                          ).brightness ==
+                                                  Theme.of(context)
+                                                              .brightness ==
                                                           Brightness.dark
                                                       ? primaryColor
                                                       : Colors.white,
-                                              fontWeight: FontWeight.w600,
+                                              size: 18,
                                             ),
-                                          ),
-                                          Icon(
-                                            Icons.arrow_drop_down,
-                                            color:
-                                                Theme.of(context).brightness ==
-                                                        Brightness.dark
-                                                    ? primaryColor
-                                                    : Colors.white,
-                                            size: 18,
-                                          ),
-                                        ],
+                                            const SizedBox(width: 4),
+                                            Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).export,
+                                              style: TextStyle(
+                                                color:
+                                                    Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.dark
+                                                        ? primaryColor
+                                                        : Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_drop_down,
+                                              color:
+                                                  Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.dark
+                                                      ? primaryColor
+                                                      : Colors.white,
+                                              size: 18,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-
-                                SizedBox(
-                                  width: getViewPortWidth(context) * 0.02,
-                                ),
-                                ElevatedButton(
-                                  onPressed:
-                                      value != null
-                                          ? () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              QSlopeStabilityChartScreen.route,
-                                              arguments:
-                                                  QSlopeStabilityChartScreenArguments(
-                                                    qSlopeValues:
-                                                        List<double>.from([
-                                                          value,
-                                                        ]),
-                                                    slopeAnglesByUser:
-                                                        List<double?>.from([
-                                                          widget
-                                                              .qSlope
-                                                              .value
-                                                              .slopeAngleByUser,
-                                                        ]),
-                                                  ),
-                                            );
-                                          }
-                                          : null,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              Colors.grey.shade800,
-                                            )
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed:
+                                        value != null
+                                            ? () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                QSlopeStabilityChartScreen
+                                                    .route,
+                                                arguments:
+                                                    QSlopeStabilityChartScreenArguments(
+                                                      qSlopeValues:
+                                                          List<double>.from([
+                                                            value,
+                                                          ]),
+                                                      slopeAnglesByUser:
+                                                          List<double?>.from([
+                                                            widget
+                                                                .qSlope
+                                                                .value
+                                                                .slopeAngleByUser,
+                                                          ]),
+                                                    ),
+                                              );
+                                            }
                                             : null,
-                                    foregroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              primaryColor,
-                                            )
-                                            : null,
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? WidgetStatePropertyAll(
+                                                Colors.grey.shade800,
+                                              )
+                                              : null,
+                                      foregroundColor:
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? WidgetStatePropertyAll(
+                                                primaryColor,
+                                              )
+                                              : null,
+                                      shape: WidgetStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      fixedSize: WidgetStatePropertyAll(
+                                        Size.fromHeight(
+                                          getViewPortHeight(context) * 0.05,
+                                        ),
                                       ),
                                     ),
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(
-                                        getViewPortWidth(context) * 0.4,
-                                        getViewPortHeight(context) * 0.05,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "${AppLocalizations.of(context).qSlopeSymbol}\n ${AppLocalizations.of(context).stabilityChart}",
+                                        textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                  ),
-                                  child: FittedBox(
-                                    child: Text(
-                                      "${AppLocalizations.of(context).qSlopeSymbol}\n ${AppLocalizations.of(context).stabilityChart}",
-                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),

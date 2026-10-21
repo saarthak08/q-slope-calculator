@@ -42,10 +42,14 @@ class SupportGeometryInputsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.benchHeight,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                Expanded(
+                  child: Text(
+                    l10n.benchHeight,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    softWrap: true,
+                  ),
                 ),
+                const SizedBox(width: 8),
                 Text(
                   '${benchHeight.toStringAsFixed(1)} m',
                   style: TextStyle(
@@ -69,10 +73,14 @@ class SupportGeometryInputsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.qSlopeRating,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                Expanded(
+                  child: Text(
+                    l10n.qSlopeRating,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    softWrap: true,
+                  ),
                 ),
+                const SizedBox(width: 8),
                 Text(
                   qSlopeVal.toStringAsFixed(4),
                   style: TextStyle(

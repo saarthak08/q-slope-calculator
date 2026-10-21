@@ -58,7 +58,8 @@ class QSlopeListItemCard extends StatelessWidget {
                           Text(
                             "${AppLocalizations.of(context).listLocationId}: ${item.locationId ?? ''}",
                             style: const TextStyle(fontWeight: FontWeight.w600),
-                            softWrap: true,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 2),
                           Text(
@@ -77,15 +78,16 @@ class QSlopeListItemCard extends StatelessWidget {
                     StabilityBadge(
                       qSlope: item.qSlope,
                       actualSlopeAngle: item.slopeAngleByUser,
+                      showSafetyMargin: false,
                     ),
                   ],
                 ),
                 subtitle: Container(
                   margin: const EdgeInsets.only(top: 8),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
+                      Expanded(
+                        flex: 5,
                         child: Text(
                           "${AppLocalizations.of(context).qSlopeSymbol}: ${item.qSlope?.toStringAsFixed(4) ?? '-'}",
                           style: TextStyle(
@@ -97,15 +99,20 @@ class QSlopeListItemCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item.createdAt != null
-                            ? (formatDateTime(item.createdAt!) ?? '')
-                            : '',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade500,
+                      Expanded(
+                        flex: 6,
+                        child: Text(
+                          item.createdAt != null
+                              ? (formatDateTime(item.createdAt!) ?? '')
+                              : '',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade500,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
                       ),
                     ],
                   ),

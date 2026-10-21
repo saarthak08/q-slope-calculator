@@ -301,24 +301,32 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           title:
               isSelectionActive
-                  ? Text(
-                    AppLocalizations.of(
-                      context,
-                    ).selectedCount(_selectedIds.length),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getSubTitleFontSize(context),
-                      color: primaryColor,
+                  ? FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      AppLocalizations.of(
+                        context,
+                      ).selectedCount(_selectedIds.length),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: getSubTitleFontSize(context),
+                        color: primaryColor,
+                      ),
                     ),
                   )
-                  : Text(
-                    AppLocalizations.of(context).appName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: getTitleFontSize(context),
+                  : FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      AppLocalizations.of(context).appName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: getTitleFontSize(context),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
         ),
         floatingActionButton: FloatingActionButton.extended(

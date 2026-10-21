@@ -33,23 +33,27 @@ class SimulatorOperatingPointCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.qSlopeRating,
-                        style: TextStyle(
-                          fontSize: getCaptionFontSize(context),
-                          color: theme.textTheme.bodyMedium?.color?.withAlpha(
-                            160,
-                          ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.qSlopeRating,
+                      style: TextStyle(
+                        fontSize: getCaptionFontSize(context),
+                        color: theme.textTheme.bodyMedium?.color?.withAlpha(
+                          160,
                         ),
                       ),
-                      Text(
+                    ),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
                         qVal.toStringAsFixed(4),
                         style: TextStyle(
                           fontSize: getTitleFontSize(context) * 1.3,
@@ -57,10 +61,9 @@ class SimulatorOperatingPointCard extends StatelessWidget {
                           color: primaryColor,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
                 StabilityBadge(
                   qSlope: qVal,
                   actualSlopeAngle: actualSlopeAngle,

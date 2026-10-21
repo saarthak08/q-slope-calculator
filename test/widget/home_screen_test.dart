@@ -11,6 +11,7 @@ import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cub
 import 'package:q_slope_calculator/src/logic/cubit/settings/settings_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/components/app_bar_list_selection_menu_widget.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/home_screen.dart';
+import 'package:q_slope_calculator/src/ui/widgets/stability_badge.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 
@@ -318,6 +319,47 @@ void main() {
 
         // Settle toast timer
         await tester.pump(const Duration(seconds: 3));
+      },
+    );
+
+    testWidgets(
+      'renders home screen on small mobile viewport without overflow',
+      (WidgetTester tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+
+        when(
+          () => mockSettingsCubit.state,
+        ).thenReturn(SettingsState(themeMode: ThemeMode.light));
+
+        final qSlopes = [
+          QSlope(
+            id: 'test_id_1',
+            locationId: 'Pit Alpha - Section 42 Extended Road Cut',
+            lithology: 'Weathered Sandstone with shale interbeds',
+            qSlope: 0.1234,
+            slopeAngleByUser: 68.0,
+            createdAt: DateTime.now(),
+          ),
+        ];
+
+        when(
+          () => mockQSlopeListCubit.state,
+        ).thenReturn(QSlopeListLoaded(qSlopes));
+
+        await tester.pumpWidget(buildHomeScreen());
+        await tester.pumpAndSettle();
+
+        expect(find.text('Q-slope Calculator'), findsOneWidget);
+        expect(find.byType(StabilityBadge), findsOneWidget);
+        expect(tester.takeException(), isNull);
+
+        // Enter selection mode on narrow viewport
+        await tester.longPress(find.textContaining('Pit Alpha'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('1 selected'), findsOneWidget);
+        expect(tester.takeException(), isNull);
       },
     );
   });

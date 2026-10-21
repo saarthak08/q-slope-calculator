@@ -132,34 +132,36 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: primaryColor,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              AppLocalizations.of(context).gpsCoordinates,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: getBodyFontSize(context),
-                              ),
-                              softWrap: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
                     Row(
                       mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            AppLocalizations.of(context).gpsCoordinates,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: getBodyFontSize(context),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         if (onViewMap != null)
                           Tooltip(
@@ -173,8 +175,6 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                               onPressed: onViewMap,
                             ),
                           ),
-                        if (onViewMap != null && onCaptureGps != null)
-                          const SizedBox(width: 6),
                         if (onCaptureGps != null)
                           ElevatedButton.icon(
                             icon: const Icon(Icons.my_location, size: 15),
@@ -258,32 +258,32 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.photo_camera,
-                            color: primaryColor,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              AppLocalizations.of(context).fieldImages,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: getBodyFontSize(context),
-                              ),
-                              softWrap: true,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.photo_camera,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            AppLocalizations.of(context).fieldImages,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: getBodyFontSize(context),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
                     if (onAddImage != null)
                       ElevatedButton.icon(
                         icon: const Icon(Icons.add_a_photo, size: 15),

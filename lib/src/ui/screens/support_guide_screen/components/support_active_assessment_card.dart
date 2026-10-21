@@ -30,13 +30,17 @@ class SupportActiveAssessmentCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.activeAssessment,
-                  style: TextStyle(
-                    fontSize: getCaptionFontSize(context),
-                    color: theme.textTheme.bodyMedium?.color?.withAlpha(160),
+                Expanded(
+                  child: Text(
+                    l10n.activeAssessment,
+                    style: TextStyle(
+                      fontSize: getCaptionFontSize(context),
+                      color: theme.textTheme.bodyMedium?.color?.withAlpha(160),
+                    ),
+                    softWrap: true,
                   ),
                 ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,

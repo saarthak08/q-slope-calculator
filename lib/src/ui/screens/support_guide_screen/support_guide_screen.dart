@@ -53,9 +53,13 @@ class _SupportGuideScreenState extends State<SupportGuideScreen> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          l10n.slopeSupportGuide,
-          style: TextStyle(fontSize: getTitleFontSize(context)),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            l10n.slopeSupportGuide,
+            style: TextStyle(fontSize: getTitleFontSize(context)),
+          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

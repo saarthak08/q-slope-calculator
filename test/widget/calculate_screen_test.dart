@@ -634,5 +634,50 @@ void main() {
         expect(find.byType(AlertDialog), findsNothing);
       },
     );
+
+    testWidgets(
+      'renders calculate screen on small mobile viewport without overflow',
+      (WidgetTester tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+
+        final complexQSlope = QSlope(
+          id: 'test_mobile',
+          locationId: 'Mobile Bench Cut Alpha-9',
+          lithology: 'Granite and Quartzite',
+          slopeAngleByUser: 65.0,
+          benchHeight: 15.0,
+          latitude: 23.5432,
+          longitude: 87.1234,
+          elevation: 245.0,
+          imagePaths: ['/tmp/fake_image.png'],
+          blockSize: BlockSize(rqd: 85.0, jointSetNumber: 4.0),
+          jointCharacter: JointCharacter(
+            jointRoughness: [2.0],
+            jointAlteration: [1.0],
+          ),
+          oFactor: OFactor(oFactorForFirstJoint: 1.0),
+          externalFactors: ExternalFactors(
+            environmentalAndGeologicalConditionalNumber: 0.75,
+          ),
+          activeStress: ActiveStress(srf: 2.5),
+          qSlope: 2.1675,
+        );
+
+        await tester.pumpWidget(buildCalculateScreen(qSlope: complexQSlope));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Basic Information'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+
+        // Switch to Tab 4 (Active Stress & Q-slope) where quick tools chips and export are located
+        await tester.tap(find.text('Active Stress & Q-slope'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Live Sensitivity Simulator'), findsOneWidget);
+        expect(find.text('Empirical Slope Support Guide'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }

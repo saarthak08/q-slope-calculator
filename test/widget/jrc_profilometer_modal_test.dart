@@ -62,7 +62,8 @@ void main() {
     testWidgets('opens modal on mobile viewport and closes via close button', (
       tester,
     ) async {
-      await tester.binding.setSurfaceSize(const Size(380, 700));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.binding.setSurfaceSize(const Size(320, 640));
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
@@ -70,6 +71,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Barton 10-Profile JRC Selector'), findsOneWidget);
+      expect(tester.takeException(), isNull);
 
       // Close using close icon
       await tester.tap(find.byIcon(Icons.close));
