@@ -633,15 +633,19 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                     Builder(
                                                       builder: (context) {
                                                         final isDark =
-                                                            Theme.of(context).brightness ==
+                                                            Theme.of(
+                                                              context,
+                                                            ).brightness ==
                                                             Brightness.dark;
                                                         final chipColor =
                                                             isDark
-                                                                ? Colors.tealAccent
+                                                                ? Colors
+                                                                    .tealAccent
                                                                 : primaryColor;
                                                         return ActionChip(
                                                           avatar: Icon(
-                                                            Icons.explore_outlined,
+                                                            Icons
+                                                                .explore_outlined,
                                                             size: 18,
                                                             color: chipColor,
                                                           ),
@@ -652,27 +656,37 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                             style: TextStyle(
                                                               fontSize: 13,
                                                               fontWeight:
-                                                                  FontWeight.w600,
+                                                                  FontWeight
+                                                                      .w600,
                                                               color: chipColor,
                                                             ),
                                                           ),
                                                           backgroundColor:
                                                               isDark
-                                                                  ? Colors.teal.withValues(
-                                                                    alpha: 0.15,
-                                                                  )
-                                                                  : primaryColor.withValues(
-                                                                    alpha: 0.08,
-                                                                  ),
+                                                                  ? Colors.teal
+                                                                      .withValues(
+                                                                        alpha:
+                                                                            0.15,
+                                                                      )
+                                                                  : primaryColor
+                                                                      .withValues(
+                                                                        alpha:
+                                                                            0.08,
+                                                                      ),
                                                           side: BorderSide(
                                                             color:
                                                                 isDark
-                                                                    ? Colors.tealAccent.withValues(
-                                                                      alpha: 0.5,
-                                                                    )
-                                                                    : primaryColor.withValues(
-                                                                      alpha: 0.4,
-                                                                    ),
+                                                                    ? Colors
+                                                                        .tealAccent
+                                                                        .withValues(
+                                                                          alpha:
+                                                                              0.5,
+                                                                        )
+                                                                    : primaryColor
+                                                                        .withValues(
+                                                                          alpha:
+                                                                              0.4,
+                                                                        ),
                                                           ),
                                                           shape: RoundedRectangleBorder(
                                                             borderRadius:
@@ -681,9 +695,12 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                 ),
                                                           ),
                                                           onPressed: () {
-                                                            final double slopeDip =
+                                                            final double
+                                                            slopeDip =
                                                                 double.tryParse(
-                                                                  widget.betaS.text,
+                                                                  widget
+                                                                      .betaS
+                                                                      .text,
                                                                 ) ??
                                                                 65.0;
                                                             final double
@@ -694,9 +711,12 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                                       .text,
                                                                 ) ??
                                                                 120.0;
-                                                            final double joint1Dip =
+                                                            final double
+                                                            joint1Dip =
                                                                 double.tryParse(
-                                                                  widget.betaJ.text,
+                                                                  widget
+                                                                      .betaJ
+                                                                      .text,
                                                                 ) ??
                                                                 45.0;
                                                             final double
@@ -710,7 +730,9 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                             final double?
                                                             joint2Dip =
                                                                 double.tryParse(
-                                                                  widget.betaI.text,
+                                                                  widget
+                                                                      .betaI
+                                                                      .text,
                                                                 );
                                                             final double?
                                                             joint2DipDir =
@@ -725,7 +747,8 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                               KinematicCompassScreen
                                                                   .route,
                                                               arguments: KinematicCompassScreenArguments(
-                                                                slopeDip: slopeDip,
+                                                                slopeDip:
+                                                                    slopeDip,
                                                                 slopeDipDirection:
                                                                     slopeDipDir,
                                                                 joint1Dip:
