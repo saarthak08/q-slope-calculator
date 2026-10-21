@@ -92,13 +92,6 @@ class PdfReportUtils {
                         color: PdfColors.grey700,
                       ),
                     ),
-                    pw.Text(
-                      'Based on Bar & Barton (2015, 2017)',
-                      style: const pw.TextStyle(
-                        fontSize: 9,
-                        color: PdfColors.grey600,
-                      ),
-                    ),
                   ],
                 ),
                 pw.Text(
