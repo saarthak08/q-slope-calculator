@@ -552,14 +552,14 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                           ),
                                         ],
                                     child: Container(
-                                      height:
-                                          getViewPortHeight(context) * 0.05,
+                                      height: getViewPortHeight(context) * 0.05,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         color:
                                             value != null
-                                                ? (Theme.of(context)
-                                                            .brightness ==
+                                                ? (Theme.of(
+                                                          context,
+                                                        ).brightness ==
                                                         Brightness.dark
                                                     ? Colors.grey.shade800
                                                     : primaryColor)
@@ -575,8 +575,9 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                             Icon(
                                               Icons.file_download_outlined,
                                               color:
-                                                  Theme.of(context)
-                                                              .brightness ==
+                                                  Theme.of(
+                                                            context,
+                                                          ).brightness ==
                                                           Brightness.dark
                                                       ? primaryColor
                                                       : Colors.white,
@@ -589,8 +590,9 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               ).export,
                                               style: TextStyle(
                                                 color:
-                                                    Theme.of(context)
-                                                                .brightness ==
+                                                    Theme.of(
+                                                              context,
+                                                            ).brightness ==
                                                             Brightness.dark
                                                         ? primaryColor
                                                         : Colors.white,
@@ -600,8 +602,9 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                             Icon(
                                               Icons.arrow_drop_down,
                                               color:
-                                                  Theme.of(context)
-                                                              .brightness ==
+                                                  Theme.of(
+                                                            context,
+                                                          ).brightness ==
                                                           Brightness.dark
                                                       ? primaryColor
                                                       : Colors.white,
@@ -629,13 +632,14 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                                           List<double>.from([
                                                             value,
                                                           ]),
-                                                      slopeAnglesByUser:
-                                                          List<double?>.from([
-                                                            widget
-                                                                .qSlope
-                                                                .value
-                                                                .slopeAngleByUser,
-                                                          ]),
+                                                      slopeAnglesByUser: List<
+                                                        double?
+                                                      >.from([
+                                                        widget
+                                                            .qSlope
+                                                            .value
+                                                            .slopeAngleByUser,
+                                                      ]),
                                                     ),
                                               );
                                             }
@@ -657,8 +661,9 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                               : null,
                                       shape: WidgetStatePropertyAll(
                                         RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
+                                          borderRadius: BorderRadius.circular(
+                                            5,
+                                          ),
                                         ),
                                       ),
                                       fixedSize: WidgetStatePropertyAll(

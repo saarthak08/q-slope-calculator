@@ -83,22 +83,23 @@ void main() {
       expect(find.byIcon(Icons.help_outline), findsOneWidget);
     });
 
-    testWidgets('renders compact badge without safety margin and without overflow', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(
-        buildTestBadge(
-          qSlope: 1.0,
-          actualSlopeAngle: 55.0,
-          showSafetyMargin: false,
-        ),
-      );
-      await tester.pumpAndSettle();
+    testWidgets(
+      'renders compact badge without safety margin and without overflow',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          buildTestBadge(
+            qSlope: 1.0,
+            actualSlopeAngle: 55.0,
+            showSafetyMargin: false,
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.text('Stable'), findsOneWidget);
-      expect(find.textContaining('Δβ'), findsNothing);
-      expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
+        expect(find.text('Stable'), findsOneWidget);
+        expect(find.textContaining('Δβ'), findsNothing);
+        expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }

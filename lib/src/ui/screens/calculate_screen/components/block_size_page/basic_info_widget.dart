@@ -141,11 +141,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          color: primaryColor,
-                          size: 20,
-                        ),
+                        Icon(Icons.location_on, color: primaryColor, size: 20),
                         const SizedBox(width: 6),
                         Flexible(
                           child: Text(
@@ -267,11 +263,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.photo_camera,
-                          color: primaryColor,
-                          size: 20,
-                        ),
+                        Icon(Icons.photo_camera, color: primaryColor, size: 20),
                         const SizedBox(width: 6),
                         Flexible(
                           child: Text(
