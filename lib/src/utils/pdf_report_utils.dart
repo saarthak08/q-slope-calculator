@@ -101,24 +101,12 @@ class PdfReportUtils {
                     ),
                   ],
                 ),
-                pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                  children: [
-                    pw.Text(
-                      'Date: $formattedDate',
-                      style: const pw.TextStyle(
-                        fontSize: 10,
-                        color: PdfColors.grey700,
-                      ),
-                    ),
-                    pw.Text(
-                      'ID: ${qSlope.id.substring(0, qSlope.id.length > 8 ? 8 : qSlope.id.length)}',
-                      style: const pw.TextStyle(
-                        fontSize: 10,
-                        color: PdfColors.grey700,
-                      ),
-                    ),
-                  ],
+                pw.Text(
+                  'Date: $formattedDate',
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                    color: PdfColors.grey700,
+                  ),
                 ),
               ],
             ),
@@ -438,56 +426,6 @@ class PdfReportUtils {
               ),
               pw.SizedBox(height: 20),
             ],
-
-            // Sign-off / Engineering Stamp block
-            pw.Divider(color: PdfColors.grey300),
-            pw.SizedBox(height: 8),
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    _buildStampPenIcon(),
-                    pw.SizedBox(width: 6),
-                    pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Text(
-                          'Prepared By: __________________________',
-                          style: const pw.TextStyle(fontSize: 9),
-                        ),
-                        pw.SizedBox(height: 4),
-                        pw.Text(
-                          'Engineering Geologist / Geotechnical Eng.',
-                          style: const pw.TextStyle(
-                            fontSize: 8,
-                            color: PdfColors.grey600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      'Reviewed / Stamped: __________________________',
-                      style: const pw.TextStyle(fontSize: 9),
-                    ),
-                    pw.SizedBox(height: 4),
-                    pw.Text(
-                      'Principal Geotechnical Engineer (PE/CPEng)',
-                      style: const pw.TextStyle(
-                        fontSize: 8,
-                        color: PdfColors.grey600,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
           ];
         },
       ),
@@ -714,28 +652,6 @@ class PdfReportUtils {
           size.x * 0.22,
           size.y * 0.22,
         );
-        canvas.fillPath();
-      },
-    );
-  }
-
-  static pw.Widget _buildStampPenIcon() {
-    return pw.CustomPaint(
-      size: const PdfPoint(12, 12),
-      painter: (PdfGraphics canvas, PdfPoint size) {
-        canvas.setColor(PdfColors.blueGrey700);
-        canvas.setLineWidth(1.2);
-        canvas.drawLine(
-          size.x * 0.15,
-          size.y * 0.85,
-          size.x * 0.75,
-          size.y * 0.25,
-        );
-        canvas.strokePath();
-        canvas.setFillColor(PdfColors.blueGrey800);
-        canvas.moveTo(size.x * 0.1, size.y * 0.9);
-        canvas.lineTo(size.x * 0.25, size.y * 0.85);
-        canvas.lineTo(size.x * 0.15, size.y * 0.75);
         canvas.fillPath();
       },
     );

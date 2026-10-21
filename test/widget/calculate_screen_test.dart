@@ -670,11 +670,11 @@ void main() {
         expect(find.text('Basic Information'), findsOneWidget);
         expect(tester.takeException(), isNull);
 
-        // Switch to Tab 4 (Active Stress & Q-slope) where quick tools chips and export are located
+        // Switch to Tab 4 (Active Stress & Q-slope)
         await tester.tap(find.text('Active Stress & Q-slope'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Kinematic Stereonet & Compass'), findsOneWidget);
+        expect(find.byType(PopupMenuButton<String>), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );

@@ -5,7 +5,6 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
-import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/excel_utils.dart';
@@ -15,7 +14,6 @@ import 'package:toastification/toastification.dart';
 
 enum SelectionMenuAction {
   toggleSelect,
-  openKinematicCompass,
   exportPdf,
   exportExcel,
   exportCalculations,
@@ -74,21 +72,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
             ),
             if (isSingleSelection) ...[
               const PopupMenuDivider(),
-              PopupMenuItem(
-                value: SelectionMenuAction.openKinematicCompass,
-                child: Row(
-                  children: [
-                    Icon(Icons.explore_outlined, color: primaryColor),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context).kinematicCompass,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               PopupMenuItem(
                 value: SelectionMenuAction.exportPdf,
                 child: Row(
@@ -176,23 +159,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
             } else {
               setSelectedIds(currentList.map((e) => e.id).toSet());
             }
-            break;
-
-          case SelectionMenuAction.openKinematicCompass:
-            final single = _selectedQSlopes.first;
-            Navigator.pushNamed(
-              context,
-              KinematicCompassScreen.route,
-              arguments: KinematicCompassScreenArguments(
-                slopeDip:
-                    single.slopeAngleByUser ?? single.oFactor?.betaS ?? 65.0,
-                slopeDipDirection: single.oFactor?.alphaS ?? 120.0,
-                joint1Dip: single.oFactor?.betaJ ?? 45.0,
-                joint1DipDirection: single.oFactor?.alphaJ ?? 115.0,
-                joint2Dip: single.oFactor?.betaI,
-                joint2DipDirection: single.oFactor?.alphaI,
-              ),
-            );
             break;
 
           case SelectionMenuAction.exportPdf:

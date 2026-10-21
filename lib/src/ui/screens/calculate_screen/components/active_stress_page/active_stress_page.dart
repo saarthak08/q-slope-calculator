@@ -9,7 +9,6 @@ import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
-import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/csv_utils.dart';
@@ -680,47 +679,6 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                               ],
                             ),
                           ),
-                          if (value != null) ...[
-                            SizedBox(height: getViewPortHeight(context) * 0.02),
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              alignment: WrapAlignment.center,
-                              children: [
-                                ActionChip(
-                                  avatar: Icon(
-                                    Icons.explore_outlined,
-                                    size: 16,
-                                    color: primaryColor,
-                                  ),
-                                  label: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    ).kinematicCompass,
-                                    style: const TextStyle(fontSize: 12.5),
-                                  ),
-                                  onPressed: () {
-                                    final o = widget.qSlope.value.oFactor;
-                                    Navigator.pushNamed(
-                                      context,
-                                      KinematicCompassScreen.route,
-                                      arguments:
-                                          KinematicCompassScreenArguments(
-                                            slopeDip: o?.betaS ?? 65.0,
-                                            slopeDipDirection:
-                                                o?.alphaS ?? 120.0,
-                                            joint1Dip: o?.betaJ ?? 45.0,
-                                            joint1DipDirection:
-                                                o?.alphaJ ?? 110.0,
-                                            joint2Dip: o?.betaI,
-                                            joint2DipDirection: o?.alphaI,
-                                          ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
                           SizedBox(height: getViewPortHeight(context) * 0.08),
                         ],
                       ),

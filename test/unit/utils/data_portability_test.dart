@@ -477,16 +477,16 @@ srf-test,Pit C,Diorite,90,2,3,1,1,1.0,20.0,2.0,20.0,8.0
     test('SampleData.getSampleQSlopes provides 5 benchmark calculations', () {
       final samples = SampleData.getSampleQSlopes();
       expect(samples.length, 5);
-      expect(samples[0].locationId, 'Mine Bench 4B - Quartzite');
+      expect(samples[0].locationId, 'Sample 1: Mine Bench 4B - Quartzite');
       expect(samples[0].lithology, 'Quartzite');
       expect(samples[0].qSlope, 18.13);
-      expect(samples[1].locationId, 'Highway 102 Cut - Mica Schist');
+      expect(samples[1].locationId, 'Sample 2: Highway 102 Cut - Mica Schist');
       expect(samples[1].qSlope, 0.28);
-      expect(samples[2].locationId, 'East Wall Sector 2 - Siltstone');
+      expect(samples[2].locationId, 'Sample 3: East Wall Sector 2 - Siltstone');
       expect(samples[2].qSlope, 0.017);
-      expect(samples[3].locationId, 'Rail Corridor Cut 9 - Sandstone');
+      expect(samples[3].locationId, 'Sample 4: Rail Corridor Cut 9 - Sandstone');
       expect(samples[3].qSlope, 11.78);
-      expect(samples[4].locationId, 'Spillway Left Abutment - Basalt');
+      expect(samples[4].locationId, 'Sample 5: Spillway Left Abutment - Basalt');
       expect(samples[4].qSlope, 0.36);
     });
   });
