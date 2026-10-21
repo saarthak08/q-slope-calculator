@@ -80,9 +80,13 @@ class _KinematicCompassScreenState extends State<KinematicCompassScreen> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          l10n.kinematicCompass,
-          style: TextStyle(fontSize: getTitleFontSize(context)),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            l10n.kinematicCompass,
+            style: TextStyle(fontSize: getTitleFontSize(context)),
+          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -117,7 +121,7 @@ class _KinematicCompassScreenState extends State<KinematicCompassScreen> {
                   joint2DipDirection:
                       _enableJoint2 ? _joint2DipDirection : null,
                   frictionAngle: _frictionAngle,
-                  size: 260,
+                  size: (vpW - 64).clamp(180.0, 260.0),
                 ),
               ),
             ),

@@ -30,8 +30,27 @@ void main() {
     }
 
     testWidgets(
+      'renders kinematic analysis screen on small mobile without overflow',
+      (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.binding.setSurfaceSize(const Size(320, 640));
+        await tester.pumpWidget(createWidgetUnderTest());
+        await tester.pumpAndSettle();
+
+        // Full AppBar title should be present without exception
+        expect(find.text('Kinematic Stereonet & Compass'), findsOneWidget);
+        // Risk chips should all render cleanly wrapped
+        expect(find.textContaining('Planar:'), findsOneWidget);
+        expect(find.textContaining('Wedge:'), findsOneWidget);
+        expect(find.textContaining('Toppling:'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
       'renders kinematic analysis screen with stereonet and controls',
       (tester) async {
+        addTearDown(() => tester.binding.setSurfaceSize(null));
         await tester.binding.setSurfaceSize(const Size(1000, 1200));
         await tester.pumpWidget(createWidgetUnderTest());
         await tester.pumpAndSettle();

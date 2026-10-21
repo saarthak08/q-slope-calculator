@@ -94,21 +94,21 @@ class KinematicCompassWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         // Kinematic Risk Summary Badges
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
           children: [
             _riskChip(
               context,
               AppLocalizations.of(context).kinematicPlanar,
               result.planarRisk,
             ),
-            const SizedBox(width: 8),
             _riskChip(
               context,
               AppLocalizations.of(context).kinematicWedge,
               result.wedgeRisk,
             ),
-            const SizedBox(width: 8),
             _riskChip(
               context,
               AppLocalizations.of(context).kinematicToppling,
@@ -130,9 +130,11 @@ class KinematicCompassWidget extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+        Flexible(
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+          ),
         ),
       ],
     );
