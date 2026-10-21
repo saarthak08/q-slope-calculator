@@ -381,6 +381,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 10),
         ],
       ],
     );
