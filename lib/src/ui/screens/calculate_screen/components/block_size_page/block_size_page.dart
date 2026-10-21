@@ -296,6 +296,7 @@ class _BlockSizePageState extends State<BlockSizePage> {
           context: context,
           title: Text(AppLocalizations.of(context).gpsCaptured),
           type: ToastificationType.success,
+          alignment: Alignment.bottomCenter,
           autoCloseDuration: const Duration(seconds: 2),
         );
       } else {
@@ -374,6 +375,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
               context: context,
               title: Text(l10n.locationPermissionDeniedMessage),
               type: ToastificationType.warning,
+              alignment: Alignment.bottomCenter,
+
               autoCloseDuration: const Duration(seconds: 3),
             );
             break;
@@ -385,6 +388,8 @@ class _BlockSizePageState extends State<BlockSizePage> {
               context: context,
               title: Text(l10n.gpsFailed),
               type: ToastificationType.warning,
+              alignment: Alignment.bottomCenter,
+
               autoCloseDuration: const Duration(seconds: 3),
             );
             break;
