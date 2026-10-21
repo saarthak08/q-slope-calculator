@@ -154,11 +154,9 @@ The codebase enforces strict static analysis and includes a comprehensive automa
 
 ## 📚 Scientific References
 
-1. **Bar, N., & Barton, N. (2015)**.
-2. **Bar, N., & Barton, N. (2017)**. *The Q-slope method for rock slope engineering*. Rock Mechanics and Rock Engineering, 50(12), 3307-3345.
-3. **Bar, N., & Barton, N. (2024)**. *Q‑Slope: Rock Slope Engineering 10 Years on*.
-4. **Romana, M. (1985)**. *New adjustment ratings for application of Bieniawski's classification to slopes*. In International Symposium on the Role of Rock Mechanics, Zacatecas.
-5. **Palmström, A. (1982)**. *The volumetric joint count—a useful and simple measure of the degree of rock jointing*. In 4th Congress of the International Association of Engineering Geology, New Delhi.
+1. [Bar & Barton 2015](https://drive.google.com/file/d/1EsSIlYLWDFlOaLePkfi8Cm63bpRwjDxZ/view?usp=sharing)
+2. [Bar & Barton 2017](https://drive.google.com/file/d/1sSVjmFOb7Rwbny5oPhkI80tRWcqEVzd4/view?usp=sharing)
+3. [Q‑Slope: Rock Slope Engineering 10 Years on Bar & Barton 2024](https://drive.google.com/file/d/1BZzaTP4Fjj5AKQF_D1KJkJVhKcpQm7tc/view?usp=sharing)
 
 ---
 
