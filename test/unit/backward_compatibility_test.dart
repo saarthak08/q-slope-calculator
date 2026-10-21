@@ -6,10 +6,7 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/data/repository/q_slope_repository.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/calculate_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/home_screen/components/q_slope_list_item_card.dart';
-import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -591,85 +588,6 @@ void main() {
     );
 
     testWidgets(
-      'SensitivitySimulatorScreen functions seamlessly with legacy calculation input',
-      (tester) async {
-        await tester.binding.setSurfaceSize(const Size(800, 1000));
-        final legacySlope = QSlope.fromJson(legacyCommit5fea1b7PlanarJson);
-
-        await tester.pumpWidget(
-          MaterialApp(
-            builder:
-                (context, child) => ResponsiveBreakpoints.builder(
-                  child: child!,
-                  breakpoints: [
-                    const Breakpoint(start: 0, end: 450, name: MOBILE),
-                    const Breakpoint(start: 451, end: 800, name: TABLET),
-                    const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                  ],
-                ),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('en')],
-            home: SensitivitySimulatorScreen(
-              arguments: SensitivitySimulatorScreenArguments(
-                qSlope: legacySlope,
-              ),
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        expect(
-          find.textContaining('Live Sensitivity Simulator'),
-          findsOneWidget,
-        );
-        expect(find.textContaining('RQD'), findsWidgets);
-      },
-    );
-
-    testWidgets(
-      'SupportGuideScreen functions seamlessly with legacy calculation input',
-      (tester) async {
-        await tester.binding.setSurfaceSize(const Size(800, 1000));
-        final legacySlope = QSlope.fromJson(legacyCommit5fea1b7PlanarJson);
-
-        await tester.pumpWidget(
-          MaterialApp(
-            builder:
-                (context, child) => ResponsiveBreakpoints.builder(
-                  child: child!,
-                  breakpoints: [
-                    const Breakpoint(start: 0, end: 450, name: MOBILE),
-                    const Breakpoint(start: 451, end: 800, name: TABLET),
-                    const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                  ],
-                ),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('en')],
-            home: SupportGuideScreen(
-              arguments: SupportGuideScreenArguments(qSlope: legacySlope),
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        expect(
-          find.textContaining('Empirical Slope Support Guide'),
-          findsOneWidget,
-        );
-      },
-    );
-
-    testWidgets(
       'KinematicCompassScreen functions seamlessly with legacy calculation input',
       (tester) async {
         await tester.binding.setSurfaceSize(const Size(800, 1000));
@@ -706,42 +624,6 @@ void main() {
           find.textContaining('Kinematic Stereonet & Compass'),
           findsOneWidget,
         );
-      },
-    );
-
-    testWidgets(
-      'InverseCalculatorScreen functions seamlessly with legacy calculation input',
-      (tester) async {
-        await tester.binding.setSurfaceSize(const Size(800, 1000));
-        final legacySlope = QSlope.fromJson(legacyCommit5fea1b7PlanarJson);
-
-        await tester.pumpWidget(
-          MaterialApp(
-            builder:
-                (context, child) => ResponsiveBreakpoints.builder(
-                  child: child!,
-                  breakpoints: [
-                    const Breakpoint(start: 0, end: 450, name: MOBILE),
-                    const Breakpoint(start: 451, end: 800, name: TABLET),
-                    const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                  ],
-                ),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('en')],
-            home: InverseCalculatorScreen(
-              arguments: InverseCalculatorScreenArguments(qSlope: legacySlope),
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.textContaining('Inverse Slope Design'), findsOneWidget);
-        expect(find.textContaining('Target Slope Angle (β)'), findsOneWidget);
       },
     );
   });

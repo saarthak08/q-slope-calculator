@@ -9,6 +9,7 @@ import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
+import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 class OFactorRomanaAdjustmentFactorWidget extends StatefulWidget {
   final OFactorTypeOfFailure? oFactorTypeOfFailure;
@@ -629,86 +630,138 @@ class _OFactorRomanaAdjustmentFactorWidgetState
                                                           ) *
                                                           0.02,
                                                     ),
-                                                    OutlinedButton.icon(
-                                                      icon: const Icon(
-                                                        Icons.explore_outlined,
-                                                        size: 18,
-                                                      ),
-                                                      label: Text(
-                                                        AppLocalizations.of(
-                                                          context,
-                                                        ).kinematicCompass,
-                                                      ),
-                                                      style:
-                                                          OutlinedButton.styleFrom(
-                                                            foregroundColor:
-                                                                Theme.of(
-                                                                  context,
-                                                                ).primaryColor,
-                                                            side: BorderSide(
-                                                              color:
-                                                                  Theme.of(
-                                                                    context,
-                                                                  ).primaryColor,
+                                                    Builder(
+                                                      builder: (context) {
+                                                        final isDark =
+                                                            Theme.of(
+                                                              context,
+                                                            ).brightness ==
+                                                            Brightness.dark;
+                                                        final chipColor =
+                                                            isDark
+                                                                ? Colors
+                                                                    .tealAccent
+                                                                : primaryColor;
+                                                        return ActionChip(
+                                                          avatar: Icon(
+                                                            Icons
+                                                                .explore_outlined,
+                                                            size: 18,
+                                                            color: chipColor,
+                                                          ),
+                                                          label: Text(
+                                                            AppLocalizations.of(
+                                                              context,
+                                                            ).kinematicCompass,
+                                                            style: TextStyle(
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: chipColor,
                                                             ),
                                                           ),
-                                                      onPressed: () {
-                                                        final double slopeDip =
-                                                            double.tryParse(
-                                                              widget.betaS.text,
-                                                            ) ??
-                                                            65.0;
-                                                        final double
-                                                        slopeDipDir =
-                                                            double.tryParse(
-                                                              widget
-                                                                  .alphaS
-                                                                  .text,
-                                                            ) ??
-                                                            120.0;
-                                                        final double joint1Dip =
-                                                            double.tryParse(
-                                                              widget.betaJ.text,
-                                                            ) ??
-                                                            45.0;
-                                                        final double
-                                                        joint1DipDir =
-                                                            double.tryParse(
-                                                              widget
-                                                                  .alphaJ
-                                                                  .text,
-                                                            ) ??
-                                                            110.0;
-                                                        final double?
-                                                        joint2Dip =
-                                                            double.tryParse(
-                                                              widget.betaI.text,
-                                                            );
-                                                        final double?
-                                                        joint2DipDir =
-                                                            double.tryParse(
-                                                              widget
-                                                                  .alphaI
-                                                                  .text,
-                                                            );
-
-                                                        Navigator.pushNamed(
-                                                          context,
-                                                          KinematicCompassScreen
-                                                              .route,
-                                                          arguments: KinematicCompassScreenArguments(
-                                                            slopeDip: slopeDip,
-                                                            slopeDipDirection:
-                                                                slopeDipDir,
-                                                            joint1Dip:
-                                                                joint1Dip,
-                                                            joint1DipDirection:
-                                                                joint1DipDir,
-                                                            joint2Dip:
-                                                                joint2Dip,
-                                                            joint2DipDirection:
-                                                                joint2DipDir,
+                                                          backgroundColor:
+                                                              isDark
+                                                                  ? Colors.teal
+                                                                      .withValues(
+                                                                        alpha:
+                                                                            0.15,
+                                                                      )
+                                                                  : primaryColor
+                                                                      .withValues(
+                                                                        alpha:
+                                                                            0.08,
+                                                                      ),
+                                                          side: BorderSide(
+                                                            color:
+                                                                isDark
+                                                                    ? Colors
+                                                                        .tealAccent
+                                                                        .withValues(
+                                                                          alpha:
+                                                                              0.5,
+                                                                        )
+                                                                    : primaryColor
+                                                                        .withValues(
+                                                                          alpha:
+                                                                              0.4,
+                                                                        ),
                                                           ),
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  16,
+                                                                ),
+                                                          ),
+                                                          onPressed: () {
+                                                            final double
+                                                            slopeDip =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .betaS
+                                                                      .text,
+                                                                ) ??
+                                                                65.0;
+                                                            final double
+                                                            slopeDipDir =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .alphaS
+                                                                      .text,
+                                                                ) ??
+                                                                120.0;
+                                                            final double
+                                                            joint1Dip =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .betaJ
+                                                                      .text,
+                                                                ) ??
+                                                                45.0;
+                                                            final double
+                                                            joint1DipDir =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .alphaJ
+                                                                      .text,
+                                                                ) ??
+                                                                110.0;
+                                                            final double?
+                                                            joint2Dip =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .betaI
+                                                                      .text,
+                                                                );
+                                                            final double?
+                                                            joint2DipDir =
+                                                                double.tryParse(
+                                                                  widget
+                                                                      .alphaI
+                                                                      .text,
+                                                                );
+
+                                                            Navigator.pushNamed(
+                                                              context,
+                                                              KinematicCompassScreen
+                                                                  .route,
+                                                              arguments: KinematicCompassScreenArguments(
+                                                                slopeDip:
+                                                                    slopeDip,
+                                                                slopeDipDirection:
+                                                                    slopeDipDir,
+                                                                joint1Dip:
+                                                                    joint1Dip,
+                                                                joint1DipDirection:
+                                                                    joint1DipDir,
+                                                                joint2Dip:
+                                                                    joint2Dip,
+                                                                joint2DipDirection:
+                                                                    joint2DipDir,
+                                                              ),
+                                                            );
+                                                          },
                                                         );
                                                       },
                                                     ),

@@ -4,18 +4,12 @@ import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/settings/settings_cubit.dart';
 import 'package:q_slope_calculator/src/ui/screens/about_screen/about_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 
 enum HomeOverflowMenuAction {
   toggleTheme,
   bulkSelect,
-  openSensitivitySimulator,
-  openInverseCalculator,
-  openSupportGuide,
   openKinematicCompass,
   importCalculations,
   loadSampleData,
@@ -57,18 +51,6 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
 
           case HomeOverflowMenuAction.bulkSelect:
             onBulkSelect?.call();
-            break;
-
-          case HomeOverflowMenuAction.openSensitivitySimulator:
-            Navigator.pushNamed(context, SensitivitySimulatorScreen.route);
-            break;
-
-          case HomeOverflowMenuAction.openInverseCalculator:
-            Navigator.pushNamed(context, InverseCalculatorScreen.route);
-            break;
-
-          case HomeOverflowMenuAction.openSupportGuide:
-            Navigator.pushNamed(context, SupportGuideScreen.route);
             break;
 
           case HomeOverflowMenuAction.openKinematicCompass:
@@ -126,51 +108,6 @@ class HomeAppBarOverflowMenu extends StatelessWidget {
             const PopupMenuDivider(),
 
             // Engineering Analysis Tools Section
-            PopupMenuItem(
-              value: HomeOverflowMenuAction.openSensitivitySimulator,
-              child: Row(
-                children: [
-                  Icon(Icons.tune, color: primaryColor, size: 20),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context).sensitivitySimulator,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: HomeOverflowMenuAction.openInverseCalculator,
-              child: Row(
-                children: [
-                  Icon(Icons.architecture, color: primaryColor, size: 20),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context).inverseDesignCalculator,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: HomeOverflowMenuAction.openSupportGuide,
-              child: Row(
-                children: [
-                  Icon(Icons.construction, color: primaryColor, size: 20),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      AppLocalizations.of(context).slopeSupportGuide,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             PopupMenuItem(
               value: HomeOverflowMenuAction.openKinematicCompass,
               child: Row(
