@@ -58,8 +58,7 @@ class QSlopeListItemCard extends StatelessWidget {
                           Text(
                             "${AppLocalizations.of(context).listLocationId}: ${item.locationId ?? ''}",
                             style: const TextStyle(fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
                           ),
                           const SizedBox(height: 2),
                           Text(

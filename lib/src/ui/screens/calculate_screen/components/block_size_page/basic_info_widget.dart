@@ -123,6 +123,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
         // GPS Coordinates Section
         if (latitudeController != null && longitudeController != null) ...[
           Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: isDark ? const Color(0xFF232730) : Colors.grey.shade100,
@@ -134,75 +135,82 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.location_on, color: primaryColor, size: 20),
-                        const SizedBox(width: 6),
-                        Flexible(
-                          child: Text(
-                            AppLocalizations.of(context).gpsCoordinates,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getBodyFontSize(context),
-                            ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: primaryColor,
+                            size: 20,
                           ),
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        if (onViewMap != null)
-                          Tooltip(
-                            message: AppLocalizations.of(context).viewOnMap,
-                            child: IconButton(
-                              icon: const Icon(Icons.map_outlined, size: 18),
-                              color: primaryColor,
-                              visualDensity: VisualDensity.compact,
-                              padding: const EdgeInsets.all(4),
-                              constraints: const BoxConstraints(),
-                              onPressed: onViewMap,
-                            ),
-                          ),
-                        if (onCaptureGps != null)
-                          ElevatedButton.icon(
-                            icon:
-                                isCapturingGps
-                                    ? const SizedBox(
-                                      width: 14,
-                                      height: 14,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                    : const Icon(Icons.my_location, size: 15),
-                            label: Text(
-                              AppLocalizations.of(context).captureGps,
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              foregroundColor: Colors.white,
-                              visualDensity: VisualDensity.compact,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context).gpsCoordinates,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getBodyFontSize(context),
                               ),
                             ),
-                            onPressed: isCapturingGps ? null : onCaptureGps,
                           ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (onViewMap != null)
+                            Tooltip(
+                              message: AppLocalizations.of(context).viewOnMap,
+                              child: IconButton(
+                                icon: const Icon(Icons.map_outlined, size: 18),
+                                color: primaryColor,
+                                visualDensity: VisualDensity.compact,
+                                padding: const EdgeInsets.all(4),
+                                constraints: const BoxConstraints(),
+                                onPressed: onViewMap,
+                              ),
+                            ),
+                          if (onCaptureGps != null)
+                            ElevatedButton.icon(
+                              icon:
+                                  isCapturingGps
+                                      ? const SizedBox(
+                                        width: 14,
+                                        height: 14,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                      : const Icon(Icons.my_location, size: 15),
+                              label: Text(
+                                AppLocalizations.of(context).captureGps,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                foregroundColor: Colors.white,
+                                visualDensity: VisualDensity.compact,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                              ),
+                              onPressed: isCapturingGps ? null : onCaptureGps,
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -255,6 +263,7 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
         // Field Images Section
         if (imagePaths != null) ...[
           Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: isDark ? const Color(0xFF232730) : Colors.grey.shade100,
@@ -266,44 +275,51 @@ class BlockSizePageBasicInfoWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.photo_camera, color: primaryColor, size: 20),
-                        const SizedBox(width: 6),
-                        Flexible(
-                          child: Text(
-                            AppLocalizations.of(context).fieldImages,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: getBodyFontSize(context),
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.photo_camera,
+                            color: primaryColor,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context).fieldImages,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: getBodyFontSize(context),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    if (onAddImage != null)
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.add_a_photo, size: 15),
-                        label: Text(AppLocalizations.of(context).addImage),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          foregroundColor: Colors.white,
-                          visualDensity: VisualDensity.compact,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                        ),
-                        onPressed: onAddImage,
+                        ],
                       ),
-                  ],
+                      if (onAddImage != null)
+                        ElevatedButton.icon(
+                          icon: const Icon(Icons.add_a_photo, size: 15),
+                          label: Text(AppLocalizations.of(context).addImage),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            visualDensity: VisualDensity.compact,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                          ),
+                          onPressed: onAddImage,
+                        ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 ValueListenableBuilder<List<String>>(
