@@ -5,11 +5,8 @@ import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/full_screen_loader_dialog.dart';
 import 'package:q_slope_calculator/src/ui/dialogs/generic_dialog.dart';
-import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/excel_utils.dart';
 import 'package:q_slope_calculator/src/utils/pdf_report_utils.dart';
@@ -18,10 +15,7 @@ import 'package:toastification/toastification.dart';
 
 enum SelectionMenuAction {
   toggleSelect,
-  openSensitivitySimulator,
-  openSupportGuide,
   openKinematicCompass,
-  openInverseCalculator,
   exportPdf,
   exportExcel,
   exportCalculations,
@@ -81,36 +75,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
             if (isSingleSelection) ...[
               const PopupMenuDivider(),
               PopupMenuItem(
-                value: SelectionMenuAction.openSensitivitySimulator,
-                child: Row(
-                  children: [
-                    Icon(Icons.tune, color: primaryColor),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context).sensitivitySimulator,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: SelectionMenuAction.openSupportGuide,
-                child: Row(
-                  children: [
-                    Icon(Icons.construction, color: primaryColor),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context).slopeSupportGuide,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
                 value: SelectionMenuAction.openKinematicCompass,
                 child: Row(
                   children: [
@@ -119,24 +83,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         AppLocalizations.of(context).kinematicCompass,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: SelectionMenuAction.openInverseCalculator,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.swap_vertical_circle_outlined,
-                      color: primaryColor,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context).inverseDesignCalculator,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -232,24 +178,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
             }
             break;
 
-          case SelectionMenuAction.openSensitivitySimulator:
-            final single = _selectedQSlopes.first;
-            Navigator.pushNamed(
-              context,
-              SensitivitySimulatorScreen.route,
-              arguments: SensitivitySimulatorScreenArguments(qSlope: single),
-            );
-            break;
-
-          case SelectionMenuAction.openSupportGuide:
-            final single = _selectedQSlopes.first;
-            Navigator.pushNamed(
-              context,
-              SupportGuideScreen.route,
-              arguments: SupportGuideScreenArguments(qSlope: single),
-            );
-            break;
-
           case SelectionMenuAction.openKinematicCompass:
             final single = _selectedQSlopes.first;
             Navigator.pushNamed(
@@ -264,15 +192,6 @@ class AppBarListSelectionMenuWidget extends StatelessWidget {
                 joint2Dip: single.oFactor?.betaI,
                 joint2DipDirection: single.oFactor?.alphaI,
               ),
-            );
-            break;
-
-          case SelectionMenuAction.openInverseCalculator:
-            final single = _selectedQSlopes.first;
-            Navigator.pushNamed(
-              context,
-              InverseCalculatorScreen.route,
-              arguments: InverseCalculatorScreenArguments(qSlope: single),
             );
             break;
 

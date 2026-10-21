@@ -5,7 +5,6 @@ import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/joint_character_value_widget.dart';
-import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/jrc_profilometer_modal.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
@@ -294,75 +293,30 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                   },
                   child:
                       jrCalculationType == JrCalculationType.jr
-                          ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: TextButton.icon(
-                                  icon: const Icon(Icons.waves, size: 18),
-                                  label: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    ).jrcProfilometer,
-                                  ),
-                                  style: TextButton.styleFrom(
-                                    foregroundColor: primaryColor,
-                                    visualDensity: VisualDensity.compact,
-                                  ),
-                                  onPressed: () async {
-                                    final currentJr =
-                                        _jointRoughnessControllers.isNotEmpty
-                                            ? double.tryParse(
-                                              _jointRoughnessControllers
-                                                  .first
-                                                  .text,
-                                            )
-                                            : null;
-                                    final double? selectedJr =
-                                        await JrcProfilometerModal.show(
-                                          context,
-                                          currentJr: currentJr,
-                                        );
-                                    if (selectedJr != null) {
-                                      setState(() {
-                                        for (var c
-                                            in _jointRoughnessControllers) {
-                                          c.text = selectedJr.toString();
-                                        }
-                                      });
-                                      _onFormChange();
-                                    }
-                                  },
-                                ),
-                              ),
-                              JointCharacterValueWidget(
-                                inputTitle:
-                                    AppLocalizations.of(
-                                      context,
-                                    ).jointRoughnessInputTitle,
-                                imagePath: Assets.jointRoughnessTable,
-                                inputPlaceholderText:
-                                    AppLocalizations.of(
-                                      context,
-                                    ).jointRoughnessSymbol,
-                                validateInput: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "";
-                                  }
-                                  if (value.isNotEmpty &&
-                                      ((double.tryParse(value) ?? 0) <
-                                              minJointRoughnessValue ||
-                                          (double.tryParse(value) ?? 0) >
-                                              maxJointRoughnessValue)) {
-                                    return "";
-                                  }
-                                  return null;
-                                },
-                                textEditingControllers:
-                                    _jointRoughnessControllers,
-                              ),
-                            ],
+                          ? JointCharacterValueWidget(
+                            inputTitle:
+                                AppLocalizations.of(
+                                  context,
+                                ).jointRoughnessInputTitle,
+                            imagePath: Assets.jointRoughnessTable,
+                            inputPlaceholderText:
+                                AppLocalizations.of(
+                                  context,
+                                ).jointRoughnessSymbol,
+                            validateInput: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "";
+                              }
+                              if (value.isNotEmpty &&
+                                  ((double.tryParse(value) ?? 0) <
+                                          minJointRoughnessValue ||
+                                      (double.tryParse(value) ?? 0) >
+                                          maxJointRoughnessValue)) {
+                                return "";
+                              }
+                              return null;
+                            },
+                            textEditingControllers: _jointRoughnessControllers,
                           )
                           : jrCalculationType == JrCalculationType.palmstorm
                           ? Column(

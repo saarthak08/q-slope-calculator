@@ -3,7 +3,7 @@
 [![Google Play](https://img.shields.io/badge/Google_Play-Get_it_on_Play_Store-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=in.sg.q_slope_calculator)
 [![Flutter](https://img.shields.io/badge/Flutter-Pinned%20FVM-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-%3E%3D3.7.0%20%3C4.0.0-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
-[![Tests](https://img.shields.io/badge/Tests-139%20Passing%20(100%25)-success?style=for-the-badge&logo=checkmarx&logoColor=white)]()
+[![Tests](https://img.shields.io/badge/Tests-126%20Passing%20(100%25)-success?style=for-the-badge&logo=checkmarx&logoColor=white)]()
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web%20%7C%20Windows%20%7C%20macOS%20%7C%20Linux-blue?style=for-the-badge)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
@@ -38,42 +38,19 @@ An advanced, cross-platform geotechnical engineering application for rock slope 
   * 🔴 **Unstable**: Actual angle $> \beta_{allowable} + 2.5^\circ$ (Oversteepened)
 * **Interactive Stability Badges**: Real-time visual status badges on home calculation cards with searchable filter chips.
 
-### 3. 🌪️ Live Sensitivity Simulator
-* **Dynamic Parameter Perturbations**: Adjust any parameter ($RQD, J_n, J_r, J_a, O, J_{wice}, SRF$) with live interactive sliders.
-* **Tornado Sensitivity Chart**: Instant ranking of which parameters exert the greatest sensitivity on slope stability.
-* **Operating Point Visualization**: Real-time visual envelope comparing baseline versus simulated rock mass operating points.
-
-### 4. 🛡️ Empirical Slope Support Guide
-* **Bar & Barton (2017) Support Categories**: Automatically classifies slope reinforcement requirements into Categories 1 through 6.
-* **Detailed Specifications**:
-  * Recommended rock bolt length ($L = \max(2.5\,\text{m},\, 2.0 + 0.15H)$).
-  * Staggered diamond pattern bolt spacing.
-  * Fiber-reinforced shotcrete thickness ($50\text{--}150\,\text{mm}$).
-  * Sub-horizontal drainage borehole depth, spacing, and uphole incline.
-  * Pre-stressed strand cable anchor recommendations.
-
-### 5. 🧭 Kinematic Stereonet & Compass
+### 3. 🧭 Kinematic Stereonet & Compass
 * **Interactive Equal-Angle Stereonet**: Real-time lower-hemisphere stereographic projection.
 * **Discontinuity Plotting**: Visualizes slope faces, joint planes (great circles & poles), and friction cones ($\phi$).
 * **Kinematic Daylighting Analysis**: Automatic daylight envelope calculations and risk evaluation for Planar sliding, Wedge intersecting lines, and Flexural Toppling.
 
-### 6. 📐 Inverse Slope Design Calculator
-* **Target-Driven Back-Calculation**: Solves the inverse stability equation:
-  $$Q_{req} = 10^{\frac{\beta_{target} - 65}{20}}$$
-* **Remediation Feasibility**: Determines the exact drainage improvement ($J_{wice}$) or maximum permissible stress/disturbance ($SRF$) needed to safely achieve steepened bench or inter-ramp angles.
-
-### 7. 📏 Barton 10-Profile JRC Profilometer Modal
-* **Canonical Visual Profilometer**: Interactive selector featuring the 10 standard Barton & Choubey (1977) Joint Roughness Coefficient profiles ($JRC$ 0–20).
-* **Direct $J_r$ Rating**: Smooth integration into discontinuity characterization workflows.
-
-### 8. 📍 Field Outcrop Imagery & GPS Geotagging
+### 4. 📍 Field Outcrop Imagery & GPS Geotagging
 * **Outcrop Photo Gallery**: In-app photo capture and local attachment with interactive full-screen zoom viewer.
 * **Automatic GPS Acquisition**: One-tap acquisition of field latitude, longitude, and elevation.
 
-### 9. 📁 Seamless Field Data Portability & Reporting
+### 5. 📁 Seamless Field Data Portability & Reporting
 * **Geologist-Friendly CSV Engine**: Clean import and export formatted specifically for geological field databases, with conflict resolution strategies (skip, overwrite, import as new).
 * **Multi-Tab Excel Spreadsheets**: Comprehensive multi-tab export containing summary tables, raw parameter logs, and calculation records.
-* **Professional Geotechnical PDF Reports**: Multi-page engineering reports including site metadata, GPS coordinates, stability badges, support specifications, stereonet sketches, and embedded outcrop imagery.
+* **Professional Geotechnical PDF Reports**: Multi-page engineering reports including site metadata, GPS coordinates, stability badges, stereonet diagrams, and embedded outcrop imagery.
 
 ---
 

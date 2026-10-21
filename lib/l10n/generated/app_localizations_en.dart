@@ -769,19 +769,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportPdfFailed => 'Failed to export PDF report';
 
   @override
-  String get sensitivitySimulator => 'Live Sensitivity Simulator';
-
-  @override
-  String get inverseDesignCalculator => 'Inverse Slope Design';
-
-  @override
-  String get slopeSupportGuide => 'Empirical Slope Support Guide';
-
-  @override
   String get kinematicCompass => 'Kinematic Stereonet & Compass';
-
-  @override
-  String get jrcProfilometer => 'Barton 10-Profile JRC';
 
   @override
   String get captureGps => 'Capture GPS';
@@ -833,138 +821,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Failed to capture GPS location. Check permissions or services.';
 
   @override
-  String get tools => 'Engineering Tools';
-
-  @override
-  String get saveAsScenario => 'Save as Scenario';
-
-  @override
-  String scenarioSavedSuccess(Object name) {
-    return 'Scenario \"$name\" saved successfully';
-  }
-
-  @override
-  String get qSlopeRating => 'Q-Slope Rating';
-
-  @override
-  String get liveStabilityEnvelope => 'Live Stability Envelope Operating Point';
-
-  @override
-  String get parameterSensitivityRanking =>
-      'Parameter Sensitivity Ranking (Tornado Impact)';
-
-  @override
-  String get parameterSensitivityDesc =>
-      'Relative sensitivity on allowable slope angle (Δβ) for a ±20% parameter shift.';
-
-  @override
-  String get interactiveParameterSliders => 'Interactive Parameter Sliders';
-
-  @override
-  String get simulatedRockMass => 'Simulated Rock Mass';
-
-  @override
-  String get targetSlopeAngle => 'Target Slope Angle (β)';
-
-  @override
-  String get requiredQSlope => 'Required Q-Slope';
-
-  @override
-  String get engineeringFeasibility =>
-      'Engineering Feasibility & Parameter Thresholds';
-
-  @override
-  String get baselineConstraints => 'Baseline Rock Mass Constraints';
-
-  @override
-  String get achievableWithoutSupport =>
-      'Achievable without artificial reinforcement or drainage';
-
-  @override
-  String get oversteepenedRequiresSupport =>
-      'Oversteepened face requires engineered drainage or support';
-
-  @override
-  String get drainageFeasibility => 'Drainage Feasibility (Jwice)';
-
-  @override
-  String get stressReductionFeasibility => 'Stress Reduction Feasibility (SRF)';
-
-  @override
-  String get openInSimulator => 'Open Scenario in Live Sensitivity Simulator';
-
-  @override
-  String get jwiceExceedsLimit =>
-      'Required Jwice exceeds theoretical dry limit (1.0). Bench cannot be stabilized by drainage alone.';
-
-  @override
-  String get drainageFeasible =>
-      'Stabilization theoretically feasible through complete bench drainage depressurization.';
-
-  @override
-  String controlledBlastingRequired(Object target) {
-    return 'Controlled blasting / pre-splitting required (SRF target: $target).';
-  }
-
-  @override
-  String get stressManageable =>
-      'Stress concentration manageable under baseline blasting.';
-
-  @override
-  String get activeAssessment => 'Active Geotechnical Assessment';
-
-  @override
-  String get benchGeometryInputs => 'Bench Geometry & Rock Mass Inputs';
-
-  @override
-  String get bartonBarCategories =>
-      'Barton & Bar (2017) Empirical Support Categories';
-
-  @override
-  String get boltLength => 'Bolt Length (L)';
-
-  @override
-  String get boltSpacing => 'Bolt Spacing';
-
-  @override
-  String get shotcrete => 'Shotcrete';
-
-  @override
-  String get none => 'None';
-
-  @override
-  String get rockBolting => 'Rock Bolting:';
-
-  @override
-  String get shotcreteRetention => 'Shotcrete & Surface Retention:';
-
-  @override
-  String get subHorizontalDrainage => 'Sub-horizontal Drainage:';
-
-  @override
-  String recommendedBoltLength(Object length) {
-    return 'Recommended Bolt Length L ≈ $length m';
-  }
-
-  @override
-  String recommendedBoltSpacing(Object spacing) {
-    return 'Recommended Bolt Spacing: $spacing m';
-  }
-
-  @override
-  String recommendedShotcrete(Object thickness) {
-    return 'Recommended Shotcrete: $thickness mm';
-  }
-
-  @override
-  String get requiresCableAnchors =>
-      'Requires pre-stressed strand cable anchors';
-
-  @override
-  String get requiresReprofiling =>
-      'Requires bench slope reprofiling / flattening';
-
-  @override
   String get failureMechanismAssessment => 'Failure Mechanism Assessment';
 
   @override
@@ -1012,19 +868,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wedgeIntersectionLine => 'Wedge Intersection Line';
-
-  @override
-  String get jrcProfilometerTitle => 'Barton 10-Profile JRC Selector';
-
-  @override
-  String get jrcProfilometerSubtitle =>
-      'Select joint profile to auto-derive Roughness (Jr)';
-
-  @override
-  String get equivalentJr => 'Equivalent Jr';
-
-  @override
-  String get selected => 'Selected';
 
   @override
   String get kinematicPlanar => 'Planar';

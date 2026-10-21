@@ -674,8 +674,7 @@ void main() {
         await tester.tap(find.text('Active Stress & Q-slope'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Live Sensitivity Simulator'), findsOneWidget);
-        expect(find.text('Empirical Slope Support Guide'), findsOneWidget);
+        expect(find.text('Kinematic Stereonet & Compass'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );

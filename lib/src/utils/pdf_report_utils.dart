@@ -25,11 +25,6 @@ class PdfReportUtils {
       qVal,
       actualAngle,
     );
-    final SlopeSupportRecommendation support = getSlopeSupportRecommendation(
-      qVal,
-      benchHeight: qSlope.benchHeight,
-      actualSlopeAngle: actualAngle,
-    );
 
     // Kinematic evaluation if angles present
     KinematicAnalysisResult? kinematics;
@@ -336,123 +331,6 @@ class PdfReportUtils {
             ),
             pw.SizedBox(height: 16),
 
-            // Empirical Support & Reinforcement Recommendations
-            pw.Row(
-              children: [
-                _buildReinforcementIcon(),
-                pw.SizedBox(width: 6),
-                pw.Text(
-                  '2. Empirical Slope Reinforcement Guide (Bar & Barton 2017)',
-                  style: pw.TextStyle(
-                    fontSize: 12,
-                    fontWeight: pw.FontWeight.bold,
-                    color: PdfColors.blueGrey900,
-                  ),
-                ),
-              ],
-            ),
-            pw.SizedBox(height: 6),
-            pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(color: PdfColors.grey400),
-                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
-              ),
-              padding: const pw.EdgeInsets.all(10),
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    support.title,
-                    style: pw.TextStyle(
-                      fontSize: 11,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.blueGrey900,
-                    ),
-                  ),
-                  pw.SizedBox(height: 4),
-                  pw.Text(
-                    support.summary,
-                    style: const pw.TextStyle(
-                      fontSize: 10,
-                      color: PdfColors.grey800,
-                    ),
-                  ),
-                  pw.SizedBox(height: 8),
-                  pw.Row(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Expanded(
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Text(
-                              'Rock Bolting:',
-                              style: pw.TextStyle(
-                                fontSize: 9,
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                            pw.Text(
-                              support.boltSpecification,
-                              style: const pw.TextStyle(fontSize: 9),
-                            ),
-                            if (support.recommendedBoltLengthMeters > 0)
-                              pw.Text(
-                                'Recommended Bolt Length L ~ ${support.recommendedBoltLengthMeters} m',
-                                style: pw.TextStyle(
-                                  fontSize: 9,
-                                  fontWeight: pw.FontWeight.bold,
-                                  color: PdfColors.blue800,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      pw.SizedBox(width: 12),
-                      pw.Expanded(
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Text(
-                              'Shotcrete & Retention:',
-                              style: pw.TextStyle(
-                                fontSize: 9,
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                            pw.Text(
-                              support.shotcreteSpecification,
-                              style: const pw.TextStyle(fontSize: 9),
-                            ),
-                          ],
-                        ),
-                      ),
-                      pw.SizedBox(width: 12),
-                      pw.Expanded(
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Text(
-                              'Drainage / Pore Pressure:',
-                              style: pw.TextStyle(
-                                fontSize: 9,
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                            pw.Text(
-                              support.drainageSpecification,
-                              style: const pw.TextStyle(fontSize: 9),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            pw.SizedBox(height: 16),
-
             // Kinematic Assessment Section
             if (kinematics != null) ...[
               pw.Row(
@@ -460,7 +338,7 @@ class PdfReportUtils {
                   _buildCompassIcon(),
                   pw.SizedBox(width: 6),
                   pw.Text(
-                    '3. Kinematic Failure Assessment',
+                    '2. Kinematic Failure Assessment',
                     style: pw.TextStyle(
                       fontSize: 12,
                       fontWeight: pw.FontWeight.bold,
@@ -779,31 +657,6 @@ class PdfReportUtils {
           size.y * 0.95,
         );
         canvas.strokePath();
-      },
-    );
-  }
-
-  static pw.Widget _buildReinforcementIcon() {
-    return pw.CustomPaint(
-      size: const PdfPoint(12, 12),
-      painter: (PdfGraphics canvas, PdfPoint size) {
-        canvas.setColor(PdfColors.blue800);
-        canvas.setLineWidth(1.8);
-        canvas.drawLine(
-          size.x * 0.15,
-          size.y * 0.15,
-          size.x * 0.85,
-          size.y * 0.85,
-        );
-        canvas.strokePath();
-        canvas.setFillColor(PdfColors.blueGrey700);
-        canvas.drawRect(
-          size.x * 0.05,
-          size.y * 0.05,
-          size.x * 0.35,
-          size.y * 0.15,
-        );
-        canvas.fillPath();
       },
     );
   }

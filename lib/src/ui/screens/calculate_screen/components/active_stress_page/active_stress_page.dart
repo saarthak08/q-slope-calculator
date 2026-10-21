@@ -9,11 +9,8 @@ import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
-import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
-import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
 import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
@@ -692,51 +689,6 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                               children: [
                                 ActionChip(
                                   avatar: Icon(
-                                    Icons.tune,
-                                    size: 16,
-                                    color: primaryColor,
-                                  ),
-                                  label: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    ).sensitivitySimulator,
-                                    style: const TextStyle(fontSize: 12.5),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      SensitivitySimulatorScreen.route,
-                                      arguments:
-                                          SensitivitySimulatorScreenArguments(
-                                            qSlope: widget.qSlope.value,
-                                          ),
-                                    );
-                                  },
-                                ),
-                                ActionChip(
-                                  avatar: Icon(
-                                    Icons.construction,
-                                    size: 16,
-                                    color: primaryColor,
-                                  ),
-                                  label: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    ).slopeSupportGuide,
-                                    style: const TextStyle(fontSize: 12.5),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      SupportGuideScreen.route,
-                                      arguments: SupportGuideScreenArguments(
-                                        qSlope: widget.qSlope.value,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                ActionChip(
-                                  avatar: Icon(
                                     Icons.explore_outlined,
                                     size: 16,
                                     color: primaryColor,
@@ -762,29 +714,6 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                                                 o?.alphaJ ?? 110.0,
                                             joint2Dip: o?.betaI,
                                             joint2DipDirection: o?.alphaI,
-                                          ),
-                                    );
-                                  },
-                                ),
-                                ActionChip(
-                                  avatar: Icon(
-                                    Icons.architecture,
-                                    size: 16,
-                                    color: primaryColor,
-                                  ),
-                                  label: Text(
-                                    AppLocalizations.of(
-                                      context,
-                                    ).inverseDesignCalculator,
-                                    style: const TextStyle(fontSize: 12.5),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      InverseCalculatorScreen.route,
-                                      arguments:
-                                          InverseCalculatorScreenArguments(
-                                            qSlope: widget.qSlope.value,
                                           ),
                                     );
                                   },
