@@ -5,10 +5,6 @@ on:
     branches:
       - master
       - dev
-  pull_request:
-    branches:
-      - master
-      - dev
   workflow_dispatch:
     inputs:
       build_android:
@@ -88,16 +84,7 @@ jobs:
           echo "${RELEASE_KEYSTORE_PROPERTIES}" > android/keys/release-key.properties
       - name: Accept Android licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-      - name: Get NDK version
-        id: ndk-version
-        run: |
-          NDK_VER=$(grep -oP "ndkVersion.*?['\"]\K[\d\.]+" android/app/build.gradle | head -n 1)
-          echo "VERSION=$NDK_VER" >> $GITHUB_OUTPUT
-      - name: Cache NDK
-        uses: actions/cache@v6
-        with:
-          path: /usr/local/lib/android/sdk/ndk
-          key: ${{ runner.os }}-ndk-${{ steps.ndk-version.outputs.VERSION }}
+
       - name: Set Flavor
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then

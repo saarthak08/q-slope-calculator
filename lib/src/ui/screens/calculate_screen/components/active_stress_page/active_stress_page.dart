@@ -9,12 +9,18 @@ import 'package:q_slope_calculator/src/data/common/qslope_error.dart';
 import 'package:q_slope_calculator/src/data/models/active_stress.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/logic/cubit/q_slope_list/q_slope_list_cubit.dart';
+import 'package:q_slope_calculator/src/ui/screens/inverse_calculator_screen/inverse_calculator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/kinematic_compass_screen/kinematic_compass_screen.dart';
 import 'package:q_slope_calculator/src/ui/screens/q_slope_stability_chart_screen/q_slope_stability_chart_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/sensitivity_simulator_screen/sensitivity_simulator_screen.dart';
+import 'package:q_slope_calculator/src/ui/screens/support_guide_screen/support_guide_screen.dart';
 import 'package:q_slope_calculator/src/ui/widgets/custom_text_form_field.dart';
+import 'package:q_slope_calculator/src/utils/csv_utils.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
-import 'package:q_slope_calculator/src/utils/export_excel_file.dart';
+import 'package:q_slope_calculator/src/utils/excel_utils.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
+import 'package:q_slope_calculator/src/utils/pdf_report_utils.dart';
 import 'package:q_slope_calculator/src/utils/theme/font_sizes.dart';
 import 'package:q_slope_calculator/src/utils/theme/theme_data.dart';
 import 'package:toastification/toastification.dart';
@@ -45,40 +51,67 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
   @override
   void initState() {
     QSlope? qSlope = widget.qSlope.value;
-    srfA.text = qSlope.activeStress?.srfA.toString() ?? "";
-    srfB.text = qSlope.activeStress?.srfB.toString() ?? "";
-    srfC.text = qSlope.activeStress?.srfC.toString() ?? "";
-    srf.text = qSlope.activeStress?.srf.toString() ?? "";
+    final active = qSlope.activeStress;
+    if (active != null) {
+      srfA.text =
+          (active.srfA != null && active.srfA! > 0)
+              ? active.srfA!.toString()
+              : "";
+      srfB.text =
+          (active.srfB != null && active.srfB! > 0)
+              ? active.srfB!.toString()
+              : "";
+      srfC.text =
+          (active.srfC != null && active.srfC! > 0)
+              ? active.srfC!.toString()
+              : "";
+      srf.text =
+          (active.srf != null && active.srf! > 0) ? active.srf!.toString() : "";
+    }
+    if (srf.text.isNotEmpty &&
+        srfA.text.isEmpty &&
+        srfB.text.isEmpty &&
+        srfC.text.isEmpty) {
+      srfA.text = srf.text;
+    }
     _qSlope.value = qSlope.qSlope;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _calculateQSlope();
+      }
+    });
     super.initState();
   }
 
   void _calculateQSlope() {
-    if ((srfA.text.isNotEmpty &&
-            (double.tryParse(srfA.text) ?? 0) <= maxSRFa &&
-            (double.tryParse(srfA.text) ?? 0) >= minSRFa) ||
-        (srfB.text.isNotEmpty &&
-            (double.tryParse(srfB.text) ?? 0) <= maxSRFb &&
-            (double.tryParse(srfB.text) ?? 0) >= minSRFb) ||
-        (srfC.text.isNotEmpty &&
-            (double.tryParse(srfC.text) ?? 0) <= maxSRFc &&
-            (double.tryParse(srfC.text) ?? 0) >= minSRFc)) {
+    final parsedA = double.tryParse(srfA.text);
+    final parsedB = double.tryParse(srfB.text);
+    final parsedC = double.tryParse(srfC.text);
+
+    final bool isAValid =
+        parsedA != null && parsedA <= maxSRFa && parsedA >= minSRFa;
+    final bool isBValid =
+        parsedB != null && parsedB <= maxSRFb && parsedB >= minSRFb;
+    final bool isCValid =
+        parsedC != null && parsedC <= maxSRFc && parsedC >= minSRFc;
+
+    if (isAValid || isBValid || isCValid) {
       QSlope qSlope = widget.qSlope.value;
-      qSlope.activeStress = ActiveStress();
-      qSlope.activeStress?.srfA = double.tryParse(srfA.text) ?? 0;
-      qSlope.activeStress?.srfB = double.tryParse(srfB.text) ?? 0;
-      qSlope.activeStress?.srfC = double.tryParse(srfC.text) ?? 0;
-      double preMax = max<double>(
-        qSlope.activeStress?.srfA ?? 0,
-        qSlope.activeStress?.srfB ?? 0,
-      );
-      srf.text = max<double>(
-        preMax,
-        qSlope.activeStress?.srfC ?? 0,
-      ).toStringAsFixed(4);
+      qSlope.activeStress ??= ActiveStress();
+      qSlope.activeStress?.srfA = isAValid ? parsedA : null;
+      qSlope.activeStress?.srfB = isBValid ? parsedB : null;
+      qSlope.activeStress?.srfC = isCValid ? parsedC : null;
+      final List<double> validSrfs = [
+        if (isAValid) parsedA,
+        if (isBValid) parsedB,
+        if (isCValid) parsedC,
+      ];
+      final double calculatedMaxSrf =
+          validSrfs.isNotEmpty ? validSrfs.reduce(max) : 1.0;
+      srf.text = calculatedMaxSrf.toStringAsFixed(4);
       widget.errorTabs.value[tabIndex] = false;
       widget.errorTabs.value = List.from(widget.errorTabs.value);
-      qSlope.activeStress?.srf = double.tryParse(srf.text) ?? 1;
+      qSlope.activeStress?.srf = calculatedMaxSrf;
       if (qSlope.activeStress != null &&
           qSlope.jointCharacter != null &&
           qSlope.externalFactors != null &&
@@ -95,6 +128,65 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
     } else {
       widget.errorTabs.value[tabIndex] = true;
       widget.errorTabs.value = List.from(widget.errorTabs.value);
+    }
+  }
+
+  Future<void> _handleExport(BuildContext context, String format) async {
+    QSlope qSlope = widget.qSlope.value;
+    if (qSlope.activeStress != null &&
+        qSlope.jointCharacter != null &&
+        qSlope.externalFactors != null &&
+        qSlope.blockSize != null &&
+        qSlope.oFactor != null &&
+        widget.errorTabs.value.firstWhereOrNull((value) => value) == null) {
+      qSlope.createdAt = DateTime.now();
+      widget.qSlope.value = qSlope.copyWith();
+      try {
+        String? fileName;
+        final dialogTitle =
+            AppLocalizations.of(context).selectDirectoryToSaveFile;
+        if (format == 'excel') {
+          fileName = await ExcelUtils.exportExcelFile(
+            List.from([qSlope]),
+            dialogTitle: dialogTitle,
+          );
+        } else if (format == 'pdf') {
+          fileName = await PdfReportUtils.exportPdfReport(
+            qSlope,
+            dialogTitle: dialogTitle,
+          );
+        } else {
+          fileName = await CsvUtils.exportCsv(
+            List.from([qSlope]),
+            dialogTitle: dialogTitle,
+          );
+        }
+
+        if (fileName == null || fileName.isEmpty) {
+          // User cancelled file save dialog
+          return;
+        }
+
+        if (context.mounted) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.success,
+            title: Text(
+              AppLocalizations.of(context).exportSuccessful(fileName),
+            ),
+          );
+        }
+      } catch (err) {
+        if (context.mounted) {
+          toastification.show(
+            autoCloseDuration: const Duration(seconds: 2),
+            alignment: Alignment.bottomCenter,
+            type: ToastificationType.error,
+            title: Text(AppLocalizations.of(context).exportFailed),
+          );
+        }
+      }
     }
   }
 
@@ -382,176 +474,324 @@ class _ActiveStressPageState extends State<ActiveStressPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ElevatedButton(
-                                  onPressed:
-                                      value != null
-                                          ? () async {
-                                            QSlope qSlope = widget.qSlope.value;
-                                            if (qSlope.activeStress != null &&
-                                                qSlope.jointCharacter != null &&
-                                                qSlope.externalFactors !=
-                                                    null &&
-                                                qSlope.blockSize != null &&
-                                                qSlope.oFactor != null &&
-                                                widget.errorTabs.value
-                                                        .firstWhereOrNull(
-                                                          (value) => value,
-                                                        ) ==
-                                                    null) {
-                                              qSlope.createdAt = DateTime.now();
-                                              widget.qSlope.value =
-                                                  qSlope.copyWith();
-                                              try {
-                                                String fileName =
-                                                    await exportExcelFile(
-                                                      List.from([qSlope]),
+                                Expanded(
+                                  child: PopupMenuButton<String>(
+                                    enabled: value != null,
+                                    tooltip:
+                                        AppLocalizations.of(context).export,
+                                    onSelected:
+                                        (format) =>
+                                            _handleExport(context, format),
+                                    itemBuilder:
+                                        (context) => [
+                                          PopupMenuItem(
+                                            value: 'pdf',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.picture_as_pdf,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
                                                       context,
-                                                    );
-                                                if (context.mounted) {
-                                                  toastification.show(
-                                                    autoCloseDuration:
-                                                        const Duration(
-                                                          seconds: 2,
-                                                        ),
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    type:
-                                                        ToastificationType
-                                                            .success,
-                                                    title: Text(
-                                                      AppLocalizations.of(
-                                                        context,
-                                                      ).exportSuccessful(
-                                                        fileName,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              } catch (err) {
-                                                if (context.mounted) {
-                                                  toastification.show(
-                                                    autoCloseDuration:
-                                                        const Duration(
-                                                          seconds: 2,
-                                                        ),
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    type:
-                                                        ToastificationType
-                                                            .error,
-                                                    title: Text(
-                                                      AppLocalizations.of(
-                                                        context,
-                                                      ).exportFailed,
-                                                    ),
-                                                  );
-                                                  rethrow;
-                                                }
-                                              }
-                                            }
-                                          }
-                                          : null,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              Colors.grey.shade800,
-                                            )
-                                            : null,
-                                    foregroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              primaryColor,
-                                            )
-                                            : null,
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    ),
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(
-                                        getViewPortWidth(context) * 0.4,
-                                        getViewPortHeight(context) * 0.05,
-                                      ),
-                                    ),
-                                  ),
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      AppLocalizations.of(
-                                        context,
-                                      ).exportFileTitle,
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  width: getViewPortWidth(context) * 0.02,
-                                ),
-                                ElevatedButton(
-                                  onPressed:
-                                      value != null
-                                          ? () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              QSlopeStabilityChartScreen.route,
-                                              arguments:
-                                                  QSlopeStabilityChartScreenArguments(
-                                                    qSlopeValues:
-                                                        List<double>.from([
-                                                          value,
-                                                        ]),
-                                                    slopeAnglesByUser:
-                                                        List<double?>.from([
-                                                          widget
-                                                              .qSlope
-                                                              .value
-                                                              .slopeAngleByUser,
-                                                        ]),
+                                                    ).exportPdf,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
-                                            );
-                                          }
-                                          : null,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              Colors.grey.shade800,
-                                            )
-                                            : null,
-                                    foregroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? WidgetStatePropertyAll(
-                                              primaryColor,
-                                            )
-                                            : null,
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            value: 'excel',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.table_chart_outlined,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    ).exportExcel,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            value: 'csv',
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.grid_on_outlined,
+                                                  color: primaryColor,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    ).exportCalculations,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                    child: Container(
+                                      height: getViewPortHeight(context) * 0.05,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            value != null
+                                                ? (Theme.of(
+                                                          context,
+                                                        ).brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.grey.shade800
+                                                    : primaryColor)
+                                                : Colors.grey.shade400,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
-                                    ),
-                                    fixedSize: WidgetStatePropertyAll(
-                                      Size(
-                                        getViewPortWidth(context) * 0.4,
-                                        getViewPortHeight(context) * 0.05,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.file_download_outlined,
+                                              color:
+                                                  Theme.of(
+                                                            context,
+                                                          ).brightness ==
+                                                          Brightness.dark
+                                                      ? primaryColor
+                                                      : Colors.white,
+                                              size: 18,
+                                            ),
+                                            const SizedBox(width: 4),
+                                            Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              ).export,
+                                              style: TextStyle(
+                                                color:
+                                                    Theme.of(
+                                                              context,
+                                                            ).brightness ==
+                                                            Brightness.dark
+                                                        ? primaryColor
+                                                        : Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_drop_down,
+                                              color:
+                                                  Theme.of(
+                                                            context,
+                                                          ).brightness ==
+                                                          Brightness.dark
+                                                      ? primaryColor
+                                                      : Colors.white,
+                                              size: 18,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  child: FittedBox(
-                                    child: Text(
-                                      "${AppLocalizations.of(context).qSlopeSymbol}\n ${AppLocalizations.of(context).stabilityChart}",
-                                      textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed:
+                                        value != null
+                                            ? () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                QSlopeStabilityChartScreen
+                                                    .route,
+                                                arguments:
+                                                    QSlopeStabilityChartScreenArguments(
+                                                      qSlopeValues:
+                                                          List<double>.from([
+                                                            value,
+                                                          ]),
+                                                      slopeAnglesByUser: List<
+                                                        double?
+                                                      >.from([
+                                                        widget
+                                                            .qSlope
+                                                            .value
+                                                            .slopeAngleByUser,
+                                                      ]),
+                                                    ),
+                                              );
+                                            }
+                                            : null,
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? WidgetStatePropertyAll(
+                                                Colors.grey.shade800,
+                                              )
+                                              : null,
+                                      foregroundColor:
+                                          Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? WidgetStatePropertyAll(
+                                                primaryColor,
+                                              )
+                                              : null,
+                                      shape: WidgetStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            5,
+                                          ),
+                                        ),
+                                      ),
+                                      fixedSize: WidgetStatePropertyAll(
+                                        Size.fromHeight(
+                                          getViewPortHeight(context) * 0.05,
+                                        ),
+                                      ),
+                                    ),
+                                    child: FittedBox(
+                                      child: Text(
+                                        "${AppLocalizations.of(context).qSlopeSymbol}\n ${AppLocalizations.of(context).stabilityChart}",
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          if (value != null) ...[
+                            SizedBox(height: getViewPortHeight(context) * 0.02),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.tune,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).sensitivitySimulator,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      SensitivitySimulatorScreen.route,
+                                      arguments:
+                                          SensitivitySimulatorScreenArguments(
+                                            qSlope: widget.qSlope.value,
+                                          ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.construction,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).slopeSupportGuide,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      SupportGuideScreen.route,
+                                      arguments: SupportGuideScreenArguments(
+                                        qSlope: widget.qSlope.value,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.explore_outlined,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).kinematicCompass,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    final o = widget.qSlope.value.oFactor;
+                                    Navigator.pushNamed(
+                                      context,
+                                      KinematicCompassScreen.route,
+                                      arguments:
+                                          KinematicCompassScreenArguments(
+                                            slopeDip: o?.betaS ?? 65.0,
+                                            slopeDipDirection:
+                                                o?.alphaS ?? 120.0,
+                                            joint1Dip: o?.betaJ ?? 45.0,
+                                            joint1DipDirection:
+                                                o?.alphaJ ?? 110.0,
+                                            joint2Dip: o?.betaI,
+                                            joint2DipDirection: o?.alphaI,
+                                          ),
+                                    );
+                                  },
+                                ),
+                                ActionChip(
+                                  avatar: Icon(
+                                    Icons.architecture,
+                                    size: 16,
+                                    color: primaryColor,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).inverseDesignCalculator,
+                                    style: const TextStyle(fontSize: 12.5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      InverseCalculatorScreen.route,
+                                      arguments:
+                                          InverseCalculatorScreenArguments(
+                                            qSlope: widget.qSlope.value,
+                                          ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                           SizedBox(height: getViewPortHeight(context) * 0.08),
                         ],
                       ),

@@ -1,0 +1,35 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - master
+      - dev
+
+jobs:
+  test:
+    name: Test and Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5.6.0
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: 'gradle'  
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+          flutter-version-file: .fvmrc
+          architecture: x64
+      - run: flutter --version
+      - run: cp .env.sample .env
+        continue-on-error: true
+      - run: flutter pub get
+      - name: Analyze code
+        run: flutter analyze
+      - name: Ensure Dart code is formatted
+        run: dart format -o none --set-exit-if-changed .
+      - name: Run Flutter tests
+        run: flutter test

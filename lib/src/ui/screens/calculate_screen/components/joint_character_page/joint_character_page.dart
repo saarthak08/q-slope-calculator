@@ -5,6 +5,7 @@ import 'package:q_slope_calculator/src/constants/assets.dart';
 import 'package:q_slope_calculator/src/data/models/joint_character.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/joint_character_value_widget.dart';
+import 'package:q_slope_calculator/src/ui/screens/calculate_screen/components/joint_character_page/jrc_profilometer_modal.dart';
 import 'package:q_slope_calculator/src/utils/dimensions.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
 import 'package:q_slope_calculator/src/utils/formulas.dart';
@@ -36,39 +37,58 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
   int numberOfJoints = -1;
 
   void _initiateControllers(QSlope qSlope) {
-    int? joints = qSlope.blockSize?.numberOfJoints ?? 0;
+    int joints =
+        qSlope.blockSize?.numberOfJoints ??
+        (qSlope.jointCharacter?.jointRoughness?.length ?? 1);
+    if (joints <= 0) joints = 1;
+
     if (joints != numberOfJoints) {
       _jointRoughnessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
           text:
-              qSlope.jointCharacter?.jointRoughness?[jointIndex].toString() ??
-              "",
+              (qSlope.jointCharacter?.jointRoughness != null &&
+                      qSlope.jointCharacter!.jointRoughness!.length >
+                          jointIndex)
+                  ? qSlope.jointCharacter!.jointRoughness![jointIndex]
+                      .toString()
+                  : "",
         ),
       );
       _jointAlterationControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
           text:
-              qSlope.jointCharacter?.jointAlteration?[jointIndex].toString() ??
-              "",
+              (qSlope.jointCharacter?.jointAlteration != null &&
+                      qSlope.jointCharacter!.jointAlteration!.length >
+                          jointIndex)
+                  ? qSlope.jointCharacter!.jointAlteration![jointIndex]
+                      .toString()
+                  : "",
         ),
       );
-      jrCalculationType = qSlope.jointCharacter?.jrCalculationType;
+      jrCalculationType =
+          qSlope.jointCharacter?.jrCalculationType ?? JrCalculationType.jr;
       _jointSmoothnessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
           text:
-              qSlope.jointCharacter?.jointSmoothness?[jointIndex].toString() ??
-              "",
+              (qSlope.jointCharacter?.jointSmoothness != null &&
+                      qSlope.jointCharacter!.jointSmoothness!.length >
+                          jointIndex)
+                  ? qSlope.jointCharacter!.jointSmoothness![jointIndex]
+                      .toString()
+                  : "",
         ),
       );
       _jointWavinessControllers = List.generate(
         joints,
         (jointIndex) => TextEditingController(
           text:
-              qSlope.jointCharacter?.jointWaviness?[jointIndex].toString() ??
-              "",
+              (qSlope.jointCharacter?.jointWaviness != null &&
+                      qSlope.jointCharacter!.jointWaviness!.length > jointIndex)
+                  ? qSlope.jointCharacter!.jointWaviness![jointIndex].toString()
+                  : "",
         ),
       );
       numberOfJoints = joints;
@@ -168,6 +188,11 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
   @override
   void initState() {
     _initiateControllers(widget.qSlope.value);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _onFormChange();
+      }
+    });
     super.initState();
   }
 
@@ -269,30 +294,75 @@ class _JointCharacterPageState extends State<JointCharacterPage> {
                   },
                   child:
                       jrCalculationType == JrCalculationType.jr
-                          ? JointCharacterValueWidget(
-                            inputTitle:
-                                AppLocalizations.of(
-                                  context,
-                                ).jointRoughnessInputTitle,
-                            imagePath: Assets.jointRoughnessTable,
-                            inputPlaceholderText:
-                                AppLocalizations.of(
-                                  context,
-                                ).jointRoughnessSymbol,
-                            validateInput: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "";
-                              }
-                              if (value.isNotEmpty &&
-                                  ((double.tryParse(value) ?? 0) <
-                                          minJointRoughnessValue ||
-                                      (double.tryParse(value) ?? 0) >
-                                          maxJointRoughnessValue)) {
-                                return "";
-                              }
-                              return null;
-                            },
-                            textEditingControllers: _jointRoughnessControllers,
+                          ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: TextButton.icon(
+                                  icon: const Icon(Icons.waves, size: 18),
+                                  label: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jrcProfilometer,
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: primaryColor,
+                                    visualDensity: VisualDensity.compact,
+                                  ),
+                                  onPressed: () async {
+                                    final currentJr =
+                                        _jointRoughnessControllers.isNotEmpty
+                                            ? double.tryParse(
+                                              _jointRoughnessControllers
+                                                  .first
+                                                  .text,
+                                            )
+                                            : null;
+                                    final double? selectedJr =
+                                        await JrcProfilometerModal.show(
+                                          context,
+                                          currentJr: currentJr,
+                                        );
+                                    if (selectedJr != null) {
+                                      setState(() {
+                                        for (var c
+                                            in _jointRoughnessControllers) {
+                                          c.text = selectedJr.toString();
+                                        }
+                                      });
+                                      _onFormChange();
+                                    }
+                                  },
+                                ),
+                              ),
+                              JointCharacterValueWidget(
+                                inputTitle:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointRoughnessInputTitle,
+                                imagePath: Assets.jointRoughnessTable,
+                                inputPlaceholderText:
+                                    AppLocalizations.of(
+                                      context,
+                                    ).jointRoughnessSymbol,
+                                validateInput: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "";
+                                  }
+                                  if (value.isNotEmpty &&
+                                      ((double.tryParse(value) ?? 0) <
+                                              minJointRoughnessValue ||
+                                          (double.tryParse(value) ?? 0) >
+                                              maxJointRoughnessValue)) {
+                                    return "";
+                                  }
+                                  return null;
+                                },
+                                textEditingControllers:
+                                    _jointRoughnessControllers,
+                              ),
+                            ],
                           )
                           : jrCalculationType == JrCalculationType.palmstorm
                           ? Column(

@@ -82,40 +82,42 @@ class BlockSize {
   factory BlockSize.fromMap(Map<String, dynamic> map) {
     return BlockSize(
       numberOfJoints:
-          map['numberOfJoints'] != null ? map['numberOfJoints'] as int : null,
+          map['numberOfJoints'] != null
+              ? (map['numberOfJoints'] as num).toInt()
+              : null,
       numberOfRandomSets:
           map['numberOfRandomSets'] != null
-              ? map['numberOfRandomSets'] as int?
+              ? (map['numberOfRandomSets'] as num).toInt()
               : null,
       jointSpacingInMeters:
           map['jointSpacingInMeters'] != null
-              ? (map['jointSpacingInMeters'] as List).cast<double>()
+              ? (map['jointSpacingInMeters'] is List
+                  ? (map['jointSpacingInMeters'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jointSpacingInMeters'] as num).toDouble()])
               : null,
-      areaInSquareMeters:
-          map['areaInSquareMeters'] != null
-              ? map['areaInSquareMeters'] as double?
-              : null,
-      jointVolume:
-          map['jointVolume'] != null ? map['jointVolume'] as double : null,
-      sumOfCorePieces:
-          map['sumOfCorePieces'] != null
-              ? map['sumOfCorePieces'] as double?
-              : null,
-      totalDrillRun:
-          map['totalDrillRun'] != null ? map['totalDrillRun'] as double? : null,
+      areaInSquareMeters: (map['areaInSquareMeters'] as num?)?.toDouble(),
+      jointVolume: (map['jointVolume'] as num?)?.toDouble(),
+      sumOfCorePieces: (map['sumOfCorePieces'] as num?)?.toDouble(),
+      totalDrillRun: (map['totalDrillRun'] as num?)?.toDouble(),
       rqdCalculationType:
           map['rqdCalculationType'] != null
-              ? map['rqdCalculationType'] ==
-                      RqdCalculationType.directMethod.name
+              ? (map['rqdCalculationType'] ==
+                          RqdCalculationType.directMethod.name ||
+                      map['rqdCalculationType'] ==
+                          RqdCalculationType.directMethod)
                   ? RqdCalculationType.directMethod
                   : RqdCalculationType.jv
               : null,
-      rqd: map['rqd'] as double,
-      jointSetNumber: map['jointSetNumber'] as double?,
+      rqd: (map['rqd'] as num?)?.toDouble() ?? 0,
+      jointSetNumber: (map['jointSetNumber'] as num?)?.toDouble(),
       rqdByJvCalculationType:
           map['rqdByJvCalculationType'] != null
-              ? map['rqdByJvCalculationType'] ==
-                      RqdByJvCalculationType.formulaWith2Point5Jv.name
+              ? (map['rqdByJvCalculationType'] ==
+                          RqdByJvCalculationType.formulaWith2Point5Jv.name ||
+                      map['rqdByJvCalculationType'] ==
+                          RqdByJvCalculationType.formulaWith2Point5Jv)
                   ? RqdByJvCalculationType.formulaWith2Point5Jv
                   : RqdByJvCalculationType.formulaWith3Point3Jv
               : null,

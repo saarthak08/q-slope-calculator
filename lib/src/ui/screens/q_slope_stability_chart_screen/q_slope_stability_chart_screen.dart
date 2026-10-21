@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:q_slope_calculator/l10n/generated/app_localizations.dart';
+import 'package:q_slope_calculator/src/constants/strings.dart';
 import 'package:q_slope_calculator/src/utils/save_file.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -59,15 +60,20 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                         bytes.offsetInBytes,
                         bytes.lengthInBytes,
                       );
-                      final fileName =
-                          "q-slope-stability-chart_${DateTime.now().toIso8601String().replaceAll(":", "-")}.png";
+                      final fileName = generateExportFileName(
+                        chartExportFilePrefix,
+                        pngFileExtension,
+                      );
                       try {
                         if (buildContext.mounted) {
-                          await saveFile(
+                          final savedPath = await saveFile(
                             imageBytes.toList(),
                             fileName,
                             buildContext,
                           );
+                          if (savedPath == null || savedPath.isEmpty) {
+                            return;
+                          }
                           if (buildContext.mounted) {
                             toastification.show(
                               autoCloseDuration: const Duration(seconds: 2),
@@ -111,11 +117,12 @@ class QSlopeStabilityChartScreen extends StatelessWidget {
                 ],
           ),
         ],
-        title: Text(
-          AppLocalizations.of(context).qSlopeStabilityChart,
-          style: TextStyle(fontSize: getTitleFontSize(context)),
-          softWrap: true,
-          overflow: TextOverflow.visible,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            AppLocalizations.of(context).qSlopeStabilityChart,
+            style: TextStyle(fontSize: getTitleFontSize(context)),
+          ),
         ),
       ),
       body: SingleChildScrollView(

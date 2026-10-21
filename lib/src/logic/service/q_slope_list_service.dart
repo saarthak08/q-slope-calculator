@@ -77,4 +77,24 @@ class QSlopeListService {
       return Failure(QSlopeError(type: QSlopeErrorType.deleteError));
     }
   }
+
+  Future<Result<int>> saveMultipleQSlopes(
+    List<QSlope> incoming, {
+    ImportConflictStrategy strategy = ImportConflictStrategy.overwrite,
+  }) async {
+    try {
+      final count = await _qSlopeCalculationsRepository.saveMultipleQSlopes(
+        incoming,
+        strategy: strategy,
+      );
+      return Success(count);
+    } catch (err, s) {
+      getLogger().e(
+        'Error in saving multiple Q-slopes',
+        error: err,
+        stackTrace: s,
+      );
+      return Failure(QSlopeError(type: QSlopeErrorType.saveError));
+    }
+  }
 }

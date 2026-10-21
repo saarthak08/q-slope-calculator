@@ -143,54 +143,57 @@ class OFactor {
     return OFactor(
       oFactorCalculationType:
           map['oFactorCalculationType'] != null
-              ? map['oFactorCalculationType'] ==
-                      OFactorCalculationType.romanaAdjacentFactor.name
+              ? (map['oFactorCalculationType'] ==
+                          OFactorCalculationType.romanaAdjacentFactor.name ||
+                      map['oFactorCalculationType'] ==
+                          OFactorCalculationType.romanaAdjacentFactor)
                   ? OFactorCalculationType.romanaAdjacentFactor
                   : OFactorCalculationType.value
               : null,
       oFactorRomanaValueType:
           map['oFactorRomanaValueType'] != null
-              ? map['oFactorRomanaValueType'] == OFactorRomanaValueType.value
+              ? (map['oFactorRomanaValueType'] ==
+                          OFactorRomanaValueType.value.name ||
+                      map['oFactorRomanaValueType'] ==
+                          OFactorRomanaValueType.value)
                   ? OFactorRomanaValueType.value
                   : OFactorRomanaValueType.calculation
               : null,
-      f1: map['f1'] != null ? map['f1'] as double : null,
-      f2: map['f2'] != null ? map['f2'] as double : null,
-      f3: map['f3'] != null ? map['f3'] as double : null,
-      alphaI: map['alphaI'] != null ? map['alphaI'] as double : null,
-      alphaJ: map['alphaJ'] != null ? map['alphaJ'] as double : null,
-      alphaS: map['alphaS'] != null ? map['alphaS'] as double : null,
-      betaI: map['betaI'] != null ? map['betaI'] as double : null,
-      betaJ: map['betaJ'] != null ? map['betaJ'] as double : null,
-      betaS: map['betaS'] != null ? map['betaS'] as double : null,
-      ratingForF1:
-          map['ratingForF1'] != null ? map['ratingForF1'] as double : null,
-      ratingForF2:
-          map['ratingForF2'] != null ? map['ratingForF2'] as double : null,
-      ratingForF3:
-          map['ratingForF3'] != null ? map['ratingForF3'] as double : null,
-      indexOfFirstJoint:
-          map['indexOfFirstJoint'] != null
-              ? map['indexOfFirstJoint'] as int
-              : null,
-      indexOfSecondJoint:
-          map['indexOfSecondJoint'] != null
-              ? map['indexOfSecondJoint'] as int
-              : null,
+      f1: (map['f1'] as num?)?.toDouble(),
+      f2: (map['f2'] as num?)?.toDouble(),
+      f3: (map['f3'] as num?)?.toDouble(),
+      alphaI: (map['alphaI'] as num?)?.toDouble(),
+      alphaJ: (map['alphaJ'] as num?)?.toDouble(),
+      alphaS: (map['alphaS'] as num?)?.toDouble(),
+      betaI: (map['betaI'] as num?)?.toDouble(),
+      betaJ: (map['betaJ'] as num?)?.toDouble(),
+      betaS: (map['betaS'] as num?)?.toDouble(),
+      ratingForF1: (map['ratingForF1'] as num?)?.toDouble(),
+      ratingForF2: (map['ratingForF2'] as num?)?.toDouble(),
+      ratingForF3: (map['ratingForF3'] as num?)?.toDouble(),
+      indexOfFirstJoint: (map['indexOfFirstJoint'] as num?)?.toInt(),
+      indexOfSecondJoint: (map['indexOfSecondJoint'] as num?)?.toInt(),
       oFactorForFirstJoint:
           map['oFactorForFirstJoint'] != null
-              ? map['oFactorForFirstJoint'] as double
-              : null,
+              ? (map['oFactorForFirstJoint'] as num).toDouble()
+              : (map['oFactor'] != null
+                  ? (map['oFactor'] as num).toDouble()
+                  : null),
       oFactorForSecondJoint:
           map['oFactorForSecondJoint'] != null
-              ? map['oFactorForSecondJoint'] as double
+              ? (map['oFactorForSecondJoint'] as num).toDouble()
               : null,
       oFactorTypeOfFailure:
           map['oFactorTypeOfFailure'] != null
-              ? map['oFactorTypeOfFailure'] == OFactorTypeOfFailure.planar.name
+              ? (map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.planar.name ||
+                      map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.planar)
                   ? OFactorTypeOfFailure.planar
-                  : map['oFactorTypeOfFailure'] ==
-                      OFactorTypeOfFailure.toppling.name
+                  : (map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.toppling.name ||
+                      map['oFactorTypeOfFailure'] ==
+                          OFactorTypeOfFailure.toppling)
                   ? OFactorTypeOfFailure.toppling
                   : OFactorTypeOfFailure.wedge
               : null,

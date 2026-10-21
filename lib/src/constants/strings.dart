@@ -13,3 +13,22 @@ const reference3Link =
     "https://drive.google.com/file/d/1BZzaTP4Fjj5AKQF_D1KJkJVhKcpQm7tc/view?usp=sharing";
 const privacyPolicyLink =
     "https://docs.google.com/document/d/1W7llZRHJl-HNIlpxQqHbANEbb3vgdK7KqSKIwQfyBAI/edit?usp=sharing";
+
+// File Export & Backup Prefixes
+const String csvExportFilePrefix = "q-slope-data_";
+const String excelExportFilePrefix = "q-slope-calculations_";
+const String chartExportFilePrefix = "q-slope-stability-chart_";
+const String pdfReportFilePrefix = "q-slope-report_";
+
+// File Extensions
+const String jsonFileExtension = ".json";
+const String csvFileExtension = ".csv";
+const String excelFileExtension = ".xlsx";
+const String pngFileExtension = ".png";
+const String pdfFileExtension = ".pdf";
+
+// Helper for standardized timestamped file naming
+String generateExportFileName(String prefix, String extension) {
+  final ext = extension.startsWith('.') ? extension : '.$extension';
+  return "$prefix${DateTime.now().toIso8601String().replaceAll(':', '-')}$ext";
+}

@@ -1,0 +1,6 @@
+ID,Location_ID,Lithology,RQD,Jn,Jr1,Ja1,Jr2,Ja2,OFactor1,OFactor2,Jwice,SRF,QSlope,SlopeAngleByUser,AllowableAngle,SafetyMargin,StabilityStatus,CreatedAt
+bench-4b-quartzite,"Mine Bench 4B - Quartzite",Quartzite,85,3,2,1,,,1,,0.8,2.5,18.13,65,90.17,25.17,stable,2026-10-15T08:30:00.000Z
+hwy-102-schist,"Highway 102 Cut - Mica Schist",Mica Schist,45,9,1.5,2,,,1.25,,0.7,5,0.28,52,53.94,1.94,uncertain,2026-10-16T11:15:00.000Z
+pit-east-siltstone,"East Wall Sector 2 - Siltstone",Siltstone,25,12,1,4,,,1.5,,0.5,10,0.017,60,29.61,-30.39,unstable,2026-10-18T14:45:00.000Z
+rail-cut-sandstone,"Rail Corridor Cut 9 - Sandstone",Sandstone,70,6,3,1.5,,,0.95,,1,1.5,11.78,55,86.42,31.42,stable,2026-10-19T09:00:00.000Z
+spillway-basalt,"Spillway Left Abutment - Basalt",Basalt,60,9,2,3,,,1.1,,0.6,4,0.36,58,56.12,-1.88,uncertain,2026-10-19T16:20:00.000Z

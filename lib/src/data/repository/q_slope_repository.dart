@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:q_slope_calculator/src/data/models/q_slope.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 /// A Singleton repository responsible for managing the local storage
 /// and retrieval of [QSlope] data. It acts as the single source of truth
@@ -73,4 +74,51 @@ class QSlopeRepository {
       (pref) => pref.setStringList(_qSlopeSharedPreferenceKey, jsonList),
     );
   }
+
+  Future<int> saveMultipleQSlopes(
+    List<QSlope> incoming, {
+    ImportConflictStrategy strategy = ImportConflictStrategy.overwrite,
+  }) async {
+    var qSlopesList = await getAllQSlopes();
+    final Set<String> existingIds = qSlopesList.map((e) => e.id).toSet();
+    final Map<String, int> existingIndexMap = {
+      for (int i = 0; i < qSlopesList.length; i++) qSlopesList[i].id: i,
+    };
+
+    int count = 0;
+    for (var item in incoming) {
+      if (existingIds.contains(item.id)) {
+        switch (strategy) {
+          case ImportConflictStrategy.skip:
+            // Do not import
+            break;
+          case ImportConflictStrategy.overwrite:
+            qSlopesList[existingIndexMap[item.id]!] = item;
+            count++;
+            break;
+          case ImportConflictStrategy.importAsNew:
+            final newId = const Uuid().v4();
+            final newItem = item.copyWith(id: newId);
+            qSlopesList.add(newItem);
+            existingIds.add(newId);
+            existingIndexMap[newId] = qSlopesList.length - 1;
+            count++;
+            break;
+        }
+      } else {
+        qSlopesList.add(item);
+        existingIds.add(item.id);
+        existingIndexMap[item.id] = qSlopesList.length - 1;
+        count++;
+      }
+    }
+
+    var jsonList = qSlopesList.map((val) => val.toJson()).toList();
+    await _sharedPreferences.then((pref) {
+      return pref.setStringList(_qSlopeSharedPreferenceKey, jsonList);
+    });
+    return count;
+  }
 }
+
+enum ImportConflictStrategy { skip, overwrite, importAsNew }

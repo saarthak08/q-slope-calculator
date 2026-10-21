@@ -625,4 +625,457 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chartExportFailed => 'Chart export failed';
+
+  @override
+  String get statusStable => 'Stable';
+
+  @override
+  String get statusUncertain => 'Uncertain';
+
+  @override
+  String get statusUnstable => 'Unstable';
+
+  @override
+  String get statusUnknown => 'Unknown';
+
+  @override
+  String get safetyMargin => 'Safety Margin (Δβ)';
+
+  @override
+  String get allowableAngle => 'Allowable (β)';
+
+  @override
+  String get actualAngle => 'Actual (α)';
+
+  @override
+  String get searchPlaceholder => 'Search by location or lithology...';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get sortBy => 'Sort By';
+
+  @override
+  String get sortDateNewest => 'Date (Newest)';
+
+  @override
+  String get sortDateOldest => 'Date (Oldest)';
+
+  @override
+  String get sortQSlopeHigh => 'Q-slope (Highest)';
+
+  @override
+  String get sortQSlopeLow => 'Q-slope (Lowest)';
+
+  @override
+  String get sortLocationAZ => 'Location (A-Z)';
+
+  @override
+  String get sortLocationZA => 'Location (Z-A)';
+
+  @override
+  String get noCalculationsMatchFilter =>
+      'No calculations match your search or filter';
+
+  @override
+  String get importCalculations => 'Import Calculations';
+
+  @override
+  String get exportCalculations => 'Export Calculations';
+
+  @override
+  String get exportExcel => 'Export to Excel';
+
+  @override
+  String importSuccessful(Object count) {
+    return 'Successfully imported $count calculation(s)';
+  }
+
+  @override
+  String importFailed(Object error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get importConflictTitle => 'Import Calculations';
+
+  @override
+  String get importConflictContent =>
+      'How would you like to handle existing calculations?';
+
+  @override
+  String get skipDuplicates => 'Skip Duplicates';
+
+  @override
+  String get overwriteExisting => 'Overwrite Existing';
+
+  @override
+  String get importAsNew => 'Import As New Copies';
+
+  @override
+  String get noFileSelected => 'No file selected';
+
+  @override
+  String get invalidFormat => 'Invalid file format or corrupted file';
+
+  @override
+  String get importData => 'Import Data';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get saveFailed => 'Save failed';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get exportAll => 'Export All';
+
+  @override
+  String get exportAllExcel => 'Export All (Excel)';
+
+  @override
+  String get exportAllJson => 'Export All (JSON)';
+
+  @override
+  String get exportAllCsv => 'Export All (CSV)';
+
+  @override
+  String get bulkSelect => 'Select Calculations';
+
+  @override
+  String selectedCount(Object count) {
+    return '$count selected';
+  }
+
+  @override
+  String get options => 'Options';
+
+  @override
+  String get exportPdf => 'Export PDF Report';
+
+  @override
+  String exportPdfSuccessful(Object fileName) {
+    return 'Report exported successfully as $fileName';
+  }
+
+  @override
+  String get exportPdfFailed => 'Failed to export PDF report';
+
+  @override
+  String get sensitivitySimulator => 'Live Sensitivity Simulator';
+
+  @override
+  String get inverseDesignCalculator => 'Inverse Slope Design';
+
+  @override
+  String get slopeSupportGuide => 'Empirical Slope Support Guide';
+
+  @override
+  String get kinematicCompass => 'Kinematic Stereonet & Compass';
+
+  @override
+  String get jrcProfilometer => 'Barton 10-Profile JRC';
+
+  @override
+  String get captureGps => 'Capture GPS';
+
+  @override
+  String get viewOnMap => 'View on Map';
+
+  @override
+  String get fieldPhotos => 'Field Outcrop Photos';
+
+  @override
+  String get fieldImages => 'Field Outcrop Images';
+
+  @override
+  String get addPhoto => 'Add Photo';
+
+  @override
+  String get addImage => 'Add Image';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get pickFromGallery => 'Choose from Gallery / Files';
+
+  @override
+  String get noImagesAttached => 'No outcrop images attached yet.';
+
+  @override
+  String get benchHeight => 'Bench / Slope Height (H) in meters';
+
+  @override
+  String get gpsCoordinates => 'GPS Coordinates';
+
+  @override
+  String get latitude => 'Latitude';
+
+  @override
+  String get longitude => 'Longitude';
+
+  @override
+  String get elevation => 'Elevation (m)';
+
+  @override
+  String get gpsCaptured => 'GPS location captured successfully';
+
+  @override
+  String get gpsFailed =>
+      'Failed to capture GPS location. Check permissions or services.';
+
+  @override
+  String get tools => 'Engineering Tools';
+
+  @override
+  String get saveAsScenario => 'Save as Scenario';
+
+  @override
+  String scenarioSavedSuccess(Object name) {
+    return 'Scenario \"$name\" saved successfully';
+  }
+
+  @override
+  String get qSlopeRating => 'Q-Slope Rating';
+
+  @override
+  String get liveStabilityEnvelope => 'Live Stability Envelope Operating Point';
+
+  @override
+  String get parameterSensitivityRanking =>
+      'Parameter Sensitivity Ranking (Tornado Impact)';
+
+  @override
+  String get parameterSensitivityDesc =>
+      'Relative sensitivity on allowable slope angle (Δβ) for a ±20% parameter shift.';
+
+  @override
+  String get interactiveParameterSliders => 'Interactive Parameter Sliders';
+
+  @override
+  String get simulatedRockMass => 'Simulated Rock Mass';
+
+  @override
+  String get targetSlopeAngle => 'Target Slope Angle (β)';
+
+  @override
+  String get requiredQSlope => 'Required Q-Slope';
+
+  @override
+  String get engineeringFeasibility =>
+      'Engineering Feasibility & Parameter Thresholds';
+
+  @override
+  String get baselineConstraints => 'Baseline Rock Mass Constraints';
+
+  @override
+  String get achievableWithoutSupport =>
+      'Achievable without artificial reinforcement or drainage';
+
+  @override
+  String get oversteepenedRequiresSupport =>
+      'Oversteepened face requires engineered drainage or support';
+
+  @override
+  String get drainageFeasibility => 'Drainage Feasibility (Jwice)';
+
+  @override
+  String get stressReductionFeasibility => 'Stress Reduction Feasibility (SRF)';
+
+  @override
+  String get openInSimulator => 'Open Scenario in Live Sensitivity Simulator';
+
+  @override
+  String get jwiceExceedsLimit =>
+      'Required Jwice exceeds theoretical dry limit (1.0). Bench cannot be stabilized by drainage alone.';
+
+  @override
+  String get drainageFeasible =>
+      'Stabilization theoretically feasible through complete bench drainage depressurization.';
+
+  @override
+  String controlledBlastingRequired(Object target) {
+    return 'Controlled blasting / pre-splitting required (SRF target: $target).';
+  }
+
+  @override
+  String get stressManageable =>
+      'Stress concentration manageable under baseline blasting.';
+
+  @override
+  String get activeAssessment => 'Active Geotechnical Assessment';
+
+  @override
+  String get benchGeometryInputs => 'Bench Geometry & Rock Mass Inputs';
+
+  @override
+  String get bartonBarCategories =>
+      'Barton & Bar (2017) Empirical Support Categories';
+
+  @override
+  String get boltLength => 'Bolt Length (L)';
+
+  @override
+  String get boltSpacing => 'Bolt Spacing';
+
+  @override
+  String get shotcrete => 'Shotcrete';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get rockBolting => 'Rock Bolting:';
+
+  @override
+  String get shotcreteRetention => 'Shotcrete & Surface Retention:';
+
+  @override
+  String get subHorizontalDrainage => 'Sub-horizontal Drainage:';
+
+  @override
+  String recommendedBoltLength(Object length) {
+    return 'Recommended Bolt Length L ≈ $length m';
+  }
+
+  @override
+  String recommendedBoltSpacing(Object spacing) {
+    return 'Recommended Bolt Spacing: $spacing m';
+  }
+
+  @override
+  String recommendedShotcrete(Object thickness) {
+    return 'Recommended Shotcrete: $thickness mm';
+  }
+
+  @override
+  String get requiresCableAnchors =>
+      'Requires pre-stressed strand cable anchors';
+
+  @override
+  String get requiresReprofiling =>
+      'Requires bench slope reprofiling / flattening';
+
+  @override
+  String get failureMechanismAssessment => 'Failure Mechanism Assessment';
+
+  @override
+  String get interactiveOrientationControls =>
+      'Interactive Orientation Controls';
+
+  @override
+  String get slopeDipDirectionAlphaS => 'Slope Dip Direction (αs)';
+
+  @override
+  String get slopeDipAngleBetaS => 'Slope Dip Angle (βs)';
+
+  @override
+  String get joint1DipDirectionAlphaJ1 => 'Joint 1 Dip Direction (αj1)';
+
+  @override
+  String get joint1DipAngleBetaJ1 => 'Joint 1 Dip Angle (βj1)';
+
+  @override
+  String get includeJoint2Wedge => 'Include Joint 2 (Wedge Analysis)';
+
+  @override
+  String get joint2DipDirectionAlphaJ2 => 'Joint 2 Dip Direction (αj2)';
+
+  @override
+  String get joint2DipAngleBetaJ2 => 'Joint 2 Dip Angle (βj2)';
+
+  @override
+  String get basicFrictionAnglePhi => 'Basic Friction Angle (φ)';
+
+  @override
+  String get stereonetLegend => 'Stereonet Quick Legend';
+
+  @override
+  String get daylightingSector => 'Daylighting Sector';
+
+  @override
+  String get slopeFace => 'Slope Face';
+
+  @override
+  String get joint1 => 'Joint 1';
+
+  @override
+  String get joint2 => 'Joint 2';
+
+  @override
+  String get wedgeIntersectionLine => 'Wedge Intersection Line';
+
+  @override
+  String get jrcProfilometerTitle => 'Barton 10-Profile JRC Selector';
+
+  @override
+  String get jrcProfilometerSubtitle =>
+      'Select joint profile to auto-derive Roughness (Jr)';
+
+  @override
+  String get equivalentJr => 'Equivalent Jr';
+
+  @override
+  String get selected => 'Selected';
+
+  @override
+  String get kinematicPlanar => 'Planar';
+
+  @override
+  String get kinematicWedge => 'Wedge';
+
+  @override
+  String get kinematicToppling => 'Toppling';
+
+  @override
+  String get riskCritical => 'CRITICAL';
+
+  @override
+  String get riskModerate => 'MODERATE';
+
+  @override
+  String get riskLow => 'LOW';
+
+  @override
+  String get riskNone => 'NONE';
+
+  @override
+  String get loadSampleCalculations => 'Load Sample Calculations';
+
+  @override
+  String sampleCalculationsLoaded(int count) {
+    return '$count sample calculations loaded successfully';
+  }
+
+  @override
+  String get locationServicesDisabledTitle => 'Location Services Disabled';
+
+  @override
+  String get locationServicesDisabledMessage =>
+      'Location services (GPS) are turned off. Please turn on location services on your device to capture outcrop coordinates.';
+
+  @override
+  String get locationPermissionDeniedTitle => 'Location Permission Required';
+
+  @override
+  String get locationPermissionDeniedMessage =>
+      'Location permission was denied. Please allow location access to capture outcrop GPS coordinates.';
+
+  @override
+  String get locationPermissionPermanentlyDeniedMessage =>
+      'Location permission is permanently denied. Please open App Settings and grant location permission.';
+
+  @override
+  String get openLocationSettings => 'Open Location Settings';
+
+  @override
+  String get openAppSettings => 'Open App Settings';
 }

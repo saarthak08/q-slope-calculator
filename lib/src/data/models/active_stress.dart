@@ -8,7 +8,7 @@ class ActiveStress {
   /// [MAX_AMONG_SRFA_SRFB_SRFC]
   double? srf;
 
-  ActiveStress({this.srfA = 0, this.srfB = 0, this.srfC = 0, this.srf = 0});
+  ActiveStress({this.srfA, this.srfB, this.srfC, this.srf});
 
   ActiveStress copyWith({
     double? srfA,
@@ -35,10 +35,10 @@ class ActiveStress {
 
   factory ActiveStress.fromMap(Map<String, dynamic> map) {
     return ActiveStress(
-      srfA: map['srfA'] as double,
-      srfB: map['srfB'] as double,
-      srfC: map['srfC'] as double,
-      srf: map['srf'] as double,
+      srfA: (map['srfA'] as num?)?.toDouble(),
+      srfB: (map['srfB'] as num?)?.toDouble(),
+      srfC: (map['srfC'] as num?)?.toDouble(),
+      srf: (map['srf'] as num?)?.toDouble(),
     );
   }
 

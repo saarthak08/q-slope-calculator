@@ -1251,6 +1251,834 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chart export failed'**
   String get chartExportFailed;
+
+  /// No description provided for @statusStable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get statusStable;
+
+  /// No description provided for @statusUncertain.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncertain'**
+  String get statusUncertain;
+
+  /// No description provided for @statusUnstable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unstable'**
+  String get statusUnstable;
+
+  /// No description provided for @statusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get statusUnknown;
+
+  /// No description provided for @safetyMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Margin (Δβ)'**
+  String get safetyMargin;
+
+  /// No description provided for @allowableAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowable (β)'**
+  String get allowableAngle;
+
+  /// No description provided for @actualAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual (α)'**
+  String get actualAngle;
+
+  /// No description provided for @searchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by location or lithology...'**
+  String get searchPlaceholder;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get sortBy;
+
+  /// No description provided for @sortDateNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Newest)'**
+  String get sortDateNewest;
+
+  /// No description provided for @sortDateOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Oldest)'**
+  String get sortDateOldest;
+
+  /// No description provided for @sortQSlopeHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Q-slope (Highest)'**
+  String get sortQSlopeHigh;
+
+  /// No description provided for @sortQSlopeLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Q-slope (Lowest)'**
+  String get sortQSlopeLow;
+
+  /// No description provided for @sortLocationAZ.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (A-Z)'**
+  String get sortLocationAZ;
+
+  /// No description provided for @sortLocationZA.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (Z-A)'**
+  String get sortLocationZA;
+
+  /// No description provided for @noCalculationsMatchFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No calculations match your search or filter'**
+  String get noCalculationsMatchFilter;
+
+  /// No description provided for @importCalculations.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Calculations'**
+  String get importCalculations;
+
+  /// No description provided for @exportCalculations.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Calculations'**
+  String get exportCalculations;
+
+  /// No description provided for @exportExcel.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to Excel'**
+  String get exportExcel;
+
+  /// No description provided for @importSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully imported {count} calculation(s)'**
+  String importSuccessful(Object count);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String importFailed(Object error);
+
+  /// No description provided for @importConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Calculations'**
+  String get importConflictTitle;
+
+  /// No description provided for @importConflictContent.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to handle existing calculations?'**
+  String get importConflictContent;
+
+  /// No description provided for @skipDuplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip Duplicates'**
+  String get skipDuplicates;
+
+  /// No description provided for @overwriteExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Overwrite Existing'**
+  String get overwriteExisting;
+
+  /// No description provided for @importAsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Import As New Copies'**
+  String get importAsNew;
+
+  /// No description provided for @noFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get noFileSelected;
+
+  /// No description provided for @invalidFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid file format or corrupted file'**
+  String get invalidFormat;
+
+  /// No description provided for @importData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Data'**
+  String get importData;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Save failed'**
+  String get saveFailed;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// No description provided for @exportAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All'**
+  String get exportAll;
+
+  /// No description provided for @exportAllExcel.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (Excel)'**
+  String get exportAllExcel;
+
+  /// No description provided for @exportAllJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (JSON)'**
+  String get exportAllJson;
+
+  /// No description provided for @exportAllCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export All (CSV)'**
+  String get exportAllCsv;
+
+  /// No description provided for @bulkSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Calculations'**
+  String get bulkSelect;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedCount(Object count);
+
+  /// No description provided for @options.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get options;
+
+  /// No description provided for @exportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export PDF Report'**
+  String get exportPdf;
+
+  /// No description provided for @exportPdfSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Report exported successfully as {fileName}'**
+  String exportPdfSuccessful(Object fileName);
+
+  /// No description provided for @exportPdfFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export PDF report'**
+  String get exportPdfFailed;
+
+  /// No description provided for @sensitivitySimulator.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Sensitivity Simulator'**
+  String get sensitivitySimulator;
+
+  /// No description provided for @inverseDesignCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Inverse Slope Design'**
+  String get inverseDesignCalculator;
+
+  /// No description provided for @slopeSupportGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Empirical Slope Support Guide'**
+  String get slopeSupportGuide;
+
+  /// No description provided for @kinematicCompass.
+  ///
+  /// In en, this message translates to:
+  /// **'Kinematic Stereonet & Compass'**
+  String get kinematicCompass;
+
+  /// No description provided for @jrcProfilometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Barton 10-Profile JRC'**
+  String get jrcProfilometer;
+
+  /// No description provided for @captureGps.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture GPS'**
+  String get captureGps;
+
+  /// No description provided for @viewOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View on Map'**
+  String get viewOnMap;
+
+  /// No description provided for @fieldPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Outcrop Photos'**
+  String get fieldPhotos;
+
+  /// No description provided for @fieldImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Outcrop Images'**
+  String get fieldImages;
+
+  /// No description provided for @addPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo'**
+  String get addPhoto;
+
+  /// No description provided for @addImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Image'**
+  String get addImage;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// No description provided for @pickFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery / Files'**
+  String get pickFromGallery;
+
+  /// No description provided for @noImagesAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'No outcrop images attached yet.'**
+  String get noImagesAttached;
+
+  /// No description provided for @benchHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Bench / Slope Height (H) in meters'**
+  String get benchHeight;
+
+  /// No description provided for @gpsCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Coordinates'**
+  String get gpsCoordinates;
+
+  /// No description provided for @latitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get latitude;
+
+  /// No description provided for @longitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get longitude;
+
+  /// No description provided for @elevation.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevation (m)'**
+  String get elevation;
+
+  /// No description provided for @gpsCaptured.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS location captured successfully'**
+  String get gpsCaptured;
+
+  /// No description provided for @gpsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to capture GPS location. Check permissions or services.'**
+  String get gpsFailed;
+
+  /// No description provided for @tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Engineering Tools'**
+  String get tools;
+
+  /// No description provided for @saveAsScenario.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as Scenario'**
+  String get saveAsScenario;
+
+  /// No description provided for @scenarioSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Scenario \"{name}\" saved successfully'**
+  String scenarioSavedSuccess(Object name);
+
+  /// No description provided for @qSlopeRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Q-Slope Rating'**
+  String get qSlopeRating;
+
+  /// No description provided for @liveStabilityEnvelope.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Stability Envelope Operating Point'**
+  String get liveStabilityEnvelope;
+
+  /// No description provided for @parameterSensitivityRanking.
+  ///
+  /// In en, this message translates to:
+  /// **'Parameter Sensitivity Ranking (Tornado Impact)'**
+  String get parameterSensitivityRanking;
+
+  /// No description provided for @parameterSensitivityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Relative sensitivity on allowable slope angle (Δβ) for a ±20% parameter shift.'**
+  String get parameterSensitivityDesc;
+
+  /// No description provided for @interactiveParameterSliders.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive Parameter Sliders'**
+  String get interactiveParameterSliders;
+
+  /// No description provided for @simulatedRockMass.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulated Rock Mass'**
+  String get simulatedRockMass;
+
+  /// No description provided for @targetSlopeAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Slope Angle (β)'**
+  String get targetSlopeAngle;
+
+  /// No description provided for @requiredQSlope.
+  ///
+  /// In en, this message translates to:
+  /// **'Required Q-Slope'**
+  String get requiredQSlope;
+
+  /// No description provided for @engineeringFeasibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Engineering Feasibility & Parameter Thresholds'**
+  String get engineeringFeasibility;
+
+  /// No description provided for @baselineConstraints.
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline Rock Mass Constraints'**
+  String get baselineConstraints;
+
+  /// No description provided for @achievableWithoutSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievable without artificial reinforcement or drainage'**
+  String get achievableWithoutSupport;
+
+  /// No description provided for @oversteepenedRequiresSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Oversteepened face requires engineered drainage or support'**
+  String get oversteepenedRequiresSupport;
+
+  /// No description provided for @drainageFeasibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Drainage Feasibility (Jwice)'**
+  String get drainageFeasibility;
+
+  /// No description provided for @stressReductionFeasibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress Reduction Feasibility (SRF)'**
+  String get stressReductionFeasibility;
+
+  /// No description provided for @openInSimulator.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Scenario in Live Sensitivity Simulator'**
+  String get openInSimulator;
+
+  /// No description provided for @jwiceExceedsLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Required Jwice exceeds theoretical dry limit (1.0). Bench cannot be stabilized by drainage alone.'**
+  String get jwiceExceedsLimit;
+
+  /// No description provided for @drainageFeasible.
+  ///
+  /// In en, this message translates to:
+  /// **'Stabilization theoretically feasible through complete bench drainage depressurization.'**
+  String get drainageFeasible;
+
+  /// No description provided for @controlledBlastingRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Controlled blasting / pre-splitting required (SRF target: {target}).'**
+  String controlledBlastingRequired(Object target);
+
+  /// No description provided for @stressManageable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress concentration manageable under baseline blasting.'**
+  String get stressManageable;
+
+  /// No description provided for @activeAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Geotechnical Assessment'**
+  String get activeAssessment;
+
+  /// No description provided for @benchGeometryInputs.
+  ///
+  /// In en, this message translates to:
+  /// **'Bench Geometry & Rock Mass Inputs'**
+  String get benchGeometryInputs;
+
+  /// No description provided for @bartonBarCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Barton & Bar (2017) Empirical Support Categories'**
+  String get bartonBarCategories;
+
+  /// No description provided for @boltLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Bolt Length (L)'**
+  String get boltLength;
+
+  /// No description provided for @boltSpacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Bolt Spacing'**
+  String get boltSpacing;
+
+  /// No description provided for @shotcrete.
+  ///
+  /// In en, this message translates to:
+  /// **'Shotcrete'**
+  String get shotcrete;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
+  /// No description provided for @rockBolting.
+  ///
+  /// In en, this message translates to:
+  /// **'Rock Bolting:'**
+  String get rockBolting;
+
+  /// No description provided for @shotcreteRetention.
+  ///
+  /// In en, this message translates to:
+  /// **'Shotcrete & Surface Retention:'**
+  String get shotcreteRetention;
+
+  /// No description provided for @subHorizontalDrainage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-horizontal Drainage:'**
+  String get subHorizontalDrainage;
+
+  /// No description provided for @recommendedBoltLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Bolt Length L ≈ {length} m'**
+  String recommendedBoltLength(Object length);
+
+  /// No description provided for @recommendedBoltSpacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Bolt Spacing: {spacing} m'**
+  String recommendedBoltSpacing(Object spacing);
+
+  /// No description provided for @recommendedShotcrete.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Shotcrete: {thickness} mm'**
+  String recommendedShotcrete(Object thickness);
+
+  /// No description provided for @requiresCableAnchors.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires pre-stressed strand cable anchors'**
+  String get requiresCableAnchors;
+
+  /// No description provided for @requiresReprofiling.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires bench slope reprofiling / flattening'**
+  String get requiresReprofiling;
+
+  /// No description provided for @failureMechanismAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Failure Mechanism Assessment'**
+  String get failureMechanismAssessment;
+
+  /// No description provided for @interactiveOrientationControls.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive Orientation Controls'**
+  String get interactiveOrientationControls;
+
+  /// No description provided for @slopeDipDirectionAlphaS.
+  ///
+  /// In en, this message translates to:
+  /// **'Slope Dip Direction (αs)'**
+  String get slopeDipDirectionAlphaS;
+
+  /// No description provided for @slopeDipAngleBetaS.
+  ///
+  /// In en, this message translates to:
+  /// **'Slope Dip Angle (βs)'**
+  String get slopeDipAngleBetaS;
+
+  /// No description provided for @joint1DipDirectionAlphaJ1.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 1 Dip Direction (αj1)'**
+  String get joint1DipDirectionAlphaJ1;
+
+  /// No description provided for @joint1DipAngleBetaJ1.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 1 Dip Angle (βj1)'**
+  String get joint1DipAngleBetaJ1;
+
+  /// No description provided for @includeJoint2Wedge.
+  ///
+  /// In en, this message translates to:
+  /// **'Include Joint 2 (Wedge Analysis)'**
+  String get includeJoint2Wedge;
+
+  /// No description provided for @joint2DipDirectionAlphaJ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 2 Dip Direction (αj2)'**
+  String get joint2DipDirectionAlphaJ2;
+
+  /// No description provided for @joint2DipAngleBetaJ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 2 Dip Angle (βj2)'**
+  String get joint2DipAngleBetaJ2;
+
+  /// No description provided for @basicFrictionAnglePhi.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Friction Angle (φ)'**
+  String get basicFrictionAnglePhi;
+
+  /// No description provided for @stereonetLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Stereonet Quick Legend'**
+  String get stereonetLegend;
+
+  /// No description provided for @daylightingSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Daylighting Sector'**
+  String get daylightingSector;
+
+  /// No description provided for @slopeFace.
+  ///
+  /// In en, this message translates to:
+  /// **'Slope Face'**
+  String get slopeFace;
+
+  /// No description provided for @joint1.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 1'**
+  String get joint1;
+
+  /// No description provided for @joint2.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint 2'**
+  String get joint2;
+
+  /// No description provided for @wedgeIntersectionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Wedge Intersection Line'**
+  String get wedgeIntersectionLine;
+
+  /// No description provided for @jrcProfilometerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Barton 10-Profile JRC Selector'**
+  String get jrcProfilometerTitle;
+
+  /// No description provided for @jrcProfilometerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select joint profile to auto-derive Roughness (Jr)'**
+  String get jrcProfilometerSubtitle;
+
+  /// No description provided for @equivalentJr.
+  ///
+  /// In en, this message translates to:
+  /// **'Equivalent Jr'**
+  String get equivalentJr;
+
+  /// No description provided for @selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get selected;
+
+  /// No description provided for @kinematicPlanar.
+  ///
+  /// In en, this message translates to:
+  /// **'Planar'**
+  String get kinematicPlanar;
+
+  /// No description provided for @kinematicWedge.
+  ///
+  /// In en, this message translates to:
+  /// **'Wedge'**
+  String get kinematicWedge;
+
+  /// No description provided for @kinematicToppling.
+  ///
+  /// In en, this message translates to:
+  /// **'Toppling'**
+  String get kinematicToppling;
+
+  /// No description provided for @riskCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'CRITICAL'**
+  String get riskCritical;
+
+  /// No description provided for @riskModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'MODERATE'**
+  String get riskModerate;
+
+  /// No description provided for @riskLow.
+  ///
+  /// In en, this message translates to:
+  /// **'LOW'**
+  String get riskLow;
+
+  /// No description provided for @riskNone.
+  ///
+  /// In en, this message translates to:
+  /// **'NONE'**
+  String get riskNone;
+
+  /// No description provided for @loadSampleCalculations.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Sample Calculations'**
+  String get loadSampleCalculations;
+
+  /// No description provided for @sampleCalculationsLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sample calculations loaded successfully'**
+  String sampleCalculationsLoaded(int count);
+
+  /// No description provided for @locationServicesDisabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Services Disabled'**
+  String get locationServicesDisabledTitle;
+
+  /// No description provided for @locationServicesDisabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location services (GPS) are turned off. Please turn on location services on your device to capture outcrop coordinates.'**
+  String get locationServicesDisabledMessage;
+
+  /// No description provided for @locationPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Permission Required'**
+  String get locationPermissionDeniedTitle;
+
+  /// No description provided for @locationPermissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission was denied. Please allow location access to capture outcrop GPS coordinates.'**
+  String get locationPermissionDeniedMessage;
+
+  /// No description provided for @locationPermissionPermanentlyDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is permanently denied. Please open App Settings and grant location permission.'**
+  String get locationPermissionPermanentlyDeniedMessage;
+
+  /// No description provided for @openLocationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Location Settings'**
+  String get openLocationSettings;
+
+  /// No description provided for @openAppSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open App Settings'**
+  String get openAppSettings;
 }
 
 class _AppLocalizationsDelegate

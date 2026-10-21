@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 class JointCharacter {
   /// [JR_USING_PALMSTROM]
@@ -49,21 +50,42 @@ class JointCharacter {
     return JointCharacter(
       jointRoughness:
           map['jointRoughness'] != null
-              ? (map['jointRoughness'] as List).cast<double>()
+              ? (map['jointRoughness'] is List
+                  ? (map['jointRoughness'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jointRoughness'] as num).toDouble()])
               : null,
       jointWaviness:
-          map['jw'] != null ? (map['jw'] as List).cast<double>() : null,
+          map['jw'] != null
+              ? (map['jw'] is List
+                  ? (map['jw'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jw'] as num).toDouble()])
+              : null,
       jointSmoothness:
-          map['js'] != null ? (map['js'] as List).cast<double>() : null,
+          map['js'] != null
+              ? (map['js'] is List
+                  ? (map['js'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['js'] as num).toDouble()])
+              : null,
       jrCalculationType:
           map['jrCalculationType'] != null
-              ? map['jrCalculationType'] == JrCalculationType.jr.name
+              ? (map['jrCalculationType'] == JrCalculationType.jr.name ||
+                      map['jrCalculationType'] == JrCalculationType.jr)
                   ? JrCalculationType.jr
                   : JrCalculationType.palmstorm
               : null,
       jointAlteration:
           map['jointAlteration'] != null
-              ? (map['jointAlteration'] as List).cast<double>()
+              ? (map['jointAlteration'] is List
+                  ? (map['jointAlteration'] as List)
+                      .map((e) => (e as num).toDouble())
+                      .toList()
+                  : [(map['jointAlteration'] as num).toDouble()])
               : null,
     );
   }
@@ -82,20 +104,20 @@ class JointCharacter {
   bool operator ==(covariant JointCharacter other) {
     if (identical(this, other)) return true;
 
-    return other.jointRoughness == jointRoughness &&
-        other.jointWaviness == jointWaviness &&
-        other.jointSmoothness == jointSmoothness &&
+    return listEquals(other.jointRoughness, jointRoughness) &&
+        listEquals(other.jointWaviness, jointWaviness) &&
+        listEquals(other.jointSmoothness, jointSmoothness) &&
         other.jrCalculationType == jrCalculationType &&
-        other.jointAlteration == jointAlteration;
+        listEquals(other.jointAlteration, jointAlteration);
   }
 
   @override
   int get hashCode {
-    return jointRoughness.hashCode ^
-        jointWaviness.hashCode ^
-        jointSmoothness.hashCode ^
+    return Object.hashAll(jointRoughness ?? const []) ^
+        Object.hashAll(jointWaviness ?? const []) ^
+        Object.hashAll(jointSmoothness ?? const []) ^
         jrCalculationType.hashCode ^
-        jointAlteration.hashCode;
+        Object.hashAll(jointAlteration ?? const []);
   }
 }
 
